@@ -1,0 +1,27 @@
+.select-container {
+    height: 70px;
+    width: 60%;
+    display: flex;
+    gap: 10px;
+    background-color: adjust-color($color: #bec0dd);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    margin-left: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-option {}
+
+.select-case {
+    margin-top: 2px;
+    margin-left: 50px;
+}
+
+.select-container2{
+    display: flex;
+    gap: 30px;
+    margin-top: 80px;
+    margin-left: 800px;
+}

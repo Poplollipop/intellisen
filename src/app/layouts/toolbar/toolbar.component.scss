@@ -1,0 +1,19 @@
+mat-toolbar {
+    color: white;
+    background-color: adjust-color($color: #333455);
+    flex: 1 auto;
+    height: 60px;
+}
+
+span {
+font-weight: bold;
+}
+.toolbar-link {
+    color: white;
+    font-size: small;
+    gap: 10px;
+    display: flex;
+    margin-left: auto;
+    margin-top: 30px;
+    margin-right: 70px;
+}
