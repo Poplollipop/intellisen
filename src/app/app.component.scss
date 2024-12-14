@@ -12,7 +12,6 @@
     align-items: center;
 }
 
-.select-option {}
 
 .select-case {
     margin-top: 2px;
@@ -21,7 +20,9 @@
 
 .select-container2{
     display: flex;
-    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
     margin-top: 80px;
-    margin-left: 800px;
+
 }

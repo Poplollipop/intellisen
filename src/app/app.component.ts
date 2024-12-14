@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/d
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { SelectedCourtComponent } from './component/selected-court/selected-court.component';
+import { SelectLawComponent } from './component/select-law/select-law.component';
 @Component({
   selector: 'app-root',
   imports: [
@@ -31,6 +32,13 @@ export class AppComponent {
     dialogConfig.width = "600px",
       dialogConfig.height = "600px"
     this.dialog.open(SelectedCourtComponent, dialogConfig);
+  }
+
+   selectLaw() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "600px",
+      dialogConfig.height = "600px"
+    this.dialog.open(SelectLawComponent, dialogConfig);
   }
 
 }

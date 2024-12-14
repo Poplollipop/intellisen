@@ -73,17 +73,8 @@
 </div>
 
 <div class="select-container2">
-    <button mat-raised-button (click)="selectCourt()">選擇法院</button>
+  <button mat-raised-button (click)="selectCourt()">選擇法院</button>
 
-  <div class="select-law">
-    <select>
-      <option value="" selected>選擇法條</option>
-      <option value="law1">刑法271條</option>
-      <option value="law2">刑法272條</option>
-      <option value="law3">刑法273條</option>
-      <option value="law4">刑法274條</option>
-      <option value="law4">刑法275條</option>
-    </select>
-  </div>
+  <button mat-raised-button (click)="selectLaw()">選擇法條</button>
 </div>
 <router-outlet></router-outlet>
