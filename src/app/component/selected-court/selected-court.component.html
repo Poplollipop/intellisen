@@ -1,0 +1,36 @@
+<mat-toolbar>
+  <span>選擇法院</span>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+
+<mat-dialog-content class="mat-text">
+  <form [formGroup]="selectCourtform">
+    <div class="form-content">
+      <mat-form-field>
+        <mat-label>法院</mat-label>
+        <section class="example-section" [formGroup]="toppings">
+          <h4>選擇法院</h4>
+          <p><mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox></p>
+          <p><mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox></p>
+          <p><mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox></p>
+        </section>
+        <section class="example-section" [formGroup]="toppings">
+          <h4>搜尋地區法院:</h4>
+          {{toppings.value| json}}
+        </section>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button type="submit" (click)="submit()">
+    <mat-icon>save</mat-icon> 選擇
+  </button>
+  <button mat-raised-button mat-dialog-close>
+    <mat-icon>cancel</mat-icon> 關閉
+  </button>
+</mat-dialog-actions>

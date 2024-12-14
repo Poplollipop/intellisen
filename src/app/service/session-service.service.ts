@@ -7,5 +7,5 @@ export class SessionServiceService {
 
   constructor() { }
 
-  inputdata:any
+  selectedData:any
 }
