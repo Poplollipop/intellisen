@@ -1,28 +1,148 @@
+/* Select Container Styles */
 .select-container {
-    height: 70px;
-    width: 60%;
-    display: flex;
-    gap: 10px;
-    background-color: adjust-color($color: #bec0dd);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 80px;
-    margin-left: 300px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 100px auto 15px auto;
+  max-width: 1000px;
+  padding: 20px 25px;
+  background-color: #D3DADF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 10px;
 }
 
-
+.select-option,
 .select-case {
-    margin-top: 2px;
-    margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
-.select-container2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 200px;
-    margin-top: 80px;
+/* 搜尋標籤 */
+.search-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  width: auto; /* 自適應寬度 */
+  white-space: nowrap; /* 防止文字換行 */
+  text-align: right; /* 如果需要右對齊標籤 */
+}
 
+.select-case .search-label{
+  margin-left: 10px;
+}
+
+.select-option select,
+.select-case select {
+  width: 220px;
+  height: 36px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+// .select-case select{
+//   margin-left: 100px;
+// }
+
+.select-option select:focus,
+.select-case select:focus {
+  border-color: #87bfb7;
+  box-shadow: 0 0 5px rgba(135, 191, 183, 0.5);
+}
+
+.select-option select option:disabled {
+  color: #999;
+}
+
+/* 選擇按鈕區 */
+.select-container2 {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 200px;
+  margin: 10px;
+}
+
+button[mat-raised-button] {
+  font-size: 15px;
+  color: #fff;
+  background-color: #1F618D;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #bbd0f3;
+  transform: scale(1.05);
+}
+
+button[mat-raised-button]:active {
+  background-color: #2b20f9;
+}
+
+button[mat-raised-button]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgb(132, 186, 213);
+}
+
+
+
+/* 黃色區域 */
+.yellow-container{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+.selected-items-container {
+  width: 400px;
+  height: 250px;
+  padding: 20px;
+  background-color: #ffeb99;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected-items {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 12px;
+  margin-bottom: 5px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #333;
+}
+
+.selected-item .remove-btn {
+  background: none;
+  border: none;
+  color: #ff4d4f;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.bottom-button{
+  display: flex;
+  justify-content:end ;
+  gap: 20px;
+  margin-top: 30px;
+  margin-right: 40px;
 }
