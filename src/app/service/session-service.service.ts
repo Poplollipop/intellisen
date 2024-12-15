@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class SessionServiceService {
 
-  private selectedCriteria: SelectedCriteria = {
+  private selectedData: SelectedData = {
     courts: [],
     laws: [],
     startYear: '',
@@ -14,18 +15,18 @@ export class SessionServiceService {
   };
 
   // 設定選擇條件
-  setCriteria(criteria: SelectedCriteria): void {
-    this.selectedCriteria = { ...criteria };
+  setData(data: SelectedData): void {
+    this.selectedData = { ...data };
   }
 
   // 取得選擇條件
-  getCriteria(): SelectedCriteria {
-    return this.selectedCriteria;
+  getData(): SelectedData {
+    return this.selectedData;
   }
 
   // 清除選擇條件
-  clearCriteria(): void {
-    this.selectedCriteria = {
+  clearData(): void {
+    this.selectedData = {
       courts: [],
       laws: [],
       startYear: '',
@@ -35,7 +36,7 @@ export class SessionServiceService {
   }
 }
 
-export interface SelectedCriteria {
+export interface SelectedData {
   courts: string[];
   laws: string[];
   startYear: string;

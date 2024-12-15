@@ -1,72 +1,9 @@
 <app-toolbar></app-toolbar>
-<div class="select-container">
-  <div class="select-option">
-    <label for="start-year" class="search-label">判決年度：</label>
-    <select id="start-year"  [(ngModel)]="startYear">
-      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-        <option [value]="year">{{ year }}</option>
-      }
-    </select>
-  </div>
 
-  <div class="select-option">
-    <label for="end-year" class="search-label">至</label>
-    <select id="end-year" [(ngModel)]="endYear">
-      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-        <option [value]="year">{{ year }}</option>
-      }
-    </select>
-  </div>
-
-  <div class="select-case">
-    <label for="select-case" class="search-label">選擇案件：</label>
-    <select id="select-case" [(ngModel)]="selectedCase">
-      <option value="">選擇案件</option>
-      <option value="殺人罪">殺人罪</option>
-      <option value="強盜罪">強盜罪</option>
-      <option value="貪汙罪">貪汙罪</option>
-    </select>
-  </div>
+<div class="content">
+  <router-outlet></router-outlet>
 </div>
 
-<div class="select-container2">
-  <button mat-raised-button (click)="openSelectCourtDialog()">選擇法院</button>
-  <button mat-raised-button (click)="openSelectLawDialog()">選擇法條</button>
-</div>
-
-<!-- 新增兩個黃色區域 -->
-<div class="yellow-container">
-  <div class="selected-items-container">
-      <div class="selected-items">
-        @for (court of selectedCourts; track $index) {
-          <div class="selected-item">
-            <ul>
-              <li>{{ court }}</li>
-            </ul>
-            <button class="remove-btn" (click)="removeCourt($index)">X</button>
-          </div>
-        }
-      </div>
-  </div>
-
-  <div class="selected-items-container">
-    <div class="selected-items">
-      @for (law of selectedLaws; track $index) {
-        <div class="selected-item">
-          <ul>
-            <li>{{ law }}</li>
-          </ul>
-          <button class="remove-btn" (click)="removeLaw($index)">X</button>
-        </div>
-      }
-    </div>
-  </div>
-</div>
-
-<div class="bottom-button">
-  <button mat-raised-button color="primary">清空條件</button>
-  <button mat-raised-button color="primary" (click)="confirmSelection()">確認選擇</button>
-</div>
+<ngx-ui-loader></ngx-ui-loader>
 
 
-<router-outlet></router-outlet>
