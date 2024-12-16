@@ -1,0 +1,87 @@
+<app-toolbar></app-toolbar>
+
+
+<div class="filter-container">
+
+  <!-- 左側 -->
+  <div class="basic-filters">
+    <h3>目前您的篩選條件</h3>
+    <hr />
+    <p>判決年度： {{ data.startYear }} - {{ data.endYear }}</p>
+    <p>案件： {{ data.case }}</p>
+    <p>適用法條：{{ data.laws }}</p>
+    <p>判決法院：</p>
+      @if(data.courts.length !== 0 ){
+        <div class="selected-courts">
+          @for (court of data.courts; track $index; let i = $index) {
+            <span class="selected-item">
+              {{ court }}
+              <button class="remove-btn" (click)="removeCourt(i)">X</button>
+            </span>
+          }
+        </div>
+      }
+  </div>
+
+  <!-- 右側 -->
+  <div class="advanced-filters">
+    <h3>進階篩選條件
+      <!-- 新增觸發按鈕 -->
+    <button class="btn btn-primary" (click)="openModal()">+</button>
+    </h3>
+    <hr />
+
+    <!-- 顯示已套用的篩選條件 -->
+    <div *ngIf="appliedOptions.length > 0" class="applied-options mt-2">
+      <p>已選擇的條件：</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span
+          *ngFor="let option of appliedOptions"
+          class="badge bg-primary p-2"
+        >
+          {{ option }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div
+  class="modal fade"
+  id="advancedFilterModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">進階篩選條件</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- 篩選選項按鈕 -->
+          <div class="d-flex flex-wrap gap-2">
+            @for (option of advancedOptions; track $index) {
+              <button
+              class="btn"
+              [ngClass]="{ 'btn-dark': isSelected(option), 'btn-outline-secondary': !isSelected(option) }"
+              (click)="toggleOption(option)"
+            >
+              {{ option }}
+            </button>
+            }
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-primary" (click)="applyFilters()">套用</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+

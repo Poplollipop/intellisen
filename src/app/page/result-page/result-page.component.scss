@@ -1,0 +1,104 @@
+:host {
+  display: block;
+  min-height: 100vh;              // 覆蓋整個視口高度
+  background-color: #f7f9fc;
+  padding: 20px;
+  margin-top: 70px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;        // 讓左右區域在頁面中央排列
+  gap: 20px;                      // 調整左右區域間距
+  padding: 20px;
+}
+
+.basic-filters,
+.advanced-filters {
+  background-color: #eaf2fb;
+  border: 1px solid #d1e3f5;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+  max-width: 400px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 左側文字間距 */
+.basic-filters p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* 選中的法院容器 */
+.selected-courts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 刪除按鈕 */
+.remove-btn {
+  background: none;
+  border: none;
+  color: #e43c3c;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.remove-btn:hover {
+  color: #ff4d4f;
+}
+
+/* 右側標題按鈕 */
+.advanced-filters h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+button {
+  background-color: #1e88e5;
+  color: #ffffff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+.btn-dark {
+  background-color: #343a40 !important;
+  color: white !important;
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+}

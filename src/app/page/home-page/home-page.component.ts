@@ -6,8 +6,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { SelectedData, SessionServiceService } from '../../service/session-service.service';
 import { Router } from '@angular/router';
-import { SelectedCourtComponent } from '../selected-court/selected-court.component';
-import { SelectLawComponent } from '../select-law/select-law.component';
+import { SelectedCourtComponent } from '../../component/selected-court/selected-court.component';
+import { SelectLawComponent } from '../../component/select-law/select-law.component';
 
 @Component({
   selector: 'app-home-page',
