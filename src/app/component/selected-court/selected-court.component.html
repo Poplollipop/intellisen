@@ -1,6 +1,6 @@
 <mat-toolbar>
   <span>選擇法院</span>
-  <button mat-icon-button mat-dialog-close>
+  <button mat-icon-button mat-dialog-close class="close_icon">
     <mat-icon>close</mat-icon>
   </button>
 </mat-toolbar>
@@ -13,9 +13,15 @@
 
         <!-- Checkbox 選擇法院 -->
         <h4>選擇法院</h4>
-        <p><mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox></p>
-        <p><mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox></p>
-        <p><mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox></p>
+        <p>
+          <mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox>
+        </p>
       </section>
 
       <!-- 顯示選擇結果 -->

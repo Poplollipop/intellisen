@@ -16,6 +16,7 @@
   background-color: #D3DADF;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   gap: 10px;
+  z-index: 1;
 }
 
 .select-option,
@@ -85,7 +86,7 @@ button[mat-raised-button] {
 }
 
 button[mat-raised-button]:hover {
-  background-color: #bbd0f3;
+  background-color: #184b6d;
   transform: scale(1.05);
 }
 
@@ -109,11 +110,14 @@ button[mat-raised-button]:focus {
 
 .selected-items-container {
   width: 400px;
-  height: 250px;
+  min-height: 300px;
   padding: 20px;
-  background-color: #ffeb99;
+  background-color: white;
+  opacity: 0.9;
   border-radius: 16px;
+  border: black solid 1px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .selected-items {
