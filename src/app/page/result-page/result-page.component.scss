@@ -6,13 +6,15 @@
   margin-top: 70px;
 }
 
+/* 上方區域 */
 .filter-container {
   display: flex;
-  justify-content: center;        // 讓左右區域在頁面中央排列
-  gap: 20px;                      // 調整左右區域間距
+  justify-content: space-evenly;
+  gap: 100px; // 調整左右區域間距
   padding: 20px;
-}
 
+
+/* 左右兩個框框 */
 .basic-filters,
 .advanced-filters {
   background-color: #eaf2fb;
@@ -20,7 +22,7 @@
   border-radius: 8px;
   padding: 20px;
   flex: 1;
-  max-width: 400px;
+  max-width: 600px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -29,6 +31,12 @@ h3 {
   font-size: 18px;
   font-weight: bold;
   color: #333;
+}
+
+.clear-button {
+  position: absolute;  // 絕對定位
+  bottom: 10px;        // 距離底部 10px
+  right: 10px;         // 距離右側 10px
 }
 
 /* 左側文字間距 */
@@ -60,7 +68,7 @@ h3 {
 .remove-btn {
   background: none;
   border: none;
-  color: #e43c3c;
+  color: #000000;
   font-size: 12px;
   cursor: pointer;
   margin-left: 8px;
@@ -76,29 +84,195 @@ h3 {
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
+  margin: 0;
+  }
 }
 
-button {
-  background-color: #1e88e5;
-  color: #ffffff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+/* 總計區域(兩個框框) */
+.number-result {
+  display: flex;
+  gap: 50px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .left-result,
+  .right-result {
+    box-sizing: border-box;
+    width: 280px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+
+  .left-result {
+    background-color: #8157C3;
+    color: #000000;
+  }
+
+  .right-result {
+    background-color: #81CA85;
+    color: #000000;
+  }
+
+  .left-result p,
+  .right-result p {
+    font-size: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  .left-result h3,
+  .right-result h3 {
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+}
+
+
+
+/* 下方區域 */
+.result-container {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px
+}
+
+/* 圖表區 */
+.chart-container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 20px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  width: 800px;
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .small-button {
+    padding: 10px;
+    background-color: #04093d;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+  }
+
+  #chartContainer {
+    margin-left: 20px;
+    color: none;
+  }
+}
+
+
+/* 右下表格區 */
+.table-container {
+  width: 700px;
+  background-color: #f2f2f2;
+  margin-top: 20px;
+  border-radius: 8px;
+
+  .container {
+    max-width: 700px;
+
+  }
+
+  .responsive-table {
+    padding: 0;
+
+    li {
+      border-radius: 3px;
+      padding: 10px 10px;
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .table-header {
+      background-color: #abd8ad;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+      margin-top: 20px;
+    }
+
+    .table-row {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .clickable {
+      color: #007bff;
+      cursor: pointer;
+    }
+
+
+    .col-1 {
+      flex-basis: 25%;
+      text-align: left;
+    }
+
+    .col-2 {
+      flex-basis: 15%;
+    }
+
+    .col-3 {
+      flex-basis: 20%;
+    }
+
+    .col-4 {
+      flex-basis: 20%;
+    }
+
+    .col-5 {
+      flex-basis: 20%;
+
+    }
+
+    .table-row .col-3{
+      text-align: right;
+    }
+
+    .table-row .col-4,
+    .table-row .col-5
+    {
+      text-align: right;
+    }
+
+    .table-header .col-4,
+    .table-header .col-5{
+      text-align: center;
+    }
+
+  }
+
+}
+
+/* 底部按鈕 */
+.back-button{
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.back-button button {
+  padding: 10px;
+  background-color: #04093d;
+  border-radius: 8px;
+  color: white;
   font-size: 14px;
-}
-
-button:hover {
-  background-color: #1565c0;
-}
-
-.btn-dark {
-  background-color: #343a40 !important;
-  color: white !important;
-}
-
-.btn-outline-secondary {
-  background-color: transparent;
-  border: 1px solid #6c757d;
-  color: #6c757d;
+  font-weight: bold;
+  border: none;
 }
