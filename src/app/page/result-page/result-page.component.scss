@@ -1,6 +1,6 @@
 :host {
   display: block;
-  min-height: 100vh;              // 覆蓋整個視口高度
+  min-height: 100vh; // 覆蓋整個視口高度
   background-color: #f7f9fc;
   padding: 20px;
   margin-top: 70px;
@@ -14,77 +14,77 @@
   padding: 20px;
 
 
-/* 左右兩個框框 */
-.basic-filters,
-.advanced-filters {
-  background-color: #eaf2fb;
-  border: 1px solid #d1e3f5;
-  border-radius: 8px;
-  padding: 20px;
-  flex: 1;
-  max-width: 600px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
+  /* 左右兩個框框 */
+  .basic-filters,
+  .advanced-filters {
+    background-color: #eaf2fb;
+    border: 1px solid #d1e3f5;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    max-width: 600px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
 
-h3 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
+  h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
 
-.clear-button {
-  position: absolute;  // 絕對定位
-  bottom: 10px;        // 距離底部 10px
-  right: 10px;         // 距離右側 10px
-}
+  .clear-button {
+    position: absolute; // 絕對定位
+    bottom: 10px; // 距離底部 10px
+    right: 10px; // 距離右側 10px
+  }
 
-/* 左側文字間距 */
-.basic-filters p {
-  margin: 8px 0;
-  font-size: 14px;
-  color: #555;
-}
+  /* 左側文字間距 */
+  .basic-filters p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+  }
 
-/* 選中的法院容器 */
-.selected-courts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
+  /* 選中的法院容器 */
+  .selected-courts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
 
-.selected-item {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 4px 8px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+  .selected-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
 
-/* 刪除按鈕 */
-.remove-btn {
-  background: none;
-  border: none;
-  color: #000000;
-  font-size: 12px;
-  cursor: pointer;
-  margin-left: 8px;
-}
+  /* 刪除按鈕 */
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 8px;
+  }
 
-.remove-btn:hover {
-  color: #ff4d4f;
-}
+  .remove-btn:hover {
+    color: #ff4d4f;
+  }
 
-/* 右側標題按鈕 */
-.advanced-filters h3 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  margin: 0;
+  /* 右側標題按鈕 */
+  .advanced-filters h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    margin: 0;
   }
 }
 
@@ -240,18 +240,17 @@ h3 {
 
     }
 
-    .table-row .col-3{
+    .table-row .col-3 {
       text-align: right;
     }
 
     .table-row .col-4,
-    .table-row .col-5
-    {
+    .table-row .col-5 {
       text-align: right;
     }
 
     .table-header .col-4,
-    .table-header .col-5{
+    .table-header .col-5 {
       text-align: center;
     }
 
@@ -260,7 +259,7 @@ h3 {
 }
 
 /* 底部按鈕 */
-.back-button{
+.back-button {
   display: flex;
   justify-content: end;
   gap: 20px;
