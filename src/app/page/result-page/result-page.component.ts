@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import * as Highcharts from 'highcharts';
 import { CaseViewComponent } from '../../component/case-view/case-view.component';
-
+import { Router } from '@angular/router';
 
 
 
@@ -72,6 +72,7 @@ export class ResultPageComponent {
   constructor(
     private sessionService: SessionServiceService,
     public dialog: MatDialog,
+    private router: Router,
   ) { }
 
 
@@ -242,8 +243,8 @@ export class ResultPageComponent {
   openDialog(count: number): void {
     const dialogRef = this.dialog.open(CaseViewComponent, {
       maxWidth: '100vw',
-      width: '80%',
       height: '70vh',
+      width: '400px',
       data: { count: count } // 傳入該行的件數
     });
 
@@ -251,5 +252,13 @@ export class ResultPageComponent {
       console.log('Dialog closed with result:', result);
     });
   }
+  backToHome(){
+    this.router.navigateByUrl('/home')
+  }
 }
+
+
+
+
+
 
