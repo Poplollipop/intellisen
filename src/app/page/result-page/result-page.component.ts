@@ -244,7 +244,7 @@ export class ResultPageComponent {
     const dialogRef = this.dialog.open(CaseViewComponent, {
       maxWidth: '100vw',
       height: '70vh',
-      width: '400px',
+      width: '80%',
       data: { count: count } // 傳入該行的件數
     });
 
@@ -252,6 +252,7 @@ export class ResultPageComponent {
       console.log('Dialog closed with result:', result);
     });
   }
+
   backToHome(){
     this.router.navigateByUrl('/home')
   }
