@@ -32,13 +32,22 @@ export class CaseViewComponent {
     public dialogRef: MatDialogRef<CaseViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // 接收主元件的數據
   ) {
-     this.dataSource = new MatTableDataSource(users);
+     this.dataSource = new MatTableDataSource(cases);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    //顯示頁數、將預設顯示的英文更改成中文
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator._intl.itemsPerPageLabel = "顯示筆數:";
+    this.dataSource.paginator._intl.firstPageLabel = "第一頁:";
+    this.dataSource.paginator._intl.previousPageLabel = "上一頁";
+    this.dataSource.paginator._intl.nextPageLabel = "下一頁";
+    this.dataSource.paginator._intl.lastPageLabel = "最後一頁";
   }
+
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -66,7 +75,7 @@ export interface caseData {
 
 
 // 有期徒刑案件一覽表
-const users: caseData[] = [
+const cases: caseData[] = [
   { id: '112年度訴字第123號刑事判決', verdictYear: '112', charge: '傷害', judge: '李大明', lawyer: '陳小明', url:'http://...' },
   { id: '112年度訴字第151號刑事判決', verdictYear: '112', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
   { id: '112年度訴字第126號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },

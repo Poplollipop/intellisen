@@ -238,7 +238,8 @@ export class ResultPageComponent {
   openDialog(count: number): void {
     const dialogRef = this.dialog.open(CaseViewComponent, {
       maxWidth: '100vw',
-      minHeight: '50vh',
+      width: '80%',
+      height: '70vh',
       data: { count: count } // 傳入該行的件數
     });
 

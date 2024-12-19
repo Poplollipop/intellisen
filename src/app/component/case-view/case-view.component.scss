@@ -16,3 +16,22 @@
 .large {
   font-size: 30px;
 }
+
+// table 內容字體
+.mat-mdc-cell {
+  // text-align: center;
+}
+
+
+// table header 字體顏色
+.mat-mdc-table .mat-mdc-header-cell {
+  color: rgb(255, 255, 255);
+}
+
+input {
+  background-color: #ffffff;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #ff0000;
+}

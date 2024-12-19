@@ -1,12 +1,11 @@
 <h1 mat-dialog-title style="text-align: center;">有期徒刑案件一覽</h1>
 <div mat-dialog-content style="margin-top: 1%;">
   <mat-form-field>
-
-    <input matInput (keyup)="applyFilter($event)" placeholder="請輸入篩選條件" #input>
+    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="請輸入篩選條件" #input>
   </mat-form-field>
 
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort class="table table-bordered table table-striped table-hover" style="background-color: rgb(7, 97, 187);">
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
@@ -53,7 +52,7 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cases"></mat-paginator>
   </div>
 </div>
 <div mat-dialog-actions>
