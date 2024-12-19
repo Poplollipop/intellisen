@@ -23,6 +23,12 @@ import { SelectLawComponent } from '../../component/select-law/select-law.compon
 })
 export class HomePageComponent {
 
+  constructor(
+    private dialog: MatDialog,
+    private sessionService: SessionServiceService,
+    private router: Router,
+  ) { }
+
   // 已選擇的項目
   selectedCourts: string[] = [];
   selectedLaws: string[] = [];
@@ -30,17 +36,22 @@ export class HomePageComponent {
   startYear: string = '89';
   endYear: string = '89';
 
-  constructor(
-    private dialog: MatDialog,
-    private sessionService: SessionServiceService,
-    private router: Router,
-  ) { }
+  ngOnInit(): void {
+    if(this.sessionService.getData()){
+      const sessionData = this.sessionService.getData();
+      this.selectedCourts = sessionData.courts;
+      this.selectedLaws = sessionData.laws;
+      this.selectedCase = sessionData.case;
+      this.startYear = sessionData.startYear;
+      this.endYear = sessionData.endYear;
+    }
 
+  }
 
   openSelectCourtDialog() {
     const dialogRef = this.dialog.open(SelectedCourtComponent, {
-      width: '600px',
-      height: '600px',
+      width: '50vw',
+      height: '70vh',
     });
 
     // 接收返回的資料
@@ -54,11 +65,18 @@ export class HomePageComponent {
     });
   }
 
+  // 將法院代碼換成法院名稱
+  turn_code_to_name(code: string) {
+    return this.sessionService.turn_code_to_name(code);
+  }
+
 
   openSelectLawDialog() {
     const dialogRef = this.dialog.open(SelectLawComponent, {
-      width: '600px',
-      height: '600px',
+      width: '50vw',
+      height: '70vh',
+      // 發送用戶選擇的法律類型給 dialog
+      data: this.selectedCase,
     });
 
     // 接收返回的資料
@@ -82,8 +100,8 @@ export class HomePageComponent {
     this.selectedLaws.splice(index, 1);
   }
 
-   // 清空條件方法
-   clearSelection() {
+  // 清空條件方法
+  clearSelection() {
     this.startYear = '89';     // 重置為預設年份
     this.endYear = '89';       // 重置為預設年份
     this.selectedCase = '';    // 重置案件選擇

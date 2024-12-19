@@ -21,9 +21,16 @@
     <label for="select-case" class="search-label">選擇案件：</label>
     <select id="select-case" [(ngModel)]="selectedCase">
       <option value="">選擇案件</option>
-      <option value="殺人罪">殺人罪</option>
-      <option value="強盜罪">強盜罪</option>
-      <option value="貪汙罪">貪汙罪</option>
+      <option value="殺人">殺人</option>
+      <option value="強盜">強盜</option>
+      <option value="傷害">傷害</option>
+      <option value="不能安全駕駛">不能安全駕駛</option>
+      <option value="肇事逃逸">肇事逃逸</option>
+      <option value="詐欺">詐欺</option>
+      <option value="竊盜">竊盜</option>
+      <option value="毒品">毒品</option>
+      <option value="槍砲">槍砲</option>
+      <option value="妨礙性自主">妨礙性自主</option>
     </select>
   </div>
 </div>
@@ -40,7 +47,7 @@
         @for (court of selectedCourts; track $index) {
           <div class="selected-item">
             <ul>
-              <li>{{ court }}</li>
+              <li>{{turn_code_to_name(court)}}</li>
             </ul>
             <button class="remove-btn" (click)="removeCourt($index)">X</button>
           </div>

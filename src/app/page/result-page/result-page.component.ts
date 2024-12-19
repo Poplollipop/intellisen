@@ -89,6 +89,10 @@ export class ResultPageComponent {
     this.data.laws.splice(index, 1);
   }
 
+  // 將法院代碼換成法院名稱
+  turn_code_to_name(code: string) {
+    return this.sessionService.turn_code_to_name(code);
+  }
 
   // 刪除已選擇的篩選條件
   removeOption(index: number): void {

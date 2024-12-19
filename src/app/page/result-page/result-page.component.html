@@ -15,7 +15,7 @@
         <div class="selected-courts">
           @for (court of data.courts; track $index; let i = $index) {
             <span class="selected-item">
-              {{ court }}
+              {{ turn_code_to_name(court) }}
               <button class="remove-btn" (click)="removeCourt(i)">X</button>
             </span>
           }
