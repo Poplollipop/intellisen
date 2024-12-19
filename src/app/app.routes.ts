@@ -4,6 +4,6 @@ import { HomePageComponent } from './page/home-page/home-page.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomePageComponent },           // 主畫面路由
-  { path: 'result', component: ResultPageComponent },   // 結果頁面路由
-  { path: '**', redirectTo: '' },
+  { path: 'result', component: ResultPageComponent },       // 結果頁面路由
+  { path: '', component: HomePageComponent }
 ];
