@@ -251,8 +251,11 @@ export class ResultPageComponent {
     });
   }
 
-  backtoHome(){
+  backToHome(){
     this.router.navigateByUrl('/home')
   }
+
+
 }
+
 

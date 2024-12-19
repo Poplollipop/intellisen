@@ -5,7 +5,8 @@
 
   <!-- 左側 -->
   <div class="basic-filters">
-    <h3>目前您的篩選條件</h3>
+    <h3>目前您的篩選條件 <button mat-raised-button class="back-button" color="primary" (click)="backToHome()">更改條件</button>
+    </h3>
     <hr />
     <p>判決年度： {{ data.startYear }} - {{ data.endYear }}</p>
     <p>案件： {{ data.case }}</p>
@@ -21,6 +22,7 @@
           }
         </div>
       }
+
   </div>
 
   <!-- 右側 -->
@@ -98,13 +100,13 @@
   <div class="chart-container">
     <!-- 按鈕區域 -->
     <div class="button-container">
-      <button class="small-button" (click)="renderChart('pie')">
+      <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('pie')">
         刑種全貌圖
       </button>
-      <button class="small-button" (click)="renderChart('bar')">
+      <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
         有期徒刑
       </button>
-      <button class="small-button" (click)="renderChart('bar')">
+      <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
         無期徒刑
       </button>
     </div>
@@ -144,9 +146,7 @@
 
 </div>
 
-<div class="back-button">
-  <button (click)="backtoHome()">返回</button>
-</div>
+
 
 
 
