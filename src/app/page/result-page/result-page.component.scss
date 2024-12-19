@@ -2,8 +2,8 @@
   display: block;
   min-height: 100%; // 覆蓋整個視口高度
   background-color: #f7f9fc;
-  padding: 2rem;
-  margin-top: 5rem;
+  padding: 0.5rem;
+  margin-top: 3rem;
 }
 
 /* 上方區域 */
@@ -32,20 +32,23 @@
     margin: 0 0 10px;
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #000000;
   }
 
   .clear-button {
-    position: absolute; // 絕對定位
-    bottom: 10px; // 距離底部 10px
-    right: 10px; // 距離右側 10px
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
   }
 
-  /* 左側文字間距 */
+  /* 左側文字 */
   .basic-filters p {
-    margin: 8px 0;
+    margin: 15px 0;
+    color: #000000;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;  // 不換行，強制放在同一行
     font-size: 14px;
-    color: #555;
   }
 
   /* 選中的法院容器 */
@@ -53,17 +56,19 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 0;
+    flex: 1;  //使選中的法院列表佔據剩餘空間
   }
 
   .selected-item {
     display: flex;
     align-items: center;
     background-color: #ffffff;
-    padding: 4px 8px;
+    padding: 4px 5px;
     border: 1px solid #ddd;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
   }
 
   /* 刪除按鈕 */
@@ -103,6 +108,7 @@
   /* 返回按鈕 */
   button[mat-raised-button] {
     font-size: 15px;
+    font-weight: 900;
     color: #fff;
     background-color: #04395d;
     padding: 8px 15px;

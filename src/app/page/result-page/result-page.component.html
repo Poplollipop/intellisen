@@ -11,18 +11,18 @@
     <p>判決年度： {{ data.startYear }} - {{ data.endYear }}</p>
     <p>案件： {{ data.case }}</p>
     <p>適用法條：{{ data.laws }}</p>
-    <p>判決法院：</p>
+    <p>判決法院：
       @if(data.courts.length !== 0 ){
-        <div class="selected-courts">
+        <span class="selected-courts">
           @for (court of data.courts; track $index; let i = $index) {
             <span class="selected-item">
               {{ turnCodeToName(court) }}
               <button class="remove-btn" (click)="removeCourt(i)">X</button>
             </span>
           }
-        </div>
+        </span>
       }
-
+    </p>
   </div>
 
   <!-- 右側 -->
