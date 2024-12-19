@@ -27,7 +27,6 @@ export class CaseViewComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   constructor(
     public dialogRef: MatDialogRef<CaseViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // 接收主元件的數據
@@ -47,12 +46,14 @@ export class CaseViewComponent {
     this.dataSource.paginator._intl.lastPageLabel = "最後一頁";
   }
 
-
-
   applyFilter(event: Event) {
+    // 從事件中獲取過濾條件
     const filterValue = (event.target as HTMLInputElement).value;
+
+    // 設置資料源的過濾條件，將過濾條件轉換為小寫並去掉兩側空格
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // 如果資料源有分頁功能（Paginator），則跳轉到表格的第一頁
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -63,7 +64,6 @@ export class CaseViewComponent {
   }
 }
 
-
 export interface caseData {
   id: string;
   verdictYear: string;
@@ -72,7 +72,6 @@ export interface caseData {
   lawyer: string;
   url: string;
 }
-
 
 // 有期徒刑案件一覽表
 const cases: caseData[] = [

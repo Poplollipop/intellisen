@@ -5,41 +5,41 @@
   </mat-form-field>
 
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="table table-bordered table table-striped table-hover" style="background-color: rgb(7, 97, 187);">
+    <table mat-table [dataSource]="dataSource" matSort class="table table-bordered table table-striped table-hover">
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 裁判書字號 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 裁判書字號 </th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
       </ng-container>
 
       <!-- VerdictYear Column -->
       <ng-container matColumnDef="verdictYear">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 判決年度 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 判決年度 </th>
         <td mat-cell *matCellDef="let row"> {{row.verdictYear}}年 </td>
       </ng-container>
 
       <!-- Charge Column -->
       <ng-container matColumnDef="charge">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 案由 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 案由 </th>
         <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
       </ng-container>
 
       <!-- Judge Column -->
       <ng-container matColumnDef="judge">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 法官 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 法官 </th>
         <td mat-cell *matCellDef="let row"> {{row.judge}} </td>
       </ng-container>
 
        <!-- Lawyer Column -->
        <ng-container matColumnDef="lawyer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 律師 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 律師 </th>
         <td mat-cell *matCellDef="let row"> {{row.lawyer}} </td>
       </ng-container>
 
        <!-- Url Column -->
        <ng-container matColumnDef="url">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> 判決書連結 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(7, 97, 187);"> 判決書連結 </th>
         <td mat-cell *matCellDef="let row"><a href="">連結</a></td>
       </ng-container>
 
