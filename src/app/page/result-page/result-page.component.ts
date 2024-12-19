@@ -5,7 +5,6 @@ import { SelectedData, SessionServiceService } from '../../service/session-servi
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-// import { CaseViewComponent } from '../../component/case-view/case-view.component';
 import * as Highcharts from 'highcharts';
 import { CaseViewComponent } from '../../component/case-view/case-view.component';
 
@@ -239,8 +238,7 @@ export class ResultPageComponent {
 
 
     // 件數跳出dialog
-
-     // 開啟Dialog，並將「件數」作為參數傳遞
+    // 開啟Dialog，並將「件數」作為參數傳遞
     openDialog(count: number): void {
       const dialogRef = this.dialog.open(CaseViewComponent, {
         width: '400px',
@@ -250,6 +248,7 @@ export class ResultPageComponent {
       dialogRef.afterClosed().subscribe(result => {
         console.log('Dialog closed with result:', result);
       });
+
 
 
 }
