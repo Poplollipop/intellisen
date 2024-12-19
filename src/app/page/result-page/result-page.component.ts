@@ -246,6 +246,7 @@ export class ResultPageComponent {
       });
 
 
+
 }
 }
 

@@ -22,8 +22,10 @@
     border-radius: 8px;
     padding: 20px;
     flex: 1;
-    max-width: 600px;
+    max-width: 100vh;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+    opacity: 0.9;
   }
 
   h3 {
@@ -99,21 +101,25 @@
   .left-result,
   .right-result {
     box-sizing: border-box;
-    width: 280px;
-    height: 100px;
+    width: 50vh;
+    height: 15vh;
     display: flex;
     justify-content: center;
     align-items: end;
+    z-index: 2;
+
   }
 
   .left-result {
     background-color: #8157C3;
     color: #000000;
+    opacity: 0.9;
   }
 
   .right-result {
     background-color: #81CA85;
     color: #000000;
+    opacity: 0.9;
   }
 
   .left-result p,
@@ -148,7 +154,7 @@
   margin-top: 20px;
   background-color: #f2f2f2;
   border-radius: 8px;
-  width: 800px;
+  width: 150vh;
 
   .button-container {
     display: flex;
@@ -170,23 +176,19 @@
     border: none;
   }
 
-  #chartContainer {
-    margin-left: 20px;
-    color: none;
-  }
+
 }
 
 
 /* 右下表格區 */
 .table-container {
-  width: 700px;
+  width: 130vh;
   background-color: #f2f2f2;
   margin-top: 20px;
   border-radius: 8px;
 
   .container {
     max-width: 700px;
-
   }
 
   .responsive-table {
@@ -249,6 +251,7 @@
       text-align: right;
     }
 
+    .table-header .col-3,
     .table-header .col-4,
     .table-header .col-5 {
       text-align: center;
