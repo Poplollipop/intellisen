@@ -8,6 +8,7 @@ import { SelectedData, SessionServiceService } from '../../service/session-servi
 import { Router } from '@angular/router';
 import { SelectedCourtComponent } from '../../component/selected-court/selected-court.component';
 import { SelectLawComponent } from '../../component/select-law/select-law.component';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-home-page',
@@ -33,8 +34,8 @@ export class HomePageComponent {
   selectedCourts: string[] = [];
   selectedLaws: string[] = [];
   selectedCase: string = '';
-  startYear: string = '89';
-  endYear: string = '89';
+  startYear: string = '';
+  endYear: string = '';
 
   ngOnInit(): void {
     if(this.sessionService.getData()){
@@ -50,8 +51,8 @@ export class HomePageComponent {
 
   openSelectCourtDialog() {
     const dialogRef = this.dialog.open(SelectedCourtComponent, {
-      width: '50vw',
-      height: '70vh',
+      width: '60vw',
+      height: '75vh',
     });
 
     // 接收返回的資料
@@ -66,27 +67,22 @@ export class HomePageComponent {
   }
 
   // 將法院代碼換成法院名稱
-  turn_code_to_name(code: string) {
-    return this.sessionService.turn_code_to_name(code);
+  turnCodeToName(code: string) {
+    return this.sessionService.turnCodeToName(code);
   }
 
 
   openSelectLawDialog() {
     const dialogRef = this.dialog.open(SelectLawComponent, {
-      width: '50vw',
-      height: '70vh',
+      width: '60vw',
+      height: '75vh',
       // 發送用戶選擇的法律類型給 dialog
       data: this.selectedCase,
     });
 
     // 接收返回的資料
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // 將選中的項目轉為陣列，並儲存
-        this.selectedLaws = Object.keys(result).filter(
-          (key) => result[key]
-        );
-      }
+     console.log(result)
     });
   }
 
@@ -102,12 +98,12 @@ export class HomePageComponent {
 
   // 清空條件方法
   clearSelection() {
-    this.startYear = '89';     // 重置為預設年份
-    this.endYear = '89';       // 重置為預設年份
+    this.startYear = '';     // 重置年份
+    this.endYear = '';       // 重置年份
     this.selectedCase = '';    // 重置案件選擇
     this.selectedCourts = [];  // 清空法院
     this.selectedLaws = [];    // 清空法條
-    console.log('已清空所有條件');
+    this.sessionService.clearData(); //清空 sessionService
   }
 
 
