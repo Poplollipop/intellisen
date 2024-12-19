@@ -13,31 +13,28 @@
 
         <!-- Checkbox 選擇法院 -->
         <h4>選擇法院</h4>
-        <p>
-          <mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox>
-        </p>
-        <p>
-          <mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox>
-        </p>
-        <p>
-          <mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox>
-        </p>
-      </section>
-
-      <!-- 顯示選擇結果 -->
-      <section class="example-section">
-        <h4>搜尋地區法院:</h4>
-        <ul>
-          @if (selectCourtform.get('toppings.pepperoni')?.value) {
-            <li>Pepperoni</li>
-          }
-          @if (selectCourtform.get('toppings.extracheese')?.value) {
-            <li>Extra Cheese</li>
-          }
-          @if (selectCourtform.get('toppings.mushroom')?.value) {
-            <li>Mushroom</li>
-          }
-        </ul>
+        <p><mat-checkbox formControlName="TPD">臺灣臺北地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="PCD">臺灣新北地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="SLD">臺灣士林地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="TYD">臺灣桃園地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="SCD">臺灣新竹地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="MLD">臺灣苗栗地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="TCD">臺灣臺中地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="NTD">臺灣南投地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="CHD">臺灣彰化地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="ULD">臺灣雲林地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="CYD">臺灣嘉義地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="TND">臺灣臺南地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="CTD">臺灣橋頭地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="KSD">臺灣高雄地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="PTD">臺灣屏東地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="TTD">臺灣臺東地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="HLD">臺灣花蓮地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="ILD">臺灣宜蘭地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="KLD">臺灣基隆地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="PHD">臺灣澎湖地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="LCD">福建連江地方法院</mat-checkbox></p>
+        <p><mat-checkbox formControlName="KMD">福建金門地方法院</mat-checkbox></p>
       </section>
     </div>
   </form>

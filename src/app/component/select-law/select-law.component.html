@@ -4,34 +4,22 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-toolbar>
-
+@for (item of case; track $index) {
+  <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+}
 
 <mat-dialog-content class="mat-text">
   <form [formGroup]="selectLawform">
     <div class="form-content">
       <section class="example-section" formGroupName="toppings">
-
         <!-- Checkbox 選擇法院 -->
         <h4>選擇法條</h4>
-        <p><mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox></p>
-        <p><mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox></p>
-        <p><mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox></p>
-      </section>
-
-      <!-- 顯示選擇結果 -->
-      <section class="example-section">
-        <h4>搜尋法條:</h4>
-        <ul>
-          @if (selectLawform.get('toppings.pepperoni')?.value) {
-            <li>Pepperoni</li>
-          }
-          @if (selectLawform.get('toppings.extracheese')?.value) {
-            <li>Extra Cheese</li>
-          }
-          @if (selectLawform.get('toppings.mushroom')?.value) {
-            <li>Mushroom</li>
-          }
-        </ul>
+        @if(selectedCase == "殺人"){
+          <p><mat-checkbox formControlName="case271">刑法第271條:普通殺人罪</mat-checkbox></p>
+          <p><mat-checkbox formControlName="case272">刑法第272條:殺直系血親尊親屬罪</mat-checkbox></p>
+          <p><mat-checkbox formControlName="case273">刑法第273條:義憤殺人罪</mat-checkbox></p>
+          <p><mat-checkbox formControlName="case274">刑法第274條:母殺嬰兒罪</mat-checkbox></p>
+        }
       </section>
     </div>
   </form>

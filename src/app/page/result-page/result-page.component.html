@@ -15,7 +15,7 @@
         <div class="selected-courts">
           @for (court of data.courts; track $index; let i = $index) {
             <span class="selected-item">
-              {{ court }}
+              {{ turn_code_to_name(court) }}
               <button class="remove-btn" (click)="removeCourt(i)">X</button>
             </span>
           }
@@ -110,7 +110,7 @@
     </div>
 
     <!-- 圖表容器 -->
-    <div id="chartContainer" style="width: 500px; height: 400px;"></div>
+    <div id="chartContainer" style="width: 90vh; height: 80vh;"></div>
   </div>
 
 
