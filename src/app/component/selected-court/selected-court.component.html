@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class="top">
   <span>選擇法院</span>
   <button mat-icon-button mat-dialog-close class="close_icon">
     <mat-icon>close</mat-icon>
@@ -12,7 +12,6 @@
       <section class="example-section" formGroupName="toppings">
 
         <!-- Checkbox 選擇法院 -->
-        <h4>選擇法院</h4>
         <p><mat-checkbox formControlName="TPD">臺灣臺北地方法院</mat-checkbox></p>
         <p><mat-checkbox formControlName="PCD">臺灣新北地方法院</mat-checkbox></p>
         <p><mat-checkbox formControlName="SLD">臺灣士林地方法院</mat-checkbox></p>
@@ -43,8 +42,5 @@
 <mat-dialog-actions>
   <button mat-raised-button type="submit" (click)="submit()">
     <mat-icon>save</mat-icon> 選擇
-  </button>
-  <button mat-raised-button mat-dialog-close>
-    <mat-icon>cancel</mat-icon> 關閉
   </button>
 </mat-dialog-actions>

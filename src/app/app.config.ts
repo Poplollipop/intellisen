@@ -10,9 +10,9 @@ const ngx: NgxUiLoaderConfig = {
   text: "載入中...",
   textColor: "#FFFFFF",
   textPosition: "center-center",
-  bgsColor: "#dc9c9c",
-  fgsColor: "#dc9c9c",
-  fgsType: "square-loader",
+  bgsColor: "#FFFFFF",
+  fgsColor: "#FFFFFF",
+  fgsType: "circle",
   fgsSize: 100,
   hasProgressBar: false
 }

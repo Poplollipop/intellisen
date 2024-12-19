@@ -89,8 +89,8 @@ export class ResultPageComponent {
   }
 
   // 將法院代碼換成法院名稱
-  turn_code_to_name(code: string) {
-    return this.sessionService.turn_code_to_name(code);
+  turnCodeToName(code: string) {
+    return this.sessionService.turnCodeToName(code);
   }
 
   // 刪除已選擇的篩選條件

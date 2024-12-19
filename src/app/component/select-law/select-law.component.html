@@ -4,32 +4,63 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-toolbar>
-@for (item of case; track $index) {
-  <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
-}
+
 
 <mat-dialog-content class="mat-text">
-  <form [formGroup]="selectLawform">
     <div class="form-content">
-      <section class="example-section" formGroupName="toppings">
         <!-- Checkbox 選擇法院 -->
-        <h4>選擇法條</h4>
-        @if(selectedCase == "殺人"){
-          <p><mat-checkbox formControlName="case271">刑法第271條:普通殺人罪</mat-checkbox></p>
-          <p><mat-checkbox formControlName="case272">刑法第272條:殺直系血親尊親屬罪</mat-checkbox></p>
-          <p><mat-checkbox formControlName="case273">刑法第273條:義憤殺人罪</mat-checkbox></p>
-          <p><mat-checkbox formControlName="case274">刑法第274條:母殺嬰兒罪</mat-checkbox></p>
+        @switch (selectedCase) {
+          @case("殺人"){
+            @for (item of low.murder; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("搶奪暨強盜") {
+            @for (item of low.robbery; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("傷害") {
+            @for (item of low.injury; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("不能安全駕駛") {
+            @for (item of low.drive; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("肇事逃逸") {
+            @for (item of low.escape; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("詐欺") {
+            @for (item of low.fraud; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("毒品") {
+            @for (item of low.drug; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("槍砲") {
+            @for (item of low.gun; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
+          @case ("妨礙性自主") {
+            @for (item of low.sexual_assault; track $index) {
+              <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
+            }
+          }
         }
-      </section>
     </div>
-  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-raised-button type="submit" (click)="submit()">
     <mat-icon>save</mat-icon> 選擇
-  </button>
-  <button mat-raised-button mat-dialog-close>
-    <mat-icon>cancel</mat-icon> 關閉
   </button>
 </mat-dialog-actions>
