@@ -77,6 +77,7 @@ export class ResultPageComponent {
 
 
 
+  
   ngOnInit(): void {
     this.data = this.sessionService.getData();
   }
@@ -160,7 +161,7 @@ export class ResultPageComponent {
       categories: ['90', '91', '92', '93'],
       series: [
         {
-          name: '刑度',
+          name: '件數',
           data: [20, 35, 10, 20]
         }
       ]
@@ -201,6 +202,9 @@ export class ResultPageComponent {
       credits: {
         enabled: false // 禁用右下角的 Highcharts.com
       },
+      legend:{
+        enabled: false // 禁用圖例
+      },
       xAxis: type == 'bar' ? { categories: this.chartData.bar.categories, title: { text: '年度' } } : undefined,
       yAxis: type == 'bar' ? { title: { text: '數量' } } : undefined,
       plotOptions: {
@@ -209,7 +213,7 @@ export class ResultPageComponent {
             enabled: true, // 啟用標籤
             style: {
               color: '#000000', // 設定標籤顏色為黑色
-              fontSize: '14px', // 設定字體大小
+              fontSize: '16px', // 設定字體大小
               fontWeight: 'bold' // 字體加粗
             },
             formatter: function () {
