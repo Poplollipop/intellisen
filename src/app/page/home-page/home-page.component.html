@@ -1,69 +1,78 @@
 <div class="select-container">
   <div class="select-option">
     <label for="start-year" class="search-label">判決年度：</label>
-    <select id="start-year"  [(ngModel)]="startYear">
-      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-        <option [value]="year">{{ year }}</option>
+    <select id="start-year" [ngClass]="{'warn':startYearWarn}" [value]="startYear" (change)="checkFillin(); onStartYearChange($event)">
+      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103',
+      '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
+      <option [value]="year">{{ year }}</option>
       }
     </select>
+    @if(startYearWarn){<span class="startYearError">*選擇年份異常</span>}
   </div>
 
   <div class="select-option">
     <label for="end-year" class="search-label">至</label>
-    <select id="end-year" [(ngModel)]="endYear">
-      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-        <option [value]="year">{{ year }}</option>
+    <select id="end-year" [ngClass]="{'warn':endYearWarn}" [value]="endYear" (change)="checkFillin();onEndYearChange($event)">
+      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103',
+      '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
+      <option [value]="year">{{ year }}</option>
       }
     </select>
+    @if(endYearWarn){<span class="endYearError">*選擇年份異常</span>}
   </div>
 
   <div class="select-case">
     <label for="select-case" class="search-label">選擇案件：</label>
-    <select id="select-case" [(ngModel)]="selectedCase">
-      <option value="">選擇案件</option>
-      <option value="殺人">殺人</option>
-      <option value="搶奪暨強盜">搶奪暨強盜</option>
-      <option value="傷害">傷害</option>
-      <option value="不能安全駕駛">不能安全駕駛</option>
-      <option value="肇事逃逸">肇事逃逸</option>
-      <option value="詐欺">詐欺</option>
-      <option value="毒品">毒品</option>
-      <option value="槍砲">槍砲</option>
-      <option value="妨礙性自主">妨礙性自主</option>
-    </select>
+    <span [ngClass]="{'warn': noSelectedCaseWarm}"><select id="select-case"
+        (change)="selectedLaws = []; noSelectedCaseWarm  = false ; checkFillin()" [(ngModel)]="selectedCase">
+        <option value="">選擇案件</option>
+        <option value="殺人">殺人</option>
+        <option value="搶奪暨強盜">搶奪暨強盜</option>
+        <option value="傷害">傷害</option>
+        <option value="不能安全駕駛">不能安全駕駛</option>
+        <option value="肇事逃逸">肇事逃逸</option>
+        <option value="詐欺">詐欺</option>
+        <option value="毒品">毒品</option>
+        <option value="槍砲">槍砲</option>
+        <option value="妨礙性自主">妨礙性自主</option>
+      </select>
+    </span>
+    @if(noSelectedCaseWarm){
+    <span class="warnText">*請先選擇案件</span>
+    }
   </div>
 </div>
 
 <div class="select-container2">
   <button mat-raised-button (click)="openSelectCourtDialog()">選擇法院</button>
-  <button mat-raised-button (click)="openSelectLawDialog()">選擇法條</button>
+  <button mat-raised-button (click)="openSelectLawDialog(); checkCaseSlected()">選擇法條</button>
 </div>
 
 
 <!-- 新增兩個白色區域 -->
 <div class="yellow-container">
   <div class="selected-items-container">
-      <div class="selected-items">
-        @for (court of selectedCourts; track $index) {
-          <div class="selected-item">
-            <ul>
-              <li>{{turnCodeToName(court)}}</li>
-            </ul>
-            <button class="remove-btn" (click)="removeCourt($index)">X</button>
-          </div>
-        }
+    <div class="selected-items">
+      @for (court of selectedCourts; track $index) {
+      <div class="selected-item">
+        <ul>
+          <li>{{turnCodeToName(court)}}</li>
+        </ul>
+        <button class="remove-btn" (click)="removeCourt($index)">X</button>
       </div>
+      }
+    </div>
   </div>
 
   <div class="selected-items-container">
     <div class="selected-items">
       @for (law of selectedLaws; track $index) {
-        <div class="selected-item">
-          <ul>
-            <li>{{ law }}</li>
-          </ul>
-          <button class="remove-btn" (click)="removeLaw($index)">X</button>
-        </div>
+      <div class="selected-item">
+        <ul>
+          <li>{{ law }}</li>
+        </ul>
+        <button class="remove-btn" (click)="removeLaw($index)">X</button>
+      </div>
       }
     </div>
   </div>
@@ -71,5 +80,6 @@
 
 <div class="bottom-button">
   <button mat-raised-button color="primary" (click)="clearSelection()">清空條件</button>
-  <button mat-raised-button color="primary" (click)="confirmSelection()">確認選擇</button>
+  <button mat-raised-button color="primary" [ngClass]="{'transparent': notFillin}" [disabled]="notFillin"
+    (click)="confirmSelection()">確認選擇</button>
 </div>

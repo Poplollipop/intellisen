@@ -131,7 +131,7 @@ export class SelectLawComponent {
       { name: "槍砲彈藥刀械管制條例第15條:未經許可攜帶刀械", selected: false },
     ],
     // 性侵
-    sexual_assault: [
+    sexualAssault: [
       { name: "刑法第221條第1項:強制性交罪", selected: false },
       { name: "刑法第224條:強制猥褻罪", selected: false },
       { name: "刑法第225條:乘機性交猥褻罪", selected: false },
@@ -143,7 +143,73 @@ export class SelectLawComponent {
   }
 
   submit() {
-    this.dialog.close(this.low);
+    let selectedLaws: string[] = []
+    switch (this.selectedCase) {
+      case ("殺人"):
+        this.low.murder.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("搶奪暨強盜"):
+        this.low.robbery.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("傷害"):
+        this.low.injury.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("不能安全駕駛"):
+        this.low.drive.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("肇事逃逸"):
+        this.low.escape.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("詐欺"):
+        this.low.fraud.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("毒品"):
+        this.low.drug.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("槍砲"):
+        this.low.gun.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+      case ("妨礙性自主"):
+        this.low.sexualAssault.forEach(item => {
+          if (item.selected) {
+            selectedLaws.push(item.name)
+          }
+        })
+        break;
+    }
+    this.dialog.close(selectedLaws);
   }
 
 }
