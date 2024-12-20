@@ -34,11 +34,13 @@ export class HomePageComponent {
   selectedCourts: string[] = [];
   selectedLaws: string[] = [];
   selectedCase: string = '';
-  startYear: string = '';
-  endYear: string = '';
+  startYear: string = '89';
+  endYear: string = '113';
+
+
 
   ngOnInit(): void {
-    if(this.sessionService.getData()){
+    if (this.sessionService.getData()) {
       const sessionData = this.sessionService.getData();
       this.selectedCourts = sessionData.courts;
       this.selectedLaws = sessionData.laws;
@@ -48,6 +50,7 @@ export class HomePageComponent {
     }
 
   }
+
 
   openSelectCourtDialog() {
     const dialogRef = this.dialog.open(SelectedCourtComponent, {
@@ -82,7 +85,7 @@ export class HomePageComponent {
 
     // 接收返回的資料
     dialogRef.afterClosed().subscribe((result) => {
-     console.log(result)
+      console.log(result)
     });
   }
 
@@ -98,8 +101,8 @@ export class HomePageComponent {
 
   // 清空條件方法
   clearSelection() {
-    this.startYear = '';     // 重置年份
-    this.endYear = '';       // 重置年份
+    this.startYear = '89';     // 重置年份
+    this.endYear = '113';       // 重置年份
     this.selectedCase = '';    // 重置案件選擇
     this.selectedCourts = [];  // 清空法院
     this.selectedLaws = [];    // 清空法條

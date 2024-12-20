@@ -1,9 +1,12 @@
 :host {
   display: block;
   min-height: 100vh;            //確保覆蓋整個瀏覽器視口高度
-  background-color: #f8f8f8;
+  background-image: url('../../../../public/background.png'), linear-gradient(to top, #030303 0%, #acacac 100%);
   padding: 20px;                //為內部內容留出間距
   box-sizing: border-box;
+  width:100%;
+  background-size: cover;
+  background-blend-mode: screen;
 }
 
 .select-container {
@@ -138,6 +141,7 @@
   font-size: 14px;
   color: #333;
 }
+
 
 .selected-item .remove-btn {
   background: none;

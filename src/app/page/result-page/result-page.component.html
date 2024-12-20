@@ -29,7 +29,7 @@
   <div class="advanced-filters">
     <h3>進階篩選條件
       <!-- 新增觸發按鈕 -->
-      <mat-icon (click)="openModal()" >add</mat-icon>
+      <mat-icon style="cursor: pointer" (click)="openModal()" >add</mat-icon>
     </h3>
     <hr />
 
@@ -73,7 +73,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-          <button type="button" class="btn btn-primary" (click)="applyFilters()">套用</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="applyFilters()">套用</button>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
   </div>
   <div class="right-result">
     <p>量刑區間</p>
-    <h3>5 - 10</h3>
+    <h3>1 - 10</h3>
     <p>年</p>
   </div>
 </div>
