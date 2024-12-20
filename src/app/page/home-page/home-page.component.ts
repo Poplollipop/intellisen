@@ -40,20 +40,8 @@ export class HomePageComponent {
 
 
 
-<<<<<<< HEAD
-  ngOnInit(): void {
-    if (this.sessionService.getData()) {
-      const sessionData = this.sessionService.getData();
-      this.selectedCourts = sessionData.courts;
-      this.selectedLaws = sessionData.laws;
-      this.selectedCase = sessionData.case;
-      this.startYear = sessionData.startYear;
-      this.endYear = sessionData.endYear;
-    }
-=======
   // 未選取案件警告
   noSelectedCaseWarm: boolean = false;
->>>>>>> dev_jerry
 
   // 開始時間超過結束時間警告
   startYearWarn: boolean = false;
@@ -77,11 +65,7 @@ export class HomePageComponent {
     this.checkFillin();
   }
 
-<<<<<<< HEAD
-
-=======
   // 選擇法院
->>>>>>> dev_jerry
   openSelectCourtDialog() {
     const dialogRef = this.dialog.open(SelectedCourtComponent, {
       width: '60vw',
@@ -130,15 +114,10 @@ export class HomePageComponent {
     });
 
     // 接收返回的資料
-<<<<<<< HEAD
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result)
-=======
     dialogRef.afterClosed().subscribe((selectedLaws: string[]) => {
       this.selectedLaws = selectedLaws
       // 確認資料都有填寫
       this.checkFillin()
->>>>>>> dev_jerry
     });
   }
 
