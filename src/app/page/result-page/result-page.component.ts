@@ -237,7 +237,6 @@ export class ResultPageComponent {
     });
   }
 
-
   // 件數跳出dialog
   // 開啟Dialog，並將「件數」作為參數傳遞
   openDialog(count: number): void {
