@@ -51,7 +51,7 @@
             }
           }
           @case ("妨礙性自主") {
-            @for (item of low.sexual_assault; track $index) {
+            @for (item of low.sexualAssault; track $index) {
               <p><mat-checkbox [(ngModel)]="item.selected" >{{item.name}}</mat-checkbox></p>
             }
           }
