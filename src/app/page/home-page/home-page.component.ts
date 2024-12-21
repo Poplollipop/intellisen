@@ -171,10 +171,29 @@ export class HomePageComponent {
 
   // 確認並存入 Service
   confirmSelection() {
-    if (false) {
+    if (this.selectedCourts.length === 0) {
       Swal.fire({
         icon: "info",
-        title: "<strong>請選擇</strong>",
+        title: "<strong>請先選擇法院</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
+      return;
+    }
+    if (this.selectedCase === '') {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇案件和法條</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
+      return;
+    }
+
+    if (this.selectedLaws.length === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇法條</strong>",
         showCloseButton: false,
         confirmButtonText: "確認"
       });
