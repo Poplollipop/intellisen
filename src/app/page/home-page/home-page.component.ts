@@ -39,17 +39,6 @@ export class HomePageComponent {
   startYear: string = '89';
   endYear: string = '113';
 
-  // 未選取案件警告
-  noSelectedCaseWarm: boolean = false;
-
-  // 開始時間超過結束時間警告
-  startYearWarn: boolean = false;
-
-  // 結束時間早開始時間警告
-  endYearWarn: boolean = false;
-
-  // 確認資料都有填寫
-  notFillin = true;
 
   ngOnInit(): void {
     // 將導入數據
