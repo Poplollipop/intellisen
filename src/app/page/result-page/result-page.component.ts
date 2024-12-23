@@ -77,7 +77,7 @@ export class ResultPageComponent {
 
 
 
-  
+
   ngOnInit(): void {
     this.data = this.sessionService.getData();
   }
@@ -246,7 +246,7 @@ export class ResultPageComponent {
   openDialog(count: number): void {
     const dialogRef = this.dialog.open(CaseViewComponent, {
       maxWidth: '100vw',
-      height: '70vh',
+      height: '80%',
       width: '80%',
       data: { count: count } // 傳入該行的件數
     });
