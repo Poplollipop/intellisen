@@ -41,7 +41,7 @@ export class HomePageComponent {
 
 
   ngOnInit(): void {
-    // 將導入數據
+    // 導入數據
     const sessionData = this.sessionService.getData();
     this.selectedCourts = sessionData.courts;
     this.selectedLaws = sessionData.laws;
