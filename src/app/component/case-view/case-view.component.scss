@@ -1,5 +1,23 @@
-.mat-dialog-title {
-  position: relative;
+.title {
+  background-color: #2E86C1; // 藍色背景
+  width: 80%; // 使用百分比設置寬度，根據螢幕大小自適應
+  max-width: 400px; // 設置最大寬度，避免過大
+  height: 8vh; // 使用視窗高度單位
+  min-height: 50px; // 設置最小高度，確保文字不會太小
+  margin: 10px auto;
+  display: flex; // 使用 flexbox
+  justify-content: center; // 水平置中
+  align-items: center; // 垂直置中
+
+  h1 {
+    font-size: 1.5vw; // 使用視窗寬度單位設置字體大小
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2; // 確保文字在不同高度下都能垂直居中
+  }
 }
 
 .dialog-actions {
@@ -9,23 +27,34 @@
 .close-icon {
   position: absolute;
   top: 10px;
-  right: 30px;
+  right: 20px;
   cursor: pointer;
+  color: #757575; // 灰色關閉按鈕
 }
 
-// close-icon 284`
+// close-icon
 .large {
-  font-size: 30px;
+  font-size: 25px;
 }
 
-// table header 字體顏色
-.mat-mdc-table .mat-mdc-header-cell {
-  color: rgb(255, 255, 255);
+// 搜尋框
+.input-area{
+  margin-left: 5%;
+  margin-bottom: 1rem;
 }
 
-// 變更搜尋藍背景顏色
-::ng-deep .mat-mdc-text-field-wrapper {
-  background-color: white !important;
+// 表格內容樣式
+.mat-elevation-z8 mat-table{
+  border: none;
+}
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  letter-spacing: normal;
+  outline: 0;
+  padding-bottom: 10px;
 }
 
 .mat-mdc-row {
@@ -34,14 +63,30 @@
   text-align: center; /* 水平置中 */
 }
 
-
-.mat-mdc-header-cell {
-  background-color: #A3B0C7 !important;
-  font-weight: bold !important;
-  font-size: 18px;
-  align-items: center;
+.mat-mdc-row:nth-child(odd) {
+  background-color: #F4F6F8 !important;
 }
 
-.title-cell{
-  text-align: left;
+.mat-mdc-row:nth-child(even) {
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  border: none !important;
+}
+
+.mat-mdc-header-cell {
+  background-color: #48588D !important;
+  color: #ffffff;
+  font-weight: bold !important;
+  font-size: 18px;
+  padding-bottom: 1rem;
+}
+
+
+ mat-paginator {
+  background-color: #f7f7f7 !important;
+  border: 1px solid rgb(71, 71, 71);
+  margin-bottom: 1rem;
 }
