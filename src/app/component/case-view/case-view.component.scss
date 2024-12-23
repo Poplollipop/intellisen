@@ -90,3 +90,9 @@
   border: 1px solid rgb(71, 71, 71);
   margin-bottom: 1rem;
 }
+
+// 強制顯示排序箭頭
+::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+  opacity: 0.54 !important;
+  transform: translateY(0px) !important;
+}

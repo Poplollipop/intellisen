@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-case-view',
@@ -15,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './case-view.component.html',
   styleUrl: './case-view.component.scss'
@@ -31,14 +33,17 @@ export class CaseViewComponent {
     public dialogRef: MatDialogRef<CaseViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // 接收主元件的數據
   ) {
-     this.dataSource = new MatTableDataSource(cases);
+    this.dataSource = new MatTableDataSource(cases);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // 設置排序
     this.dataSource.sort = this.sort;
-    //顯示頁數、將預設顯示的英文更改成中文
+
+    // 設置分頁器
     this.dataSource.paginator = this.paginator;
+
+    //顯示頁數、將預設顯示的英文更改成中文
     this.dataSource.paginator._intl.itemsPerPageLabel = "顯示筆數:";
     this.dataSource.paginator._intl.firstPageLabel = "第一頁:";
     this.dataSource.paginator._intl.previousPageLabel = "上一頁";
@@ -59,10 +64,13 @@ export class CaseViewComponent {
     }
   }
 
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 }
+
+
 
 export interface caseData {
   id: string;
@@ -75,14 +83,14 @@ export interface caseData {
 
 // 有期徒刑案件一覽表
 const cases: caseData[] = [
-  { id: '112年度訴字第123號刑事判決', verdictYear: '112', charge: '傷害', judge: '李大明', lawyer: '陳小明', url:'http://...' },
-  { id: '112年度訴字第151號刑事判決', verdictYear: '112', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第126號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第152號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第157號刑事判決', verdictYear: '110', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第142號刑事判決', verdictYear: '109', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第18號刑事判決', verdictYear: '108', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第12號刑事判決', verdictYear: '107', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第65號刑事判決', verdictYear: '106', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' },
-  { id: '112年度訴字第89號刑事判決', verdictYear: '104', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url:'http://...' }
+  { id: '112年度訴字第123號刑事判決', verdictYear: '112', charge: '傷害', judge: '李大明', lawyer: '陳小明', url: 'http://...' },
+  { id: '112年度訴字第151號刑事判決', verdictYear: '112', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第126號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第152號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第157號刑事判決', verdictYear: '110', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第142號刑事判決', verdictYear: '109', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第18號刑事判決', verdictYear: '108', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第12號刑事判決', verdictYear: '107', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第65號刑事判決', verdictYear: '106', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
+  { id: '112年度訴字第89號刑事判決', verdictYear: '104', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' }
 ];
