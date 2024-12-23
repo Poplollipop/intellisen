@@ -9,8 +9,8 @@ export class SessionServiceService {
   private selectedData: SelectedData = {
     courts: [],
     laws: [],
-    startYear: '89',
-    endYear: '113',
+    startYear: '',
+    endYear: '',
     case: '',
   };
 

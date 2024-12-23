@@ -4,7 +4,7 @@
     <select id="start-year" [value]="startYear" (change)="onStartYearChange($event)">
       @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103',
       '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-      <option [value]="year">{{ year }}</option>
+      <option [value]="year"  [selected]="year === startYear">{{ year }}</option>
       }
     </select>
   </div>
@@ -14,14 +14,14 @@
     <select id="end-year" [value]="endYear" (change)="onEndYearChange($event)">
       @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103',
       '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index) {
-      <option [value]="year">{{ year }}</option>
+      <option [value]="year"  [selected]="year === endYear">{{ year }}</option>
       }
     </select>
   </div>
 
   <div class="select-case">
     <label for="select-case" class="search-label">選擇案件：</label>
-    <span [ngClass]="{'warn': noSelectedCaseWarm}"><select id="select-case" (change)="selectedLaws = []"
+    <span><select id="select-case" (change)="selectedLaws = []"
         [(ngModel)]="selectedCase">
         <option value="">選擇案件</option>
         <option value="殺人">殺人</option>

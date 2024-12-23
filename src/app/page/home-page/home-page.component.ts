@@ -39,26 +39,18 @@ export class HomePageComponent {
   startYear: string = '89';
   endYear: string = '113';
 
-  // 未選取案件警告
-  noSelectedCaseWarm: boolean = false;
-
-  // 開始時間超過結束時間警告
-  startYearWarn: boolean = false;
-
-  // 結束時間早開始時間警告
-  endYearWarn: boolean = false;
-
-  // 確認資料都有填寫
-  notFillin = true;
 
   ngOnInit(): void {
-    // 將導入數據
+    // 導入數據
     const sessionData = this.sessionService.getData();
-    this.selectedCourts = sessionData.courts;
-    this.selectedLaws = sessionData.laws;
-    this.selectedCase = sessionData.case;
-    this.startYear = sessionData.startYear;
-    this.endYear = sessionData.endYear;
+    if(sessionData.case !== '' && sessionData.courts.length > 0 &&
+       sessionData.laws.length > 0 && sessionData.startYear !== '' && sessionData.endYear !== ''){
+         this.selectedCourts = sessionData.courts;
+         this.selectedLaws = sessionData.laws;
+         this.selectedCase = sessionData.case;
+         this.startYear = sessionData.startYear;
+         this.endYear = sessionData.endYear;
+    }
   }
 
   // 選擇法院
