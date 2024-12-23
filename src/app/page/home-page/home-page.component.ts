@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { SelectedCourtComponent } from '../../component/selected-court/selected-court.component';
 import { SelectLawComponent } from '../../component/select-law/select-law.component';
 import { CommonModule } from '@angular/common';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +19,7 @@ import { CommonModule } from '@angular/common';
     NgxUiLoaderModule,
     MatTooltipModule,
     FormsModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
@@ -37,8 +38,6 @@ export class HomePageComponent {
   selectedCase: string = '';
   startYear: string = '89';
   endYear: string = '113';
-
-
 
   // 未選取案件警告
   noSelectedCaseWarm: boolean = false;
@@ -60,9 +59,6 @@ export class HomePageComponent {
     this.selectedCase = sessionData.case;
     this.startYear = sessionData.startYear;
     this.endYear = sessionData.endYear;
-
-    // 確認資料都有填寫
-    this.checkFillin();
   }
 
   // 選擇法院
@@ -79,8 +75,6 @@ export class HomePageComponent {
         this.selectedCourts = Object.keys(result).filter(
           (key) => result[key]
         );
-        // 確認資料都有填寫
-        this.checkFillin()
       }
     });
   }
@@ -93,10 +87,8 @@ export class HomePageComponent {
   // 確認在開啟法條的 dialog 前是否有選擇案件
   checkCaseSlected(): boolean {
     if (this.selectedCase === '') {
-      this.noSelectedCaseWarm = true;
       return true;
     } else {
-      this.noSelectedCaseWarm = false
       return false;
     }
   }
@@ -104,6 +96,12 @@ export class HomePageComponent {
   // 開啟選擇法條的 dialog
   openSelectLawDialog() {
     if (this.checkCaseSlected()) {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇案件</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
       return;
     }
     const dialogRef = this.dialog.open(SelectLawComponent, {
@@ -116,8 +114,6 @@ export class HomePageComponent {
     // 接收返回的資料
     dialogRef.afterClosed().subscribe((selectedLaws: string[]) => {
       this.selectedLaws = selectedLaws
-      // 確認資料都有填寫
-      this.checkFillin()
     });
   }
 
@@ -126,10 +122,14 @@ export class HomePageComponent {
     const newStartYear = (event.target as HTMLSelectElement).value; // 取得新值
     if (parseInt(newStartYear) > parseInt(this.endYear)) {
       (event.target as HTMLSelectElement).value = this.startYear; // 恢復成舊的值
-      this.startYearWarn = true;
+      Swal.fire({
+        icon: "info",
+        title: "<strong>開始年份需早於結束年份</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
     } else {
       this.startYear = newStartYear; // 更新開始年
-      this.startYearWarn = false;
     }
   }
 
@@ -138,25 +138,25 @@ export class HomePageComponent {
     const newEndYear = (event.target as HTMLSelectElement).value; // 取得新值
     if (parseInt(newEndYear) < parseInt(this.startYear)) {
       (event.target as HTMLSelectElement).value = this.endYear; // 恢復成舊的值
-      this.endYearWarn = true
+      Swal.fire({
+        icon: "info",
+        title: "<strong>結束年份需晚於開始年份</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
     } else {
       this.endYear = newEndYear; // 更新結束年
-      this.endYearWarn = false;
     }
   }
 
   // 移除指定索引的法院
   removeCourt(index: number) {
     this.selectedCourts.splice(index, 1);
-    // 確認資料都有填寫
-    this.checkFillin();
   }
 
   // 移除指定索引的法條
   removeLaw(index: number) {
     this.selectedLaws.splice(index, 1);
-    // 確認資料都有填寫
-    this.checkFillin();
   }
 
   // 清空條件方法
@@ -167,24 +167,38 @@ export class HomePageComponent {
     this.selectedCourts = [];  // 清空法院
     this.selectedLaws = [];    // 清空法條
     this.sessionService.clearData(); //清空 sessionService
-    // 確認資料都有填寫
-    this.checkFillin();
-  }
-
-  // 確認資料都有填寫
-  checkFillin() {
-    if (this.selectedCourts.length === 0 || this.selectedLaws.length === 0 ||
-      this.startYear === '' || this.endYear === '' || this.selectedCase === ''
-    ) {
-      this.notFillin = true;
-      return;
-    }
-    this.notFillin = false;
-    return;
   }
 
   // 確認並存入 Service
   confirmSelection() {
+    if (this.selectedCourts.length === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇法院</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
+      return;
+    }
+    if (this.selectedCase === '') {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇案件和法條</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
+      return;
+    }
+
+    if (this.selectedLaws.length === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "<strong>請先選擇法條</strong>",
+        showCloseButton: false,
+        confirmButtonText: "確認"
+      });
+      return;
+    }
     const criteria: SelectedData = {
       courts: this.selectedCourts,
       laws: this.selectedLaws,
