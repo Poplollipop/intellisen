@@ -43,11 +43,14 @@ export class HomePageComponent {
   ngOnInit(): void {
     // 導入數據
     const sessionData = this.sessionService.getData();
-    this.selectedCourts = sessionData.courts;
-    this.selectedLaws = sessionData.laws;
-    this.selectedCase = sessionData.case;
-    this.startYear = sessionData.startYear;
-    this.endYear = sessionData.endYear;
+    if(sessionData.case !== '' && sessionData.courts.length > 0 &&
+       sessionData.laws.length > 0 && sessionData.startYear !== '' && sessionData.endYear !== ''){
+         this.selectedCourts = sessionData.courts;
+         this.selectedLaws = sessionData.laws;
+         this.selectedCase = sessionData.case;
+         this.startYear = sessionData.startYear;
+         this.endYear = sessionData.endYear;
+    }
   }
 
   // 選擇法院
