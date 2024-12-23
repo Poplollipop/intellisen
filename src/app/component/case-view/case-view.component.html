@@ -13,19 +13,19 @@
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="依判決書字號排序"> 判決書字號 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="change(false)" matTooltip="依判決書字號排序"> 判決書字號 </th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
       </ng-container>
 
       <!-- VerdictYear Column -->
       <ng-container matColumnDef="verdictYear">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header  matTooltip="依年度近到遠或遠到近排序"> 判決年度 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="change(true)" [matTooltip]="yeardescription"> 判決年度 </th>
         <td mat-cell *matCellDef="let row"> {{row.verdictYear}}年 </td>
       </ng-container>
 
       <!-- Charge Column -->
       <ng-container matColumnDef="charge">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="依案由排序"> 案由 </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="change(false)" matTooltip="依案由排序"> 案由 </th>
         <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
       </ng-container>
 

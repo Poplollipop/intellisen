@@ -29,12 +29,14 @@ export class CaseViewComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+
   constructor(
     public dialogRef: MatDialogRef<CaseViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any // 接收主元件的數據
   ) {
     this.dataSource = new MatTableDataSource(cases);
   }
+  yeardescription: string = '依年度遠到近排序'
 
   ngAfterViewInit() {
     // 設置排序
@@ -49,6 +51,16 @@ export class CaseViewComponent {
     this.dataSource.paginator._intl.previousPageLabel = "上一頁";
     this.dataSource.paginator._intl.nextPageLabel = "下一頁";
     this.dataSource.paginator._intl.lastPageLabel = "最後一頁";
+  }
+  change(check : boolean){
+    if(this.yeardescription == '依年度近到遠排序'){
+      check = false
+    }
+    if(check){
+      this.yeardescription = '依年度近到遠排序'
+    }else{
+      this.yeardescription = '依年度遠到近排序'
+    }
   }
 
   applyFilter(event: Event) {
