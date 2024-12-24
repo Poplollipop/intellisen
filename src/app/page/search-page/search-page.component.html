@@ -1,0 +1,73 @@
+<div class="search-area">
+  <h3>關鍵字搜尋</h3>
+  <div class="input-search-button">
+    <input>
+    <button type="button" class="btn btn-secondary btn-sm">搜尋</button>
+  </div>
+
+  <div class="case-type">
+    <mat-icon style="cursor: pointer">filter_alt</mat-icon>
+    <p>搜尋案件類型</p>
+    <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '刑法'"
+      (click)="toggleButton('刑法')" >
+      刑法
+    </button>
+      <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '民法'"
+      (click)="toggleButton('民法')">
+      民法
+    </button>
+  </div>
+</div>
+
+
+<!-- 進階條件 -->
+<div class="bottom-area">
+  <p>
+    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      進階篩選條件
+    </button>
+  </p>
+
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+
+      <!-- 進階條件中的搜尋 -->
+      <div class="advanced-search accordion-horizontal">
+        <!-- 左邊 Accordion -->
+        <div class="accordion" id="accordionLeft">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                案由、法院、法條
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne">
+              <div class="accordion-body">這是左邊的第一個內容。</div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 右邊 Accordion -->
+        <div class="accordion" id="accordionRight">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                字號、期間
+              </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree">
+              <div class="accordion-body">這是右邊的第一個內容。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+

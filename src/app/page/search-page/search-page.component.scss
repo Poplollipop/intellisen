@@ -1,0 +1,141 @@
+.search-area{
+  height: 5%;
+  width: 70%;
+  border: 3px solid #757575;
+  margin: auto;
+  margin-top: 8rem;
+  padding: 2rem;
+  padding-left: 12rem;
+
+  h3{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .input-search-button{
+    display: flex; /* 使用 Flexbox */
+    align-items: center; /* 垂直居中對齊 */
+    gap: 0.4rem; /* 增加間距 */
+
+    input{
+      width: 70%;
+    }
+
+    button{
+      margin-left: 0.4rem;
+      font-size: 15px;
+    }
+
+
+
+  }
+
+  .case-type{
+    display: flex;
+    align-items: center; /* 垂直居中對齊 */
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    p{
+      margin-bottom: 0;
+    }
+
+    .selected {
+      background-color: black;
+      color: white;
+      border-color: black;
+    }
+  }
+
+}
+
+.bottom-area{
+  margin: 2rem auto;
+  width: 70%;
+
+
+  /* 主按鈕樣式 */
+  .btn {
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 2px solid rgb(0, 0, 34);
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .btn:hover {
+    background-color: #9fcdff;
+    transform: scale(1.05);
+  }
+
+  #collapseExample{
+    width: 100%;
+  }
+
+  /* 卡片樣式 */
+  .card {
+    background-color: #f8f9fa;
+    // border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #92c4f6;
+    padding: 1.5rem;
+    width:100%
+  }
+
+  /* 手風琴標題按鈕 */
+  .accordion-button {
+    font-weight: bold;
+    color: #f5f5f5;
+    border-radius: 0.4rem;
+    transition: background-color 0.3s, box-shadow 0.2s;
+    white-space: nowrap;          /* 防止按鈕內文字換行 */
+    background-color: #02488e;
+  }
+
+  .accordion-button:hover {
+    background-color: #000036;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .accordion-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+
+
+  /* 摺疊區塊動畫效果 */
+  .collapse {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .accordion{
+    width: 50%;
+  }
+
+  .accordion-horizontal {
+    display: flex;
+    gap: 1rem; /* 每個項目之間的間距 */
+
+  }
+
+  .accordion-item {
+    flex: 1 1 auto; /* 讓每個 Accordion 項目有相等的寬度 */
+    min-width: 410px; /* 設置最小寬度，避免內容過小 */
+  }
+
+
+  .accordion-body {
+    overflow: auto; /* 如果內容超出寬度，允許滾動 */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #6c757d;
+  }
+
+
+}
+
+
