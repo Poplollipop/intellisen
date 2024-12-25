@@ -141,12 +141,24 @@ export class SearchPageComponent {
     //
     console.log(data);
 
-    this.http.postApi('http://localhost:8080/case/search', data)
-      .subscribe({
-        next: (response: any) => {
+    const tidyData = {
+      searchName: this.keyWords,
+      caseType: this.lawType,
+      charge: this.inputCase,
+      courtList: this.inputCourts,
+      law: this.inputLaw,
+      verdictStartDate: this.startDate,
+      verdictEndDate: this.endDate,
+      docType: this.caseType,
+      verdictId: '',
+    }
+
+    this.http.postApi('http://localhost:8080/quiz/search', tidyData)
+      .subscribe(
+         (response: any) => {
           console.log('搜尋結果:', response);
         }
-      })
+      )
   }
 }
 
