@@ -153,7 +153,7 @@ export class SearchPageComponent {
       verdictId: '',
     }
 
-    this.http.postApi('http://localhost:8080/quiz/search', tidyData)
+    this.http.postApi('http://localhost:8080/case/search', tidyData)
       .subscribe(
          (response: any) => {
           console.log('搜尋結果:', response);
