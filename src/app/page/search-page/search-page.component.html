@@ -9,10 +9,10 @@
     <mat-icon style="cursor: pointer">filter_alt</mat-icon>
     <p>搜尋案件類型</p>
     <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '刑法'"
-      (click)="toggleButton('刑法')" >
+      (click)="toggleButton('刑法')">
       刑法
     </button>
-      <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '民法'"
+    <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '民法'"
       (click)="toggleButton('民法')">
       民法
     </button>
@@ -23,7 +23,8 @@
 <!-- 進階條件 -->
 <div class="bottom-area">
   <p>
-    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+      aria-controls="collapseExample">
       進階篩選條件
     </button>
   </p>
@@ -32,42 +33,93 @@
     <div class="card card-body">
 
       <!-- 進階條件中的搜尋 -->
-      <div class="advanced-search accordion-horizontal">
-        <!-- 左邊 Accordion -->
-        <div class="accordion" id="accordionLeft">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                案由、法院、法條
-              </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne">
-              <div class="accordion-body">這是左邊的第一個內容。</div>
-            </div>
-          </div>
+      <div class="layout-container">
+        <!-- 左邊的 Accordion -->
+        <div class="card flex justify-center accordion-container">
+          <p-accordion value="0">
+            <p-accordion-panel value="0">
+              <p-accordion-header>裁判案由</p-accordion-header>
+              <p-accordion-content>
+                <p class="m-0">
+                  <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="value" />
+                  <small id="username-help">請輸入案由(例如:傷害)</small>
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="1">
+              <p-accordion-header>選擇法院</p-accordion-header>
+              <p-accordion-content>
+                <div class="m-0">
+                  <div class="card flex justify-center">
+                    <p-multiselect [options]="groupedCities" [group]="true" [(ngModel)]="selectedCities"
+                      (ngModelChange)="test()" placeholder="Select Cities" scrollHeight="250px" display="chip"
+                      styleClass="w-full md:w-40" appendTo="body">
+                      <ng-template let-group #group>
+                        <div class="flex items-center">
+                          <span>{{ group.label }}</span>
+                        </div>
+                      </ng-template>
+                    </p-multiselect>
+                  </div>
+                </div>
+              </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="2">
+              <p-accordion-header>法條搜索</p-accordion-header>
+              <p-accordion-content>
+                <p class="m-0">
+                  <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="value" />
+                  <small id="username-help">請輸入法條(例如:刑法第277條)</small>
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
         </div>
 
+        <!-- 右邊的 Accordion -->
+        <div class="card flex justify-center accordion-container">
+          <p-accordion value="0">
+            <p-accordion-panel value="0">
+              <p-accordion-header>裁判字號</p-accordion-header>
+              <p-accordion-content>
+                <p class="m-0">
+                  <select>
+                    <option>年度</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                  <input>字第<input>號
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="1">
+              <p-accordion-header>裁判期間</p-accordion-header>
+              <p-accordion-content>
+                <p class="m-0">
+                  <p-datepicker [(ngModel)]="startDate" [showButtonBar]="true" appendTo="body" size="small" dateFormat="yy.mm.dd" placeholder="年/月/日"/>
+                  <span style="padding-left: 0.3rem ; padding-right: 0.3rem;">至</span>
+                  <p-datepicker [(ngModel)]="endDate" [showButtonBar]="true" appendTo="body" size="small" dateFormat="yy.mm.dd" placeholder="年/月/日"/>
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="2">
+              <p-accordion-header>裁判種類</p-accordion-header>
+              <p-accordion-content>
+                <p class="m-0">
 
-        <!-- 右邊 Accordion -->
-        <div class="accordion" id="accordionRight">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                字號、期間
-              </button>
-            </h2>
-            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree">
-              <div class="accordion-body">這是右邊的第一個內容。</div>
-            </div>
-          </div>
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
         </div>
       </div>
+
+
+
+
+
 
     </div>
   </div>
 </div>
-
-
-
-
-

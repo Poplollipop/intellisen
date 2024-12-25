@@ -49,9 +49,24 @@
 
 }
 
+.layout-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.accordion-container {
+  width: 47%; /* 調整寬度以確保兩邊均勻分布 */
+}
+
+
 .bottom-area{
   margin: 2rem auto;
-  width: 70%;
+  width: 90%;
 
 
   /* 主按鈕樣式 */
@@ -70,72 +85,72 @@
   #collapseExample{
     width: 100%;
   }
-
-  /* 卡片樣式 */
-  .card {
-    background-color: #f8f9fa;
-    // border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .card-body {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #92c4f6;
-    padding: 1.5rem;
-    width:100%
-  }
-
-  /* 手風琴標題按鈕 */
-  .accordion-button {
-    font-weight: bold;
-    color: #f5f5f5;
-    border-radius: 0.4rem;
-    transition: background-color 0.3s, box-shadow 0.2s;
-    white-space: nowrap;          /* 防止按鈕內文字換行 */
-    background-color: #02488e;
-  }
-
-  .accordion-button:hover {
-    background-color: #000036;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .accordion-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-  }
-
-
-  /* 摺疊區塊動畫效果 */
-  .collapse {
-    transition: all 0.3s ease-in-out;
-  }
-
-  .accordion{
-    width: 50%;
-  }
-
-  .accordion-horizontal {
-    display: flex;
-    gap: 1rem; /* 每個項目之間的間距 */
-
-  }
-
-  .accordion-item {
-    flex: 1 1 auto; /* 讓每個 Accordion 項目有相等的寬度 */
-    min-width: 410px; /* 設置最小寬度，避免內容過小 */
-  }
-
-
-  .accordion-body {
-    overflow: auto; /* 如果內容超出寬度，允許滾動 */
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #6c757d;
-  }
-
-
 }
+  // /* 卡片樣式 */
+  // .card {
+  //   background-color: #f8f9fa;
+  //   // border-radius: 1rem;
+  //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  // }
+
+  // .card-body {
+  //   font-size: 1rem;
+  //   line-height: 1.6;
+  //   color: #92c4f6;
+  //   padding: 1.5rem;
+  //   width:100%
+  // }
+
+  // /* 手風琴標題按鈕 */
+  // .accordion-button {
+  //   font-weight: bold;
+  //   color: #f5f5f5;
+  //   border-radius: 0.4rem;
+  //   transition: background-color 0.3s, box-shadow 0.2s;
+  //   white-space: nowrap;          /* 防止按鈕內文字換行 */
+  //   background-color: #02488e;
+  // }
+
+  // .accordion-button:hover {
+  //   background-color: #000036;
+  //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  // }
+
+  // .accordion-button:focus {
+  //   outline: none;
+  //   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  // }
+
+
+  // /* 摺疊區塊動畫效果 */
+  // .collapse {
+  //   transition: all 0.3s ease-in-out;
+  // }
+
+  // .accordion{
+  //   width: 50%;
+  // }
+
+  // .accordion-horizontal {
+  //   display: flex;
+  //   gap: 1rem; /* 每個項目之間的間距 */
+
+  // }
+
+  // .accordion-item {
+  //   flex: 1 1 auto; /* 讓每個 Accordion 項目有相等的寬度 */
+  //   min-width: 410px; /* 設置最小寬度，避免內容過小 */
+  // }
+
+
+  // .accordion-body {
+  //   overflow: auto; /* 如果內容超出寬度，允許滾動 */
+  //   font-size: 0.95rem;
+  //   line-height: 1.5;
+  //   color: #6c757d;
+  // }
+
+
+// }
 
 
