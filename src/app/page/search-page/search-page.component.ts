@@ -141,7 +141,7 @@ export class SearchPageComponent {
     //
     console.log(data);
 
-    this.http.postApi('http://localhost:8080/quiz/search', data)
+    this.http.postApi('http://localhost:8080/case/search', data)
       .subscribe({
         next: (response: any) => {
           console.log('搜尋結果:', response);
