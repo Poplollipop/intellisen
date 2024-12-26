@@ -6,29 +6,30 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { provideHttpClient } from '@angular/common/http';
 
-const ngx: NgxUiLoaderConfig = {
-  text: "載入中...",
-  textColor: "#FFFFFF",
-  textPosition: "center-center",
-  bgsColor: "#FFFFFF",
-  fgsColor: "#FFFFFF",
-  fgsType: "circle",
-  fgsSize: 100,
-  hasProgressBar: false
-}
+// const ngx: NgxUiLoaderConfig = {
+//   text: "載入中...",
+//   textColor: "#FFFFFF",
+//   textPosition: "center-center",
+//   bgsColor: "#FFFFFF",
+//   fgsColor: "#FFFFFF",
+//   fgsType: "circle",
+//   fgsSize: 100,
+//   hasProgressBar: false
+// }
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
-    importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
+    // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}
-  })
+    }),
+    provideHttpClient()
 
-
-]
+  ]
 };
 
