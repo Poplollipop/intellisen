@@ -52,7 +52,9 @@ export class SearchPageComponent {
   hao: string = '';
   combinedId: string = '';
 
-  isExpanded: boolean = false;
+  isExpanded: boolean = false;  // 進階條件是否展開的變數
+  errorMessage: string = '';    // 法條錯誤提示訊息
+
 
 
 
@@ -133,8 +135,24 @@ export class SearchPageComponent {
     this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
   }
 
+
+  // 驗證輸入內容
+  validateInput(input: string): boolean {
+    // 禁止特殊符號：僅允許中文、文字、數字及空白
+    const regex = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    return regex.test(input);
+  }
+
+  // 更新法條列表
   updateLawsList() {
-    this.lawList = this.inputLaw.split(' ').filter(law => law.trim() !== '');
+    const isValid = this.validateInput(this.inputLaw);
+
+    if (isValid) {
+      this.errorMessage = '';
+      this.lawList = this.inputLaw.split(' ').filter(law => law.trim() !== '');
+    } else {
+      this.errorMessage = '輸入內容包含不合法的特殊符號，請重新輸入';
+    }
   }
 
 
@@ -167,11 +185,11 @@ export class SearchPageComponent {
     }
 
     this.http.postApi('http://localhost:8080/case/search', tidyData)
-      .subscribe(
-         (response: any) => {
-          console.log('搜尋結果:', response);
-        }
-      )
+    .subscribe(
+        (response: any) => {
+        console.log('搜尋結果:', response);
+      }
+    )
   }
 }
 

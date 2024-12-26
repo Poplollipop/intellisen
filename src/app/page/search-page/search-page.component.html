@@ -87,8 +87,11 @@
               <p-accordion-content>
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()" />
-                  <small id="username-help" style="display: inline-block;margin-left: 1%;">請輸入法條(例如:刑法第277條)，不同法條請用空白隔開</small>
+                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()"/>
+                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條(例如:刑法第277條)，不同法條請用空白隔開</small>
+                  @if (errorMessage) {
+                    <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+                  }
                 </p>
               </p-accordion-content>
             </p-accordion-panel>
@@ -103,6 +106,7 @@
               <p-accordion-content>
                 <p class="m-0">
                   <select [(ngModel)]="year" (ngModelChange)="updateCombinedId()">
+                    <option value="">年度</option>
                     @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
                     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index)
                     {
