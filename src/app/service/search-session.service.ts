@@ -11,10 +11,10 @@ export class SearchSessionService {
     inputCase: '',
     inputLaw:'',
     inputCourts: [],
-    inputCaseYear: '',
     lawType:'',
     startDate: new Date('1990-01-01') ,
     endDate: new Date('9990-01-01'),
+    id: '',
     caseType: '',
   }
 
@@ -29,10 +29,10 @@ export class SearchSessionService {
       inputCase: '',
       inputLaw:'',
       inputCourts: [],
-      inputCaseYear: '',
       lawType: '',
       startDate: new Date('1990-01-01') ,
       endDate: new Date('9990-01-01'),
+      id:'',
       caseType: '',
     };
   }
@@ -44,9 +44,9 @@ export interface InputSearchData{
   inputCase: string;
   inputLaw: string;
   inputCourts: string[];
-  inputCaseYear: string;
   lawType: string;
   startDate: Date;
   endDate: Date;
+  id: string;
   caseType: string;
 }

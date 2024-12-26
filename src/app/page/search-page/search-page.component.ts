@@ -9,9 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectItemGroup } from 'primeng/api';
-import { DatePicker } from 'primeng/datepicker';
 import { InputSearchData } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
+
 
 
 @Component({
@@ -25,7 +25,6 @@ import { HttpClientService } from '../../service/http-client.service';
     InputTextModule,
     FormsModule,
     MultiSelectModule,
-    DatePicker,
 
   ],
   templateUrl: './search-page.component.html',
@@ -36,7 +35,7 @@ export class SearchPageComponent {
 
   readonly panelOpenState = signal(false);
 
-  keyWords: string = '';
+  keywords: string = '';
   selectedButton: string | null = null;
   inputCase: string = '';
   inputLaw: string = '';
@@ -45,17 +44,14 @@ export class SearchPageComponent {
   inputCourts!: string[];
   inputCaseYear: string = '';
   startDate!: Date;
-  // startDate: string = '1999-01-01';
   endDate!: Date;
-  year: string = '1999';
   caseType: string = '';
+  year: string = '89';
+  zhi: string = '';
+  hao: string = '';
+  combinedId: string = '';
 
-
-  toggleButton(buttonType: string): void {
-    this.selectedButton = this.selectedButton == buttonType ? null : buttonType;
-    console.log(this.selectedButton)
-  }
-
+  isExpanded: boolean = false;
 
 
 
@@ -120,29 +116,41 @@ export class SearchPageComponent {
     ];
   }
 
-  test() {
-    console.log(this.inputCourts)
+
+
+  toggleButton(buttonType: string): void {
+    this.selectedButton = this.selectedButton == buttonType ? null : buttonType;
+    console.log(this.selectedButton)
+  }
+
+  toggleAdvanced() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  updateCombinedId() {
+    // 將三個輸入框的值合併成一個新值
+    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
   }
 
 
   confirm() {
     const data: InputSearchData = {
-      keyword: this.keyWords,
-      inputCase: this.inputCase,
-      inputLaw: this.inputLaw,
-      inputCourts: this.inputCourts,
-      inputCaseYear: this.inputCaseYear,
-      lawType: this.selectedButton || '',
-      startDate: this.startDate,
-      endDate: this.endDate,
-      caseType: this.caseType
+      keyword: this.keywords,   // 關鍵字
+      inputCase: this.inputCase,    // 案由
+      inputLaw: this.inputLaw,      // 選擇法條
+      inputCourts: this.inputCourts,    // 選擇法院
+      lawType: this.selectedButton || '',   // 刑法or民法
+      startDate: this.startDate,    // 開始時間
+      endDate: this.endDate,    // 結束時間
+      id: this.combinedId,    // 字號
+      caseType: this.caseType,    // 裁判種類
     }
     this.searchSessionService.setData(data);
     //
     console.log(data);
 
     const tidyData = {
-      searchName: this.keyWords,
+      searchName: this.keywords,
       caseType: this.lawType,
       charge: this.inputCase,
       courtList: this.inputCourts,
@@ -150,7 +158,7 @@ export class SearchPageComponent {
       verdictStartDate: this.startDate,
       verdictEndDate: this.endDate,
       docType: this.caseType,
-      verdictId: '',
+      verdictId: this.combinedId,
     }
 
     this.http.postApi('http://localhost:8080/case/search', tidyData)
@@ -161,6 +169,8 @@ export class SearchPageComponent {
       )
   }
 }
+
+
 
 
 
