@@ -87,8 +87,8 @@
               <p-accordion-content>
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputLaw" />
-                  <small id="username-help">請輸入法條(例如:刑法第277條)</small>
+                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()" />
+                  <small id="username-help" style="display: inline-block;margin-left: 1%;">請輸入法條(例如:刑法第277條)，不同法條請用空白隔開</small>
                 </p>
               </p-accordion-content>
             </p-accordion-panel>

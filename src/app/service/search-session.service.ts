@@ -9,7 +9,7 @@ export class SearchSessionService {
    private inputData: InputSearchData = {
     keyword: '',
     inputCase: '',
-    inputLaw:'',
+    inputLaw:[],
     inputCourts: [],
     lawType:'',
     startDate: new Date('1990-01-01') ,
@@ -27,7 +27,7 @@ export class SearchSessionService {
     this.inputData = {
       keyword: '',
       inputCase: '',
-      inputLaw:'',
+      inputLaw:[],
       inputCourts: [],
       lawType: '',
       startDate: new Date('1990-01-01') ,
@@ -42,7 +42,7 @@ export class SearchSessionService {
 export interface InputSearchData{
   keyword: string;
   inputCase: string;
-  inputLaw: string;
+  inputLaw: string[];
   inputCourts: string[];
   lawType: string;
   startDate: Date;

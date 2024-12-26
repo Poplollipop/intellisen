@@ -39,6 +39,7 @@ export class SearchPageComponent {
   selectedButton: string | null = null;
   inputCase: string = '';
   inputLaw: string = '';
+  lawList!: string[];
   lawType: string = '';
   groupedCourts!: SelectItemGroup[];
   inputCourts!: string[];
@@ -46,7 +47,7 @@ export class SearchPageComponent {
   startDate!: Date;
   endDate!: Date;
   caseType: string = '';
-  year: string = '89';
+  year: string = '';
   zhi: string = '';
   hao: string = '';
   combinedId: string = '';
@@ -132,12 +133,16 @@ export class SearchPageComponent {
     this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
   }
 
+  updateLawsList() {
+    this.lawList = this.inputLaw.split(' ').filter(law => law.trim() !== '');
+  }
+
 
   confirm() {
     const data: InputSearchData = {
       keyword: this.keywords,   // 關鍵字
       inputCase: this.inputCase,    // 案由
-      inputLaw: this.inputLaw,      // 選擇法條
+      inputLaw: this.lawList,      // 選擇法條
       inputCourts: this.inputCourts,    // 選擇法院
       lawType: this.selectedButton || '',   // 刑法or民法
       startDate: this.startDate,    // 開始時間
