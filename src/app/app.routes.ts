@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { ResultPageComponent } from './page/result-page/result-page.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
 import { SearchPageComponent } from './page/search-page/search-page.component';
-import { SearchResultPageComponent } from './page/search-result-page/search-result-page.component';
+import { SearchResultPageComponent } from './search-result-page/search-result-page.component';
 
 
 export const routes: Routes = [
