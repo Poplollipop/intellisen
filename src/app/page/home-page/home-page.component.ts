@@ -39,7 +39,6 @@ export class HomePageComponent {
   startYear: string = '89';
   endYear: string = '113';
 
-
   ngOnInit(): void {
     // 導入數據
     const sessionData = this.sessionService.getData();

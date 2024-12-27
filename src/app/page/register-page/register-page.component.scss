@@ -1,0 +1,38 @@
+.content {
+  margin-top: 10%;
+  margin-left: 20%;
+  text-align: center;
+  display: flex;
+}
+
+
+.register-info {
+  width: 30%;
+  height: 600px;
+  background-color: rgb(43, 43, 99);
+  color: white;
+
+}
+
+
+.input-info {
+  width: 50%;
+  margin-top: 20%;
+  margin-left: 10%;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn{
+  display: flex;
+  width: 300px;
+  gap: 10px;
+}
+
+.pic{
+  width: 10%;
+  height: 300px;
+  background-color: black;
+  margin-left: 30px;
+}
