@@ -5,7 +5,48 @@
 }
 
 .login-info {
-  margin-left: 30px;
+  margin-left: 3rem;
+
+  input[pInputText]{
+    width: 73%;
+    padding: 8px 12px;
+    margin: 3px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  input[pInputText]:focus{
+    border-color: #10b981;
+    outline: none; /* 避免預設的藍色邊框 */
+  }
+
+  .input .password{
+    width:100%;
+    margin-bottom: 2rem;
+    margin-top: 3px;
+  }
+
+  .nav {
+    width: 200px;
+    height: 5px;
+    background-color: black;
+    margin-bottom: 10%;
+  }
+
+  .forgot-password{
+    margin-left: 60%;
+  }
+
+  .create-account{
+    display: flex;
+    gap: 20px;
+  }
+
+  .create-account-link{
+    color: lightblue;
+  }
 }
 
 .pic {
@@ -14,29 +55,4 @@
   background-color: black;
 }
 
-.nav {
-  width: 200px;
-  height: 5px;
-  background-color: black;
-  margin-bottom: 10%;
-}
 
-.input{
-  margin-top: 10%;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.forgot-password{
-  margin-left: 60%;
-}
-
-.create-account{
-  display: flex;
-  gap: 20px;
-}
-
-.create-account-link{
-  color: lightblue;
-}

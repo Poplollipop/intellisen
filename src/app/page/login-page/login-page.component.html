@@ -6,11 +6,11 @@
     <div class="nav"></div>
     <span>法律雲平台登入系統</span>
     <div class="input">
-      <div class="card flex justify-center">
-        <input type="text" pInputText [(ngModel)]="account" (keyup)="updateEmailForm()"/>
-        @if (errorMessage) {
-          <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
-        }
+      <input type="text" pInputText [(ngModel)]="account" (keyup)="updateEmailForm()"/>
+      @if (errorMessage) {
+        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+      }
+      <div class="password">
         <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"/>
       </div>
     </div>
@@ -22,4 +22,5 @@
       <a class="create-account-link" (click)="gotoregister();">創建帳號</a>
     </div>
   </div>
+
 </div>

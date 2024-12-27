@@ -6,21 +6,23 @@ import { Injectable } from '@angular/core';
 
 export class SearchSessionService {
 
-   private inputData: InputSearchData = {
+  searchData!: any; // 暫存搜尋頁面資訊
+
+  private inputData: InputSearchData = {
     keyword: '',
     inputCase: '',
     inputLaw:[],
     inputCourts: [],
-    lawType:'',
-    startDate: new Date('1990-01-01') ,
+    lawType: '',
+    startDate: new Date('1990-01-01'),
     endDate: new Date('9990-01-01'),
     id: '',
     caseType: '',
   }
 
   setData(data: InputSearchData): void {
-      this.inputData = { ...data };
-    }
+    this.inputData = { ...data };
+  }
 
   // 清除選擇條件
   clearData(): void {
@@ -30,16 +32,16 @@ export class SearchSessionService {
       inputLaw:[],
       inputCourts: [],
       lawType: '',
-      startDate: new Date('1990-01-01') ,
+      startDate: new Date('1990-01-01'),
       endDate: new Date('9990-01-01'),
-      id:'',
+      id: '',
       caseType: '',
     };
   }
 
 }
 
-export interface InputSearchData{
+export interface InputSearchData {
   keyword: string;
   inputCase: string;
   inputLaw: string[];

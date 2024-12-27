@@ -1,0 +1,70 @@
+p {
+  font-weight: bold;
+}
+
+.condition {
+  font-weight: bold;
+  color: #0039bf;
+}
+
+.search {
+  margin-top: 20%;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #f9fafe;
+  display: flex;
+  justify-content: space-between;
+}
+
+.basic-search {
+  display: flex;
+  flex-direction: column; // 子元素會在垂直方向（從上到下）排列
+  justify-content: center;
+}
+
+hr {
+  border: black 5px solid;
+}
+
+.keywords {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.advanced-search-left, .advanced-search-right {
+  padding: 10px;
+}
+
+
+.search-result {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; // 兩個區塊之間的間距
+}
+
+.search-result-left {
+  flex: 4; // 左邊區塊佔 4 單位
+}
+
+.search-result-right {
+  flex: 6; // 右邊區塊佔 6 單位
+  box-sizing: border-box; // 包括邊框和內邊距在內
+}
+
+.card {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.category div {
+  font-weight: bold;
+  margin-right: 20px;
+  background-color: #ccc;
+}
+

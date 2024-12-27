@@ -11,6 +11,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectItemGroup } from 'primeng/api';
 import { InputSearchData } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
+import { Router } from '@angular/router';
 
 
 
@@ -56,11 +57,10 @@ export class SearchPageComponent {
   errorMessage: string = '';    // 法條錯誤提示訊息
 
 
-
-
   constructor(
     private searchSessionService: SearchSessionService,
     private http: HttpClientService,
+    private router: Router
   ) {
     this.groupedCourts = [
       {
@@ -123,7 +123,7 @@ export class SearchPageComponent {
 
   toggleButton(buttonType: string): void {
     this.selectedButton = this.selectedButton == buttonType ? null : buttonType;
-    console.log(this.selectedButton)
+    // console.log(this.selectedButton)
   }
 
   toggleAdvanced() {
@@ -169,8 +169,8 @@ export class SearchPageComponent {
       caseType: this.caseType,    // 裁判種類
     }
     this.searchSessionService.setData(data);
-    //
-    console.log(data);
+
+    // console.log(data);
 
     const tidyData = {
       searchName: this.keywords,
@@ -184,6 +184,18 @@ export class SearchPageComponent {
       verdictId: this.combinedId,
     }
 
+    // this.http.postApi('http://localhost:8080/case/search', tidyData)
+    //   .subscribe(
+    //     (response: any) => {
+    //       // console.log('搜尋結果:', response);
+    //       this.searchSessionService.searchData = response;
+    //     }
+    //   )
+
+    // 將整理的資料暫存到 service
+    this.searchSessionService.searchData = tidyData;
+
+    this.router.navigate(['/search-result']);
     this.http.postApi('http://localhost:8080/case/search', tidyData)
     .subscribe(
         (response: any) => {
