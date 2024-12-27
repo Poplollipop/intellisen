@@ -66,6 +66,20 @@ export class SessionServiceService {
   turnCodeToName(code: string) {
     return this.court_code.get(code)
   }
+
+  // 西元轉民國
+  convertToROCDate(date: Date): string {
+    // 取得西元年份
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth() 是從 0 開始，所以需要加 1
+    const day = date.getDate();
+
+    // 民國年 = 西元年 - 1911
+    const rocYear = year - 1911;
+
+    // ${}表示將變數或表達式直接嵌入到字串中，不需要另外拼接
+    return `${rocYear}年${month}月${day}日`;
+  }
 }
 
 export interface SelectedData {
