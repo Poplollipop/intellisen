@@ -1,0 +1,25 @@
+<div class="content">
+  <div class="pic"></div>
+
+  <div class="login-info">
+    <h3>歡迎！</h3>
+    <div class="nav"></div>
+    <span>法律雲平台登入系統</span>
+    <div class="input">
+      <div class="card flex justify-center">
+        <input type="text" pInputText [(ngModel)]="account" (keyup)="updateEmailForm()"/>
+        @if (errorMessage) {
+          <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+        }
+        <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"/>
+      </div>
+    </div>
+    <span class="forgot-password">忘記密碼？</span>
+    <button mat-raised-button class="login-btn">登入</button>
+    <br>
+    <div class="create-account">
+      <span>還沒有帳號嗎？</span>
+      <a class="create-account-link" (click)="gotoregister();">創建帳號</a>
+    </div>
+  </div>
+</div>
