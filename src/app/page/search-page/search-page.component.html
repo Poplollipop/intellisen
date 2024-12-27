@@ -59,8 +59,8 @@
               <p-accordion-content>
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputCase" />
-                  <small id="username-help" style="margin-left: 0.3rem ;">請輸入案由(例如:傷害)</small>
+                    [(ngModel)]="inputCase" placeholder="傷害等"/>
+                  <small id="username-help" style="margin-left: 0.3rem ;">請輸入案由</small>
                 </p>
               </p-accordion-content>
             </p-accordion-panel>
@@ -87,8 +87,8 @@
               <p-accordion-content>
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()"/>
-                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條(例如:刑法第277條)，不同法條請用空白隔開</small>
+                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()" placeholder="刑法第277條"/>
+                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用空白隔開</small>
                   @if (errorMessage) {
                     <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
                   }
