@@ -76,7 +76,7 @@ export class SearchResultPageComponent {
   }
 
    formatCaseId(caseId: string): string {
-    const regex = /(\d+)(年度)?([^字第]+)(字)?(第)?(\d+)/; // ^ 和 $ 分別表示匹配字符串的開始和結束
+    const regex = /(\d+)(年度)?([^字第]+)(字)?(第)?(\d+)/;  // ^ 和 $ 分別表示匹配字符串的開始和結束
     const match = caseId.match(regex); // 使用 match() 方法來匹配
 
     if (match) {

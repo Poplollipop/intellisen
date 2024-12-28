@@ -4,43 +4,23 @@
     <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
     <button type="button" class="btn btn-secondary btn-sm" (click)="confirm()">搜尋</button>
   </div>
-
-  <div class="case-type">
-    <mat-icon style="cursor: pointer">filter_alt</mat-icon>
-    <p>搜尋案件類型</p>
-    <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '刑法'"
-      (click)="toggleButton('刑法')">
-      刑法
-    </button>
-    <button type="button" class="btn btn-outline-dark btn-sm" [class.selected]="selectedButton == '民法'"
-      (click)="toggleButton('民法')">
-      民法
-    </button>
-  </div>
 </div>
 
 
 <!-- 進階條件 -->
 <div class="bottom-area">
   <p>
-    <button
-      class="btn btn-outline-primary"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseExample"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-      (click)="toggleAdvanced()"
-    >
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+      aria-expanded="false" aria-controls="collapseExample" (click)="toggleAdvanced()">
       @if (!isExpanded) {
-        <span>
-          進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
-        </span>
+      <span>
+        進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
+      </span>
       }
       @if (isExpanded) {
-        <span>
-          收起篩選條件 <mat-icon>keyboard_arrow_up</mat-icon>
-        </span>
+      <span>
+        收起篩選條件 <mat-icon>keyboard_arrow_up</mat-icon>
+      </span>
       }
     </button>
   </p>
@@ -58,8 +38,8 @@
               <p-accordion-header>裁判案由</p-accordion-header>
               <p-accordion-content>
                 <p class="m-0">
-                  <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputCase" placeholder="傷害等"/>
+                  <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="inputCase"
+                    placeholder="例如：傷害等" />
                   <small id="username-help" style="margin-left: 0.3rem ;">請輸入案由</small>
                 </p>
               </p-accordion-content>
@@ -68,10 +48,12 @@
               <p-accordion-header>選擇法院</p-accordion-header>
               <p-accordion-content>
                 <div class="m-0">
-                  <div class="card flex justify-center">
+                  <div class="card flex justify-center test">
+
                     <p-multiselect [options]="groupedCourts" [group]="true" [(ngModel)]="inputCourts"
-                      placeholder="選擇法院" scrollHeight="250px" display="chip"
-                      styleClass="w-full md:w-30" appendTo="body" size="small">
+                      placeholder="請選擇法院" scrollHeight="250px" display="chip" styleClass="w-full md:w-30"
+                      appendTo="body" size="small">
+                      <div class=".p-multiselect-header">全選</div>
                       <ng-template let-group #group>
                         <div class="flex items-center">
                           <span>{{ group.label }}</span>
@@ -86,13 +68,27 @@
               <p-accordion-header>法條搜索</p-accordion-header>
               <p-accordion-content>
                 <p class="m-0">
-                  <input pInputText id="username" aria-describedby="username-help" pSize="small"
-                    [(ngModel)]="inputLaw" (keyup)="updateLawsList()" placeholder="刑法第277條"/>
+                  <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="law"
+                    (keyup)="updateLawsList()" placeholder="例如：刑法第277條" />
                   <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用空白隔開</small>
                   @if (errorMessage) {
-                    <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+                  <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
                   }
                 </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="3">
+              <p-accordion-header>案件類型</p-accordion-header>
+              <p-accordion-content>
+                <div class="m-0">
+                  <div class="case-type">
+                    <p>搜尋案件類型</p>
+                    <p-checkbox inputId="ingredient1" name="lawType" value="刑法" [(ngModel)]="lawType" />
+                    <label for="ingredient1" class="ml-2"> 刑法 </label>
+                    <p-checkbox inputId="ingredient2" name="lawType" value="民法" [(ngModel)]="lawType" />
+                    <label for="ingredient2" class="ml-2"> 民法 </label>
+                  </div>
+                </div>
               </p-accordion-content>
             </p-accordion-panel>
           </p-accordion>
@@ -136,7 +132,7 @@
               <p-accordion-content>
                 <p class="m-0">
                   <select [(ngModel)]="caseType" class="wide-select">
-                    <option value="">種類</option>
+                    <option value="">請選擇種類</option>
                     <option value="判決">判決</option>
                     <option value="裁定">裁定</option>
                   </select>

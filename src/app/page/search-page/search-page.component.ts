@@ -10,8 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectItemGroup } from 'primeng/api';
 import { InputSearchData } from '../../service/search-session.service';
-import { HttpClientService } from '../../service/http-client.service';
 import { Router } from '@angular/router';
+import { Checkbox } from 'primeng/checkbox';
 
 
 
@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
     InputTextModule,
     FormsModule,
     MultiSelectModule,
-
+    Checkbox
   ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
@@ -37,11 +37,10 @@ export class SearchPageComponent {
   readonly panelOpenState = signal(false);
 
   keywords: string = '';
-  selectedButton: string | null = null;
   inputCase: string = '';
-  inputLaw: string = '';
+  law: string = '';
   lawList!: string[];
-  lawType: string = '';
+  lawType!: string [];
   groupedCourts!: SelectItemGroup[];
   inputCourts!: string[];
   inputCaseYear: string = '';
@@ -59,7 +58,6 @@ export class SearchPageComponent {
 
   constructor(
     private searchSessionService: SearchSessionService,
-    private http: HttpClientService,
     private router: Router
   ) {
     this.groupedCourts = [
@@ -120,12 +118,6 @@ export class SearchPageComponent {
   }
 
 
-
-  toggleButton(buttonType: string): void {
-    this.selectedButton = this.selectedButton == buttonType ? null : buttonType;
-    // console.log(this.selectedButton)
-  }
-
   toggleAdvanced() {
     this.isExpanded = !this.isExpanded;
   }
@@ -145,11 +137,11 @@ export class SearchPageComponent {
 
   // 更新法條列表
   updateLawsList() {
-    const isValid = this.validateInput(this.inputLaw);
+    const isValid = this.validateInput(this.law);
 
     if (isValid) {
       this.errorMessage = '';
-      this.lawList = this.inputLaw.split(' ').filter(law => law.trim() !== '');
+      this.lawList = this.law.split(' ').filter(law => law.trim() !== '');
     } else {
       this.errorMessage = '輸入內容包含不合法的特殊符號，請重新輸入';
     }
@@ -158,15 +150,15 @@ export class SearchPageComponent {
 
   confirm() {
     const data: InputSearchData = {
-      keyword: this.keywords,   // 關鍵字
-      inputCase: this.inputCase,    // 案由
-      inputLaw: this.lawList,      // 選擇法條
-      inputCourts: this.inputCourts,    // 選擇法院
-      lawType: this.selectedButton || '',   // 刑法or民法
-      startDate: this.startDate,    // 開始時間
-      endDate: this.endDate,    // 結束時間
-      id: this.combinedId,    // 字號
-      caseType: this.caseType,    // 裁判種類
+      keyword: this.keywords,               // 關鍵字
+      inputCase: this.inputCase,            // 案由
+      inputLaw: this.lawList,               // 選擇法條
+      inputCourts: this.inputCourts,        // 選擇法院
+      lawType: this.lawType,                // 刑法or民法
+      startDate: this.startDate,            // 開始時間
+      endDate: this.endDate,                // 結束時間
+      id: this.combinedId,                  // 字號
+      caseType: this.caseType,              // 裁判種類
     }
     this.searchSessionService.setData(data);
 
@@ -177,7 +169,7 @@ export class SearchPageComponent {
       caseType: this.lawType,
       charge: this.inputCase,
       courtList: this.inputCourts,
-      law: this.inputLaw,
+      law: this.lawList,
       verdictStartDate: this.startDate,
       verdictEndDate: this.endDate,
       docType: this.caseType,
@@ -194,14 +186,14 @@ export class SearchPageComponent {
 
     // 將整理的資料暫存到 service
     this.searchSessionService.searchData = tidyData;
-
+    console.log("存入的資料:",tidyData);
     this.router.navigate(['/search-result']);
-    this.http.postApi('http://localhost:8080/case/search', tidyData)
-    .subscribe(
-        (response: any) => {
-        console.log('搜尋結果:', response);
-      }
-    )
+    // this.http.postApi('http://localhost:8080/case/search', tidyData)
+    // .subscribe(
+    //     (response: any) => {
+    //     console.log('搜尋結果:', response);
+    //   }
+    // )
   }
 }
 

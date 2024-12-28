@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   min-height: 100vh; /* 保證佔滿整個視窗高度 */
-  padding-top: 8%;
+  padding-top: 6%;
   padding-bottom: 1%;
 }
 
@@ -63,25 +63,7 @@
 
   }
 
-  .case-type{
-    margin-top: 1.5rem;
-    margin-left: 9rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 
-    p{
-      font-size: 1rem;
-      color: #333;
-      margin: 0;
-    }
-
-    .selected {
-      background-color: black;
-      color: white;
-      border-color: black;
-    }
-  }
 
 }
 
@@ -108,12 +90,6 @@
     }
   }
 
-  .mat-icon {
-    margin-left: 8px;
-    font-size: 20px;
-    transition: transform 0.3s;
-    vertical-align: middle;
-  }
 
 
   // .btn {
@@ -155,6 +131,24 @@
   .p-accordionheader{
     background-color: white;
   }
+
+  .case-type{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    p{
+      font-size: 1rem;
+      color: #333;
+      margin: 0;
+    }
+
+    p-checkbox{
+      display: flex;
+      align-items: center;
+    }
+  }
+
 }
 
 /* 統一 input 框樣式 */
@@ -197,18 +191,20 @@ input[pInputText] {
 /* 適用於 <select> 的樣式 */
 select {
   padding: 8px 12px;
-  margin: 8px 0;
-  border: 2px solid #ccc;
+  border: 1.5px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   width: 19%;
+  height: 2.5rem;
+
   box-sizing: border-box;
 }
 
 .wide-select {
-  width: 60%; /* 根據需要調整寬度 */
+  width: 60%;
+  height: 2.5rem;
   padding: 8px 12px;
-  border: 2px solid #ccc;
+  border: 1.5px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
 }
@@ -225,6 +221,5 @@ select:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
-
 
 
