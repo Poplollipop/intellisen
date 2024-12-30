@@ -8,6 +8,7 @@ import Highcharts from 'highcharts';
   templateUrl: './case-details.component.html',
   styleUrl: './case-details.component.scss'
 })
+
 export class CaseDetailsComponent {
 
   @Input() caseId: string | null = null;
@@ -22,13 +23,6 @@ export class CaseDetailsComponent {
     // 模擬案件資料查詢
     if (this.caseId) {
       this.displayData = this.searchSessionService.tidyMap[this.caseId]
-        // judgeName: this.displayData.judgeName,
-        // defendantName: this.displayData.defendantName,
-        // charge: this.displayData.charge,
-        // verdictDate: this.displayData.verdictDate,
-        // court:  this.displayData.court,
-        // docType: this.displayData.docType,
-        // content: this.displayData.content
       }
     }
 
@@ -64,8 +58,6 @@ export class CaseDetailsComponent {
   ];
 
   // 圖表區
-
-
   Highcharts: typeof Highcharts = Highcharts; // Highcharts 實例
   chart: Highcharts.Chart | undefined; // 儲存圖表實例
   chartType: string = 'pie'; // 預設圖表類型

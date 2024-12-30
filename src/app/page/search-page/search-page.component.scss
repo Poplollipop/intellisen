@@ -118,20 +118,36 @@
     right: 0;
     padding: 10px;
     border: none;
-    background-color: rgba(198, 198, 198, 0.26);
+    background-color: rgba(174, 174, 174, 0.334);
+
+    .accordion-container {
+      width: 47%;
+
+
+      .custom1 {
+        background-color: #ffffff !important;
+        color: #000 !important;
+      }
+
+
+    }
+
+    .p-accordionheader{
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+    }
+
+
   }
 
 
-  .accordion-container {
-    width: 47%; /* 調整寬度以確保兩邊均勻分布 */
-  }
 
 
-  .p-accordionheader{
-    background-color: transparent;
-    border: none;
-    color: #ffffff;
-  }
+
+
+
+
 
   .case-type{
     display: flex;
@@ -140,7 +156,7 @@
 
     p{
       font-size: 1rem;
-      color: #333;
+      color: #ffffff;
       margin: 0;
     }
 
@@ -164,6 +180,8 @@ select {
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 14px;
+  background-color: #fff;
+  color: #000;
 }
 
 input[type="date"]{
@@ -175,6 +193,8 @@ input[type="date"]{
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 14px;
+  background-color: #fff;
+  color: #000;
 }
 
 /* 適用於 ngModel 的 input 框 */
@@ -187,6 +207,8 @@ input[pInputText] {
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 14px;
+  background-color: #fff;
+  color: #000;
 }
 
 /* 適用於 <select> 的樣式 */
@@ -197,8 +219,9 @@ select {
   font-size: 14px;
   width: 19%;
   height: 2.5rem;
-
   box-sizing: border-box;
+  background-color: #fff;
+  color: #000;
 }
 
 .wide-select {
@@ -208,11 +231,15 @@ select {
   border: 1.5px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+  background-color: #fff;
+  color: #000;
 }
 
 /* 多選框樣式 */
 p-multiselect {
   width: 100%;
+  background-color: #fff;
+  color: #000;
 }
 
 /* 表單元素統一的 focus 樣式 */

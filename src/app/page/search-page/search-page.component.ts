@@ -131,7 +131,7 @@ export class SearchPageComponent {
   // 驗證輸入內容
   validateInput(input: string): boolean {
     // 禁止特殊符號：僅允許中文、文字、數字及空白
-    const regex = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
     return regex.test(input);
   }
 
@@ -141,9 +141,9 @@ export class SearchPageComponent {
 
     if (isValid) {
       this.errorMessage = '';
-      this.lawList = this.law.split(' ').filter(law => law.trim() !== '');
+      this.lawList = this.law.split(';').filter(law => law.trim() !== '');
     } else {
-      this.errorMessage = '輸入內容包含不合法的特殊符號，請重新輸入';
+      this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
     }
   }
 
