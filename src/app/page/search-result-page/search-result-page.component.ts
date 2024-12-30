@@ -28,20 +28,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 })
 
 export class SearchResultPageComponent {
-  caseType: string = ''; // 顯示的案由
-  charge: string = ''; // 顯示的案由
-  court: string = ''; // 顯示的法院
-  docType: string = ''; // 顯示的種類，如裁定或判決等
-  law: string = ''; // 顯示的相關法條
-  verdictDate: string = ''; // 顯示的裁判日期
-  id: string = ''; // 顯示的裁判字號
-  judgeName: string = ''; //法官姓名
-  defendantName: string = ''; // 被告姓名
-  content: string = ''; // 裁判書內文
   tidyMap!: any; // 整理後的 map
-  displayData!: any; // 右側顯示的資料
   caseList: any[] = []; // 接後端的東西
   selectedCaseId!: string; // 選中的案件id
+  showCaseDetail : boolean = false; // 顯示案件細節
 
   groupedCourts!: any;
   searchForm!: FormGroup;
@@ -237,22 +227,6 @@ export class SearchResultPageComponent {
     // console.log(this.tidyMap);
   }
 
-  // 顯示左側的資料
-  display(id: string): void {
-    this.displayData = this.searchSessionService.tidyMap[id];
-    this.judgeName = this.displayData.judgeName;
-    this.defendantName = this.displayData.defendantName;
-    this.charge = this.displayData.charge;
-    this.verdictDate = this.displayData.verdictDate;
-    this.court = this.displayData.court;
-    this.docType = this.displayData.docType;
-    this.content = this.displayData.content;
-
-    // console.log(this.displayData);
-    console.log(id);
-    console.log(this.displayData);
-  }
-
 
   page: number = 1; // 當前頁碼
   itemsPerPage: number = 10; // 每頁顯示的項目數量
@@ -276,6 +250,7 @@ export class SearchResultPageComponent {
       this.page++;
     }
   }
+
 
   selectId(id: string){
     this.selectedCaseId = id;
