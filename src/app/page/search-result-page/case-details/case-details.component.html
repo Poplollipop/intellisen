@@ -2,23 +2,36 @@
 
 
 @if (showCaseDetail) {
-  <div class="category">
-    <div>法官
-      <br>
-      {{ displayData.judgeName }}
-    </div>
-    <div>被告: {{ displayData.defendantName }}</div>
-    <div>案由: {{ displayData.charge }}</div>
-    <div>裁判日期: {{ displayData.verdictDate }}</div>
-    <div>裁判法院: {{ displayData.court }}</div>
-    <div>種類: {{ displayData.docType }}</div>
-  </div>
 
-  <div style="width: 100%; height: 50rem; overflow: hidden;">
-    <pre style="font-size: 20px;">
-      {{ displayData.content }}
-    </pre>
-  </div>
+  @if(displayData){
+    <div class="category">
+      <div>法官:
+        <br>
+        {{ displayData.judgeName }}
+      </div>
+      <div>被告: {{ displayData.defendantName }}</div>
+      <div>案由: {{ displayData.charge }}</div>
+      <div>裁判日期: {{ displayData.verdictDate }}</div>
+      <div>裁判法院: {{ displayData.court }}</div>
+      <div>種類: {{ displayData.docType }}</div>
+    </div>
+
+    <div style="width: 100%; height: 50rem; overflow: hidden;">
+      <pre style="font-size: 20px;">
+        {{ displayData.content }}
+      </pre>
+    </div>
+  }@else {
+    <div class="category">
+      <div>法官:</div>
+      <div>被告: </div>
+      <div>案由: </div>
+      <div>裁判日期: </div>
+      <div>裁判法院: </div>
+      <div>種類: </div>
+    </div>
+    <div style="width: 100%; height: 50rem; overflow: hidden;"></div>
+  }
 
 
 }
@@ -78,7 +91,7 @@
          @for (item of items; track $index) {
           <li class="table-row">
             <div class="col col-1">{{ item.type }}</div>
-            <div class="col col-2" class="clickable">{{ item.count }}件</div>
+            <div class="col col-2" (click)="openDialog(item.count)" class="clickable">{{ item.count }}件</div>
             <div class="col col-3">{{ item.min }}</div>
             <div class="col col-4">{{ item.max }}</div>
             <div class="col col-5">{{ item.avg }}</div>
