@@ -9,7 +9,7 @@
   <!-- 左側案件列表 -->
   <div class="case-list">
     <h3>案件列表</h3>
-    @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track  $index) {
+    <!-- @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track  $index) {
       <button (click)="display(item.id);selectId(item.id)" class="display-button">
         {{ this.sessionServiceService.turnCodeToName(item.court) }}
         {{ formatCaseId(item.id) }}
@@ -17,13 +17,43 @@
         {{ item.caseType }}
         {{ item.docType }} >
       </button>
+    } -->
+
+    @for (item of displayedData; track $index) {
+      <button (click)="display(item.id); selectId(item.id)" class="display-button">
+        {{ this.sessionServiceService.turnCodeToName(item.court) }}
+        {{ formatCaseId(item.id) }}
+        {{ item.charge }}
+        {{ item.caseType }}
+        {{ item.docType }}
+      </button>
     }
 
       <!-- 分頁控制 -->
-      <div>
+      <!-- <div>
         <button (click)="previousPage()">上一頁</button>
         <span>{{ page }} / {{ totalPages }}</span>
         <button (click)="nextPage()">下一頁</button>
+      </div> -->
+
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="page === 1">上一頁</button>
+        <!-- <span>{{ page }} / {{ totalPages }}</span> -->
+        <!-- <button (click)="nextPage()" [disabled]="page === totalPages">下一頁</button> -->
+        <!-- 顯示具體頁碼 -->
+        <div class="page-numbers">
+          @for (item of pageNumbers; track $index) {
+            <button (click)="selectPage(item)" [class.active]="page === item"  class="page-button">
+              {{ item }}
+            </button>
+          }
+          <button (click)="nextPage()" [disabled]="page === totalPages">下一頁</button>
+          <!-- <button *ngFor="let pageNum of pageNumbers"
+                  (click)="selectPage(pageNum)"
+                  [class.active]="page === pageNum">
+            {{ pageNum }}
+          </button> -->
+        </div>
       </div>
   </div>
 
