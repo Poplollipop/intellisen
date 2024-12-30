@@ -146,8 +146,10 @@ export class SearchResultPageComponent {
     this.tidyMap = this.tidyData(resData.caseList);
 
     console.log(this.caseList);
+
     // 計算總頁數
     this.calculateTotalPages();
+    this.updateDisplayedData();
 
   }
 
@@ -168,33 +170,7 @@ export class SearchResultPageComponent {
     }
   }
 
-
-
-
-  // 搜尋
-  // private initializeSearchData(): void {
-  //   this.caseType = this.searchSessionService.searchData.caseType;
-  //   this.charge = this.searchSessionService.searchData.charge;
-  //   this.docType = this.searchSessionService.searchData.docType;
-  //   this.law = this.searchSessionService.searchData.law;
-  //   this.searchName = this.searchSessionService.searchData.searchName;
-
-  //   // 如果有輸入法院才串接
-  //   if (this.searchSessionService.searchData.courtList) {
-  //     this.courtList = this.searchSessionService.searchData.courtList
-  //       .map((item: any) => this.sessionServiceService.turnCodeToName(item))
-  //       .join('、');
-  //   }
-
-  //   // 如果有輸入日期才串接
-  //   if (this.searchSessionService.searchData.verdictStartDate && this.searchSessionService.searchData.verdictEndDate) {
-  //     this.verdictStartDate = this.sessionServiceService.convertToROCDate(new Date(this.searchSessionService.searchData.verdictStartDate));
-  //     this.verdictEndDate = this.sessionServiceService.convertToROCDate(new Date(this.searchSessionService.searchData.verdictEndDate));
-  //   }
-
-  //   // console.log(this.searchSessionService.searchData);
-  // }
-
+  // 將字號轉換為顯示的格式
   formatCaseId(caseId: string): string {
     const regex = /(\d+)(年度)?([^字第]+)(字)?(第)?(\d+)/; // 以「/」定義正規表達式的開始與結束
     const match = caseId.match(regex); // 使用 match() 方法來匹配
@@ -208,8 +184,8 @@ export class SearchResultPageComponent {
     }
   }
 
-   // 重組資料
-   private tidyData(rawData: any): void {
+  // 重組資料
+  private tidyData(rawData: any): void {
     // 以 id 作為分組依據
     this.tidyMap = rawData.reduce((result: any, item: any) => {
       if (!result[item.id]) {
@@ -257,27 +233,71 @@ export class SearchResultPageComponent {
   page: number = 1; // 當前頁碼
   itemsPerPage: number = 10; // 每頁顯示的項目數量
   totalPages: number = 1; // 總頁數
+  pageNumbers: number[] = []; // 儲存頁碼的陣列
+  displayedData: any[] = []; // 當前頁顯示的資料
 
   calculateTotalPages() {
+    // this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
+    // if (this.totalPages === 0) {
+    //   this.totalPages = 1; // 如果沒有資料，預設為 1 頁
+    // }
+
     this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
     if (this.totalPages === 0) {
-      this.totalPages = 1; // 如果沒有資料，預設為 1 頁
+      this.totalPages = 1;
     }
+
+    // 計算頁碼範圍，最多顯示5頁，並且聚焦當前頁
+    let startPage = Math.max(this.page - 2, 1); // 當前頁的前2頁
+    let endPage = Math.min(this.page + 2, this.totalPages); // 當前頁的後2頁
+
+    // 如果顯示的頁碼範圍小於5頁，根據情況調整
+    if (endPage - startPage < 4) {
+      if (startPage === 1) {
+        endPage = Math.min(startPage + 4, this.totalPages); // 從第一頁開始顯示最多5頁
+      } else if (endPage === this.totalPages) {
+        startPage = Math.max(endPage - 4, 1); // 顯示最後的5頁
+      }
+    }
+
+    this.pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
+    // 如果當前頁超過總頁數，設置為總頁數
+    if (this.page > this.totalPages) {
+      this.page = this.totalPages;
+    }
+
+    this.updateDisplayedData();
+  }
+
+  updateDisplayedData() {
+    const start = (this.page - 1) * this.itemsPerPage;
+    const end = Math.min(this.page * this.itemsPerPage, this.caseList.length); // 保證 end 不會超過資料長度
+    this.displayedData = this.caseList.slice(start, end);
   }
 
   previousPage() {
     if (this.page > 1) {
       this.page--;
+      this.updateDisplayedData();
     }
   }
 
   nextPage() {
     if (this.page < this.totalPages) {
       this.page++;
+      this.updateDisplayedData();
     }
   }
 
-  selectId(id: string){
+  selectPage(pageNumber: number) {
+    if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+      this.page = pageNumber;
+      this.updateDisplayedData();
+    }
+  }
+
+  selectId(id: string) {
     this.selectedCaseId = id;
   }
 
