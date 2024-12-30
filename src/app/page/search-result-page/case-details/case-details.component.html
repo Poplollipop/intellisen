@@ -3,7 +3,10 @@
 
 @if (displayData) {
   <div class="category">
-    <div>法官: {{ displayData.judgeName }}</div>
+    <div>法官
+      <br>
+      {{ displayData.judgeName }}
+    </div>
     <div>被告: {{ displayData.defendantName }}</div>
     <div>案由: {{ displayData.charge }}</div>
     <div>裁判日期: {{ displayData.verdictDate }}</div>
