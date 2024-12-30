@@ -1,0 +1,211 @@
+/* 案件內容顯示區 */
+.category {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.category div {
+  font-weight: bold;
+  margin-right: 20px;
+  background-color: #ccc;
+}
+
+.card {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+
+/* 總計區域(兩個框框) */
+.number-result {
+  display: flex;
+  gap: 50px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+
+  .left-result,
+  .right-result {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 18rem;   // 最大寬度，避免過大
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+
+  .left-result {
+    background-color: #8157C3;
+    color: #000000;
+    opacity: 0.8;
+  }
+
+  .right-result {
+    background-color: #81CA85;
+    color: #000000;
+    opacity: 0.8;
+  }
+
+  .left-result p,
+  .right-result p {
+    font-size: clamp(14px, 1.5vw, 18px);
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  .left-result h3,
+  .right-result h3 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* 下方區域 */
+.result-container {
+  gap: 1rem;
+}
+
+/* 圖表區 */
+.chart-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  width: 50rem;
+  z-index: 2;
+  opacity: 0.8;
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+
+    button[mat-raised-button] {
+      font-size: 15px;
+      color: #fff;
+      background-color: #05174e;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button[mat-raised-button]:hover {
+      background-color: #184b6d;
+      transform: scale(1.05);
+    }
+
+    button[mat-raised-button]:active {
+      background-color: #2b20f9;
+    }
+
+    button[mat-raised-button]:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgb(132, 186, 213);
+    }
+  }
+
+  .small-button {
+    padding: 10px;
+    background-color: #04093d;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+  }
+
+
+}
+
+
+/* 表格區 */
+.table-container {
+  width: 50rem;
+  background-color: #f2f2f2;
+  margin-top: 1rem;
+  border-radius: 8px;
+  opacity: 0.8;
+
+  .container {
+    max-width: 700px;
+  }
+
+  .responsive-table {
+    padding: 1rem;
+
+    li {
+      border-radius: 3px;
+      padding: 10px 10px;
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .table-header {
+      background-color: #abd8ad;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+      margin-top: 20px;
+    }
+
+    .table-row {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .clickable {
+      color: #007bff;
+      cursor: pointer;
+    }
+
+
+    .col-1 {
+      flex-basis: 25%;
+      text-align: left;
+    }
+
+    .col-2 {
+      flex-basis: 15%;
+    }
+
+    .col-3 {
+      flex-basis: 20%;
+    }
+
+    .col-4 {
+      flex-basis: 20%;
+    }
+
+    .col-5 {
+      flex-basis: 20%;
+
+    }
+
+    .table-row .col-3 {
+      text-align: right;
+    }
+
+    .table-row .col-4,
+    .table-row .col-5 {
+      text-align: right;
+    }
+
+    .table-header .col-3,
+    .table-header .col-4,
+    .table-header .col-5 {
+      text-align: center;
+    }
+
+  }
+
+}

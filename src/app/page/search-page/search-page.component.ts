@@ -149,18 +149,19 @@ export class SearchPageComponent {
 
 
   confirm() {
-    const data: InputSearchData = {
-      keyword: this.keywords,               // 關鍵字
-      inputCase: this.inputCase,            // 案由
-      inputLaw: this.lawList,               // 選擇法條
-      inputCourts: this.inputCourts,        // 選擇法院
-      lawType: this.lawType,                // 刑法or民法
-      startDate: this.startDate,            // 開始時間
-      endDate: this.endDate,                // 結束時間
-      id: this.combinedId,                  // 字號
-      caseType: this.caseType,              // 裁判種類
-    }
-    this.searchSessionService.setData(data);
+    // const data: InputSearchData = {
+    //   searchName: this.keywords,            // 關鍵字
+    //   charge: this.inputCase,               // 案由
+    //   law: this.lawList,                    // 選擇法條
+    //   courtList: this.inputCourts,          // 選擇法院
+    //   caseType: this.lawType,               // 刑法or民法
+    //   verdictStartDate: this.startDate,     // 開始時間
+    //   verdictEndDate: this.endDate,         // 結束時間
+    //   verdictId: this.combinedId,           // 字號
+    //   docType: this.caseType,               // 裁判種類
+    // }
+    // this.searchSessionService.setSearchConditions(data);
+    // this.router.navigate(['/search-result']);
 
     // console.log(data);
 
@@ -176,6 +177,11 @@ export class SearchPageComponent {
       verdictId: this.combinedId,
     }
 
+    // 將整理的資料暫存到 service
+    this.searchSessionService.searchData = tidyData;
+    console.log("存入的資料:", tidyData);
+    this.router.navigate(['/search-result']);
+
     // this.http.postApi('http://localhost:8080/case/search', tidyData)
     //   .subscribe(
     //     (response: any) => {
@@ -184,10 +190,7 @@ export class SearchPageComponent {
     //     }
     //   )
 
-    // 將整理的資料暫存到 service
-    this.searchSessionService.searchData = tidyData;
-    console.log("存入的資料:",tidyData);
-    this.router.navigate(['/search-result']);
+
     // this.http.postApi('http://localhost:8080/case/search', tidyData)
     // .subscribe(
     //     (response: any) => {

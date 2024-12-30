@@ -7,48 +7,56 @@ import { Injectable } from '@angular/core';
 export class SearchSessionService {
 
   searchData!: any; // 暫存搜尋頁面資訊
+  tidyMap!:any; // 暫存搜尋顯示結果
 
-  private inputData: InputSearchData = {
-    keyword: '',                            // 關鍵字
-    inputCase: '',                          // 案由
-    inputLaw:[],                            // 法條搜索
-    inputCourts: [],                        // 法院搜索
-    lawType: [],                            // 刑法or民法
-    startDate: new Date('1990-01-01'),      // 開始時間
-    endDate: new Date('9990-01-01'),        // 結束時間
-    id: '',                                 // 字號
-    caseType: '',                           // 判決or裁定
+  // private inputData: InputSearchData = {
+  //   searchName: '',                            // 關鍵字
+  //   charge: '',                                // 案由
+  //   law:[],                                    // 法條搜索
+  //   courtList: [],                             // 法院搜索
+  //   caseType: [],                              // 刑法or民法
+  //   verdictStartDate: new Date('1990-01-01'),  // 開始時間
+  //   verdictEndDate: new Date('9990-01-01'),    // 結束時間
+  //   verdictId: '',                             // 字號
+  //   docType: '',                               // 判決or裁定
+  // }
+
+
+  // 設定資料(不一定用到)
+  setSearchConditions(data: InputSearchData): void {
+    this.searchData = { ...data };
   }
 
-  setData(data: InputSearchData): void {
-    this.inputData = { ...data };
+  // 取資料(不一定用到)
+  getSearchConditions(): any {
+    return this.searchData;
   }
 
-  // 清除選擇條件
+  // 清除選擇條件(不一定用到)
   clearData(): void {
-    this.inputData = {
-      keyword: '',
-      inputCase: '',
-      inputLaw:[],
-      inputCourts: [],
-      lawType: [],
-      startDate: new Date('1990-01-01'),
-      endDate: new Date('9990-01-01'),
-      id: '',
-      caseType: '',
+    this.searchData = {
+      searchName: '',
+      charge: '',
+      law:[],
+      courtList: [],
+      caseType: [],
+      verdictStartDate: new Date('1990-01-01'),
+      verdictEndDate: new Date('9990-01-01'),
+      verdictId: '',
+      docType: '',
     };
   }
 
 }
 
 export interface InputSearchData {
-  keyword: string;
-  inputCase: string;
-  inputLaw: string[];
-  inputCourts: string[];
-  lawType: string[];
-  startDate: Date;
-  endDate: Date;
-  id: string;
-  caseType: string;
+  searchName: string;
+  charge: string;
+  law: string[];
+  courtList: string[];
+  caseType: string[];
+  verdictStartDate: Date;
+  verdictEndDate: Date;
+  verdictId: string;
+  docType: string;
 }

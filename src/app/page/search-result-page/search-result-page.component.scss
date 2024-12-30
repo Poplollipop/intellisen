@@ -1,70 +1,138 @@
-p {
-  font-weight: bold;
+.show-search-btn {
+  text-align: end;
+  margin-right: 1rem;
+  margin-top: 1rem;
 }
 
-.condition {
-  font-weight: bold;
-  color: #0039bf;
-}
-
-.search {
-  margin-top: 20%;
-  border: 2px solid #ccc;
-  border-radius: 20px;
-  padding: 20px;
-  background-color: #f9fafe;
+/* 搜尋結果的左右佈局 */
+.search-result-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  overflow: hidden;
 }
 
-.basic-search {
-  display: flex;
-  flex-direction: column; // 子元素會在垂直方向（從上到下）排列
-  justify-content: center;
+.case-list {
+  flex: 1;
+  overflow-y: auto;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+
+  .clickable {
+    color: #007bff;
+    cursor: pointer;
+  }
+
 }
 
-hr {
-  border: black 5px solid;
-}
-
-.keywords {
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-.advanced-search-left, .advanced-search-right {
+.case-details {
+  flex: 2;
+  overflow-y: auto;
   padding: 10px;
 }
 
 
-.search-result {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px; // 兩個區塊之間的間距
+.p-field{
+  input{
+    display: block;
+    width: 20rem;
+  }
+
+  p-multiselect{
+    height: 30px;
+    width: 20rem;
+    border-radius: 2px;
+    background-color: #f8f8f8;
+  }
+
+
 }
 
-.search-result-left {
-  flex: 4; // 左邊區塊佔 4 單位
+
+.display-button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none; // 去掉邊框
+  border-radius: 30px;
+  background-color: #91b2ff;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; // 增加顏色變換的過渡效果
 }
 
-.search-result-right {
-  flex: 6; // 右邊區塊佔 6 單位
-  box-sizing: border-box; // 包括邊框和內邊距在內
+// 按鈕懸停時的樣式
+.display-button:hover {
+  background-color: #b7cbf0; // 設置懸停時的背景顏色
 }
 
-.card {
-  padding: 10px;
-  border: 1px solid #ccc;
-}
+// p {
+//   font-weight: bold;
+// }
 
-.category {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-}
-.category div {
-  font-weight: bold;
-  margin-right: 20px;
-  background-color: #ccc;
-}
+// .condition {
+//   font-weight: bold;
+//   color: #0039bf;
+// }
+
+// .search {
+//   margin-top: 20%;
+//   border: 2px solid #ccc;
+//   border-radius: 20px;
+//   padding: 20px;
+//   background-color: #f9fafe;
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .basic-search {
+//   display: flex;
+//   flex-direction: column; // 子元素會在垂直方向（從上到下）排列
+//   justify-content: center;
+// }
+
+// hr {
+//   border: black 5px solid;
+// }
+
+// .keywords {
+//   margin-bottom: 20px;
+//   font-weight: bold;
+// }
+
+// .advanced-search-left, .advanced-search-right {
+//   padding: 10px;
+// }
+
+
+// .search-result {
+//   display: flex;
+//   justify-content: space-between;
+//   gap: 20px; // 兩個區塊之間的間距
+// }
+
+// .search-result-left {
+//   flex: 4; // 左邊區塊佔 4 單位
+// }
+
+// .search-result-right {
+//   flex: 6; // 右邊區塊佔 6 單位
+//   box-sizing: border-box; // 包括邊框和內邊距在內
+// }
+
+// // .card {
+// //   padding: 10px;
+// //   border: 1px solid #ccc;
+// // }
+
+// .category {
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 10px 0;
+// }
+// .category div {
+//   font-weight: bold;
+//   margin-right: 20px;
+//   background-color: #ccc;
+// }
+
 
