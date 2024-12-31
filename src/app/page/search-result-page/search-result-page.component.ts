@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
@@ -31,7 +32,7 @@ export class SearchResultPageComponent {
   tidyMap!: any; // 整理後的 map
   caseList: any[] = []; // 接後端的東西
   selectedCaseId!: string; // 選中的案件id
-  showCaseDetail : boolean = false; // 顯示案件細節
+  showCaseDetail: boolean = false; // 顯示案件細節
 
   groupedCourts!: any;
   searchForm!: FormGroup;
@@ -42,7 +43,8 @@ export class SearchResultPageComponent {
     private searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
 
     // 初始化表單
@@ -198,8 +200,8 @@ export class SearchResultPageComponent {
     }
   }
 
-   // 重組資料
-   private tidyData(rawData: any): void {
+  // 重組資料
+  private tidyData(rawData: any): void {
     // 以 id 作為分組依據
     this.tidyMap = rawData.reduce((result: any, item: any) => {
       if (!result[item.id]) {
@@ -229,7 +231,7 @@ export class SearchResultPageComponent {
 
 
   page: number = 1; // 當前頁碼
-  itemsPerPage: number = 10; // 每頁顯示的項目數量
+  itemsPerPage: number = 15; // 每頁顯示的項目數量
   totalPages: number = 1; // 總頁數
 
   calculateTotalPages() {
@@ -252,10 +254,14 @@ export class SearchResultPageComponent {
   }
 
 
-  selectId(id: string){
+  selectId(id: string) {
     this.selectedCaseId = id;
   }
 
+  // 返回搜尋畫面
+  backToSearchPage() {
+    this.router.navigateByUrl('search')
+   }
 
 
 
