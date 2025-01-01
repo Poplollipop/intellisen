@@ -1,40 +1,60 @@
 <div class="card">
 
 
-@if (showCaseDetail) {
+  @if (showCaseDetail) {
 
   @if(displayData){
-    <div class="category">
-      <div> <p class="title">法官</p> <p class="content"> {{ displayData.judgeName }}</p> </div>
-      <div> <p class="title">被告</p> <p class="content"> {{ displayData.defendantName }}</p> </div>
-      <div> <p class="title">案由</p> <p class="content"> {{ displayData.charge }}</p> </div>
-      <div> <p class="title">裁判日期</p> <p class="content"> {{ displayData.verdictDate }}</p> </div>
-      <div> <p class="title">裁判法院</p> <p class="content"> {{ displayData.court }}</p> </div>
-      <div> <p class="title">種類</p> <p class="content"> {{ displayData.docType }}</p> </div>
+  <div class="category">
+    <div>
+      <p class="title">法官</p>
+      <p class="content"> {{ displayData.judgeName }}</p>
     </div>
+    <div>
+      <p class="title">被告</p>
+      <p class="content"> {{ displayData.defendantName }}</p>
+    </div>
+    <div>
+      <p class="title">案由</p>
+      <p class="content"> {{ displayData.charge }}</p>
+    </div>
+    <div>
+      <p class="title">裁判日期</p>
+      <p class="content"> {{ displayData.verdictDate }}</p>
+    </div>
+    <div>
+      <p class="title">裁判法院</p>
+      <p class="content"> {{ displayData.court }}</p>
+    </div>
+    <div>
+      <p class="title">種類</p>
+      <p class="content"> {{ displayData.docType }}</p>
+    </div>
+  </div>
+  <div> <button class="check-content-button">查看全文</button></div>
 
-    <div class="content-div">
-      <pre class="pre-content">
+
+  <div class="content-div">
+    <pre class="pre-content">
         {{ displayData.content }}
       </pre>
-    </div>
+  </div>
   }@else {
-    <div class="category">
-      <div class="title">法官</div>
-      <div class="title">被告</div>
-      <div class="title">案由</div>
-      <div class="title">裁判日期</div>
-      <div class="title">裁判法院</div>
-      <div class="title">種類</div>
-    </div>
+  <div class="category">
+    <div class="title">法官</div>
+    <div class="title">被告</div>
+    <div class="title">案由</div>
+    <div class="title">裁判日期</div>
+    <div class="title">裁判法院</div>
+    <div class="title">種類</div>
+  </div>
   }
 
 
-}
+  }
 
 
 
-@else {
+  @else {
   <h2>統計圖</h2>
   <!-- 中間總計區 -->
   <div class="number-result">
@@ -55,13 +75,13 @@
     <div class="chart-container">
       <!-- 按鈕區域 -->
       <div class="button-container">
-        <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('pie')">
+        <button mat-raised-button color="primary" class="small-button" (click)="renderChart('pie')">
           刑種全貌圖
         </button>
-        <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
+        <button mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
           有期徒刑
         </button>
-        <button  mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
+        <button mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
           無期徒刑
         </button>
       </div>
@@ -74,17 +94,17 @@
     <div class="table-container">
       <div class="container">
         <ul class="responsive-table">
-           <!-- 表格標題 -->
-        <li class="table-header">
-          <div class="col col-1">刑度種類</div>
-          <div class="col col-2">件數</div>
-          <div class="col col-3">最低刑度</div>
-          <div class="col col-4">最高刑度</div>
-          <div class="col col-5">平均刑度</div>
-        </li>
+          <!-- 表格標題 -->
+          <li class="table-header">
+            <div class="col col-1">刑度種類</div>
+            <div class="col col-2">件數</div>
+            <div class="col col-3">最低刑度</div>
+            <div class="col col-4">最高刑度</div>
+            <div class="col col-5">平均刑度</div>
+          </li>
 
-        <!-- 這裡使用 for 迴圈，動態生成表格行 -->
-         @for (item of items; track $index) {
+          <!-- 這裡使用 for 迴圈，動態生成表格行 -->
+          @for (item of items; track $index) {
           <li class="table-row">
             <div class="col col-1">{{ item.type }}</div>
             <div class="col col-2" (click)="openDialog(item.count)" class="clickable">{{ item.count }}件</div>
@@ -92,12 +112,12 @@
             <div class="col col-4">{{ item.max }}</div>
             <div class="col col-5">{{ item.avg }}</div>
           </li>
-         }
+          }
         </ul>
       </div>
     </div>
 
   </div>
-}
+  }
 
 </div>
