@@ -38,7 +38,7 @@ export class SearchResultPageComponent {
 
   groupedCourts!: any;
   searchForm!: FormGroup;
-  visible2: boolean = false;
+  visible2: boolean = true;
   editMode = false;
   errorMessage: string = '';    // 法條錯誤提示訊息
   lawList!: string[];     // 整理後的法院字串
