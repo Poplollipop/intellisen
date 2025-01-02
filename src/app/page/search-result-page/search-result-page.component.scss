@@ -1,7 +1,17 @@
 .show-search-btn {
-  text-align: end;
-  margin-right: 1rem;
-  margin-top: 1rem;
+  display: flex;
+  position: relative;
+  .case-preview-button{
+    margin-left: 1%;
+  }
+  .statistics-button{
+    margin-left: 5%;
+  }
+  .select-condition-button{
+    position: absolute;
+    right: 0;
+  }
+  margin-bottom: 1%;
 }
 
 /* 搜尋結果的左右佈局 */

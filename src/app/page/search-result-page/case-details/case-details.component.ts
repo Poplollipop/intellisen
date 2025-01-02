@@ -11,7 +11,8 @@ import Highcharts from 'highcharts';
 
 export class CaseDetailsComponent {
 
-  @Input() caseId: string | null = null;
+  @Input() caseId: string = '';
+  @Input() showCaseDetail: boolean = false;
   displayData: any;
 
 
@@ -20,16 +21,23 @@ export class CaseDetailsComponent {
   ) { }
 
   ngOnInit() {
-    // 模擬案件資料查詢
-    if (this.caseId) {
-      this.displayData = this.searchSessionService.tidyMap[this.caseId]
-      }
-    }
+  }
 
+  // 初始化圖表
+  ngAfterViewInit(): void {
+    this.renderChart('pie');
+  }
 
   ngOnChanges() {
     // 當 caseId 變更時更新資料
-    this.ngOnInit();
+    this.displayCase();
+    this.showCaseDetail;
+  }
+
+  displayCase() {
+    if (this.caseId != '') {
+      this.displayData = this.searchSessionService.tidyMap[this.caseId]
+    }
   }
 
   // 表格的動態數據，這裡的數據可以從 API 獲取
@@ -93,10 +101,7 @@ export class CaseDetailsComponent {
     bar: ['#6A1B9A', '#9C27B0', '#CE93D8', '#BA68C8'] // 長條圖顏色
   };
 
-  // 初始化圖表
-  ngAfterViewInit(): void {
-    this.renderChart('pie');
-  }
+
 
   // 渲染圖表
   renderChart(type: 'pie' | 'bar'): void {
