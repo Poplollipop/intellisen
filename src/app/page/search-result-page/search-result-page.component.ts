@@ -133,7 +133,7 @@ export class SearchResultPageComponent {
       sessionStorage.setItem("savedConditions", JSON.stringify(savedConditions))
     }
 
-    // 取得在sessionStorage裡的資料
+    // 取得在sessionStorage裡的資料，isPlatformBrowser(this.platformId) 檢查程式碼是否在瀏覽器上執行(不加會error)
     if (!this.searchSessionService.searchData && isPlatformBrowser(this.platformId)) {
       savedConditions = JSON.parse(sessionStorage.getItem("savedConditions")!);
     }
