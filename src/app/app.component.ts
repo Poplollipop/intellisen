@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from "./layouts/toolbar/toolbar.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,7 +25,10 @@ import { FormsModule } from '@angular/forms';
 
 export class AppComponent {
 
-  constructor(private ngxService: NgxUiLoaderService) {}
+  constructor(
+    private ngxService: NgxUiLoaderService,
+    protected router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.ngxService.start(); // 啟動加載器
