@@ -243,11 +243,11 @@ export class ViewFullTextPageComponent {
     while (currentNode) {
       const span = currentNode as HTMLElement;
 
-      // 創建該 <span> 的範圍
+      // 創建該 `<span>` 的範圍
       const spanRange = document.createRange();
       spanRange.selectNodeContents(span);
 
-      // 檢查範圍是否完全包含在 <span> 內
+      // 檢查範圍是否完全包含在 `<span>` 內
       if (
         range.compareBoundaryPoints(Range.START_TO_START, spanRange) === 0 &&
         range.compareBoundaryPoints(Range.END_TO_END, spanRange) === 0
@@ -275,7 +275,7 @@ export class ViewFullTextPageComponent {
           span.parentNode!.insertBefore(afterNode, span.nextSibling);
         }
 
-        // 移除範圍內的 <span>
+        // 移除範圍內的 `<span>`
         span.parentNode!.removeChild(span);
       }
 
@@ -350,6 +350,8 @@ export class ViewFullTextPageComponent {
 
     window.print(); // 啟動列印功能
   }
+
+  // 處理高亮邏輯
   prepareHighlightsForPrint(includeHighlights: boolean) {
     if (includeHighlights) {
       console.log('列印帶有螢光筆標記的內容');
@@ -368,3 +370,5 @@ export class ViewFullTextPageComponent {
   }
 
 }
+
+
