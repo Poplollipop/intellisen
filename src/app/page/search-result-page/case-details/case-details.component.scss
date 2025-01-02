@@ -113,7 +113,6 @@
 
 /* 圖表區 */
 .chart-container {
-  display: flex;
   gap: 10px;
   margin-top: 1rem;
   background-color: #f2f2f2;
@@ -124,13 +123,14 @@
 
   .button-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 10px;
     margin-left: 20px;
     margin-top: 20px;
+    padding: 1rem;
 
     button[mat-raised-button] {
-      font-size: 15px;
+      font-size: 20px;
       color: #fff;
       background-color: #05174e;
       padding: 8px 15px;
@@ -153,6 +153,14 @@
       outline: none;
       box-shadow: 0 0 5px rgb(132, 186, 213);
     }
+
+  }
+
+  .chart-css {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 40rem;
   }
 
   .small-button {
@@ -175,10 +183,9 @@
   background-color: #f2f2f2;
   margin-top: 1rem;
   border-radius: 8px;
-  opacity: 0.8;
 
   .container {
-    max-width: 700px;
+    max-width: 85%;
   }
 
   .responsive-table {

@@ -3,7 +3,6 @@ import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { SessionServiceService } from '../../service/session-service.service';
-import { firstValueFrom } from 'rxjs';
 import { CaseDetailsComponent } from './case-details/case-details.component';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
@@ -29,6 +28,9 @@ import { isPlatformBrowser } from '@angular/common';
 })
 
 export class SearchResultPageComponent {
+
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
+
   tidyMap!: any;    // 整理後的 map
   caseList: any[] = [];       // 接後端的東西
   selectedCaseId!: string;    // 選中的案件id
@@ -41,7 +43,6 @@ export class SearchResultPageComponent {
   errorMessage: string = '';    // 法條錯誤提示訊息
   lawList!: string[];     // 整理後的法院字串
 
-  private readonly platformId = inject(PLATFORM_ID); // 確保 sessionStorage 存在
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -133,7 +134,8 @@ export class SearchResultPageComponent {
       sessionStorage.setItem("savedConditions", JSON.stringify(savedConditions))
     }
 
-    // 取得在sessionStorage裡的資料，isPlatformBrowser(this.platformId) 檢查程式碼是否在瀏覽器上執行(不加會error)
+    // 取得在sessionStorage裡的資料
+    // isPlatformBrowser(this.platformId) : 檢查程式碼是否在瀏覽器上執行(不加會error)
     if (!this.searchSessionService.searchData && isPlatformBrowser(this.platformId)) {
       savedConditions = JSON.parse(sessionStorage.getItem("savedConditions")!);
     }
@@ -143,15 +145,13 @@ export class SearchResultPageComponent {
     if (savedConditions) {
       this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
         resData = searchData;
-        console.log(resData)
 
+        // 儲存搜尋資料
         this.searchForm.patchValue(savedConditions);
 
         // // 重組資料
         this.caseList = resData.caseList;
         this.tidyMap = this.tidyData(resData.caseList);
-
-        console.log(this.caseList);
 
         // // 計算總頁數
         this.calculateTotalPages();
@@ -160,9 +160,7 @@ export class SearchResultPageComponent {
       });
     }
 
-
   }
-
 
   // 將字號轉換為顯示的格式
   formatCaseId(caseId: string): string {
@@ -202,9 +200,6 @@ export class SearchResultPageComponent {
     }, {});
 
     this.searchSessionService.tidyMap = this.tidyMap;
-
-    // console.log(this.tidyMap['112年度訴字第382號']);
-    // console.log(this.tidyMap);
   }
 
 

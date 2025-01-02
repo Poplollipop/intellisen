@@ -55,22 +55,54 @@
 
 
   @else {
-  <h2>統計圖</h2>
-  <!-- 中間總計區 -->
-  <div class="number-result">
-    <div class="left-result">
-      <p>平均刑度</p>
-      <h3>5</h3>
-      <p>年</p>
+
+
+  <h2>統計圖表</h2>
+
+
+  <!-- 右中量刑區間、統計列表區 -->
+  <div class="table-container">
+
+    <div class="number-result">
+      <div class="left-result">
+        <p>平均刑度</p>
+        <h3>5</h3>
+        <p>年</p>
+      </div>
+      <div class="right-result">
+        <p>量刑區間</p>
+        <h3>1 - 10</h3>
+        <p>年</p>
+      </div>
     </div>
-    <div class="right-result">
-      <p>量刑區間</p>
-      <h3>1 - 10</h3>
-      <p>年</p>
+
+    <div class="container">
+      <ul class="responsive-table">
+        <!-- 表格標題 -->
+        <li class="table-header">
+          <div class="col col-1">刑度種類</div>
+          <div class="col col-2">件數</div>
+          <div class="col col-3">最低刑度</div>
+          <div class="col col-4">最高刑度</div>
+          <div class="col col-5">平均刑度</div>
+        </li>
+
+        <!-- 這裡使用 for 迴圈，動態生成表格行 -->
+        @for (item of items; track $index) {
+        <li class="table-row">
+          <div class="col col-1">{{ item.type }}</div>
+          <div class="col col-2" (click)="openDialog(item.count)" class="clickable">{{ item.count }}件</div>
+          <div class="col col-3">{{ item.min }}</div>
+          <div class="col col-4">{{ item.max }}</div>
+          <div class="col col-5">{{ item.avg }}</div>
+        </li>
+        }
+      </ul>
+
     </div>
   </div>
 
-  <!-- 圖表區 -->
+  <!-- 右下圖表區 -->
   <div class="result-container">
     <div class="chart-container">
       <!-- 按鈕區域 -->
@@ -88,40 +120,10 @@
 
       <!-- 圖表容器 -->
       <!-- <div id="chartContainer1" style="width: 90vh; height: 80vh;"></div> -->
-
       @defer {
-      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="width: 90vh; height: 80vh">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" class="chart-css">
       </highcharts-chart>
       }
-
-
-    </div>
-
-    <!-- 右下列表區 -->
-    <div class="table-container">
-      <div class="container">
-        <ul class="responsive-table">
-          <!-- 表格標題 -->
-          <li class="table-header">
-            <div class="col col-1">刑度種類</div>
-            <div class="col col-2">件數</div>
-            <div class="col col-3">最低刑度</div>
-            <div class="col col-4">最高刑度</div>
-            <div class="col col-5">平均刑度</div>
-          </li>
-
-          <!-- 這裡使用 for 迴圈，動態生成表格行 -->
-          @for (item of items; track $index) {
-          <li class="table-row">
-            <div class="col col-1">{{ item.type }}</div>
-            <div class="col col-2" (click)="openDialog(item.count)" class="clickable">{{ item.count }}件</div>
-            <div class="col col-3">{{ item.min }}</div>
-            <div class="col col-4">{{ item.max }}</div>
-            <div class="col col-5">{{ item.avg }}</div>
-          </li>
-          }
-        </ul>
-      </div>
     </div>
 
   </div>
