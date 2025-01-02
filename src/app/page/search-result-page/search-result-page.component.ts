@@ -31,7 +31,7 @@ export class SearchResultPageComponent {
   tidyMap!: any;    // 整理後的 map
   caseList: any[] = [];       // 接後端的東西
   selectedCaseId!: string;    // 選中的案件id
-  showCaseDetail : boolean = false;     // 顯示案件細節
+  showCaseDetail: boolean = false;     // 顯示案件細節
 
   groupedCourts!: any;
   searchForm!: FormGroup;
@@ -121,17 +121,27 @@ export class SearchResultPageComponent {
   }
 
   async ngOnInit(): Promise<void> {
+
     // 從 SearchSessionService 獲取條件
-    const savedConditions = this.searchSessionService.searchData;
+    // 設定 sessionStorage 保存搜尋條件
+    let savedConditions: any;
+    if (this.searchSessionService.searchData) {
+      savedConditions = this.searchSessionService.searchData;
+      sessionStorage.setItem("savedConditions", JSON.stringify(savedConditions))
+    } else {
+      savedConditions = JSON.parse(sessionStorage.getItem("savedConditions")!);
+    }
+
+    // 取得 API 所有搜尋的資料
+    let resData: any;
+    if (savedConditions) {
+      resData = await firstValueFrom(this.http.postApi('http://localhost:8080/case/search', savedConditions));
+    }
 
     // 如果存在已保存的條件，使用 patchValue 載入
     if (savedConditions) {
       this.searchForm.patchValue(savedConditions);
     }
-
-    // 取得 API 所有搜尋的資料
-    let resData: any;
-    resData = await firstValueFrom(this.http.postApi('http://localhost:8080/case/search', this.searchSessionService.searchData));
 
     // 重組資料
     this.caseList = resData.caseList;
@@ -266,7 +276,7 @@ export class SearchResultPageComponent {
   // 返回搜尋畫面
   backToSearchPage() {
     this.router.navigateByUrl('search')
-   }
+  }
 
   // 下面是搜尋條件相關
 
@@ -282,7 +292,7 @@ export class SearchResultPageComponent {
 
   // 更新法條列表
   updateLawsList(lawString: any) {
-    if (this.validateInput(lawString) && typeof lawString == 'string' ) {
+    if (this.validateInput(lawString) && typeof lawString == 'string') {
       this.errorMessage = '';
       this.lawList = lawString.split(';').filter(lawString => lawString.trim() !== '');
     } else {
@@ -303,7 +313,7 @@ export class SearchResultPageComponent {
   // 搜尋條件再搜尋
   searchAgain() {
     const updateCondition = this.searchForm.value;
-    console.log("更改的搜尋條件:",updateCondition);
+    console.log("更改的搜尋條件:", updateCondition);
 
     const tidyLaw = this.updateLawsList(updateCondition.law);
 
