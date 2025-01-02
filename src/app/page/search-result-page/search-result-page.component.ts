@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Fluid } from 'primeng/fluid';
 import { MultiSelectModule } from 'primeng/multiselect';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-result-page',
@@ -264,6 +264,17 @@ export class SearchResultPageComponent {
     this.selectedCaseId = id;
   }
 
+<<<<<<< HEAD
+  // 查看全文
+  viewFullText(){
+    this.router.navigate(['/full-text']);
+  }
+
+  // 回上頁
+  returnToPreviousPage(){
+    this.router.navigate(['/search']);
+  }
+=======
   // 返回搜尋畫面
   backToSearchPage() {
     this.router.navigateByUrl('search')
@@ -316,6 +327,7 @@ export class SearchResultPageComponent {
   }
 
 
+>>>>>>> fa0946cfbec44d1ff4f5ff774fd5d91a3b613333
 
 }
 

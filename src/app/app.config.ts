@@ -28,7 +28,11 @@ export const appConfig: ApplicationConfig = {
     // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}}),
+<<<<<<< HEAD
+    provideHttpClient(), provideAnimationsAsync()
+=======
     provideHttpClient(withFetch())
+>>>>>>> fa0946cfbec44d1ff4f5ff774fd5d91a3b613333
 
   ]
 };

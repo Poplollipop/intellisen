@@ -1,0 +1,139 @@
+/* 工具表按鈕樣式 */
+.marker-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.marker-painter-0 {
+  background-color: yellow;
+}
+
+.marker-painter-1 {
+  background-color: lightgreen;
+}
+
+.marker-painter-2 {
+  background-color: lightblue;
+}
+
+.marker-eraser {
+  width: 24px;
+  height: 24px;
+}
+
+.marker-icon:hover {
+  transform: scale(1.1);
+}
+
+/* 工具表外觀 */
+.toolbar {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 1000;
+}
+
+.toolbar-arrow {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-bottom: none;
+  transform: rotate(45deg);
+}
+
+/* 高亮文字的樣式 */
+span[style*="background-color"] {
+  display: inline-block !important;
+  padding: 0 2px !important;
+  border-radius: 2px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+/* 高亮文字的 hover 效果 */
+span[style*="background-color"]:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+//=====================================================
+// 右上工具
+.document__toolbar {
+  position: absolute;
+  top: 185px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #000; /* 添加黑色邊框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加輕微陰影 */
+  z-index: 1000;
+  border-radius: 4px; /* 可選，讓邊框圓角化 */
+  .mat-icon{
+    color: #000000 !important;
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toolbar-button:hover {
+  background-color: #e9ecef;
+}
+
+.print-options {
+  display: none;
+  position: absolute;
+  margin-top: 5px;
+  padding: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.print-options .arrow-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.print-options button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.print-options button:hover {
+  background-color: #e9ecef;
+}

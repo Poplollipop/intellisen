@@ -39,6 +39,8 @@
 
 </div>
 
+<button class="viewFullText" (click)="viewFullText()">查看全文</button> <button (click)="returnToPreviousPage()">回上頁</button>
+
 <!-- drawer -->
 <p-drawer header="您目前的搜尋條件：" [(visible)]="visible2" position="right" [style]="{ width: '400px' }">
   <form [formGroup]="searchForm">
