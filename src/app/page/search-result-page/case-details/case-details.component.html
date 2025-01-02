@@ -87,7 +87,11 @@
       </div>
 
       <!-- 圖表容器 -->
-      <div id="chartContainer" style="width: 90vh; height: 80vh;"></div>
+      <!-- <div id="chartContainer1" style="width: 90vh; height: 80vh;"></div> -->
+
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+        style="width: 90vh; height: 80vh"></highcharts-chart>
+
     </div>
 
     <!-- 右下列表區 -->
