@@ -6,7 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 // const ngx: NgxUiLoaderConfig = {
 //   text: "載入中...",
@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
     // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}}),
-    provideHttpClient()
+    provideHttpClient(withFetch())
 
   ]
 };
