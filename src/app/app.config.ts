@@ -24,15 +24,10 @@ export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideAnimationsAsync(),
     // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}}),
-<<<<<<< HEAD
-    provideHttpClient(), provideAnimationsAsync()
-=======
     provideHttpClient(withFetch())
->>>>>>> fa0946cfbec44d1ff4f5ff774fd5d91a3b613333
 
   ]
 };

@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, Renderer2  } from '@angular/core';
-import { Router } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
+import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { Clipboard } from '@angular/cdk/clipboard';
-
+import { CommonModule } from '@angular/common'; // 匯入 CommonModule
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 interface MarkIndex {
   type: number;
   length: number;
@@ -12,18 +14,20 @@ interface MarkIndex {
 @Component({
   selector: 'app-view-full-text-page',
   imports: [MatIconModule,
-
+    CommonModule,
   ],
   templateUrl: './view-full-text-page.component.html',
   styleUrl: './view-full-text-page.component.scss'
 })
 export class ViewFullTextPageComponent {
-// 額外功能選取文字時 可以知道它的index位置
+  // 額外功能選取文字時 可以知道它的index位置
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private clipboard: Clipboard,
-    private renderer: Renderer2
-  ){}
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   @ViewChild('toptextSpan', { static: false }) toptextSpanRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('buttontextSpan', { static: false }) buttontextSpanRef!: ElementRef<HTMLSpanElement>;
@@ -36,17 +40,23 @@ export class ViewFullTextPageComponent {
 
 
   ngOnInit(): void {
-    document.addEventListener('mouseup', () => this.saveSelection());
-    document.addEventListener('selectionchange', () => this.saveSelection());
+    if (isPlatformBrowser(this.platformId)) {
+      // 僅在瀏覽器中執行這些程式碼
+      document.addEventListener('mouseup', () => this.saveSelection());
+      document.addEventListener('selectionchange', () => this.saveSelection());
+      // 分享網址
+      this.updateDynamicLink()
+    }
   }
 
   ngOnDestroy(): void {
-    document.removeEventListener('mouseup', () => this.saveSelection());
-    document.removeEventListener('selectionchange', () => this.saveSelection());
+    if (isPlatformBrowser(this.platformId)) {
+      document.removeEventListener('mouseup', () => this.saveSelection());
+      document.removeEventListener('selectionchange', () => this.saveSelection());
+    }
   }
 
   //=========================================
-
 
   // Clipboard 複製功能
   copyContent(): void {
@@ -188,6 +198,7 @@ export class ViewFullTextPageComponent {
     console.log('所有螢光效果已刪除');
   }
 
+  // 選取範圍文字螢光筆效果刪除
   removeHighlightsInRange(event?: MouseEvent): void {
     if (event) {
       event.stopPropagation(); // 防止事件冒泡清除選取範圍
@@ -205,7 +216,6 @@ export class ViewFullTextPageComponent {
     const range = selection.getRangeAt(0);
     const commonAncestor = range.commonAncestorContainer;
 
-    // 確保選取範圍在目標文字區域內
     if (
       !this.toptextSpanRef.nativeElement.contains(commonAncestor) &&
       !this.buttontextSpanRef.nativeElement.contains(commonAncestor)
@@ -215,17 +225,72 @@ export class ViewFullTextPageComponent {
       return;
     }
 
-    // 刪除範圍內的高亮
-    const fragment = range.cloneContents();
-    const spans = Array.from(fragment.querySelectorAll('span[style*="background-color"]'));
+    // 遍歷範圍內的節點
+    const walker = document.createTreeWalker(
+      commonAncestor,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode: (node: Node) => {
+          const el = node as HTMLElement;
+          return el.style.backgroundColor && range.intersectsNode(el)
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        },
+      }
+    );
 
-    spans.forEach((span) => {
-      const textNode = document.createTextNode(span.textContent || '');
-      span.parentNode?.replaceChild(textNode, span);
-    });
+    let currentNode: Node | null = walker.nextNode();
+    while (currentNode) {
+      const span = currentNode as HTMLElement;
+
+      // 創建該 <span> 的範圍
+      const spanRange = document.createRange();
+      spanRange.selectNodeContents(span);
+
+      // 檢查範圍是否完全包含在 <span> 內
+      if (
+        range.compareBoundaryPoints(Range.START_TO_START, spanRange) === 0 &&
+        range.compareBoundaryPoints(Range.END_TO_END, spanRange) === 0
+      ) {
+        // 選取範圍完全覆蓋 `<span>`，直接移除
+        const textNode = document.createTextNode(span.textContent || '');
+        span.parentNode!.replaceChild(textNode, span);
+      } else {
+        // 部分選取，執行拆分邏輯
+        const startOffset = Math.max(0, range.startOffset - spanRange.startOffset);
+        const endOffset = Math.min(spanRange.endOffset, range.endOffset - spanRange.startOffset);
+
+        const beforeText = span.textContent!.slice(0, startOffset);
+        const afterText = span.textContent!.slice(endOffset);
+
+        // 保留範圍前的文字
+        if (beforeText) {
+          const beforeNode = document.createTextNode(beforeText);
+          span.parentNode!.insertBefore(beforeNode, span);
+        }
+
+        // 保留範圍後的文字
+        if (afterText) {
+          const afterNode = document.createTextNode(afterText);
+          span.parentNode!.insertBefore(afterNode, span.nextSibling);
+        }
+
+        // 移除範圍內的 <span>
+        span.parentNode!.removeChild(span);
+      }
+
+      currentNode = walker.nextNode();
+    }
 
     console.log('選取範圍內的螢光效果已刪除');
   }
+
+
+
+
+
+
+
 
 
   // 更改高亮顏色
@@ -240,8 +305,19 @@ export class ViewFullTextPageComponent {
 
   copyLink = '';
 
+  updateDynamicLink() {
+    // 獲取當前路徑並生成完整網址
+    const currentUrl = this.router.createUrlTree([], { relativeTo: this.route }).toString();
+    this.copyLink = `${window.location.origin}${currentUrl}`;
+  }
+
   onShare() {
-    // alert('分享按鈕被點擊！');
+    this.updateDynamicLink(); // 確保分享按鈕點擊時更新網址
+    navigator.clipboard.writeText(this.copyLink).then(() => {
+      alert('網址已複製到剪貼簿！');
+    }).catch(() => {
+      alert('複製失敗，請手動複製網址。');
+    });
   }
 
   onDownload() {
@@ -251,27 +327,44 @@ export class ViewFullTextPageComponent {
   onDownloadPDF() {
     // alert('PDF 下載按鈕被點擊！');
   }
+  //===================================================
+  // 列印功能
+  showPrintOptions = false; // 默認為隱藏
 
+  // 切換選項框顯示狀態
+  togglePrintOptions() {
+    this.showPrintOptions = !this.showPrintOptions;
+  }
+
+
+  // 點擊列印選項
   onPrint(includeHighlights: boolean = false) {
+    console.log('列印選項已選擇:', includeHighlights ? '附帶螢光筆' : '不附帶螢光筆');
+
+    this.showPrintOptions = false; // 隱藏選項框
     if (includeHighlights) {
-      // alert('列印帶有螢光筆標記');
+      this.prepareHighlightsForPrint(true);
     } else {
-      // alert('列印不帶螢光筆標記');
+      this.prepareHighlightsForPrint(false);
+    }
+
+    window.print(); // 啟動列印功能
+  }
+  prepareHighlightsForPrint(includeHighlights: boolean) {
+    if (includeHighlights) {
+      console.log('列印帶有螢光筆標記的內容');
+      // 添加處理高亮邏輯
+    } else {
+      console.log('列印不帶螢光筆標記的內容');
+      // 添加清除高亮邏輯
     }
   }
 
-  onCopyLink() {
-    navigator.clipboard.writeText(this.copyLink).then(() => {
-      // alert('連結已複製！');
-    });
-  }
 
   //=========================================
   // 回上頁
-  returnToPreviousPage(){
+  returnToPreviousPage() {
     this.router.navigate(['/search-result']);
   }
 
 }
-
-

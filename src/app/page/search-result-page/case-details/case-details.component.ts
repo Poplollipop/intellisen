@@ -4,6 +4,7 @@ import * as Highcharts from 'highcharts';
 import { CaseViewComponent } from '../../../component/case-view/case-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-case-details',
@@ -28,6 +29,7 @@ export class CaseDetailsComponent {
   constructor(
     private searchSessionService: SearchSessionService,
     public dialog: MatDialog,
+    private router : Router,
   ) { }
 
   ngOnInit() {
@@ -72,6 +74,12 @@ export class CaseDetailsComponent {
       avg: ''
     }
   ];
+
+
+  // 查看全文
+  viewFullText(){
+    this.router.navigateByUrl('full-text');
+  }
 
   // 圖表區
 
