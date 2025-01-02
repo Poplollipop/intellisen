@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { SessionServiceService } from '../../service/session-service.service';
@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Fluid } from 'primeng/fluid';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-search-result-page',
@@ -39,6 +40,8 @@ export class SearchResultPageComponent {
   editMode = false;
   errorMessage: string = '';    // 法條錯誤提示訊息
   lawList!: string[];     // 整理後的法院字串
+
+  private readonly platformId = inject(PLATFORM_ID); // 確保 sessionStorage 存在
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -120,38 +123,43 @@ export class SearchResultPageComponent {
     ];
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): any {
 
     // 從 SearchSessionService 獲取條件
     // 設定 sessionStorage 保存搜尋條件
-    let savedConditions: any;
+    let savedConditions;
     if (this.searchSessionService.searchData) {
       savedConditions = this.searchSessionService.searchData;
       sessionStorage.setItem("savedConditions", JSON.stringify(savedConditions))
-    } else {
+    }
+
+    // 取得在sessionStorage裡的資料
+    if (!this.searchSessionService.searchData && isPlatformBrowser(this.platformId)) {
       savedConditions = JSON.parse(sessionStorage.getItem("savedConditions")!);
     }
 
     // 取得 API 所有搜尋的資料
     let resData: any;
     if (savedConditions) {
-      resData = await firstValueFrom(this.http.postApi('http://localhost:8080/case/search', savedConditions));
+      this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
+        resData = searchData;
+        console.log(resData)
+
+        this.searchForm.patchValue(savedConditions);
+
+        // // 重組資料
+        this.caseList = resData.caseList;
+        this.tidyMap = this.tidyData(resData.caseList);
+
+        console.log(this.caseList);
+
+        // // 計算總頁數
+        this.calculateTotalPages();
+        this.updateDisplayedData();
+
+      });
     }
 
-    // 如果存在已保存的條件，使用 patchValue 載入
-    if (savedConditions) {
-      this.searchForm.patchValue(savedConditions);
-    }
-
-    // 重組資料
-    this.caseList = resData.caseList;
-    this.tidyMap = this.tidyData(resData.caseList);
-
-    console.log(this.caseList);
-
-    // 計算總頁數
-    this.calculateTotalPages();
-    this.updateDisplayedData();
 
   }
 
