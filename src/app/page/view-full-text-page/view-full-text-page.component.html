@@ -1,0 +1,85 @@
+<div class="document__toolbar">
+  <div class="btn-group">
+    <!-- 分享按鈕 -->
+    <button class="toolbar-button share-button" (click)="onShare()">
+      <mat-icon>link</mat-icon>
+    </button>
+    <!-- 下載按鈕 -->
+    <button class="toolbar-button download-button" (click)="onDownload()">
+      <mat-icon>download</mat-icon>
+    </button>
+    <!-- PDF 下載按鈕 -->
+    <button class="toolbar-button pdfdownload-button" (click)="onDownloadPDF()">
+      <mat-icon>picture_as_pdf</mat-icon>
+    </button>
+    <!-- 列印按鈕 -->
+    <div class="toolbar-button print-button">
+      <mat-icon>print</mat-icon>
+      <div class="print-options">
+        <div class="arrow-box">
+          <button (click)="onPrint(true)">附帶螢光筆</button>
+          <button (click)="onPrint(false)">不附帶螢光筆</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <!-- 高亮文字區域 -->
+  <span id="toptext" #toptextSpan>{{ toptext }}</span>
+  <br />
+  <span id="buttontext" #buttontextSpan>{{ buttontext }}</span>
+</div>
+
+
+<div class="toolbar toolbar-abs top hidden-print" style="top: 456.188px; left: 327px; opacity: 1;">
+  <div class="toolbar-arrow"></div>
+  <div class="toolbar-content">
+    <!-- 分隔線 -->
+    <div class="line"></div>
+
+    <!-- 複製按鈕 -->
+    <button class="toolbar-inner" id="copy-button" (click)="copyContent()">
+      <div>複製</div>
+    </button>
+
+    <!-- 分隔線 -->
+    <div class="line"></div>
+
+    <!-- 引文複製按鈕 -->
+    <button class="toolbar-inner" id="quote-copy-button" (click)="copyQuote()">
+      <div>引文複製</div>
+    </button>
+
+    <!-- 分隔線 -->
+    <div class="line"></div>
+
+    <!-- 高亮標記工具 -->
+    <!-- 黃色高亮 -->
+    <span class="marker-icon marker-painter-0" (click)="highlightText('yellow', $event)">
+      <i class="ant ant-marker"></i>
+    </span>
+    <!-- 綠色高亮 -->
+    <span class="marker-icon marker-painter-1" (click)="highlightText('lightgreen', $event)">      <i class="ant ant-marker"></i>
+    </span>
+    <!-- 藍色高亮 -->
+    <span class="marker-icon marker-painter-2" (click)="highlightText('lightblue', $event)">
+      <i class="ant ant-marker"></i>
+    </span>
+
+    <!-- 橡皮擦按鈕 -->
+    <!-- 刪除全部螢光效果 -->
+    <span class="marker-icon marker-eraser" (click)="removeAllHighlights()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever"></mat-icon>
+    </span>
+    <!-- 刪除選取範圍內的螢光效果 -->
+    <span class="marker-icon marker-eraser" (click)="removeHighlightsInRange($event)">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="highlight_off"></mat-icon>
+    </span>
+  </div>
+</div>
+
+
+
+<button (click)="returnToPreviousPage()">回上頁</button>

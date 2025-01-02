@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}}),
-    provideHttpClient()
+    provideHttpClient(), provideAnimationsAsync()
 
   ]
 };
