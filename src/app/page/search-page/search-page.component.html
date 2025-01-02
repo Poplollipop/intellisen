@@ -70,8 +70,8 @@
               <p-accordion-content>
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="law"
-                    (keyup)="updateLawsList()" placeholder="例如：刑法第277條" />
-                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用分號隔開</small>
+                    (keyup)="updateLawsList()" placeholder="例如：刑法第277條;刑法271條" />
+                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用分號（;）隔開</small>
                   @if (errorMessage) {
                   <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
                   }
@@ -83,7 +83,6 @@
               <p-accordion-content>
                 <div class="m-0">
                   <div class="case-type">
-                    <p>搜尋案件類型</p>
                     <p-checkbox inputId="ingredient1" name="lawType" value="刑法" [(ngModel)]="lawType" />
                     <label for="ingredient1" class="ml-2"> 刑法 </label>
                     <p-checkbox inputId="ingredient2" name="lawType" value="民法" [(ngModel)]="lawType" />
@@ -103,7 +102,7 @@
               <p-accordion-content>
                 <p class="m-0">
                   <select [(ngModel)]="year" (ngModelChange)="updateCombinedId()">
-                    <option value="">年度</option>
+                    <option value=""></option>
                     @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
                     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index)
                     {

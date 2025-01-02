@@ -21,20 +21,19 @@ export class CaseDetailsComponent {
   @Input() showCaseDetail: boolean = false;
   displayData: any;
 
-  isHighcharts = typeof Highcharts === 'object';
   Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options = {}; // 圖表配置
-  chartType: 'pie' | 'bar' = 'pie'; // 預設圖表類型
-
+  chartOptions: Highcharts.Options = {};  // 圖表配置
 
   constructor(
     private searchSessionService: SearchSessionService,
     public dialog: MatDialog,
     private router : Router,
-  ) { }
+  ) {
+    this.updateChartOptions('pie');
+   }
 
   ngOnInit() {
-    this.updateChartOptions('pie');
+
   }
 
 
@@ -183,7 +182,7 @@ export class CaseDetailsComponent {
   //   });
   // }
 
-  updateChartOptions(type: 'pie' | 'bar'): void {
+  updateChartOptions(type: 'pie' | 'bar') {
     if (type == 'pie') {
       this.chartOptions = {
         chart: {
@@ -194,7 +193,7 @@ export class CaseDetailsComponent {
           text: '刑種全貌圖',
         },
         legend: {
-          enabled: false // 禁用圖例
+          enabled: false    // 禁用圖例
         },
         accessibility: {
           enabled: false,
@@ -203,10 +202,12 @@ export class CaseDetailsComponent {
           enabled: false    // 禁用右下角的 Highcharts.com
         },
         xAxis: {
-          title: undefined
+          categories: undefined,
+          title: undefined,
+          lineWidth: 0,     // 隱藏 x 軸線
         },
         yAxis: {
-          title: undefined
+          title: undefined,
         },
         series: [
           {
@@ -221,7 +222,7 @@ export class CaseDetailsComponent {
           },
         ],
       };
-    } else if (type == 'bar') {
+    } if (type == 'bar') {
       this.chartOptions = {
         chart: {
           type: 'column',
@@ -230,15 +231,18 @@ export class CaseDetailsComponent {
         title: {
           text: '刑度年度統計圖',
         },
+        accessibility: {
+          enabled: false,
+        },
+        legend: {
+          enabled: false // 禁用圖例
+        },
         xAxis: {
           categories: ['90', '91', '92', '93'],
           title: { text: '年度' },
         },
         yAxis: {
           title: { text: '數量' },
-        },
-        accessibility: {
-          enabled: false,
         },
         series: [
           {
@@ -251,9 +255,16 @@ export class CaseDetailsComponent {
     }
   }
 
-  renderChart(type: 'pie' | 'bar'): void {
-    this.chartType = type;
+  renderChart(type: 'pie' | 'bar') {
+
+    console.log(this.chartOptions.chart)
+
+    // 更新圖表
     this.updateChartOptions(type);
+
+    // 強制觸發 Angular 變更檢測
+    this.chartOptions = { ...this.chartOptions };
+
   }
 
 

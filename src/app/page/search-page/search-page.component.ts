@@ -131,7 +131,7 @@ export class SearchPageComponent {
   // 驗證法條輸入內容
   validateInput(input: string): boolean {
     // 禁止特殊符號：僅允許中文、文字、數字及空白
-    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
+    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?\uFF01-\uFF0F\uFF1A-\uFF5E]*$/;
     return regex.test(input);
   }
 
