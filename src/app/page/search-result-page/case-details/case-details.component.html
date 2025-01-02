@@ -89,8 +89,11 @@
       <!-- 圖表容器 -->
       <!-- <div id="chartContainer1" style="width: 90vh; height: 80vh;"></div> -->
 
-      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
-        style="width: 90vh; height: 80vh"></highcharts-chart>
+      @defer {
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="width: 90vh; height: 80vh">
+      </highcharts-chart>
+      }
+
 
     </div>
 

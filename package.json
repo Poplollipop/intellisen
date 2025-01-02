@@ -26,6 +26,7 @@
     "@primeng/themes": "^19.0.1",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
+    "highcharts": "^12.1.2",
     "highcharts-angular": "^4.0.1",
     "intellisen": "file:",
     "ngx-ui-loader": "^13.0.0",

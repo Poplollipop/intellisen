@@ -21,7 +21,8 @@ export class CaseDetailsComponent {
   @Input() showCaseDetail: boolean = false;
   displayData: any;
 
-  Highcharts: typeof Highcharts = Highcharts; // Highcharts 實例
+  isHighcharts = typeof Highcharts === 'object';
+  Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {}; // 圖表配置
   chartType: 'pie' | 'bar' = 'pie'; // 預設圖表類型
 
