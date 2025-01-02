@@ -42,19 +42,71 @@
 
 
 .p-field{
+  margin-top: 1rem;
+
   input{
     display: block;
+    height: 2.3rem;
     width: 20rem;
+    background-color: #f8f8f8;
+    color: black;
+    border: 1px solid black;
+    border-radius: 2px;
+  }
+
+  input:disabled{
+    display: block;
+    width: 20rem;
+    background-color: #f8f8f8;
+    color: rgb(182, 182, 182);
+    border: none;
+    border-radius: 2px;
+  }
+
+  select{
+    padding: 0.2rem;
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+    background-color: #f8f8f8;
+    color: black;
+  }
+
+  select:disabled{
+    padding: 0.2rem;
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+    background-color: rgb(181, 181, 181);
+    color:#ccc;
+    border: none;
   }
 
   p-multiselect{
-    height: 30px;
+    height: 2.5rem;
     width: 20rem;
     border-radius: 2px;
+    border: 1px solid black;
     background-color: #f8f8f8;
   }
 
+  .p-multiselect.p-disabled{
+    background-color: #f7f7f7;
+    border: none;
+  }
 
+}
+
+.btn{
+  ::ng-deep button{
+   background-color: #3694f9;
+   border: none;
+   margin-top: 0.9rem;
+  }
+}
+
+.btn {
+  ::ng-deep button:hover{
+    background-color: #037dff;
+  }
 }
 
 

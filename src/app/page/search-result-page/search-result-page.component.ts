@@ -28,15 +28,17 @@ import { MultiSelectModule } from 'primeng/multiselect';
 })
 
 export class SearchResultPageComponent {
-  tidyMap!: any; // 整理後的 map
-  caseList: any[] = []; // 接後端的東西
-  selectedCaseId!: string; // 選中的案件id
-  showCaseDetail : boolean = false; // 顯示案件細節
+  tidyMap!: any;    // 整理後的 map
+  caseList: any[] = [];       // 接後端的東西
+  selectedCaseId!: string;    // 選中的案件id
+  showCaseDetail : boolean = false;     // 顯示案件細節
 
   groupedCourts!: any;
   searchForm!: FormGroup;
   visible2: boolean = false;
   editMode = false;
+  errorMessage: string = '';    // 法條錯誤提示訊息
+  lawList!: string[];     // 整理後的法院字串
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -143,22 +145,6 @@ export class SearchResultPageComponent {
 
   }
 
-
-  toggleEditMode(): void {
-    this.editMode = !this.editMode;
-    if (this.editMode) {
-      this.searchForm.enable();   // 啟用所有欄位
-    } else {
-      this.searchForm.disable();  // 禁用所有欄位
-    }
-  }
-
-  saveChanges(): void {
-    if (this.searchForm.valid) {
-      this.searchSessionService.setSearchConditions(this.searchForm.value);
-      alert('搜尋條件已保存！');
-    }
-  }
 
   // 將字號轉換為顯示的格式
   formatCaseId(caseId: string): string {
@@ -271,12 +257,57 @@ export class SearchResultPageComponent {
     }
   }
 
-
+  // 用在父元件傳到子元件的id
   selectId(id: string) {
     this.selectedCaseId = id;
   }
 
 
+  // 下面是搜尋條件相關
+
+  // 驗證法條輸入內容
+  validateInput(input: string): boolean {
+    // 禁止特殊符號：僅允許中文、文字、數字及空白
+    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
+    return regex.test(input);
+  }
+
+  // 法條輸入格式錯誤訊息
+  
+
+  // 更新法條列表
+  updateLawsList(lawString: any) {
+    if (this.validateInput(lawString) && typeof lawString == 'string' ) {
+      this.errorMessage = '';
+      this.lawList = lawString.split(';').filter(lawString => lawString.trim() !== '');
+    } else {
+      this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
+    }
+  }
+
+  // 搜尋條件編輯模式
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    if (this.editMode) {
+      this.searchForm.enable();   // 啟用所有欄位
+    } else {
+      this.searchForm.disable();  // 禁用所有欄位
+    }
+  }
+
+  // 搜尋條件再搜尋
+  searchAgain() {
+    const updateCondition = this.searchForm.value;
+    console.log("更改的搜尋條件:",updateCondition);
+
+    const tidyLaw = this.updateLawsList(updateCondition.law);
+
+    const sendApiData = {
+      ...updateCondition,
+      law: tidyLaw  //  整理後的法條
+    }
+
+  }
 
 
 
