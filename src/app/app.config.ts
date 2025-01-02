@@ -6,7 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 // const ngx: NgxUiLoaderConfig = {
 //   text: "載入中...",
@@ -22,12 +22,17 @@ import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideClientHydration(withEventReplay()),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
     // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
     providePrimeNG({theme: {preset: Aura}}),
+<<<<<<< HEAD
     provideHttpClient(), provideAnimationsAsync()
+=======
+    provideHttpClient(withFetch())
+>>>>>>> fa0946cfbec44d1ff4f5ff774fd5d91a3b613333
 
   ]
 };

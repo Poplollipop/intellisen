@@ -13,12 +13,13 @@
     <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
       aria-expanded="false" aria-controls="collapseExample" (click)="toggleAdvanced()">
       @if (!isExpanded) {
-      <span>
+      <span class="d-flex align-items-center">
         進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
       </span>
+
       }
       @if (isExpanded) {
-      <span>
+      <span class="d-flex align-items-center">
         收起篩選條件 <mat-icon>keyboard_arrow_up</mat-icon>
       </span>
       }
@@ -33,7 +34,7 @@
       <div class="layout-container">
         <!-- 左邊的 Accordion -->
         <div class=" flex justify-center accordion-container">
-          <p-accordion [multiple]="true">
+          <p-accordion class="custom1" [multiple]="true">
             <p-accordion-panel value="0">
               <p-accordion-header>裁判案由</p-accordion-header>
               <p-accordion-content>
@@ -70,7 +71,7 @@
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="law"
                     (keyup)="updateLawsList()" placeholder="例如：刑法第277條" />
-                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用空白隔開</small>
+                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用分號隔開</small>
                   @if (errorMessage) {
                   <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
                   }

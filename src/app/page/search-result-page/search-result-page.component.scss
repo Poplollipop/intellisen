@@ -1,7 +1,73 @@
 .show-search-btn {
-  text-align: end;
-  margin-right: 1rem;
-  margin-top: 1rem;
+  display: flex;
+  margin-bottom: 1%;
+  position: relative;
+
+  // 按鈕基本樣式
+  .case-preview-button,
+  .statistics-button,
+  .select-condition-button {
+    transition: 0.2s;
+
+    ::ng-deep button {
+      color: black;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 8px;
+
+      span {
+        font-size: 20px;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-0.5px);
+      box-shadow: 2px 2px 5px 2px gray;
+    }
+
+    &:active {
+      transform: translateX(1px);
+    }
+
+  }
+
+  // 預覽個案
+  .case-preview-button {
+    margin-left: 1%;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: white;
+    }
+  }
+
+  // 統計
+  .statistics-button {
+    margin-left: 5%;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: white;
+    }
+  }
+
+  // 返回首頁
+  .back-button{
+    margin-left: 3rem;
+  }
+
+  // 搜尋條件
+  .select-condition-button {
+    position: absolute;
+    right: 0;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: #ffe8a3;
+    }
+  }
+
+
 }
 
 /* 搜尋結果的左右佈局 */
@@ -12,9 +78,11 @@
 }
 
 .case-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1.5;
   overflow-y: auto;
-  border-right: 1px solid #ccc;
   padding: 10px;
 
   .clickable {
@@ -33,32 +101,114 @@
 
 
 .p-field{
+  margin-top: 1rem;
+
   input{
     display: block;
+    height: 2.3rem;
     width: 20rem;
+    background-color: #f8f8f8;
+    color: black;
+    border: 1px solid black;
+    border-radius: 2px;
+  }
+
+  input:disabled{
+    display: block;
+    width: 20rem;
+    background-color: #f8f8f8;
+    color: rgb(182, 182, 182);
+    border: none;
+    border-radius: 2px;
+  }
+
+  select{
+    padding: 0.2rem;
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+    background-color: #f8f8f8;
+    color: black;
+  }
+
+  select:disabled{
+    padding: 0.2rem;
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+    background-color: rgb(181, 181, 181);
+    color:#ccc;
+    border: none;
   }
 
   p-multiselect{
-    height: 30px;
+    height: 2.5rem;
     width: 20rem;
     border-radius: 2px;
+    border: 1px solid black;
     background-color: #f8f8f8;
   }
 
+  .p-multiselect.p-disabled{
+    background-color: #f7f7f7;
+    border: none;
+  }
 
+}
+
+.btn{
+  ::ng-deep button{
+   background-color: #3694f9;
+   border: none;
+   margin-top: 0.9rem;
+  }
+}
+
+.btn {
+  ::ng-deep button:hover{
+    background-color: #037dff;
+  }
 }
 
 
 .display-button {
+  width: 85%;
   padding: 10px 20px;
   margin: 10px;
   border: none; // 去掉邊框
   border-radius: 30px;
-  background-color: #91b2ff;
+  background-color: #bde3ff;
   color: rgb(0, 0, 0);
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease; // 增加顏色變換的過渡效果
+  display: flex;
+
+  span {
+    margin-left: 5%;
+    font-size: 20px;
+  }
+
+  &:focus {
+    border: 2px solid black;
+  }
+}
+
+.normal-button {
+  font-size: 23px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: 0.2s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 2px 2px 6px 2px gray;
+  }
+
+  &:active {
+    transform: translate(1px);
+  }
+
 }
 
 // 按鈕懸停時的樣式
@@ -66,74 +216,14 @@
   background-color: #b7cbf0; // 設置懸停時的背景顏色
 }
 
-// p {
-//   font-weight: bold;
-// }
-
-// .condition {
-//   font-weight: bold;
-//   color: #0039bf;
-// }
-
-// .search {
-//   margin-top: 20%;
-//   border: 2px solid #ccc;
-//   border-radius: 20px;
-//   padding: 20px;
-//   background-color: #f9fafe;
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// .basic-search {
-//   display: flex;
-//   flex-direction: column; // 子元素會在垂直方向（從上到下）排列
-//   justify-content: center;
-// }
-
-// hr {
-//   border: black 5px solid;
-// }
-
-// .keywords {
-//   margin-bottom: 20px;
-//   font-weight: bold;
-// }
-
-// .advanced-search-left, .advanced-search-right {
-//   padding: 10px;
-// }
-
-
-// .search-result {
-//   display: flex;
-//   justify-content: space-between;
-//   gap: 20px; // 兩個區塊之間的間距
-// }
-
-// .search-result-left {
-//   flex: 4; // 左邊區塊佔 4 單位
-// }
-
-// .search-result-right {
-//   flex: 6; // 右邊區塊佔 6 單位
-//   box-sizing: border-box; // 包括邊框和內邊距在內
-// }
-
-// // .card {
-// //   padding: 10px;
-// //   border: 1px solid #ccc;
-// // }
-
-// .category {
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 10px 0;
-// }
-// .category div {
-//   font-weight: bold;
-//   margin-right: 20px;
-//   background-color: #ccc;
-// }
-
-
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+.ellipsis {
+  margin: 0 5px;
+}

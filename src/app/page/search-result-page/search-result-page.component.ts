@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
@@ -28,25 +29,17 @@ import { Router } from '@angular/router';
 })
 
 export class SearchResultPageComponent {
-  caseType: string = ''; // 顯示的案由
-  charge: string = ''; // 顯示的案由
-  court: string = ''; // 顯示的法院
-  docType: string = ''; // 顯示的種類，如裁定或判決等
-  law: string = ''; // 顯示的相關法條
-  verdictDate: string = ''; // 顯示的裁判日期
-  id: string = ''; // 顯示的裁判字號
-  judgeName: string = ''; //法官姓名
-  defendantName: string = ''; // 被告姓名
-  content: string = ''; // 裁判書內文
-  tidyMap!: any; // 整理後的 map
-  displayData!: any; // 右側顯示的資料
-  caseList: any[] = []; // 接後端的東西
-  selectedCaseId!: string; // 選中的案件id
+  tidyMap!: any;    // 整理後的 map
+  caseList: any[] = [];       // 接後端的東西
+  selectedCaseId!: string;    // 選中的案件id
+  showCaseDetail : boolean = false;     // 顯示案件細節
 
   groupedCourts!: any;
   searchForm!: FormGroup;
   visible2: boolean = false;
   editMode = false;
+  errorMessage: string = '';    // 法條錯誤提示訊息
+  lawList!: string[];     // 整理後的法院字串
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -147,55 +140,15 @@ export class SearchResultPageComponent {
     this.tidyMap = this.tidyData(resData.caseList);
 
     console.log(this.caseList);
+
     // 計算總頁數
     this.calculateTotalPages();
+    this.updateDisplayedData();
 
   }
 
 
-  toggleEditMode(): void {
-    this.editMode = !this.editMode;
-    if (this.editMode) {
-      this.searchForm.enable();   // 啟用所有欄位
-    } else {
-      this.searchForm.disable();  // 禁用所有欄位
-    }
-  }
-
-  saveChanges(): void {
-    if (this.searchForm.valid) {
-      this.searchSessionService.setSearchConditions(this.searchForm.value);
-      alert('搜尋條件已保存！');
-    }
-  }
-
-
-
-
-  // 搜尋
-  // private initializeSearchData(): void {
-  //   this.caseType = this.searchSessionService.searchData.caseType;
-  //   this.charge = this.searchSessionService.searchData.charge;
-  //   this.docType = this.searchSessionService.searchData.docType;
-  //   this.law = this.searchSessionService.searchData.law;
-  //   this.searchName = this.searchSessionService.searchData.searchName;
-
-  //   // 如果有輸入法院才串接
-  //   if (this.searchSessionService.searchData.courtList) {
-  //     this.courtList = this.searchSessionService.searchData.courtList
-  //       .map((item: any) => this.sessionServiceService.turnCodeToName(item))
-  //       .join('、');
-  //   }
-
-  //   // 如果有輸入日期才串接
-  //   if (this.searchSessionService.searchData.verdictStartDate && this.searchSessionService.searchData.verdictEndDate) {
-  //     this.verdictStartDate = this.sessionServiceService.convertToROCDate(new Date(this.searchSessionService.searchData.verdictStartDate));
-  //     this.verdictEndDate = this.sessionServiceService.convertToROCDate(new Date(this.searchSessionService.searchData.verdictEndDate));
-  //   }
-
-  //   // console.log(this.searchSessionService.searchData);
-  // }
-
+  // 將字號轉換為顯示的格式
   formatCaseId(caseId: string): string {
     const regex = /(\d+)(年度)?([^字第]+)(字)?(第)?(\d+)/; // 以「/」定義正規表達式的開始與結束
     const match = caseId.match(regex); // 使用 match() 方法來匹配
@@ -209,8 +162,8 @@ export class SearchResultPageComponent {
     }
   }
 
-   // 重組資料
-   private tidyData(rawData: any): void {
+  // 重組資料
+  private tidyData(rawData: any): void {
     // 以 id 作為分組依據
     this.tidyMap = rawData.reduce((result: any, item: any) => {
       if (!result[item.id]) {
@@ -238,50 +191,80 @@ export class SearchResultPageComponent {
     // console.log(this.tidyMap);
   }
 
-  // 顯示左側的資料
-  display(id: string): void {
-    this.displayData = this.searchSessionService.tidyMap[id];
-    this.judgeName = this.displayData.judgeName;
-    this.defendantName = this.displayData.defendantName;
-    this.charge = this.displayData.charge;
-    this.verdictDate = this.displayData.verdictDate;
-    this.court = this.displayData.court;
-    this.docType = this.displayData.docType;
-    this.content = this.displayData.content;
-
-    // console.log(this.displayData);
-    console.log(id);
-    console.log(this.displayData);
-  }
-
 
   page: number = 1; // 當前頁碼
-  itemsPerPage: number = 10; // 每頁顯示的項目數量
+  itemsPerPage: number = 15; // 每頁顯示的項目數量
   totalPages: number = 1; // 總頁數
+  pageNumbers: number[] = []; // 儲存頁碼的陣列
+  displayedData: any[] = []; // 當前頁顯示的資料
 
   calculateTotalPages() {
+    // this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
+    // if (this.totalPages === 0) {
+    //   this.totalPages = 1; // 如果沒有資料，預設為 1 頁
+    // }
+
     this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
     if (this.totalPages === 0) {
-      this.totalPages = 1; // 如果沒有資料，預設為 1 頁
+      this.totalPages = 1;
     }
+
+    // 計算頁碼範圍，最多顯示5頁，並且聚焦當前頁
+    let startPage = Math.max(this.page - 2, 1); // 當前頁的前2頁
+    let endPage = Math.min(this.page + 2, this.totalPages); // 當前頁的後2頁
+
+    // 如果顯示的頁碼範圍小於5頁，根據情況調整
+    if (endPage - startPage < 4) {
+      if (startPage === 1) {
+        endPage = Math.min(startPage + 4, this.totalPages); // 從第一頁開始顯示最多5頁
+      } else if (endPage === this.totalPages) {
+        startPage = Math.max(endPage - 4, 1); // 顯示最後的5頁
+      }
+    }
+
+    this.pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
+    // 如果當前頁超過總頁數，設置為總頁數
+    if (this.page > this.totalPages) {
+      this.page = this.totalPages;
+    }
+
+    this.updateDisplayedData();
+  }
+
+  updateDisplayedData() {
+    const start = (this.page - 1) * this.itemsPerPage;
+    const end = Math.min(this.page * this.itemsPerPage, this.caseList.length); // 保證 end 不會超過資料長度
+    this.displayedData = this.caseList.slice(start, end);
   }
 
   previousPage() {
     if (this.page > 1) {
       this.page--;
+      this.updateDisplayedData();
     }
   }
 
   nextPage() {
     if (this.page < this.totalPages) {
       this.page++;
+      this.updateDisplayedData();
     }
   }
 
-  selectId(id: string){
+  selectPage(pageNumber: number) {
+    if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+      this.page = pageNumber;
+      this.updateDisplayedData();
+    }
+  }
+
+  // 用在父元件傳到子元件的id
+  selectId(id: string) {
     this.selectedCaseId = id;
   }
 
+<<<<<<< HEAD
   // 查看全文
   viewFullText(){
     this.router.navigate(['/full-text']);
@@ -291,6 +274,60 @@ export class SearchResultPageComponent {
   returnToPreviousPage(){
     this.router.navigate(['/search']);
   }
+=======
+  // 返回搜尋畫面
+  backToSearchPage() {
+    this.router.navigateByUrl('search')
+   }
+
+  // 下面是搜尋條件相關
+
+  // 驗證法條輸入內容
+  validateInput(input: string): boolean {
+    // 禁止特殊符號：僅允許中文、文字、數字及空白
+    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
+    return regex.test(input);
+  }
+
+  // 法條輸入格式錯誤訊息
+
+
+  // 更新法條列表
+  updateLawsList(lawString: any) {
+    if (this.validateInput(lawString) && typeof lawString == 'string' ) {
+      this.errorMessage = '';
+      this.lawList = lawString.split(';').filter(lawString => lawString.trim() !== '');
+    } else {
+      this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
+    }
+  }
+
+  // 搜尋條件編輯模式
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    if (this.editMode) {
+      this.searchForm.enable();   // 啟用所有欄位
+    } else {
+      this.searchForm.disable();  // 禁用所有欄位
+    }
+  }
+
+  // 搜尋條件再搜尋
+  searchAgain() {
+    const updateCondition = this.searchForm.value;
+    console.log("更改的搜尋條件:",updateCondition);
+
+    const tidyLaw = this.updateLawsList(updateCondition.law);
+
+    const sendApiData = {
+      ...updateCondition,
+      law: tidyLaw  //  整理後的法條
+    }
+
+  }
+
+
+>>>>>>> fa0946cfbec44d1ff4f5ff774fd5d91a3b613333
 
 }
 

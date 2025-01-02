@@ -26,8 +26,32 @@ html, body {
   background-color: #ffffff !important;
 }
 
+.p-accordioncontent-content {
+  background-color: transparent !important;
+  color: #ffffff !important; /* 自訂內容文字顏色 */
+}
 
+.p-multiselect-overlay{
+  background-color: rgb(240, 240, 240) !important;
+  color: #666666 !important;
+}
 
+.p-multiselect-option{
+  color: black !important;
+}
+
+.p-drawer{
+  background-color: white !important;
+  color: black !important;
+}
+
+:root{
+  --p-checkbox-background:#ffffff !important;
+  --p-multiselect-option-focus-background:#a5a5a5 !important;
+  --p-multiselect-hover-border-color: #40ee2c !important;
+  --p-inputtext-background: #ffffff !important;
+  --p-inputtext-color: #334155 !important;
+}
 
 
 html, body { height: 100%; }

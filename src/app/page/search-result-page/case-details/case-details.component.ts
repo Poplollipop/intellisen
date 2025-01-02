@@ -1,6 +1,8 @@
 import { SearchSessionService } from './../../../service/search-session.service';
 import { Component, Input } from '@angular/core';
 import Highcharts from 'highcharts';
+import { CaseViewComponent } from '../../../component/case-view/case-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-case-details',
@@ -8,34 +10,38 @@ import Highcharts from 'highcharts';
   templateUrl: './case-details.component.html',
   styleUrl: './case-details.component.scss'
 })
+
 export class CaseDetailsComponent {
 
-  @Input() caseId: string | null = null;
+  @Input() caseId!: string;
+  @Input() showCaseDetail: boolean = false;
   displayData: any;
 
 
   constructor(
-    private searchSessionService: SearchSessionService
+    private searchSessionService: SearchSessionService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    // 模擬案件資料查詢
-    if (this.caseId) {
-      this.displayData = this.searchSessionService.tidyMap[this.caseId]
-        // judgeName: this.displayData.judgeName,
-        // defendantName: this.displayData.defendantName,
-        // charge: this.displayData.charge,
-        // verdictDate: this.displayData.verdictDate,
-        // court:  this.displayData.court,
-        // docType: this.displayData.docType,
-        // content: this.displayData.content
-      }
-    }
+  }
 
+  // 初始化圖表
+  ngAfterViewInit(): void {
+    this.renderChart('pie');
+  }
 
   ngOnChanges() {
     // 當 caseId 變更時更新資料
-    this.ngOnInit();
+    this.displayCase();
+    // 切換
+    this.showCaseDetail;
+  }
+
+  displayCase() {
+    if (this.caseId) {
+      this.displayData = this.searchSessionService.tidyMap[this.caseId]
+    }
   }
 
   // 表格的動態數據，這裡的數據可以從 API 獲取
@@ -64,8 +70,6 @@ export class CaseDetailsComponent {
   ];
 
   // 圖表區
-
-
   Highcharts: typeof Highcharts = Highcharts; // Highcharts 實例
   chart: Highcharts.Chart | undefined; // 儲存圖表實例
   chartType: string = 'pie'; // 預設圖表類型
@@ -101,10 +105,7 @@ export class CaseDetailsComponent {
     bar: ['#6A1B9A', '#9C27B0', '#CE93D8', '#BA68C8'] // 長條圖顏色
   };
 
-  // 初始化圖表
-  ngAfterViewInit(): void {
-    this.renderChart('pie');
-  }
+
 
   // 渲染圖表
   renderChart(type: 'pie' | 'bar'): void {
@@ -169,7 +170,20 @@ export class CaseDetailsComponent {
   }
 
 
+  // 件數跳出dialog
+  // 開啟Dialog，並將「件數」作為參數傳遞
+  openDialog(count: number): void {
+    const dialogRef = this.dialog.open(CaseViewComponent, {
+      maxWidth: '100vw',
+      height: '80%',
+      width: '80%',
+      data: { count: count } // 傳入該行的件數
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+    });
+  }
 
 
 }

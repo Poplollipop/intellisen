@@ -1,37 +1,40 @@
-<!-- 搜尋條件drawer觸發按鈕 -->
-<div class="show-search-btn">
-  <p-button type="button" (click)="visible2 = true" label="搜索條件" />
-</div>
-
 <!-- 主要內容 -->
 <div class="search-result-container">
 
   <!-- 左側案件列表 -->
   <div class="case-list">
     <h3>案件列表</h3>
-    @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track  $index) {
-      <button (click)="display(item.id);selectId(item.id)" class="display-button">
+    @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track $index) {
+    <button (click)="selectId(item.id);showCaseDetail = true" class="display-button">
+      <span>
         {{ this.sessionServiceService.turnCodeToName(item.court) }}
         {{ formatCaseId(item.id) }}
         {{ item.charge }}
         {{ item.caseType }}
         {{ item.docType }} >
-      </button>
+      </span>
+    </button>
     }
 
-      <!-- 分頁控制 -->
-      <div>
-        <button (click)="previousPage()">上一頁</button>
-        <span>{{ page }} / {{ totalPages }}</span>
-        <button (click)="nextPage()">下一頁</button>
-      </div>
+    <!-- 分頁控制 -->
+    <div class="paginator">
+      <button class="normal-button" (click)="previousPage()">上一頁</button>
+      <span class="page">{{ page }} / {{ totalPages }}</span>
+      <button class="normal-button" (click)="nextPage()">下一頁</button>
+    </div>
   </div>
-
-
 
   <!-- 右側內容顯示 -->
   <div class="case-details">
-    <app-case-details [caseId]="selectedCaseId"></app-case-details>
+    <!-- 搜尋條件drawer觸發按鈕 -->
+    <div class="show-search-btn">
+      <p-button class="case-preview-button" type="button" label="案件預覽" size="large" (click)="showCaseDetail = true" />
+      <p-button class="statistics-button" type="button" label="&emsp;統計&emsp;" size="large"
+        (click)="showCaseDetail = false" /> <!-- &emsp; 是全形空白 = 一個中文字 -->
+        <button class="normal-button back-button" (click)="backToSearchPage()">回首頁</button>
+      <p-button class="select-condition-button" type="button" size="large" (click)="visible2 = true" label="更改搜索條件" />
+    </div>
+    <app-case-details [caseId]="selectedCaseId" [showCaseDetail]="showCaseDetail"></app-case-details>
   </div>
 
 </div>
@@ -39,7 +42,7 @@
 <button class="viewFullText" (click)="viewFullText()">查看全文</button> <button (click)="returnToPreviousPage()">回上頁</button>
 
 <!-- drawer -->
-<p-drawer header="您目前的搜尋：" [(visible)]="visible2" position="right" [style]="{ width: '400px' }">
+<p-drawer header="您目前的搜尋條件：" [(visible)]="visible2" position="right" [style]="{ width: '400px' }">
   <form [formGroup]="searchForm">
     <p-fluid>
 
@@ -56,6 +59,9 @@
       <div class="p-field">
         <label for="law">法條：</label>
         <input id="law" type="text" pInputText formControlName="law" />
+        @if (errorMessage) {
+          <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+          }
       </div>
 
       <div class="p-field">
@@ -65,8 +71,8 @@
 
       <div class="p-field">
         <label for="courtList">法院：</label>
-        <p-multiselect [options]="groupedCourts" [group]="true" formControlName="courtList" scrollHeight="250px"
-          display="chip" styleClass="w-full">
+        <p-multiselect class="muti-select" [options]="groupedCourts" [group]="true" formControlName="courtList" scrollHeight="250px"
+          display="chip" appendTo="body" styleClass="w-full">
           <ng-template let-group #group>
             <div class="flex items-center">
               <span>{{ group.label }}</span>
@@ -93,15 +99,15 @@
 
       <div class="p-field">
         <label for="docType">裁判種類：</label>
-        <select id="docType" formControlName="docType" class="p-inputtext">
+        <select id="docType" formControlName="docType">
           <option value="">請選擇種類</option>
           <option value="判決">判決</option>
           <option value="裁定">裁定</option>
         </select>
       </div>
 
-      <p-button type="button" label="搜尋" (click)="saveChanges()"></p-button>
-      <p-button type="button" [label]="editMode ? '完成編輯' : '編輯'" (click)="toggleEditMode()"></p-button>
+      <p-button type="button" class="btn" label="搜尋" (click)="searchAgain()"></p-button>
+      <p-button type="button" class="btn" [label]="editMode ? '完成編輯' : '編輯'" (click)="toggleEditMode()"></p-button>
 
     </p-fluid>
   </form>

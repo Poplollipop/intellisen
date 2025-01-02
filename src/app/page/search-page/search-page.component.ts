@@ -128,43 +128,25 @@ export class SearchPageComponent {
   }
 
 
-  // 驗證輸入內容
+  // 驗證法條輸入內容
   validateInput(input: string): boolean {
     // 禁止特殊符號：僅允許中文、文字、數字及空白
-    const regex = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
     return regex.test(input);
   }
 
   // 更新法條列表
   updateLawsList() {
-    const isValid = this.validateInput(this.law);
-
-    if (isValid) {
+    if (this.validateInput(this.law)) {
       this.errorMessage = '';
-      this.lawList = this.law.split(' ').filter(law => law.trim() !== '');
+      this.lawList = this.law.split(';').filter(law => law.trim() !== '');
     } else {
-      this.errorMessage = '輸入內容包含不合法的特殊符號，請重新輸入';
+      this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
     }
   }
 
 
   confirm() {
-    // const data: InputSearchData = {
-    //   searchName: this.keywords,            // 關鍵字
-    //   charge: this.inputCase,               // 案由
-    //   law: this.lawList,                    // 選擇法條
-    //   courtList: this.inputCourts,          // 選擇法院
-    //   caseType: this.lawType,               // 刑法or民法
-    //   verdictStartDate: this.startDate,     // 開始時間
-    //   verdictEndDate: this.endDate,         // 結束時間
-    //   verdictId: this.combinedId,           // 字號
-    //   docType: this.caseType,               // 裁判種類
-    // }
-    // this.searchSessionService.setSearchConditions(data);
-    // this.router.navigate(['/search-result']);
-
-    // console.log(data);
-
     const tidyData = {
       searchName: this.keywords,
       caseType: this.lawType,
@@ -181,22 +163,6 @@ export class SearchPageComponent {
     this.searchSessionService.searchData = tidyData;
     console.log("存入的資料:", tidyData);
     this.router.navigate(['/search-result']);
-
-    // this.http.postApi('http://localhost:8080/case/search', tidyData)
-    //   .subscribe(
-    //     (response: any) => {
-    //       // console.log('搜尋結果:', response);
-    //       this.searchSessionService.searchData = response;
-    //     }
-    //   )
-
-
-    // this.http.postApi('http://localhost:8080/case/search', tidyData)
-    // .subscribe(
-    //     (response: any) => {
-    //     console.log('搜尋結果:', response);
-    //   }
-    // )
   }
 }
 
