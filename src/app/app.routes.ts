@@ -15,5 +15,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterPageComponent },   // 註冊頁面
   { path: 'search', component: SearchPageComponent},         // 搜尋頁
   { path: 'search-result', component: SearchResultPageComponent }, // 搜尋結果頁面
-  { path: 'full-text', component: ViewFullTextPageComponent } // 查看全文頁面
+  { path: 'full-text', component: ViewFullTextPageComponent }, // 查看全文頁面
+  { path: 'full-text/:id', component: ViewFullTextPageComponent } // 查看全文頁面
 ];
