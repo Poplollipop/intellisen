@@ -30,8 +30,8 @@
     <div class="show-search-btn">
       <p-button class="case-preview-button" type="button" label="案件預覽" size="large" (click)="showCaseDetail = true" />
       <p-button class="statistics-button" type="button" label="&emsp;統計&emsp;" size="large"
-        (click)="showCaseDetail = false" /> <!-- &emsp; 是全形空白 = 一個中文字 -->
-        <button class="normal-button back-button" (click)="backToSearchPage()">回首頁</button>
+        (click)="showCaseDetail = false" /> <!-- &emsp; 全形空白 = 一個中文字 ; &ensp; 半形空白 = 半個中文字-->
+        <button class="normal-button back-button" (click)="backToSearchPage()">&ensp;回首頁&ensp;</button>
       <p-button class="select-condition-button" type="button" size="large" (click)="visible2 = true" label="更改搜索條件" />
     </div>
     <app-case-details [caseId]="selectedCaseId" [showCaseDetail]="showCaseDetail"></app-case-details>
