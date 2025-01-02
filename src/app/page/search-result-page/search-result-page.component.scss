@@ -1,17 +1,73 @@
 .show-search-btn {
   display: flex;
+  margin-bottom: 1%;
   position: relative;
-  .case-preview-button{
+
+  // 按鈕基本樣式
+  .case-preview-button,
+  .statistics-button,
+  .select-condition-button {
+    transition: 0.2s;
+
+    ::ng-deep button {
+      color: black;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 8px;
+
+      span {
+        font-size: 20px;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-0.5px);
+      box-shadow: 2px 2px 5px 2px gray;
+    }
+
+    &:active {
+      transform: translateX(1px);
+    }
+
+  }
+
+  // 預覽個案
+  .case-preview-button {
     margin-left: 1%;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: white;
+    }
   }
-  .statistics-button{
+
+  // 統計
+  .statistics-button {
     margin-left: 5%;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: white;
+    }
   }
-  .select-condition-button{
+
+  // 返回首頁
+  .back-button{
+    margin-left: 3rem;
+  }
+
+  // 搜尋條件
+  .select-condition-button {
     position: absolute;
     right: 0;
+
+    // 按鈕個別顏色
+    ::ng-deep button {
+      background-color: #ffe8a3;
+    }
   }
-  margin-bottom: 1%;
+
+
 }
 
 /* 搜尋結果的左右佈局 */
@@ -22,9 +78,11 @@
 }
 
 .case-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1.5;
   overflow-y: auto;
-  border-right: 1px solid #ccc;
   padding: 10px;
 
   .clickable {
@@ -111,16 +169,26 @@
 
 
 .display-button {
+  width: 85%;
   padding: 10px 20px;
   margin: 10px;
   border: none; // 去掉邊框
   border-radius: 30px;
-  background-color: #91b2ff;
+  background-color: #bde3ff;
   color: rgb(0, 0, 0);
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease; // 增加顏色變換的過渡效果
-  display: block;
+  display: flex;
+
+  span {
+    margin-left: 5%;
+    font-size: 20px;
+  }
+
+  &:focus {
+    border: 2px solid black;
+  }
 }
 
 // 按鈕懸停時的樣式

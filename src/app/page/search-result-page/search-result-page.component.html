@@ -6,35 +6,33 @@
     <h3>案件列表</h3>
     @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track $index) {
     <button (click)="selectId(item.id);showCaseDetail = true" class="display-button">
-      {{ this.sessionServiceService.turnCodeToName(item.court) }}
-      {{ formatCaseId(item.id) }}
-      {{ item.charge }}
-      {{ item.caseType }}
-      {{ item.docType }} >
+      <span>
+        {{ this.sessionServiceService.turnCodeToName(item.court) }}
+        {{ formatCaseId(item.id) }}
+        {{ item.charge }}
+        {{ item.caseType }}
+        {{ item.docType }} >
+      </span>
     </button>
     }
 
     <!-- 分頁控制 -->
-    <div>
-      <button (click)="previousPage()">上一頁</button>
-      <span>{{ page }} / {{ totalPages }}</span>
-      <button (click)="nextPage()">下一頁</button>
+    <div class="paginator">
+      <button class="normal-button" (click)="previousPage()">上一頁</button>
+      <span class="page">{{ page }} / {{ totalPages }}</span>
+      <button class="normal-button" (click)="nextPage()">下一頁</button>
     </div>
   </div>
 
-
-
   <!-- 右側內容顯示 -->
   <div class="case-details">
-
     <!-- 搜尋條件drawer觸發按鈕 -->
     <div class="show-search-btn">
-      <p-button class="case-preview-button" severity="secondary" type="button" label="案件預覽" size="large"
-        (click)="showCaseDetail = true" />
-      <p-button class="statistics-button" severity="secondary" type="button" label="統計" size="large"
-        (click)="showCaseDetail = false" />
-      <p-button class="select-condition-button" severity="warn" type="button" size="large" (click)="visible2 = true"
-        label="搜索條件" />
+      <p-button class="case-preview-button" type="button" label="案件預覽" size="large" (click)="showCaseDetail = true" />
+      <p-button class="statistics-button" type="button" label="&emsp;統計&emsp;" size="large"
+        (click)="showCaseDetail = false" /> <!-- &emsp; 是全形空白 = 一個中文字 -->
+        <button class="normal-button back-button" (click)="backToSearchPage()">回首頁</button>
+      <p-button class="select-condition-button" type="button" size="large" (click)="visible2 = true" label="更改搜索條件" />
     </div>
     <app-case-details [caseId]="selectedCaseId" [showCaseDetail]="showCaseDetail"></app-case-details>
   </div>

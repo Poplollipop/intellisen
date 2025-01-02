@@ -1,6 +1,8 @@
 import { SearchSessionService } from './../../../service/search-session.service';
 import { Component, Input } from '@angular/core';
 import Highcharts from 'highcharts';
+import { CaseViewComponent } from '../../../component/case-view/case-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-case-details',
@@ -11,13 +13,14 @@ import Highcharts from 'highcharts';
 
 export class CaseDetailsComponent {
 
-  @Input() caseId: string = '';
+  @Input() caseId!: string;
   @Input() showCaseDetail: boolean = false;
   displayData: any;
 
 
   constructor(
-    private searchSessionService: SearchSessionService
+    private searchSessionService: SearchSessionService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -31,11 +34,12 @@ export class CaseDetailsComponent {
   ngOnChanges() {
     // 當 caseId 變更時更新資料
     this.displayCase();
+    // 切換
     this.showCaseDetail;
   }
 
   displayCase() {
-    if (this.caseId != '') {
+    if (this.caseId) {
       this.displayData = this.searchSessionService.tidyMap[this.caseId]
     }
   }
@@ -166,7 +170,20 @@ export class CaseDetailsComponent {
   }
 
 
+  // 件數跳出dialog
+  // 開啟Dialog，並將「件數」作為參數傳遞
+  openDialog(count: number): void {
+    const dialogRef = this.dialog.open(CaseViewComponent, {
+      maxWidth: '100vw',
+      height: '80%',
+      width: '80%',
+      data: { count: count } // 傳入該行的件數
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+    });
+  }
 
 
 }

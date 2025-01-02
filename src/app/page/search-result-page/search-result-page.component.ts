@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
@@ -44,7 +45,8 @@ export class SearchResultPageComponent {
     private searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
 
     // 初始化表單
@@ -191,7 +193,7 @@ export class SearchResultPageComponent {
 
 
   page: number = 1; // 當前頁碼
-  itemsPerPage: number = 10; // 每頁顯示的項目數量
+  itemsPerPage: number = 15; // 每頁顯示的項目數量
   totalPages: number = 1; // 總頁數
   pageNumbers: number[] = []; // 儲存頁碼的陣列
   displayedData: any[] = []; // 當前頁顯示的資料
@@ -262,6 +264,10 @@ export class SearchResultPageComponent {
     this.selectedCaseId = id;
   }
 
+  // 返回搜尋畫面
+  backToSearchPage() {
+    this.router.navigateByUrl('search')
+   }
 
   // 下面是搜尋條件相關
 
@@ -273,7 +279,7 @@ export class SearchResultPageComponent {
   }
 
   // 法條輸入格式錯誤訊息
-  
+
 
   // 更新法條列表
   updateLawsList(lawString: any) {
