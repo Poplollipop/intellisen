@@ -1,4 +1,5 @@
-<app-toolbar></app-toolbar>
+<!-- 將當前路徑傳至 app-toolbar-->
+<app-toolbar [routerUrl]='router.url'></app-toolbar>
 <div class="content">
   <router-outlet></router-outlet>
 </div>

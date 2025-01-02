@@ -275,12 +275,6 @@ export class SearchResultPageComponent {
     this.selectedCaseId = id;
   }
 
-
-  // 返回搜尋畫面
-  backToSearchPage() {
-    this.router.navigateByUrl('search')
-  }
-
   // 下面是搜尋條件相關
 
   // 驗證法條輸入內容
