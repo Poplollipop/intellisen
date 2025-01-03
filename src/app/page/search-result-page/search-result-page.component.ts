@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
@@ -49,14 +48,13 @@ export class SearchResultPageComponent {
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private fb: FormBuilder,
-    private router: Router
   ) {
 
     // 初始化表單
     this.searchForm = this.fb.group({
       searchName: new FormControl({ value: '', disabled: true }),
       charge: new FormControl({ value: '', disabled: true }),
-      law: new FormControl({ value: '', disabled: true }),
+      lawList: new FormControl({ value: '', disabled: true }),
       caseType: new FormControl({ value: '', disabled: true }),
       courtList: new FormControl({ value: [], disabled: true }),
       verdictId: new FormControl({ value: '', disabled: true }),
@@ -124,7 +122,7 @@ export class SearchResultPageComponent {
     ];
   }
 
-  ngOnInit(): any {
+  ngOnInit(): void {
 
     // 從 SearchSessionService 獲取條件
     // 設定 sessionStorage 保存搜尋條件

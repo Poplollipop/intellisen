@@ -40,7 +40,7 @@ export class SearchPageComponent {
   inputCase: string = '';
   law: string = '';
   lawList!: string[];
-  lawType!: string [];
+  lawType!: string[];
   groupedCourts!: SelectItemGroup[];
   inputCourts!: string[];
   inputCaseYear: string = '';
@@ -148,15 +148,15 @@ export class SearchPageComponent {
 
   confirm() {
     const tidyData = {
-      searchName: this.keywords,
-      caseType: this.lawType,
-      charge: this.inputCase,
-      courtList: this.inputCourts,
-      law: this.lawList,
-      verdictStartDate: this.startDate,
-      verdictEndDate: this.endDate,
-      docType: this.caseType,
-      verdictId: this.combinedId,
+      searchName: this.keywords,// 模糊搜尋名
+      verdictId: this.combinedId,// 裁判字號 id
+      caseType: this.lawType,// 案件類型:刑法、名法等等
+      charge: this.inputCase,	// 案由
+      courtList: this.inputCourts,// 法院
+      lawList: this.lawList,// 法條
+      verdictStartDate: this.startDate,// 開始時間
+      verdictEndDate: this.endDate,// 結束時間
+      docType: this.caseType,// 文件類型:裁定、判決
     }
 
     // 將整理的資料暫存到 service

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 export class SearchSessionService {
 
-  searchData!: any; // 暫存搜尋頁面資訊
+  searchData!: InputSearchData; // 暫存搜尋頁面資訊
   tidyMap!:any; // 暫存搜尋顯示結果
 
   // private inputData: InputSearchData = {
@@ -37,10 +37,10 @@ export class SearchSessionService {
     this.searchData = {
       searchName: '',
       charge: '',
-      law:[],
+      lawList:[],
       courtList: [],
       caseType: [],
-      verdictStartDate: new Date('1990-01-01'),
+      verdictStartDate: new Date('1950-01-01'),
       verdictEndDate: new Date('9990-01-01'),
       verdictId: '',
       docType: '',
@@ -51,12 +51,12 @@ export class SearchSessionService {
 
 export interface InputSearchData {
   searchName: string;
-  charge: string;
-  law: string[];
-  courtList: string[];
-  caseType: string[];
-  verdictStartDate: Date;
-  verdictEndDate: Date;
-  verdictId: string;
-  docType: string;
+  charge: string;// 模糊搜尋名
+  lawList: string[];// 法條
+  courtList: string[];// 法院
+  caseType: string[];// 案件類型:刑法、名法等等
+  verdictStartDate: Date;// 開始時間
+  verdictEndDate: Date;// 結束時間
+  verdictId: string;// 裁判字號 id
+  docType: string;// 文件類型:裁定、判決
 }
