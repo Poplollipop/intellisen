@@ -149,7 +149,7 @@ export class ViewFullTextPageComponent {
       this.clipboard.copy(citationFormat);
     }
   }
-
+  //==========================================================
   // 高亮功能，顏色參數為選擇的顏色
   highlightText(color: string, event?: MouseEvent): void {
     if (event) event.stopPropagation(); // 防止事件冒泡
@@ -189,7 +189,7 @@ export class ViewFullTextPageComponent {
   }
 
 
-
+  //===============================================================
   // 刪除所有高亮效果
   removeAllHighlights(): void {
     const highlightedSpans = this.suptextSpan.nativeElement.querySelectorAll('span[style*="background-color"]');
@@ -288,30 +288,42 @@ export class ViewFullTextPageComponent {
 
 
   // 點擊列印選項
-  onPrint(includeHighlights: boolean = false) {
-    console.log('列印選項已選擇:', includeHighlights ? '附帶螢光筆' : '不附帶螢光筆');
-
-    this.showPrintOptions = false; // 隱藏選項框
-    if (includeHighlights) {
-      this.prepareHighlightsForPrint(true);
-    } else {
-      this.prepareHighlightsForPrint(false);
+  onPrint(includeHighlights: boolean): void {
+    const styleElement = document.createElement('style');
+    if (includeHighlights == true) {
+      styleElement.innerHTML = `
+        :root{
+          @media print {
+          span.highlight {
+            background-color: yellow !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            }
+          }
+        }
+      `;
+    }
+    if (includeHighlights == false) {
+      styleElement.innerHTML = `
+        :root{
+          @media print {
+          span.highlight {
+            background-color: transparent !important;
+            }
+          }
+        }
+      `;
     }
 
-    window.print(); // 啟動列印功能
-  }
 
-  // 處理高亮邏輯
-  prepareHighlightsForPrint(includeHighlights: boolean) {
-    if (includeHighlights) {
-      console.log('列印帶有螢光筆標記的內容');
-      // 添加處理高亮邏輯
-    } else {
-      console.log('列印不帶螢光筆標記的內容');
-      // 添加清除高亮邏輯
-    }
-  }
+    document.head.appendChild(styleElement);
 
+    setTimeout(() => {
+      window.print();
+      document.head.removeChild(styleElement); // 刪除動態插入的樣式
+    }, 100);
+
+  }
 
   //=========================================
   // 回上頁

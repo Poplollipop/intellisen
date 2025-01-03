@@ -61,7 +61,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
   @include mat.tooltip-overrides((
-    supporting-text-size: 24px,
+    supporting-text-size: 20px,
     supporting-text-line-height:25px,
   ));
+
 }
+// :root{
+//   @media print {
+//     span.highlight {
+//       background-color: yellow !important; /* 確保螢光筆顏色顯示 */
+//       print-color-adjust: exact;
+//     -webkit-print-color-adjust: exact;
+//     }
+//   }
+// }

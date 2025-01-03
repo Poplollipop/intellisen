@@ -195,3 +195,23 @@ pre {
 .print-button {
   position: relative;
 }
+
+@mixin print-color-adjust($value) {
+  print-color-adjust: $value;
+  -webkit-print-color-adjust: $value;
+}
+
+@media print {
+
+  body {
+    background-color: white;
+  }
+
+  .toolbar, .document__toolbar, .print-options {
+    display: none !important; /* 隱藏工具列 */
+  }
+
+  #toptext {
+    font-size: 14px; /* 可調整影印文字大小 */
+  }
+}
