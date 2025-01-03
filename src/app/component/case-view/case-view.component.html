@@ -56,9 +56,15 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cases"></mat-paginator>
+    <mat-paginator
+    [length]="100"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+      ></mat-paginator>
   </div>
 </div>
+
 <div mat-dialog-actions>
   <mat-icon class="close-icon large" aria-hidden="false" aria-label="close" fontIcon="close"
     (click)="onNoClick()"></mat-icon>

@@ -2,31 +2,37 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, } from 'ngx-ui-loader';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { CustomPaginatorIntl } from './service/mat-paginator-intl';
 
-// const ngx: NgxUiLoaderConfig = {
-//   text: "載入中...",
-//   textColor: "#FFFFFF",
-//   textPosition: "center-center",
-//   bgsColor: "#FFFFFF",
-//   fgsColor: "#FFFFFF",
-//   fgsType: "circle",
-//   fgsSize: 100,
-//   hasProgressBar: false
-// }
+// 設定 loading 樣式
+const ngx: NgxUiLoaderConfig = {
+  text: "載入中...",
+  textColor: "#FFFFFF",
+  textPosition: "center-center",
+  bgsColor: "#FFFFFF",
+  fgsColor: "#FFFFFF",
+  fgsType: "circle",
+  fgsSize: 100,
+  // hasProgressBar: false // 進度條
+}
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  providers: [
+    importProvidersFrom(BrowserModule, MatPaginatorModule, NgxUiLoaderModule.forRoot(ngx)),  // 替代 imports
+    // 更改 MatPaginator 樣式，詳細內容在 compnent : CustomPaginatorIntl 內
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    // importProvidersFrom(NgxUiLoaderModule.forRoot(ngx)),
     provideAnimationsAsync(),
-    providePrimeNG({theme: {preset: Aura}}),
+    providePrimeNG({ theme: { preset: Aura } }),
     provideHttpClient(withFetch())
 
   ]
