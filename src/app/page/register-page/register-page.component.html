@@ -5,11 +5,11 @@
       <span>請輸入使用者名稱</span>
       <input type="text">
       <span>請輸入Email</span>
-      <input type="text">
+      <input type="text" [(ngModel)]="email">
       <span>請輸入密碼</span>
-      <input type="text">
+      <input type="text" [(ngModel)]="password">
       <div class="btn">
-        <button mat-raised-button>註冊</button>
+        <button mat-raised-button (click)="register()">註冊</button>
         <button mat-raised-button (click)="goback()">取消</button>
       </div>
     </div>
