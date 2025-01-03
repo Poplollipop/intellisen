@@ -161,7 +161,6 @@ export class SearchPageComponent {
 
     // 將整理的資料暫存到 service
     this.searchSessionService.searchData = tidyData;
-    console.log("存入的資料:", tidyData);
     this.router.navigate(['/search-result']);
   }
 }

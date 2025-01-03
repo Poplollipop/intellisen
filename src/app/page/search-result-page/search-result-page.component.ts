@@ -125,7 +125,6 @@ export class SearchResultPageComponent {
   }
 
   ngOnInit(): void {
-
     // 從 SearchSessionService 獲取條件
     // 設定 sessionStorage 保存搜尋條件
     let savedConditions;
