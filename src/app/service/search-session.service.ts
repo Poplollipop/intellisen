@@ -8,6 +8,7 @@ export class SearchSessionService {
 
   searchData!: InputSearchData; // 暫存搜尋頁面資訊
   tidyMap!:any; // 暫存搜尋顯示結果
+  singleCaseDate!:any;
 
   // private inputData: InputSearchData = {
   //   searchName: '',                            // 關鍵字

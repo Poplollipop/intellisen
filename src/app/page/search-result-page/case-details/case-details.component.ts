@@ -32,11 +32,6 @@ export class CaseDetailsComponent {
     this.updateChartOptions('pie');
    }
 
-  ngOnInit() {
-
-  }
-
-
   ngOnChanges() {
     // 當 caseId 變更時更新資料
     this.displayCase();
@@ -47,6 +42,7 @@ export class CaseDetailsComponent {
   displayCase() {
     if (this.caseId) {
       this.displayData = this.searchSessionService.tidyMap[this.caseId]
+      this.searchSessionService.singleCaseDate = this.displayData
     }
   }
 
@@ -74,7 +70,6 @@ export class CaseDetailsComponent {
       avg: ''
     }
   ];
-
 
   // 查看全文
   viewFullText(){

@@ -199,7 +199,7 @@ export class SearchResultPageComponent {
           groupId: item.groupId,
           judgeName: item.judgeName,
           law: item.law,
-          content: item.content,
+          content: item.content2 ? item.content + "\n" + item.content2 : item.content,
           url: item.url
         }
       }
