@@ -9,6 +9,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule }
 import { Fluid } from 'primeng/fluid';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { isPlatformBrowser } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-search-result-page',
@@ -48,6 +49,7 @@ export class SearchResultPageComponent {
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private fb: FormBuilder,
+    private ngxService: NgxUiLoaderService,
   ) {
 
     // 初始化表單
@@ -139,25 +141,33 @@ export class SearchResultPageComponent {
     }
 
     // 取得 API 所有搜尋的資料
-    let resData: any;
     if (savedConditions) {
-      this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
-        resData = searchData;
-
-        // 儲存搜尋資料
-        this.searchForm.patchValue(savedConditions);
-
-        // // 重組資料
-        this.caseList = resData.caseList;
-        this.tidyMap = this.tidyData(resData.caseList);
-
-        // // 計算總頁數
-        this.calculateTotalPages();
-        this.updateDisplayedData();
-
-      });
+      this.searchApi(savedConditions);
     }
 
+  }
+
+  // 取得 API 所有搜尋的資料
+  searchApi(savedConditions: any) {
+
+    this.ngxService.start(); // 啟動 loading 動畫
+    let resData: any;
+    this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
+      resData = searchData;
+
+      // 儲存搜尋資料
+      this.searchForm.patchValue(savedConditions);
+
+      // // 重組資料
+      this.caseList = resData.caseList;
+      this.tidyMap = this.tidyData(resData.caseList);
+
+      // // 計算總頁數
+      this.calculateTotalPages();
+      this.updateDisplayedData();
+
+      this.ngxService.stop()// 關閉 loading 動畫
+    });
   }
 
   // 將字號轉換為顯示的格式
@@ -287,6 +297,12 @@ export class SearchResultPageComponent {
 
   // 更新法條列表
   updateLawsList(lawString: any) {
+    // 檢查是否有要查詢的法條，如果沒有就將 lawList 設為空值
+    if (!lawString) {
+      this.lawList = []
+      return;
+    }
+
     if (this.validateInput(lawString) && typeof lawString == 'string') {
       this.errorMessage = '';
       this.lawList = lawString.split(';').filter(lawString => lawString.trim() !== '');
@@ -307,16 +323,20 @@ export class SearchResultPageComponent {
 
   // 搜尋條件再搜尋
   searchAgain() {
+    // 取出 form 中的值
     const updateCondition = this.searchForm.value;
-    console.log("更改的搜尋條件:", updateCondition);
 
-    const tidyLaw = this.updateLawsList(updateCondition.law);
+    // 製作 法條陣列
+    this.updateLawsList(updateCondition.lawList)
 
+    // 製作  search pai 的 req 資料
     const sendApiData = {
       ...updateCondition,
-      law: tidyLaw  //  整理後的法條
+      lawList: this.lawList //  整理後的法條
     }
 
+    // 發送 API 搜尋資料
+    this.searchApi(sendApiData);
   }
 
 
