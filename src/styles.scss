@@ -56,3 +56,12 @@ html, body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+//全文瀏覽頁面 工具提示文字
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.tooltip-overrides((
+    supporting-text-size: 24px,
+    supporting-text-line-height:25px,
+  ));
+}
