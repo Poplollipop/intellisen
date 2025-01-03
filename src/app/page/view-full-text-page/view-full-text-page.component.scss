@@ -214,4 +214,14 @@ pre {
   #toptext {
     font-size: 14px; /* 可調整影印文字大小 */
   }
+
+  span[style*="background-color"] {
+    background-color: inherit !important; /* 確保印刷時默認無螢光筆效果 */
+  }
+  span.highlight {
+    background-color: yellow !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+
+  }
 }

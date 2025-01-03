@@ -289,31 +289,33 @@ export class ViewFullTextPageComponent {
 
   // 點擊列印選項
   onPrint(includeHighlights: boolean): void {
+    console.log(includeHighlights);
     const styleElement = document.createElement('style');
-    if (includeHighlights == true) {
-      styleElement.innerHTML = `
-        :root{
-          @media print {
-          span.highlight {
-            background-color: yellow !important;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            }
-          }
-        }
-      `;
-    }
-    if (includeHighlights == false) {
-      styleElement.innerHTML = `
-        :root{
-          @media print {
-          span.highlight {
-            background-color: transparent !important;
-            }
-          }
-        }
-      `;
-    }
+    // if (includeHighlights == true) {
+    //   styleElement.innerHTML = `
+    //     :root{
+    //       @media print {
+    //       span.highlight {
+    //         background-color: yellow !important;
+    //         -webkit-print-color-adjust: exact;
+    //         print-color-adjust: exact;
+    //         }
+    //       }
+    //     }
+    //   `;
+    // }
+    // if (includeHighlights == false) {
+    //   styleElement.innerHTML = `
+    //     :root{
+    //       @media print {
+    //       span.highlight {
+    //         background-color: transparent !important;
+    //         color: inherit !important; /* 確保字體顏色不受影響 */
+    //         }
+    //       }
+    //     }
+    //   `;
+    // }
 
 
     document.head.appendChild(styleElement);
