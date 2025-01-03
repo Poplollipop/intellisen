@@ -1,3 +1,5 @@
+
+//================================================
 /* 工具表按鈕樣式 */
 .marker-icon {
   display: inline-block;
@@ -29,43 +31,83 @@
 .marker-icon:hover {
   transform: scale(1.1);
 }
-
+//==============================================
 /* 工具表外觀 */
 .toolbar {
   position: absolute;
-  background-color: white;
+  background: white;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 10px;
   border-radius: 8px;
-  padding: 8px;
   z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.toolbar-arrow {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-right: none;
-  border-bottom: none;
-  transform: rotate(45deg);
+.toolbar.hidden {
+  opacity: 0;
+  visibility:
+   hidden;
 }
 
-/* 高亮文字的樣式 */
-span[style*="background-color"] {
+.toolbar:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.toolbar .toolbar-content .line {
+  height: 1px;
+  box-shadow: #ddd;
+  margin: 8px 0;
+}
+//===============================================
+// 螢光筆效果
+span[style*="box-shadow"] {
   display: inline-block !important;
   padding: 0 2px !important;
   border-radius: 2px !important;
   cursor: pointer !important;
-  transition: background-color 0.3s ease !important;
+  transition: box-shadow 0.3s ease !important;
 }
+
 /* 高亮文字的 hover 效果 */
-span[style*="background-color"]:hover {
+span[style*="box-shadow"]:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+//=====================================================
+// 文字區域
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f8f9fa;
+}
+
+#toptext {
+  font-family: 'Courier New', monospace; /* 固定寬度字體 */
+  font-size: 16px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  overflow-wrap: break-word; /* 防止溢出 */
+}
+
+pre {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  background: #fff;
+  max-width: 80%;
+  word-wrap: break-word;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 //=====================================================
@@ -79,11 +121,12 @@ span[style*="background-color"]:hover {
   align-items: center;
   padding: 10px;
   background-color: #ffffff;
-  border: 1px solid #000; /* 添加黑色邊框 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加輕微陰影 */
+  border: 1px solid #000;
+  background-color: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  border-radius: 4px; /* 可選，讓邊框圓角化 */
-  .mat-icon{
+  border-radius: 4px;
+
+  .mat-icon {
     color: #000000 !important;
   }
 }
@@ -110,30 +153,75 @@ span[style*="background-color"]:hover {
   background-color: #e9ecef;
 }
 
+//===========================================
+// 列印功能
 .print-options {
-  display: none;
-  position: absolute;
-  margin-top: 5px;
-  padding: 5px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.print-options .arrow-box {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 260px;
+  right: 20px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  padding: 10px 20px;
+  gap: 15px;
 }
 
 .print-options button {
-  padding: 5px 10px;
+  background-color: #6c757d;
+  color: #ffffff;
   border: none;
-  background-color: #f8f9fa;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .print-options button:hover {
-  background-color: #e9ecef;
+  background-color: #5a6268;
+}
+
+.print-options button:focus {
+  outline: none;
+  background-color  : 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.print-button {
+  position: relative;
+}
+
+@mixin print-color-adjust($value) {
+  print-color-adjust: $value;
+  -webkit-print-color-adjust: $value;
+}
+
+@media print {
+
+  body {
+    background-color: white;
+  }
+
+  .toolbar, .document__toolbar, .print-options {
+    display: none !important; /* 隱藏工具列 */
+  }
+
+  #toptext {
+    font-size: 14px; /* 可調整影印文字大小 */
+  }
+
+  span[style*="background-color"] {
+    background-color: inherit !important; /* 確保印刷時默認無螢光筆效果 */
+  }
+  span.highlight {
+    background-color: yellow !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+
+  }
 }
