@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -13,10 +14,11 @@ import Swal from 'sweetalert2';
   imports: [
     MatButtonModule,
     FormsModule,
-    PasswordModule
+    PasswordModule,
+    InputTextModule
   ],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss'
+  styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent {
 
@@ -49,8 +51,8 @@ export class LoginPageComponent {
 
 
 
-  // 註冊
-  gotoregister(){
+  // 登入
+  login(){
     let tidyData = {
       email: this.email,
       password: this.password
@@ -65,7 +67,6 @@ export class LoginPageComponent {
             icon: 'success',
             confirmButtonText: '確定'
           });
-          this.router.navigateByUrl('/register')
         }
       },
       error: (error) => {
@@ -77,9 +78,13 @@ export class LoginPageComponent {
         });
       }
     })
+  }
 
 
 
+  // 建立帳號
+  goRegister(){
+    this.router.navigateByUrl('/register')
   }
 
 }

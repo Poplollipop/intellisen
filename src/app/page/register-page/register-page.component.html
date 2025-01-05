@@ -4,12 +4,30 @@
     <h3 style="font-weight: bold;">成為會員</h3>
     <h6 style="font-weight: bold;">註冊帳號</h6>
     <div class="nav"></div>
+
     <div class="input-info">
-      <label>請輸入Email</label>
-      <input type="text">
-      <label>請輸入密碼</label>
-      <input type="text">
+      <div class="email-area">
+        <label style="display: block;">請輸入Email</label>
+        <input type="text" class="input-email ng-invalid ng-dirty " pInputText [(ngModel)]="email"
+          (keyup)="updateEmailForm()" />
+        @if (errorMessage) {
+        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+        }
+      </div>
+
+      <div class="pwd-area">
+        <label style="display: block; margin-top: 20px;">請輸入密碼</label>
+        <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="rawPwd" [feedback]="false"
+          [toggleMask]="true" />
+        <label style="display: block; margin-top: 20px;">請再次輸入密碼</label>
+        <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
+          [feedback]="false" [toggleMask]="true" />
+        @if (errorMessage) {
+        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage2}}</small>
+        }
+      </div>
     </div>
+
     <div class="btn">
       <button mat-raised-button (click)="goRegister()">註冊</button>
       <button mat-raised-button (click)="goBack()">取消</button>
