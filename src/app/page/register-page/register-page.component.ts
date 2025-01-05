@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-register-page',
@@ -16,7 +18,15 @@ export class RegisterPageComponent {
     private router: Router,
   ) {}
 
-  goback(){
+  goBack(){
     this.router.navigateByUrl('/login')
+  }
+
+  goRegister(){
+    Swal.fire({
+      text: '驗證信已發送，請至信箱查看',
+      icon: 'info',
+      confirmButtonText: '關閉'
+    })
   }
 }

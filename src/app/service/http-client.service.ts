@@ -13,4 +13,7 @@ export class HttpClientService {
     return this.http.post(url, postData);
   }
 
+  postApi2(url: string, postData: any) {
+    return this.http.post(url, postData, { observe: 'response' });
+  }
 }
