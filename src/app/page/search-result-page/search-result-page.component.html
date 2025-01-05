@@ -98,14 +98,13 @@
       <div class="p-field">
         <label for="docType">裁判種類：</label>
         <select id="docType" formControlName="docType">
-          <option value="">請選擇種類</option>
+          <option value=""></option>
           <option value="判決">判決</option>
           <option value="裁定">裁定</option>
         </select>
       </div>
 
       <p-button type="button" class="btn" label="搜尋" (click)="searchAgain()"></p-button>
-      <p-button type="button" class="btn" [label]="editMode ? '完成編輯' : '編輯'" (click)="toggleEditMode()"></p-button>
 
     </p-fluid>
   </form>

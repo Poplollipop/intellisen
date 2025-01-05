@@ -103,30 +103,21 @@
     border-radius: 2px;
   }
 
-  input:disabled{
-    display: block;
-    width: 20rem;
-    background-color: #f8f8f8;
-    color: rgb(182, 182, 182);
-    border: none;
-    border-radius: 2px;
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0) brightness(0);  // 將顏色反轉並設置為黑色
+    cursor: pointer;  // 確保光標正常顯示
   }
+
+
 
   select{
-    padding: 0.2rem;
-    margin: 0.4rem 0;
-    font-size: 0.9rem;
+    display: block;
+    height: 2.3rem;
+    width: 20rem;
     background-color: #f8f8f8;
     color: black;
-  }
-
-  select:disabled{
-    padding: 0.2rem;
-    margin: 0.4rem 0;
-    font-size: 0.9rem;
-    background-color: rgb(181, 181, 181);
-    color:#ccc;
-    border: none;
+    border-radius: 2px;
+    border: 1px solid black;
   }
 
   p-multiselect{
@@ -135,11 +126,6 @@
     border-radius: 2px;
     border: 1px solid black;
     background-color: #f8f8f8;
-  }
-
-  .p-multiselect.p-disabled{
-    background-color: #f7f7f7;
-    border: none;
   }
 
 }

@@ -54,15 +54,16 @@ export class SearchResultPageComponent {
 
     // 初始化表單
     this.searchForm = this.fb.group({
-      searchName: new FormControl({ value: '', disabled: true }),
-      charge: new FormControl({ value: '', disabled: true }),
-      law: new FormControl({ value: '', disabled: true }),
-      caseType: new FormControl({ value: '', disabled: true }),
-      courtList: new FormControl({ value: [], disabled: true }),
-      verdictId: new FormControl({ value: '', disabled: true }),
-      verdictStartDate: new FormControl({ value: '', disabled: true }),
-      verdictEndDate: new FormControl({ value: '', disabled: true }),
-      docType: new FormControl({ value: '', disabled: true }),
+      searchName: new FormControl(''),
+      charge: new FormControl(''),
+      law: new FormControl(''),
+      caseType: new FormControl(''),
+      courtList: new FormControl([]),
+      verdictId: new FormControl(''),
+      verdictStartDate: new FormControl(''),
+      verdictEndDate: new FormControl(''),
+      docType: new FormControl(''),
+
     });
 
 
@@ -285,7 +286,7 @@ export class SearchResultPageComponent {
 
   // 驗證法條輸入內容
   validateInput(input: string): boolean {
-    // 禁止特殊符號：僅允許中文、文字、數字及空白
+    // 禁止特殊符號：僅允許分號
     const regex = /^[^\s!@#$%^&*()_+\-=[\]{}':"\\|,.<>/?]*$/;
     return regex.test(input);
   }
@@ -294,24 +295,24 @@ export class SearchResultPageComponent {
 
 
   // 更新法條列表
-  updateLawsList(lawString: any) {
-    if (this.validateInput(lawString) && typeof lawString == 'string') {
+  updateLawsList(law: any) {
+    if (this.validateInput(law)) {
       this.errorMessage = '';
-      this.lawList = lawString.split(';').filter(lawString => lawString.trim() !== '');
+      this.lawList = law.split(';').filter((law: string) => law.trim() !== '');
     } else {
       this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
     }
   }
 
-  // 搜尋條件編輯模式
-  toggleEditMode() {
-    this.editMode = !this.editMode;
-    if (this.editMode) {
-      this.searchForm.enable();   // 啟用所有欄位
-    } else {
-      this.searchForm.disable();  // 禁用所有欄位
-    }
-  }
+  // // 搜尋條件編輯模式
+  // toggleEditMode() {
+  //   this.editMode = !this.editMode;
+  //   if (this.editMode) {
+  //     this.searchForm.enable();   // 啟用所有欄位
+  //   } else {
+  //     this.searchForm.disable();  // 禁用所有欄位
+  //   }
+  // }
 
   // 搜尋條件再搜尋
   searchAgain() {

@@ -2,24 +2,22 @@
   <div class="pic"></div>
 
   <div class="login-info">
-    <h3>歡迎！</h3>
+    <h2 style="font-weight: bold;">歡迎！</h2>
     <div class="nav"></div>
-    <span>法律雲平台登入系統</span>
+    <h5>法律雲平台登入系統</h5>
     <div class="input">
-      <input type="text" pInputText [(ngModel)]="account" (keyup)="updateEmailForm()"/>
+      <input type="text" pInputText [(ngModel)]="email" (keyup)="updateEmailForm()" placeholder="請輸入Email" required/>
       @if (errorMessage) {
         <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
       }
-      <div class="password">
-        <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"/>
-      </div>
+        <p-password class="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true" placeholder="請輸入密碼" required/>
     </div>
     <span class="forgot-password">忘記密碼？</span>
     <button mat-raised-button class="login-btn">登入</button>
     <br>
     <div class="create-account">
       <span>還沒有帳號嗎？</span>
-      <a class="create-account-link" (click)="gotoregister();">創建帳號</a>
+      <a class="create-account-link" (click)="gotoregister();">建立帳號</a>
     </div>
   </div>
 
