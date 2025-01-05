@@ -310,15 +310,6 @@ export class SearchResultPageComponent {
     }
   }
 
-  // // 搜尋條件編輯模式
-  // toggleEditMode() {
-  //   this.editMode = !this.editMode;
-  //   if (this.editMode) {
-  //     this.searchForm.enable();   // 啟用所有欄位
-  //   } else {
-  //     this.searchForm.disable();  // 禁用所有欄位
-  //   }
-  // }
 
   // 搜尋條件再搜尋
   searchAgain() {

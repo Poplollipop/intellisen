@@ -22,7 +22,7 @@
         <label style="display: block; margin-top: 20px;">請再次輸入密碼</label>
         <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
           [feedback]="false" [toggleMask]="true" />
-        @if (errorMessage) {
+        @if (errorMessage2) {
         <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage2}}</small>
         }
       </div>

@@ -56,6 +56,7 @@ export class RegisterPageComponent {
     }
     else{
       this.errorMessage2 = '';
+      this.password = this.confirmPwd;
     }
   }
 
@@ -70,6 +71,8 @@ export class RegisterPageComponent {
       email: this.email,
       password: this.password
     }
+
+    console.log(tidyData);
 
     this.http.postApi2('http://localhost:8080/case/register', tidyData).subscribe({
       next: (response: any) => {
