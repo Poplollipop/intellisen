@@ -19,7 +19,7 @@
   max-height: 33rem;
   width: 25rem;
   background-color: #ffffff;
-  padding: 0.8rem;
+  padding: 1rem;
   padding-top: 1rem;
 
   // ::ng-deep .p-password input{
@@ -113,7 +113,7 @@
   .nav {
     width: 200px;
     height: 5px;
-    background-color: black;
+    background-color: #005593;
     margin-bottom: 10%;
   }
 
@@ -133,6 +133,16 @@
     color: rgb(52, 153, 255);
     cursor: pointer;
   }
+}
+
+.login-btn{
+  width: 10rem;
+  height: 2rem;
+  background-color: #005593;
+  border: none;
+  color:white;
+  border-radius: 20px;
+  font-weight: bold;
 }
 
 .pic {

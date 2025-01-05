@@ -50,11 +50,11 @@ export class RegisterPageComponent {
   }
 
   // 驗證密碼
-  pwdValidation(){
-    if(this.rawPwd != this.confirmPwd){
+  pwdValidation() {
+    if (this.rawPwd != this.confirmPwd) {
       this.errorMessage2 = '請輸入相同密碼';
     }
-    else{
+    else {
       this.errorMessage2 = '';
       this.password = this.confirmPwd;
     }
@@ -67,6 +67,15 @@ export class RegisterPageComponent {
   }
 
   goRegister() {
+    if (!this.email || !this.password) {
+      Swal.fire({
+        text: '帳號或密碼不可為空!',
+        icon: 'error',
+        confirmButtonText: '確定'
+      });
+      return
+    }
+
     let tidyData = {
       email: this.email,
       password: this.password

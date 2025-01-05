@@ -2,24 +2,24 @@
   <div class="pic"></div>
 
   <div class="login-info">
-    <h2 style="font-weight: bold;">歡迎！</h2>
+    <h3 style="font-weight: bold;">歡迎！</h3>
     <div class="nav"></div>
     <h5>法律雲平台登入系統</h5>
     <div class="input">
       <div class="email-area">
-        <input type="text" class="input-email ng-invalid ng-dirty " pInputText [(ngModel)]="email"
+        <input type="text" class="input-email" pInputText [(ngModel)]="email"
           (keyup)="updateEmailForm()" placeholder="請輸入Email" />
         @if (errorMessage) {
         <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
         }
       </div>
       <div class="pwd-area">
-        <p-password class="input-psw ng-invalid ng-dirty" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
+        <p-password class="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
         placeholder="請輸入密碼" />
       </div>
     </div>
     <p class="forgot-password">忘記密碼？</p>
-    <button mat-raised-button class="login-btn" (click)="login()">登入</button>
+    <button class="login-btn" (click)="login()">登入</button>
     <br>
     <div class="create-account">
       <span>還沒有帳號嗎？</span>

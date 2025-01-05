@@ -53,6 +53,15 @@ export class LoginPageComponent {
 
   // 登入
   login(){
+    if(!this.email || !this.password){
+      Swal.fire({
+        text: '帳號或密碼不可為空!',
+        icon: 'error',
+        confirmButtonText: '確定'
+      });
+      return
+    }
+
     let tidyData = {
       email: this.email,
       password: this.password
