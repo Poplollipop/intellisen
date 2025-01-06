@@ -1,4 +1,3 @@
-
 //================================================
 /* 工具表按鈕樣式 */
 .marker-icon {
@@ -31,6 +30,7 @@
 .marker-icon:hover {
   transform: scale(1.1);
 }
+
 //==============================================
 /* 工具表外觀 */
 .toolbar {
@@ -49,7 +49,7 @@
 .toolbar.hidden {
   opacity: 0;
   visibility:
-   hidden;
+    hidden;
 }
 
 .toolbar:not(.hidden) {
@@ -62,6 +62,7 @@
   box-shadow: #ddd;
   margin: 8px 0;
 }
+
 //===============================================
 // 螢光筆效果
 span[style*="box-shadow"] {
@@ -76,6 +77,7 @@ span[style*="box-shadow"] {
 span[style*="box-shadow"]:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 //=====================================================
 // 文字區域
 .content-container {
@@ -87,7 +89,8 @@ span[style*="box-shadow"]:hover {
 }
 
 #toptext {
-  font-family: 'Courier New', monospace; /* 固定寬度字體 */
+  font-family: 'Courier New', monospace;
+  /* 固定寬度字體 */
   font-size: 16px;
   background: #ffffff;
   border: 1px solid #ddd;
@@ -95,7 +98,8 @@ span[style*="box-shadow"]:hover {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 80%;
-  overflow-wrap: break-word; /* 防止溢出 */
+  overflow-wrap: break-word;
+  /* 防止溢出 */
 }
 
 pre {
@@ -189,7 +193,7 @@ pre {
 
 .print-options button:focus {
   outline: none;
-  background-color  : 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .print-button {
@@ -207,21 +211,22 @@ pre {
     background-color: white;
   }
 
-  .toolbar, .document__toolbar, .print-options {
-    display: none !important; /* 隱藏工具列 */
+  .toolbar,
+  .document__toolbar,
+  .print-options {
+    display: none !important;
+    /* 隱藏工具列 */
   }
 
   #toptext {
-    font-size: 14px; /* 可調整影印文字大小 */
+    font-size: 14px;
+    /* 可調整影印文字大小 */
   }
 
-  span[style*="background-color"] {
-    background-color: inherit !important; /* 確保印刷時默認無螢光筆效果 */
-  }
-  span.highlight {
-    background-color: yellow !important;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-
+  .no-highlight {
+    span[style*="background-color"] {
+      background-color: inherit !important;
+      /* 確保印刷時默認無螢光筆效果 */
+    }
   }
 }

@@ -38,6 +38,7 @@ export class ViewFullTextPageComponent {
 
 
   suptext!: any;
+  url!: any;
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
@@ -51,6 +52,7 @@ export class ViewFullTextPageComponent {
       this.updateDynamicLink(); // 更新分享連結
       //==============================================================
       this.suptext = this.searchSessionService.singleCaseDate.content;
+      this.url = this.searchSessionService.singleCaseDate.url;
     }
   }
 
@@ -179,8 +181,11 @@ export class ViewFullTextPageComponent {
     this.renderer.setStyle(highlightSpan, 'background-color', color);
     this.renderer.setStyle(highlightSpan, 'border-radius', '2px');
     this.renderer.setStyle(highlightSpan, 'cursor', 'pointer');
+    // 清除原有文字 增加新效果文字
     highlightSpan.appendChild(range.extractContents());
     range.insertNode(highlightSpan);
+    // console.log(highlightSpan);
+
 
     // 綁定點擊事件，點擊高亮文字時顯示工具列
     this.renderer.listen(highlightSpan, 'click', (event: MouseEvent) => {
@@ -202,48 +207,92 @@ export class ViewFullTextPageComponent {
   }
 
 
+
   // 刪除選取範圍內的高亮效果
-  removeHighlightsInRange(event?: MouseEvent): void {
-    if (event) event.stopPropagation(); // 防止事件冒泡
-    this.restoreSelection(); // 恢復用戶的選取範圍
+removeHighlightsInRange(event?: MouseEvent): void {
+  if (event) event.stopPropagation(); // 防止事件冒泡
+  this.restoreSelection(); // 恢復用戶的選取範圍
 
-    const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) {
-      alert('請先選取要刪除高亮的文字範圍！');
-      return;
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed) {
+    alert('請先選取要刪除高亮的文字範圍！');
+    return;
+  }
+
+  const range = selection.getRangeAt(0);
+
+  const walker = document.createTreeWalker(
+    this.suptextSpan.nativeElement,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode: (node: Node) => {
+        const el = node as HTMLElement;
+        return el.style.backgroundColor && range.intersectsNode(el)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      },
     }
+  );
 
-    const range = selection.getRangeAt(0);
-    const walker = document.createTreeWalker(
-      this.suptextSpan.nativeElement,
-      NodeFilter.SHOW_ELEMENT,
-      {
-        acceptNode: (node: Node) => {
-          const el = node as HTMLElement;
-          return el.style.backgroundColor && range.intersectsNode(el)
-            ? NodeFilter.FILTER_ACCEPT
-            : NodeFilter.FILTER_REJECT;
-        },
-      }
+  let currentNode: Node | null = walker.nextNode();
+  while (currentNode) {
+    const span = currentNode as HTMLElement;
+
+    // 獲取 span 的內容和範圍
+    const spanRange = document.createRange();
+    spanRange.selectNodeContents(span);
+
+    // 計算選取範圍與高亮範圍的交集
+    const intersectionStart = Math.max(
+      range.startOffset - spanRange.startOffset,
+      0
+    );
+    const intersectionEnd = Math.min(
+      range.endOffset - spanRange.startOffset,
+      span.textContent?.length || 0
     );
 
-    let currentNode: Node | null = walker.nextNode();
-    while (currentNode) {
-      const span = currentNode as HTMLElement;
+    const textContent = span.textContent || '';
+    const beforeText = textContent.slice(0, intersectionStart);
+    const highlightedText = textContent.slice(intersectionStart, intersectionEnd);
+    const afterText = textContent.slice(intersectionEnd);
 
-      // 範圍與節點是否完全重合
-      const spanRange = document.createRange();
-      spanRange.selectNodeContents(span);
+    const parent = span.parentNode;
 
-      if (range.compareBoundaryPoints(Range.START_TO_START, spanRange) <= 0 &&
-        range.compareBoundaryPoints(Range.END_TO_END, spanRange) >= 0) {
-        const textNode = document.createTextNode(span.textContent || '');
-        span.parentNode!.replaceChild(textNode, span);
-      }
-
-      currentNode = walker.nextNode();
+    // 依次插入節點，保持原有順序
+    if (beforeText) {
+      const beforeSpan = span.cloneNode() as HTMLElement;
+      beforeSpan.textContent = beforeText;
+      parent?.insertBefore(beforeSpan, span);
     }
+
+    if (highlightedText) {
+      const normalTextNode = document.createTextNode(highlightedText);
+      parent?.insertBefore(normalTextNode, span);
+    }
+
+    if (afterText) {
+      const afterSpan = span.cloneNode() as HTMLElement;
+      afterSpan.textContent = afterText;
+      parent?.insertBefore(afterSpan, span.nextSibling);
+    }
+
+    // 移除原高亮文字
+    parent?.removeChild(span);
+
+    currentNode = walker.nextNode();
   }
+
+  // 清除選取範圍
+  selection.removeAllRanges();
+}
+
+
+
+
+
+
+
 
 
 
@@ -275,7 +324,7 @@ export class ViewFullTextPageComponent {
   }
   // 前往判決書網站
   onOpenInNew() {
-    window.open('https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TCDM%2c109%2c%E9%87%91%E8%A8%B4%2c495%2c20240529%2c2', '_blank');
+    window.open(this.url, '_blank');
   }
   // 判決書PDF檔下載
   onDownloadPDF() {
@@ -291,42 +340,24 @@ export class ViewFullTextPageComponent {
 
   // 點擊列印選項
   onPrint(includeHighlights: boolean): void {
-    console.log(includeHighlights);
-    const styleElement = document.createElement('style');
-    // if (includeHighlights == true) {
-    //   styleElement.innerHTML = `
-    //     :root{
-    //       @media print {
-    //       span.highlight {
-    //         background-color: yellow !important;
-    //         -webkit-print-color-adjust: exact;
-    //         print-color-adjust: exact;
-    //         }
-    //       }
-    //     }
-    //   `;
-    // }
-    // if (includeHighlights == false) {
-    //   styleElement.innerHTML = `
-    //     :root{
-    //       @media print {
-    //       span.highlight {
-    //         background-color: transparent !important;
-    //         color: inherit !important; /* 確保字體顏色不受影響 */
-    //         }
-    //       }
-    //     }
-    //   `;
-    // }
+    console.log(includeHighlights); // 這裡會顯示用戶選擇的值
 
+    const body = document.getElementById('toptext');
 
-    document.head.appendChild(styleElement);
+    if (body) {
+      // 根據 includeHighlights 來動態切換類別
+      if (includeHighlights) {
+        body.classList.remove('no-highlight'); // 加上 highlight 類
+      }
+      if (!includeHighlights) {
+        body.classList.add('no-highlight');  // 移除 highlight 類
+      }
+    }
 
+    // 觸發列印
     setTimeout(() => {
       window.print();
-      document.head.removeChild(styleElement); // 刪除動態插入的樣式
-    }, 100);
-
+    }, 100); // 等待一些時間以確保列印選項被應用
   }
 
   //=========================================
