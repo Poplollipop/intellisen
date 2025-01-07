@@ -206,94 +206,84 @@ export class ViewFullTextPageComponent {
     });
   }
 
-
-
   // 刪除選取範圍內的高亮效果
-removeHighlightsInRange(event?: MouseEvent): void {
-  if (event) event.stopPropagation(); // 防止事件冒泡
-  this.restoreSelection(); // 恢復用戶的選取範圍
+  removeHighlightsInRange(event?: MouseEvent): void {
+    if (event) event.stopPropagation(); // 防止事件冒泡
+    this.restoreSelection(); // 恢復用戶的選取範圍
 
-  const selection = window.getSelection();
-  if (!selection || selection.isCollapsed) {
-    alert('請先選取要刪除高亮的文字範圍！');
-    return;
-  }
-
-  const range = selection.getRangeAt(0);
-
-  const walker = document.createTreeWalker(
-    this.suptextSpan.nativeElement,
-    NodeFilter.SHOW_ELEMENT,
-    {
-      acceptNode: (node: Node) => {
-        const el = node as HTMLElement;
-        return el.style.backgroundColor && range.intersectsNode(el)
-          ? NodeFilter.FILTER_ACCEPT
-          : NodeFilter.FILTER_REJECT;
-      },
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) {
+      alert('請先選取要刪除高亮的文字範圍！');
+      return;
     }
-  );
 
-  let currentNode: Node | null = walker.nextNode();
-  while (currentNode) {
-    const span = currentNode as HTMLElement;
+    const range = selection.getRangeAt(0);
 
-    // 獲取 span 的內容和範圍
-    const spanRange = document.createRange();
-    spanRange.selectNodeContents(span);
-
-    // 計算選取範圍與高亮範圍的交集
-    const intersectionStart = Math.max(
-      range.startOffset - spanRange.startOffset,
-      0
-    );
-    const intersectionEnd = Math.min(
-      range.endOffset - spanRange.startOffset,
-      span.textContent?.length || 0
+    const walker = document.createTreeWalker(
+      this.suptextSpan.nativeElement,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode: (node: Node) => {
+          const el = node as HTMLElement;
+          return el.style.backgroundColor && range.intersectsNode(el)
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        },
+      }
     );
 
-    const textContent = span.textContent || '';
-    const beforeText = textContent.slice(0, intersectionStart);
-    const highlightedText = textContent.slice(intersectionStart, intersectionEnd);
-    const afterText = textContent.slice(intersectionEnd);
-
-    const parent = span.parentNode;
-
-    // 依次插入節點，保持原有順序
-    if (beforeText) {
-      const beforeSpan = span.cloneNode() as HTMLElement;
-      beforeSpan.textContent = beforeText;
-      parent?.insertBefore(beforeSpan, span);
+    const nodesToProcess: HTMLElement[] = [];
+    let currentNode: Node | null = walker.nextNode();
+    while (currentNode) {
+      nodesToProcess.push(currentNode as HTMLElement);
+      currentNode = walker.nextNode();
     }
 
-    if (highlightedText) {
-      const normalTextNode = document.createTextNode(highlightedText);
-      parent?.insertBefore(normalTextNode, span);
+    for (const span of nodesToProcess) {
+      const spanRange = document.createRange();
+      spanRange.selectNodeContents(span);
+
+      const spanStart = range.compareBoundaryPoints(Range.START_TO_START, spanRange) <= 0
+        ? 0
+        : range.startOffset - spanRange.startOffset;
+      const spanEnd = range.compareBoundaryPoints(Range.END_TO_END, spanRange) >= 0
+        ? span.textContent!.length
+        : range.endOffset - spanRange.startOffset;
+
+      if (spanStart >= spanEnd) continue; // 無交集，跳過
+
+      const textContent = span.textContent || '';
+      const beforeText = textContent.slice(0, spanStart);
+      const highlightedText = textContent.slice(spanStart, spanEnd);
+      const afterText = textContent.slice(spanEnd);
+
+      const parent = span.parentNode;
+
+      // 依次插入節點
+      if (beforeText) {
+        const beforeSpan = span.cloneNode() as HTMLElement;
+        beforeSpan.textContent = beforeText;
+        parent?.insertBefore(beforeSpan, span);
+      }
+
+      if (highlightedText) {
+        const normalTextNode = document.createTextNode(highlightedText);
+        parent?.insertBefore(normalTextNode, span);
+      }
+
+      if (afterText) {
+        const afterSpan = span.cloneNode() as HTMLElement;
+        afterSpan.textContent = afterText;
+        parent?.insertBefore(afterSpan, span.nextSibling);
+      }
+
+      // 移除原高亮文字
+      parent?.removeChild(span);
     }
 
-    if (afterText) {
-      const afterSpan = span.cloneNode() as HTMLElement;
-      afterSpan.textContent = afterText;
-      parent?.insertBefore(afterSpan, span.nextSibling);
-    }
-
-    // 移除原高亮文字
-    parent?.removeChild(span);
-
-    currentNode = walker.nextNode();
+    // 清除選取範圍
+    selection.removeAllRanges();
   }
-
-  // 清除選取範圍
-  selection.removeAllRanges();
-}
-
-
-
-
-
-
-
-
 
 
   // 更改高亮顏色
