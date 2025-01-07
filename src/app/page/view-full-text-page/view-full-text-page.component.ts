@@ -66,16 +66,26 @@ export class ViewFullTextPageComponent {
 
   //=========================================
 
-  // 顯示工具欄
+  // 顯示工具列
   showToolbar(event: MouseEvent, highlightSpan: HTMLElement): void {
     const toolbar = this.toolbarRef.nativeElement;
 
-    // 設置工具欄的位置
+    // 設定工具列位置
     this.renderer.setStyle(toolbar, 'top', `${event.clientY + window.scrollY}px`);
     this.renderer.setStyle(toolbar, 'left', `${event.clientX + window.scrollX}px`);
-    this.renderer.removeClass(toolbar, 'hidden'); // 顯示工具欄
-    this.currentHighlight = highlightSpan; // 設定當前高亮的文字元素
+
+    // 顯示工具列
+    this.renderer.removeClass(toolbar, 'hidden');
   }
+
+  // 隱藏工具列
+  hideToolbar(): void {
+    const toolbar = this.toolbarRef.nativeElement;
+
+    // 隱藏工具列
+    this.renderer.addClass(toolbar, 'hidden');
+  }
+
 
   // 動態顯示工具列
   handleTextSelection(): void {
@@ -104,11 +114,8 @@ export class ViewFullTextPageComponent {
   }
 
 
-  // 隱藏工具列
-  hideToolbar(): void {
-    const toolbar = this.toolbarRef.nativeElement;
-    this.renderer.addClass(toolbar, 'hidden');
-  }
+
+
 
   //========================================
   // 儲存用戶的選取範圍

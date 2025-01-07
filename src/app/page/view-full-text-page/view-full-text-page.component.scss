@@ -4,9 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px; /* 按鈕寬度 */
-  height: 50px; /* 按鈕高度 */
-  border-radius: 6px; /* 按鈕圓角 */
+  width: 50px;
+  /* 按鈕寬度 */
+  height: 50px;
+  /* 按鈕高度 */
+  border-radius: 6px;
+  /* 按鈕圓角 */
   cursor: pointer;
   transition: transform 0.2s, background-color 0.3s;
 }
@@ -26,7 +29,8 @@
 .marker-eraser {
   width: 50px;
   height: 50px;
-  background-color: #f8d7da; /* 橡皮擦背景色 */
+  background-color: #f8d7da;
+  /* 橡皮擦背景色 */
 }
 
 .marker-icon:hover {
@@ -43,11 +47,13 @@
   padding: 10px;
   border-radius: 8px;
   z-index: 1000;
+  transform: scale(0.9);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.1s ease, visibility 0.1s ease;
 }
-.toolbar-inner{
+
+.toolbar-inner {
   left: auto;
 }
 
@@ -58,8 +64,12 @@
 }
 
 .toolbar:not(.hidden) {
+  transform: scale(1);
+  /* 恢復正常大小 */
   opacity: 1;
+  /* 顯示不透明 */
   visibility: visible;
+  /* 可見 */
 }
 
 .toolbar .toolbar-content .line {
@@ -72,19 +82,26 @@
 /* 工具表按鈕容器 */
 .toolbar-buttons {
   display: flex;
-  flex-direction: row; /* 工具按鈕橫向排列 */
+  flex-direction: row;
+  /* 工具按鈕橫向排列 */
   align-items: center;
-  gap: 12px; /* 按鈕之間的間距 */
-}
-.toolbar-content {
-  display: flex;
-  justify-content: center; /* 居中顯示工具 */
-  align-items: center; /* 垂直居中 */
-  flex-direction: row; /* 橫向排列 */
-  gap: 10px; /* 工具之間的間距 */
-  padding: 8px; /* 工具列內邊距 */
+  gap: 12px;
+  /* 按鈕之間的間距 */
 }
 
+.toolbar-content {
+  display: flex;
+  justify-content: center;
+  /* 居中顯示工具 */
+  align-items: center;
+  /* 垂直居中 */
+  flex-direction: row;
+  /* 橫向排列 */
+  gap: 10px;
+  /* 工具之間的間距 */
+  padding: 8px;
+  /* 工具列內邊距 */
+}
 
 
 //===============================================
@@ -175,6 +192,14 @@ pre {
   background-color: white;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+.toolbar-button {
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    transform: none; /* 移除按壓動畫的縮放效果 */
+  }
 }
 
 .toolbar-button:hover {
