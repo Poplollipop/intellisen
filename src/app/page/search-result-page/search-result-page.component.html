@@ -1,44 +1,201 @@
-<!-- 主要內容 -->
-<div class="search-result-container">
+<div class="search-area">
 
-  <!-- 左側案件列表 -->
-  <div class="case-list">
-    <h3>案件列表</h3>
-    @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track $index) {
-    <button (click)="selectId(item.id);showCaseDetail = true" class="display-button">
-      <span>
-        {{ this.sessionServiceService.turnCodeToName(item.court) }}
-        {{ formatCaseId(item.id) }}
-        {{ item.charge }}
-        {{ item.caseType }}
-        {{ item.docType }} >
+  <!-- 關鍵字區域 -->
+  <div class="keyword-search">
+    <div class="input-search-button">
+      <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
+      <button type="button" class="btn btn-secondary btn-sm">搜尋</button>
+    </div>
+  </div>
+
+
+  <!-- 進階條件 -->
+  <div class="bottom-area">
+    <p>
+      <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+        aria-controls="collapseExample" (click)="toggleAdvanced()">
+        @if (!isExpanded) {
+        <span class="d-flex align-items-center">
+          進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
+        </span>
+
+        }
+        @if (isExpanded) {
+        <span class="d-flex align-items-center">
+          收起篩選條件 <mat-icon>keyboard_arrow_up</mat-icon>
+        </span>
+        }
       </span>
-    </button>
-    }
+    </p>
 
-    <!-- 分頁控制 -->
-    <div class="paginator">
-      <button class="normal-button" (click)="previousPage()">上一頁</button>
-      <span class="page">{{ page }} / {{ totalPages }}</span>
-      <button class="normal-button" (click)="nextPage()">下一頁</button>
+
+    <div class="collapse" id="collapseExample">
+      <div class=" card-body">
+
+        <!-- 進階條件中的搜尋 -->
+        <div class="layout-container">
+          <!-- 左邊的 Accordion -->
+          <div class=" flex justify-center accordion-container">
+            <p-accordion class="custom1" [multiple]="true">
+              <p-accordion-panel value="0">
+                <p-accordion-header>裁判案由</p-accordion-header>
+                <p-accordion-content>
+                  <p class="m-0">
+                    <input pInputText id="username" aria-describedby="username-help" pSize="small"
+                      [(ngModel)]="inputCase" placeholder="例如：傷害等" />
+                  </p>
+                </p-accordion-content>
+              </p-accordion-panel>
+              <p-accordion-panel value="1">
+                <p-accordion-header>選擇法院</p-accordion-header>
+                <p-accordion-content>
+                  <div class="m-0">
+                    <div class="flex justify-center test">
+                      <p-multiselect [options]="groupedCourts" [group]="true" [(ngModel)]="inputCourts"
+                        placeholder="請選擇法院" scrollHeight="250px" display="chip" styleClass="w-full md:w-30"
+                        appendTo="body" size="small">
+                        <div class=".p-multiselect-header">全選</div>
+                        <ng-template let-group #group>
+                          <div class="flex items-center">
+                            <span>{{ group.label }}</span>
+                          </div>
+                        </ng-template>
+                      </p-multiselect>
+                    </div>
+                  </div>
+                </p-accordion-content>
+              </p-accordion-panel>
+              <p-accordion-panel value="2">
+                <p-accordion-header>法條搜索</p-accordion-header>
+                <p-accordion-content>
+                  <p class="m-0">
+                    <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="law"
+                      (keyup)="updateLawsList()" placeholder="例如：刑法第277條;刑法271條" />
+                    <small id="username-help" style="display: inline-block; margin-left: 1%;">不同法條請用分號（;）隔開</small>
+                    @if (errorMessage) {
+                    <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+                    }
+                  </p>
+                </p-accordion-content>
+              </p-accordion-panel>
+              <p-accordion-panel value="3">
+                <p-accordion-header>案件類型</p-accordion-header>
+                <p-accordion-content>
+                  <div class="m-0">
+                    <div class="case-type">
+                      <p-checkbox inputId="ingredient1" name="lawType" value="刑法" [(ngModel)]="lawType" />
+                      <label for="ingredient1" class="ml-2"> 刑法 </label>
+                      <p-checkbox inputId="ingredient2" name="lawType" value="民法" [(ngModel)]="lawType" />
+                      <label for="ingredient2" class="ml-2"> 民法 </label>
+                    </div>
+                  </div>
+                </p-accordion-content>
+              </p-accordion-panel>
+            </p-accordion>
+          </div>
+
+          <!-- 右邊的 Accordion -->
+          <div class=" flex justify-center accordion-container">
+            <p-accordion [multiple]="true">
+              <p-accordion-panel value="0">
+                <p-accordion-header>裁判字號</p-accordion-header>
+                <p-accordion-content>
+                  <p class="m-0">
+                    <select [(ngModel)]="year" (ngModelChange)="updateCombinedId()">
+                      <option value=""></option>
+                      @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
+                      '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index)
+                      {
+                      <option>{{ year }}</option>
+                      }
+                    </select>
+                    年度
+                    <input [(ngModel)]="zhi" (ngModelChange)="updateCombinedId()">
+                    字第
+                    <input [(ngModel)]="hao" (ngModelChange)="updateCombinedId()">
+                    號
+                  </p>
+                </p-accordion-content>
+              </p-accordion-panel>
+              <p-accordion-panel value="1">
+                <p-accordion-header>裁判期間</p-accordion-header>
+                <p-accordion-content>
+                  <p class="m-0">
+                    <input type="date" id="start" name="trip-start" [(ngModel)]="startDate" />
+                    <span style="padding-left: 0.3rem ; padding-right: 0.3rem;">至</span>
+                    <input type="date" id="start" name="trip-start" [min]="startDate" [(ngModel)]="endDate" />
+                  </p>
+                </p-accordion-content>
+              </p-accordion-panel>
+              <p-accordion-panel value="2">
+                <p-accordion-header>裁判種類</p-accordion-header>
+                <p-accordion-content>
+                  <p class="m-0">
+                    <select [(ngModel)]="caseType" class="wide-select">
+                      <option value="">請選擇種類</option>
+                      <option value="判決">判決</option>
+                      <option value="裁定">裁定</option>
+                    </select>
+                  </p>
+                </p-accordion-content>
+              </p-accordion-panel>
+            </p-accordion>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- 右側內容顯示 -->
-  <div class="case-details">
-    <!-- 搜尋條件drawer觸發按鈕 -->
-    <div class="show-search-btn">
-      <p-button class="case-preview-button" type="button" label="案件預覽" size="large" (click)="showCaseDetail = true" />
-      <p-button class="statistics-button" type="button" label="&emsp;統計&emsp;" size="large"
-        (click)="showCaseDetail = false" /> <!-- &emsp; 全形空白 = 一個中文字 ; &ensp; 半形空白 = 半個中文字-->
-      <p-button class="select-condition-button" type="button" size="large" (click)="visible2 = true" label="更改搜索條件" />
-    </div>
-    <app-case-details [caseId]="selectedCaseId" [showCaseDetail]="showCaseDetail"></app-case-details>
-  </div>
-
 </div>
 
-<!-- drawer -->
+
+
+
+
+
+
+
+
+<div class="search-result-container">
+
+  <mat-tab-group>
+
+    <!-- 案件列表 -->
+    <mat-tab label="案件列表">
+      <div class="case-list">
+        <ul>
+          @for (item of caseList.slice((page - 1) * itemsPerPage, page * itemsPerPage); track $index) {
+          <li class="display-li">
+            <span (click)="selectId(item.id)">{{ item.id }}</span>
+            <span style="margin-left: 5%;">|</span>
+            <span style="margin-left: 5%;"> {{ this.sessionServiceService.turnCodeToName(item.court) }}</span>
+            <!-- {{ item.charge }}
+              {{ item.caseType }}
+              {{ item.docType }} -->
+          </li>
+          <p class="content2">{{item.content2}}</p>
+        <hr>
+          }
+        </ul>
+        <!-- 分頁控制 -->
+        <div class="paginator">
+          <button class="normal-button" (click)="previousPage()">上一頁</button>
+          <span class="page">{{ page }} / {{ totalPages }}</span>
+          <button class="normal-button" (click)="nextPage()">下一頁</button>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- 統計圖 -->
+    <mat-tab label="統計圖">
+      <div class="case-details">
+        <app-case-details [caseId]="selectedCaseId" [showCaseDetail]="showCaseDetail"></app-case-details>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+
+<!-- drawer
 <p-drawer header="您目前的搜尋條件：" [(visible)]="visible2" position="right" [style]="{ width: '400px' }">
   <form [formGroup]="searchForm">
     <p-fluid>
@@ -107,4 +264,4 @@
 
     </p-fluid>
   </form>
-</p-drawer>
+</p-drawer> -->

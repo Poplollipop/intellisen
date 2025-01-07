@@ -164,6 +164,14 @@ export class SearchPageComponent {
     console.log("存入的資料:", tidyData);
     this.router.navigate(['/search-result']);
   }
+
+  goLogin(){
+    this.router.navigateByUrl('/login')
+  }
+
+  goRegister(){
+    this.router.navigateByUrl('/register')
+  }
 }
 
 

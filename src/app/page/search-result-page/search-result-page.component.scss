@@ -1,67 +1,254 @@
-.show-search-btn {
-  display: flex;
-  margin-bottom: 1%;
-  position: relative;
+.search-area{
+  height: 5%;
+  width: 100%;
+  background: #c1e5ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 1rem auto;
+  padding: 1rem;
 
-  // 按鈕基本樣式
-  .case-preview-button,
-  .statistics-button,
-  .select-condition-button {
-    transition: 0.2s;
 
-    ::ng-deep button {
-      color: black;
-      border: 1px solid black;
-      border-radius: 5px;
-      padding: 8px;
+  .input-search-button{
+    display: flex; /* 使用 Flexbox */
+    align-items: center; /* 垂直居中對齊 */
+    justify-content: center;
+    gap: 1rem; /* 增加間距 */
 
-      span {
-        font-size: 20px;
-      }
+
+    input{
+      width: 60%;
+      padding: 5px;
+      border: none ;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #ffffff;
+      color:black;
+      border: 1px solid rgb(0, 30, 111)
+    }
+
+    button{
+      padding: 5px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #031546;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
   }
-
-  // 預覽個案
-  .case-preview-button {
-    margin-left: 1%;
-
-    // 按鈕個別顏色
-    ::ng-deep button {
-      background-color: #eaeaea;
-    }
-  }
-
-  // 統計
-  .statistics-button {
-    margin-left: 5%;
-
-    // 按鈕個別顏色
-    ::ng-deep button {
-      background-color: #eaeaea;
-    }
-  }
-
-  // 搜尋條件
-  .select-condition-button {
-    position: absolute;
-    right: 0;
-
-    // 按鈕個別顏色
-    ::ng-deep button {
-      background-color: #ffe8a3;
-    }
-  }
-
 
 }
+
+.bottom-area{
+  // margin: 2rem;
+  width: 100%;
+
+  /* 主按鈕樣式 */
+  .btn {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 2px;
+    margin-left: 5%;
+    border: none;
+
+    span{
+      color: #003b65;
+      font-size: 1rem;
+    }
+  }
+
+  .btn :hover{
+    font-weight: bold;
+  }
+
+  .layout-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 10px;
+    border: none;
+    // background-color: #878787e3;
+
+    .accordion-container {
+      width: 46%;
+      margin: 0 auto;
+
+    }
+
+    .p-accordionheader{
+      background-color: transparent;
+      border: none;
+      color: #0a0a0a;
+      justify-content: flex-start;
+      gap: 1rem
+    }
+
+
+  }
+
+
+
+  .case-type{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    p-checkbox{
+      display: flex;
+      align-items: center;
+    }
+  }
+
+}
+
+/* 統一 input 框樣式 */
+input[type="text"],
+input,
+select {
+  width: 25%;
+  padding: 8px 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #fff;
+  color: #000;
+}
+
+input[type="date"]{
+  width: 40%;
+  padding: 8px 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #fff;
+  color: #000;
+}
+
+/* 適用於 ngModel 的 input 框 */
+input[ngModel],
+input[pInputText] {
+  width: 60%;
+  padding: 8px 12px;
+  margin: 8px 2px;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #fff;
+  color: #000;
+}
+
+/* 適用於 <select> 的樣式 */
+select {
+  padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 19%;
+  height: 2.5rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #000;
+}
+
+.wide-select {
+  width: 60%;
+  height: 2.5rem;
+  padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #000;
+}
+
+/* 多選框樣式 */
+p-multiselect {
+  width: 70%;
+  background-color: #fff;
+  color: #000;
+}
+
+/* 表單元素統一的 focus 樣式 */
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+// .show-search-btn {
+//   display: flex;
+//   margin-bottom: 1%;
+//   position: relative;
+
+//   // 按鈕基本樣式
+//   .case-preview-button,
+//   .statistics-button,
+//   .select-condition-button {
+//     transition: 0.2s;
+
+//     ::ng-deep button {
+//       color: black;
+//       border: 1px solid black;
+//       border-radius: 5px;
+//       padding: 8px;
+
+//       span {
+//         font-size: 20px;
+//       }
+//     }
+
+//   }
+
+//   // 預覽個案
+//   .case-preview-button {
+//     margin-left: 1%;
+
+//     // 按鈕個別顏色
+//     ::ng-deep button {
+//       background-color: #eaeaea;
+//     }
+//   }
+
+//   // 統計
+//   .statistics-button {
+//     margin-left: 5%;
+
+//     // 按鈕個別顏色
+//     ::ng-deep button {
+//       background-color: #eaeaea;
+//     }
+//   }
+
+//   // 搜尋條件
+//   .select-condition-button {
+//     position: absolute;
+//     right: 0;
+
+//     // 按鈕個別顏色
+//     ::ng-deep button {
+//       background-color: #ffe8a3;
+//     }
+//   }
+
+
+// }
 
 /* 搜尋結果的左右佈局 */
-.search-result-container {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-}
+// .search-result-container {
+//   display: flex;
+//   flex-direction: row;
+//   overflow: hidden;
+// }
 
 .case-list {
   display: flex;
@@ -71,97 +258,104 @@
   overflow-y: auto;
   padding: 10px;
 
-  .clickable {
-    color: #007bff;
-    cursor: pointer;
+  .display-li {
+    width: 70rem;
+    height: 2rem;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none; // 去掉邊框
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    transition: background-color 0.3s ease; // 增加顏色變換的過渡效果
+    display: flex;
+    justify-content: flex-start;
+
+    span {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    &:focus {
+      border: 2px solid black;
+    }
+
   }
 
-}
-
-.case-details {
-  flex: 2;
-  overflow-y: auto;
-  padding: 10px;
-}
-
-
-.p-field{
-  margin-top: 1rem;
-
-  input{
-    display: block;
-    height: 2.3rem;
-    width: 20rem;
-    background-color: #f8f8f8;
-    color: black;
-    border: 1px solid black;
-    border-radius: 2px;
+  p{
+    display: -webkit-box; /* 設定為彈性盒子模型 */
+    -webkit-box-orient: vertical; /* 設定彈性盒子的方向為垂直 */
+    overflow: hidden; /* 隱藏超出的內容 */
+    text-overflow: ellipsis; /* 加上省略號 */
+    -webkit-line-clamp: 3; /* 限制顯示 3 行 */
+    margin-left: 2%; /* 保留你原來的樣式 */
   }
 
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0) brightness(0);  // 將顏色反轉並設置為黑色
-    cursor: pointer;  // 確保光標正常顯示
-  }
-
-
-
-  select{
-    display: block;
-    height: 2.3rem;
-    width: 20rem;
-    background-color: #f8f8f8;
-    color: black;
-    border-radius: 2px;
-    border: 1px solid black;
-  }
-
-  p-multiselect{
-    height: 2.5rem;
-    width: 20rem;
-    border-radius: 2px;
-    border: 1px solid black;
-    background-color: #f8f8f8;
-  }
-
-}
-
-.btn{
-  ::ng-deep button{
-   background-color: #3694f9;
-   border: none;
-   margin-top: 0.9rem;
-  }
-}
-
-.btn {
-  ::ng-deep button:hover{
-    background-color: #037dff;
+  .case-details {
+    flex: 2;
+    overflow-y: auto;
+    padding: 10px;
   }
 }
 
 
-.display-button {
-  width: 85%;
-  padding: 10px 20px;
-  margin: 10px;
-  border: none; // 去掉邊框
-  border-radius: 30px;
-  background-color: #bde3ff;
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease; // 增加顏色變換的過渡效果
-  display: flex;
 
-  span {
-    margin-left: 5%;
-    font-size: 20px;
-  }
 
-  &:focus {
-    border: 2px solid black;
-  }
-}
+// .p-field{
+//   margin-top: 1rem;
+
+//   input{
+//     display: block;
+//     height: 2.3rem;
+//     width: 20rem;
+//     background-color: #f8f8f8;
+//     color: black;
+//     border: 1px solid black;
+//     border-radius: 2px;
+//   }
+
+//   input[type="date"]::-webkit-calendar-picker-indicator {
+//     filter: invert(0) brightness(0);  // 將顏色反轉並設置為黑色
+//     cursor: pointer;  // 確保光標正常顯示
+//   }
+
+
+
+//   select{
+//     display: block;
+//     height: 2.3rem;
+//     width: 20rem;
+//     background-color: #f8f8f8;
+//     color: black;
+//     border-radius: 2px;
+//     border: 1px solid black;
+//   }
+
+//   p-multiselect{
+//     height: 2.5rem;
+//     width: 20rem;
+//     border-radius: 2px;
+//     border: 1px solid black;
+//     background-color: #f8f8f8;
+//   }
+
+// }
+
+// .btn{
+//   ::ng-deep button{
+//    background-color: #3694f9;
+//    border: none;
+//    margin-top: 0.9rem;
+//   }
+// }
+
+// .btn {
+//   ::ng-deep button:hover{
+//     background-color: #037dff;
+//   }
+// }
+
+
+
 
 .normal-button {
   font-size: 20px;

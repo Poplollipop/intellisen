@@ -10,6 +10,15 @@ import { Fluid } from 'primeng/fluid';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AccordionModule } from 'primeng/accordion';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { InputTextModule } from 'primeng/inputtext';
+import { Checkbox } from 'primeng/checkbox';
+import { SelectItemGroup } from 'primeng/api';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-search-result-page',
@@ -20,8 +29,18 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    Fluid,
-    MultiSelectModule
+    // Fluid,
+    MultiSelectModule,
+    MatIconModule,
+    MatExpansionModule,
+    AccordionModule,
+    AvatarModule,
+    BadgeModule,
+    InputTextModule,
+    FormsModule,
+    MultiSelectModule,
+    Checkbox,
+    MatTabsModule
   ],
   templateUrl: './search-result-page.component.html',
   styleUrl: './search-result-page.component.scss'
@@ -36,13 +55,27 @@ export class SearchResultPageComponent {
   selectedCaseId!: string;    // 選中的案件id
   showCaseDetail: boolean = false;     // 顯示案件細節
 
-  groupedCourts!: any;
   searchForm!: FormGroup;
   visible2: boolean = true;
   editMode = false;
   errorMessage: string = '';    // 法條錯誤提示訊息
   lawList!: string[];     // 整理後的法院字串
+  isExpanded: boolean = false;  // 進階條件是否展開的變數
 
+  keywords: string = '';
+    inputCase: string = '';
+    law: string = '';
+    lawType!: string[];
+    groupedCourts!: SelectItemGroup[];
+    inputCourts!: string[];
+    inputCaseYear: string = '';
+    startDate!: Date;
+    endDate!: Date;
+    caseType: string = '';
+    year: string = '';
+    zhi: string = '';
+    hao: string = '';
+    combinedId: string = '';
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -155,6 +188,7 @@ export class SearchResultPageComponent {
     let resData: any;
     this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
       resData = searchData;
+      console.log(resData);
 
       // 儲存搜尋資料
       this.searchForm.patchValue(savedConditions);
@@ -296,18 +330,33 @@ export class SearchResultPageComponent {
   // 法條輸入格式錯誤訊息
 
 
+  // // 更新法條列表
+  // updateLawsList(lawString: any) {
+  //   if (!lawString) {
+  //     this.lawList = []
+  //     return;
+  //   }
+  //   if (this.validateInput(lawString)) {
+  //     this.errorMessage = '';
+  //     this.lawList = lawString.split(';').filter((law: string) => law.trim() !== '');
+  //   } else {
+  //     this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
+  //   }
+  // }
+
   // 更新法條列表
-  updateLawsList(lawString: any) {
-    if (!lawString) {
-      this.lawList = []
-      return;
-    }
-    if (this.validateInput(lawString)) {
+  updateLawsList() {
+    if (this.validateInput(this.law)) {
       this.errorMessage = '';
-      this.lawList = lawString.split(';').filter((law: string) => law.trim() !== '');
+      this.lawList = this.law.split(';').filter(law => law.trim() !== '');
     } else {
       this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
     }
+  }
+
+  updateCombinedId() {
+    // 將三個輸入框的值合併成一個新值
+    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
   }
 
 
@@ -316,17 +365,17 @@ export class SearchResultPageComponent {
     // 取出 form 中的值
     const updateCondition = this.searchForm.value;
 
-    // 製作 法條陣列
-    this.updateLawsList(updateCondition.lawList)
 
     // 製作  search pai 的 req 資料
-    const sendApiData = {
-      ...updateCondition,
-      lawList: this.lawList //  整理後的法條
-    }
+    const sendApiData = updateCondition
+
 
     // 發送 API 搜尋資料
     this.searchApi(sendApiData);
+  }
+
+  toggleAdvanced() {
+    this.isExpanded = !this.isExpanded;
   }
 
 
