@@ -42,7 +42,7 @@ export class ViewFullTextPageComponent {
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
-  isToolbarVisible: boolean = false;
+
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -50,9 +50,6 @@ export class ViewFullTextPageComponent {
       document.addEventListener('mouseup', () => this.handleTextSelection());
       document.addEventListener('selectionchange', () => this.handleTextSelection());
       this.updateDynamicLink(); // 更新分享連結
-
-      // 初始化邏輯後，控制工具列可見性
-      this.isToolbarVisible = true;
       //==============================================================
       this.suptext = this.searchSessionService.singleCaseDate.content;
       this.url = this.searchSessionService.singleCaseDate.url;
@@ -209,8 +206,6 @@ export class ViewFullTextPageComponent {
     });
   }
 
-
-
   // 刪除選取範圍內的高亮效果
   removeHighlightsInRange(event?: MouseEvent): void {
     if (event) event.stopPropagation(); // 防止事件冒泡
@@ -289,7 +284,6 @@ export class ViewFullTextPageComponent {
     // 清除選取範圍
     selection.removeAllRanges();
   }
-
 
 
   // 更改高亮顏色
