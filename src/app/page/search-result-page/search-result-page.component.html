@@ -4,7 +4,7 @@
   <div class="keyword-search">
     <div class="input-search-button">
       <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
-      <button type="button" class="btn btn-secondary btn-sm">搜尋</button>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="searchAgain()">搜尋</button>
     </div>
   </div>
 
@@ -13,7 +13,7 @@
   <div class="bottom-area">
     <p>
       <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
-        aria-controls="collapseExample" (click)="toggleAdvanced()">
+        aria-controls="collapseExample"  (click)="toggleAdvanced()">
         @if (!isExpanded) {
         <span class="d-flex align-items-center">
           進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
@@ -83,10 +83,10 @@
                 <p-accordion-content>
                   <div class="m-0">
                     <div class="case-type">
-                      <p-checkbox inputId="ingredient1" name="lawType" value="刑法" [(ngModel)]="lawType" />
-                      <label for="ingredient1" class="ml-2"> 刑法 </label>
-                      <p-checkbox inputId="ingredient2" name="lawType" value="民法" [(ngModel)]="lawType" />
-                      <label for="ingredient2" class="ml-2"> 民法 </label>
+                      <p-checkbox inputId="ingredient1" name="lawType" value="刑事" [(ngModel)]="lawType" />
+                      <label for="ingredient1" class="ml-2"> 刑事 </label>
+                      <p-checkbox inputId="ingredient2" name="lawType" value="民事" [(ngModel)]="lawType" />
+                      <label for="ingredient2" class="ml-2"> 民事 </label>
                     </div>
                   </div>
                 </p-accordion-content>
@@ -183,7 +183,7 @@
           }
         </ul>
         <!-- 分頁控制 -->
-        <p-paginator [rows]="itemsPerPage1" [totalRecords]="totalRecords" [first]="first" 
+        <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [first]="first" 
           (onPageChange)="onPageChange($event)"></p-paginator>
 
       </div>
