@@ -40,6 +40,67 @@ export class SessionServiceService {
     ["KMD", "福建金門地方法院"],
   ]);
 
+  private email: string;
+  private isLogin: boolean;
+
+  constructor() {
+    // 檢查是否在瀏覽器端執行
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      const storedEmail = sessionStorage.getItem('email');
+      this.email = storedEmail ? JSON.parse(storedEmail) : '';
+    } else {
+      this.email = ''; // 如果在伺服器端，設為空字串
+    }
+
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      const storedIsLogin = sessionStorage.getItem('isLogin');
+      this.isLogin = storedIsLogin ? JSON.parse(storedIsLogin) : false;
+    } else {
+      this.isLogin = false; // 如果在伺服器端，設為 false
+    }
+  }
+
+  // 取得 email
+  getIsLogin(): boolean {
+    return this.isLogin;
+  }
+
+  // 設定 email
+  setIsLogin(isLogin: boolean) {
+    this.isLogin = isLogin;
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('isLogin', JSON.stringify(isLogin));
+    }
+  }
+
+  // 清空 email
+  clearIsLogin() {
+    this.isLogin = false;
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.removeItem('isLogin');
+    }
+  }
+
+  // 取得 email
+  getEmail(): string {
+    return this.email;
+  }
+
+  // 設定 email
+  setEmail(email: string) {
+    this.email = email;
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('email', JSON.stringify(email));
+    }
+  }
+
+  // 清空 email
+  clearEmail() {
+    this.email = '';
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.removeItem('email');
+    }
+  }
 
   // 設定選擇條件
   setData(data: SelectedData): void {

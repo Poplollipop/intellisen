@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { HttpClientService } from '../../service/http-client.service';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { SessionServiceService } from '../../service/session-service.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class RegisterPageComponent {
 
   constructor(
     private router: Router,
-    private http: HttpClientService
+    private http: HttpClientService,
+    private session: SessionServiceService
   ) { }
 
   email!: string;
@@ -82,14 +84,25 @@ export class RegisterPageComponent {
     }
 
     console.log(tidyData);
+    console.log(this.email);
 
-    this.http.postApi2('http://localhost:8080/case/register', tidyData).subscribe({
+    this.http.postApi2('http://localhost:8080/accountSystem/register', tidyData).subscribe({
       next: (response: any) => {
-        if (response.status == 200) {
+        if (response.body.code == 200) {
           Swal.fire({
             text: '驗證信已發送，請至信箱查看',
             icon: 'info',
             confirmButtonText: '關閉'
+          });
+          this.session.setEmail(this.email);
+          this.router.navigateByUrl('/edit-info')
+        }
+
+        if (response.body.code != 200) {
+          Swal.fire({
+            text: '註冊失敗，請檢查email或密碼格式是否正確',
+            icon: 'error',
+            confirmButtonText: '確定'
           });
         }
       },
