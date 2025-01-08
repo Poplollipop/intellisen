@@ -23,28 +23,37 @@ html, body {
 
 /* src/styles.css */
 
-
+// dialog
 .mat-mdc-dialog-surface {
   background-color: #ffffff !important;
 }
 
+// 風琴列表
 .p-accordioncontent-content {
   background-color: transparent !important;
   color: #090909 !important; /* 自訂內容文字顏色 */
 }
 
+// 多選
 .p-multiselect-overlay{
   background-color: rgb(240, 240, 240) !important;
   color: #666666 !important;
 }
 
+// 多選
 .p-multiselect-option{
   color: black !important;
 }
 
-.p-drawer{
-  background-color: white !important;
-  color: black !important;
+
+// 搜尋結果頁的往最頂端按鈕
+.p-scrolltop.p-button {
+  z-index: 999;
+  position: fixed;
+  bottom: 12px;
+  inset-inline-end: 20px;
+  background-color: #a5a5a5;
+  border: none;
 }
 
 :root{

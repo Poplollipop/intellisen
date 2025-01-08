@@ -1,65 +1,5 @@
 <div class="card">
 
-
-  @if (showCaseDetail) {
-
-  @if(displayData){
-  <div class="category">
-    <div>
-      <p class="title">法官</p>
-      <p class="content"> {{ displayData.judgeName }}</p>
-    </div>
-    <div>
-      <p class="title">被告</p>
-      <p class="content"> {{ displayData.defendantName }}</p>
-    </div>
-    <div>
-      <p class="title">案由</p>
-      <p class="content"> {{ displayData.charge }}</p>
-    </div>
-    <div>
-      <p class="title">裁判日期</p>
-      <p class="content"> {{ displayData.verdictDate }}</p>
-    </div>
-    <div>
-      <p class="title">裁判法院</p>
-      <p class="content"> {{ displayData.court }}</p>
-    </div>
-    <div>
-      <p class="title">種類</p>
-      <p class="content"> {{ displayData.docType }}</p>
-    </div>
-  </div>
-  <div> <button class="check-content-button" (click)="viewFullText()">查看全文</button></div>
-
-
-  <div class="content-div">
-    <pre class="pre-content">
-        {{ displayData.content }}
-      </pre>
-  </div>
-  }@else {
-  <div class="category">
-    <div class="title">法官</div>
-    <div class="title">被告</div>
-    <div class="title">案由</div>
-    <div class="title">裁判日期</div>
-    <div class="title">裁判法院</div>
-    <div class="title">種類</div>
-  </div>
-  }
-
-
-  }
-
-
-
-  @else {
-
-
-  <h2>統計圖表</h2>
-
-
   <!-- 右中量刑區間、統計列表區 -->
   <div class="table-container">
 
@@ -127,6 +67,3 @@
     </div>
 
   </div>
-  }
-
-</div>
