@@ -1,4 +1,4 @@
-<div class="document__toolbar">
+<div class="document__toolbar" *ngIf="isToolbarVisible" >
   <div class="btn-group">
     <!-- 分享按鈕 -->
     <button class="toolbar-button share-button" (click)="onShare()" matTooltip="分享連結" matTooltipClass="custom-tooltip">
@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<div class="toolbar toolbar-abs top hidden" class="toolbar hidden" #toolbar>
+<div class="toolbar toolbar-abs top hidden" class="toolbar hidden" #toolbar *ngIf="isToolbarVisible">
   <div class="toolbar-arrow"></div>
   <div class="toolbar-content">
     <!-- 工具列內容 -->

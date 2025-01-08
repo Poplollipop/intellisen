@@ -42,6 +42,7 @@ export class ViewFullTextPageComponent {
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
+  isToolbarVisible = false; // 控制工具列表起始狀態:為 false 不啟用
 
 
   ngOnInit(): void {
@@ -50,6 +51,10 @@ export class ViewFullTextPageComponent {
       document.addEventListener('mouseup', () => this.handleTextSelection());
       document.addEventListener('selectionchange', () => this.handleTextSelection());
       this.updateDynamicLink(); // 更新分享連結
+      //==============================================================
+      setTimeout(() => {
+        this.isToolbarVisible = true; // 避免初始渲染出現工具列
+      }, 10);
       //==============================================================
       this.suptext = this.searchSessionService.singleCaseDate.content;
       this.url = this.searchSessionService.singleCaseDate.url;
@@ -63,6 +68,12 @@ export class ViewFullTextPageComponent {
       document.removeEventListener('selectionchange', () => this.saveSelection());
     }
   }
+  // 確保右上工具按鈕在頁面載入時不觸發動畫
+  ngAfterViewInit() {
+    const toolbarButtons = document.querySelectorAll('.toolbar-button');
+    toolbarButtons.forEach((button) => (button as HTMLElement).blur()); // 確保按鈕失去焦點
+  }
+
 
   //=========================================
 
