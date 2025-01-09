@@ -1,27 +1,48 @@
-// 最外層容器
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;  
+  background-color: #c3cfde;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
+.content {
+  display: flex;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  justify-content: center;
 }
 
-.header h2 {
-  font-size: 1.8rem;
+// 右邊圖區域
+.pic {
+  width: 35%;
+  background:url('../../../../public/login.png') 0 0 no-repeat #005593;
+  background-size: 100% 100%;
+  box-shadow: 0 0 15px gray;
+}
+
+// 左邊文字區域
+.text-area{
+  width: 35%;
+  height: 35rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  padding-top: 2rem;
+  box-shadow: 0 0 15px gray;
+}
+
+h2 {
+  font-size: 2rem;
   color: #333;
-  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.header p {
-  font-size: 1rem;
-  color: #888;
+
+.nav {
+  width: 200px;
+  height: 5px;
+  background-color: #005593;
+  margin-bottom: 10%;
 }
 
 .update-form {
@@ -33,7 +54,15 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  gap: 10px;
+}
+
+.flex {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
 }
 
 label {
@@ -41,8 +70,7 @@ label {
   color: #333;
 }
 
-// input 和 select 的樣式
-.select-form,
+// input 的樣式
 .form-control {
   padding: 10px;
   font-size: 1rem;

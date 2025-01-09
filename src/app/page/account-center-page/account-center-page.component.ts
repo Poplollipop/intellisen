@@ -14,6 +14,7 @@ export class AccountCenterPageComponent {
   name!: string;
   phone!: string;
   emailVerified!: boolean;
+  email!: string;
 
   constructor(
       private router: Router,

@@ -1,4 +1,4 @@
-:host{
+:host {
   display: block;
   margin: 0;
   padding: 0;
@@ -29,20 +29,30 @@
   background-color: #005593;
   padding: 1rem;
   padding-top: 2rem;
+  box-shadow: 0 0 15px gray;
+  border-radius: 5% 0 0 5%;
 
-  .input-info{
+  h2 {
+    font-weight: bold;
+  }
+
+  h5 {
+    font-weight: bold;
+  }
+
+  .input-info {
     margin-top: 10%;
   }
 
-  .email-area{
+  .email-area {
     height: 5rem
   }
 
-  .pwd-area{
+  .pwd-area {
     height: 5rem
   }
 
-  .input-email{
+  .input-email {
     width: 100%;
     max-width: 100%;
     background-color: white;
@@ -64,14 +74,14 @@
 }
 
 
-.btn-area{
+.btn-area {
   display: flex;
   justify-content: end;
   margin-top: 13rem;
   gap: 10px;
 }
 
-.btn{
+.btn {
   width: 9rem;
   height: 3rem;
   background-color: #ffffff;
@@ -82,8 +92,14 @@
   font-weight: bold;
 }
 
-.pic{
+.btn:hover {
+  background-color: #e7e7e7;
+}
+
+.pic {
   width: 35%;
   background:url('../../../../public/login.png') 0 0 no-repeat #e7e7e7;
   background-size: 100% 100%;
+  box-shadow: 0 0 15px gray;
+  border-radius: 0 5% 5% 0;
 }

@@ -57,6 +57,30 @@ html, body {
   border: none;
 }
 
+/* 覆蓋多選框勾選時的底色 */
+.p-checkbox-box.p-highlight {
+  background-color: blue !important; /* 替換成你想要的顏色 */
+  border-color: blue !important; /* 確保邊框顏色一致 */
+}
+
+/* 覆蓋打勾圖示的顏色 */
+.p-checkbox-box.p-highlight .p-checkbox-icon {
+  color: white !important; /* 替換成你想要的打勾顏色 */
+}
+
+
+/* 選中時的背景色和邊框色 */
+.p-radiobutton-box.p-highlight {
+  background-color: blue !important; /* 替換成你想要的顏色 */
+  border-color: blue !important;
+}
+
+/* 選中時內部圓圈的顏色 */
+.p-radiobutton-box.p-highlight .p-radiobutton-icon {
+  background-color: white !important; /* 替換成你想要的顏色 */
+}
+
+
 :root{
   --p-checkbox-background:#ffffff !important;   // 多選勾選框的顏色
   --p-multiselect-option-focus-background:#a5a5a5 !important;   // 法院的多選框顏色
@@ -67,6 +91,11 @@ html, body {
   --p-paginator-background: none !important;
   --p-paginator-nav-button-color: #000000 !important;
   --p-highlight-background: #a2dafa !important;
+  --p-radiobutton-checked-background: #0c41b4 !important;
+  --p-radiobutton-checked-border-color: #0c0e8c !important;
+  --p-radiobutton-checked-hover-background: #09286d !important;
+  --p-radiobutton-checked-hover-border-color: #0c0e8c !important;
+  --p-radiobutton-checked-focus-border-color: #061a45 !important;
 }
 
 
