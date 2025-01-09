@@ -6,6 +6,7 @@ import { PasswordModule } from 'primeng/password';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { InputTextModule } from 'primeng/inputtext';
+import { SessionServiceService } from '../../service/session-service.service';
 
 
 
@@ -30,6 +31,7 @@ export class LoginPageComponent {
   constructor(
     private router: Router,
     private http: HttpClientService,
+    private session: SessionServiceService
   ){}
 
   // 驗證email格式
@@ -46,10 +48,7 @@ export class LoginPageComponent {
     } else {
       this.errorMessage = '請輸入正確Email格式!';
     }
-
   }
-
-
 
   // 登入
   login(){
@@ -67,15 +66,30 @@ export class LoginPageComponent {
       password: this.password
     }
 
-    this.http.postApi2('http://localhost:8080/case/login',tidyData).subscribe({
+    this.http.postApi2('http://localhost:8080/accountSystem/login', tidyData).subscribe({
       next: (response: any) => {
-        if (response.status == 200) {
+        if (response.body.code == 200) {
           Swal.fire({
             title: '登入成功!',
             text: '歡迎回來！',
             icon: 'success',
             confirmButtonText: '確定'
           });
+          console.log(response.body.code);
+          this.session.setIsLogin(true);
+          this.session.setEmail(this.email);
+          console.log(this.session.getIsLogin());
+          this.router.navigateByUrl('/search')
+        }
+
+        if (response.body.code != 200) {
+          Swal.fire({
+            title: '登入失敗',
+            text: '請檢查帳號或密碼是否正確。',
+            icon: 'error',
+            confirmButtonText: '再試一次'
+          });
+          console.log(response.body.code);
         }
       },
       error: (error) => {
@@ -89,11 +103,13 @@ export class LoginPageComponent {
     })
   }
 
-
-
   // 建立帳號
   goRegister(){
     this.router.navigateByUrl('/register')
   }
 
+  // 忘記密碼
+  goForgotPassword() {
+    this.router.navigateByUrl('/forgot-password')
+  }
 }

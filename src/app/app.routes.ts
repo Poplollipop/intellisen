@@ -6,6 +6,8 @@ import { SearchPageComponent } from './page/search-page/search-page.component';
 import { ResultPageComponent } from './page/result-page/result-page.component';
 import { SearchResultPageComponent } from './page/search-result-page/search-result-page.component';
 import { ViewFullTextPageComponent } from './page/view-full-text-page/view-full-text-page.component';
+import { EditInfoPageComponent } from './page/edit-info-page/edit-info-page.component';
+import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -16,5 +18,7 @@ export const routes: Routes = [
   { path: 'search', component: SearchPageComponent},         // 搜尋頁
   { path: 'search-result', component: SearchResultPageComponent }, // 搜尋結果頁面
   { path: 'full-text', component: ViewFullTextPageComponent }, // 查看全文頁面
-  { path: 'full-text/:id', component: ViewFullTextPageComponent } // 查看全文頁面
+  { path: 'full-text/:id', component: ViewFullTextPageComponent }, // 查看全文頁面
+  { path: 'edit-info', component: EditInfoPageComponent }, // 編輯個人資料頁面
+  { path: 'forgot-password', component: ForgotPasswordPageComponent } // 編輯個人資料頁面
 ];
