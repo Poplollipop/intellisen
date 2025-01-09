@@ -306,8 +306,8 @@ export class SearchResultPageComponent {
   }
 
   // 觀看全文
-  checkConternt(id : String){
+  checkConternt(id : string){
     // 將網址與案件 id 綁在一起
-    this.router.navigateByUrl('full-text/:' +  id);
+    this.router.navigateByUrl('full-text/:' + id);
   }
 }
