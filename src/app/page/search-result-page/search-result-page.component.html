@@ -166,8 +166,7 @@
           @for (item of visibleCases; track $index) {
           <li class="display-li">
             <div class="main-content">
-              <!-- item 暫時替代 -->
-              <span class="id" (click)="checkConternt(item.id, item)">{{ item.id }}</span>
+              <span class="id" (click)="checkConternt(item.id)">{{ item.id }}</span>
               <span class="separator">|</span>
               <span class="court"> {{ this.sessionServiceService.turnCodeToName(item.court) }}</span>
             </div>

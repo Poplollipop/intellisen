@@ -1,3 +1,4 @@
+import { HttpClientService } from '../../service/http-client.service';
 import { FullTextDialogComponent } from './full-text-dialog/full-text-dialog.component';
 import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +27,7 @@ import { log } from 'console';
 // 增加網頁ID，並儲存該ID給伺服器
 export class ViewFullTextPageComponent {
   constructor(
+    private http: HttpClientService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
@@ -52,6 +54,8 @@ export class ViewFullTextPageComponent {
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
       this.judgmentJid = param.get('id');
+      console.log(this.judgmentJid);
+      this.getJudgmentApi(this.judgmentJid);
     })
 
     if (isPlatformBrowser(this.platformId)) {
@@ -64,10 +68,6 @@ export class ViewFullTextPageComponent {
         this.isToolbarVisible = true; // 避免初始渲染出現工具列
       }, 10);
       //==============================================================
-      console.log(this.searchSessionService.singleCaseDate.content);
-      this.suptext = this.searchSessionService.singleCaseDate.content2 ? this.searchSessionService.singleCaseDate.content + '\n' + this.searchSessionService.singleCaseDate.content2 : this.searchSessionService.singleCaseDate.content;
-      this.url = this.searchSessionService.singleCaseDate.url;
-      this.judgmentJid = this.searchSessionService.singleCaseDate.groupId;
     }
   }
 
@@ -152,7 +152,21 @@ export class ViewFullTextPageComponent {
     }
   }
   //==========================================
-
+  // api區
+  // 搜尋給於id，呼叫後端接收判決書資料
+  getJudgmentApi(judgmentJid: string) {
+    this.http
+      .getApi('http://localhost:8080/case/judgmentid?id=' + judgmentJid)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          this.suptext = res.caseList[0].content2
+            ? res.caseList[0].content + '\n' + res.caseList[0].content2
+            : res.caseList[0].content;
+          this.url = res.caseList[0].url;
+          this.judgmentJid = res.caseList[0].id;
+        });
+  }
 
 
   //==========================================
