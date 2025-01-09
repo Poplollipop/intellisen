@@ -150,7 +150,7 @@ export class SearchPageComponent {
     const tidyData = {
       searchName: this.keywords,// 模糊搜尋名
       verdictId: this.combinedId,// 裁判字號 id
-      caseType: this.lawType,// 案件類型:刑法、名法等等
+      caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
       charge: this.inputCase,	// 案由
       courtList: this.inputCourts,// 法院
       lawList: this.lawList,// 法條
@@ -163,6 +163,14 @@ export class SearchPageComponent {
     this.searchSessionService.searchData = tidyData;
     console.log("存入的資料:", tidyData);
     this.router.navigate(['/search-result']);
+  }
+
+  goLogin(){
+    this.router.navigateByUrl('/login')
+  }
+
+  goRegister(){
+    this.router.navigateByUrl('/register')
   }
 }
 
