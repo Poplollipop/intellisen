@@ -1,3 +1,44 @@
+/* 主容器排版 */
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  position: relative; /* 為了定位工具列與按鈕 */
+}
+/* 主內容區域 */
+.main-content {
+  flex: 3;
+  position: relative; /* 工具列與回上頁按鈕絕對定位所需 */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 右側 aside 區塊 */
+.aside-container {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-left: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) ;
+}
+
+/* 高亮文字的預設樣式 */
+#toptext {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 20px;
+  border: none;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
 //================================================
 // 工具表按鈕樣式
 .marker-icon {
@@ -106,55 +147,43 @@ span[style*="box-shadow"]:hover {
 }
 
 //=====================================================
-// 文字區域
-.content-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #f8f9fa;
+//回上頁按鈕
+.back-button {
+  position: absolute;
+  top: 20px; /* 顯示在主文區塊的右上角 */
+  right: 200px; /* 調整位置 */
+  padding: 5px 20px; /* 調整內邊距 */
+  font-size: 18px; /* 調整字體大小 */
+  font-weight: bold; /* 加粗文字 */
+  background-color: rgb(3, 21, 70); /* 深藍背景色 */
+  color: white; /* 白色文字 */
+  border: none; /* 移除邊框 */
+  border-radius: 8px; /* 圓角 */
+  cursor: pointer; /* 指針樣式 */
+  transition: background-color 0.3s, transform 0.2s; /* 增加平滑過渡效果 */
 }
 
-#toptext {
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 80%;
-  overflow-wrap: break-word;
+.back-button:hover {
+  background-color: rgb(5, 30, 100); /* 懸停時更深的藍色 */
+  transform: scale(1.05); /* 微縮放效果 */
 }
 
-pre {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  font-family: 'Courier New', monospace;
-  background: #fff;
-  max-width: 80%;
-  word-wrap: break-word;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
 
 //=====================================================
-// 右上工具
+// 右上工具列
 .document__toolbar {
   position: absolute;
-  top: 185px;
-  right: 20px;
+  top: 20px; /* 顯示在主文區塊的右上角 */
+  right:20px; /* 留出空間給回上頁按鈕 */
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px;
   background-color: #ffffff;
-  border: 1px solid #000;
-  background-color: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  border-radius: 4px;
-
   .mat-icon {
     color: #000000 !important;
   }
@@ -177,9 +206,11 @@ pre {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .toolbar-button:hover {
-  background-color: #e9ecef;
+  background-color: #b3b3b3;
 }
+
 //==============================================
 // 頁面載入 渲染處理
 .hidden {

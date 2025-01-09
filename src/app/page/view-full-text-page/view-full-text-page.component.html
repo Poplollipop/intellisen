@@ -1,76 +1,95 @@
-<div class="document__toolbar" *ngIf="isToolbarVisible" >
-  <div class="btn-group">
-    <!-- 分享按鈕 -->
-    <!-- <button class="toolbar-button share-button" (click)="onShare()" matTooltip="分享連結" matTooltipClass="custom-tooltip">
-      <mat-icon>link</mat-icon>
-    </button> -->
-    <!--我的最愛-->
-    <!-- <button class="toolbar-button star-button" (click)="myFavorite()" matTooltip="儲存我的最愛" matTooltipClass="custom-tooltip">
-      <mat-icon>star</mat-icon>
-    </button> -->
-    <!-- 前往判決書網站按鈕 -->
-    <button class="toolbar-button open_in_new-button" (click)="onOpenInNew()" matTooltip="前往官方本文"
-      matTooltipClass="custom-tooltip">
-      <mat-icon>open_in_new</mat-icon>
-    </button>
-    <!-- PDF 下載按鈕 -->
-    <button class="toolbar-button pdfdownload-button" (click)="onDownloadPDF()" matTooltip="PDF檔下載"
-      matTooltipClass="custom-tooltip">
-      <mat-icon>picture_as_pdf</mat-icon>
-    </button>
-    <!-- 列印按鈕 -->
-    <div class="toolbar-button print-button">
-      <mat-icon (click)="togglePrintOptions()" matTooltip="列印" matTooltipClass="custom-tooltip">print</mat-icon>
-      <!-- 選項框 -->
-      <div class="print-options" *ngIf="showPrintOptions">
-        <div class="arrow-box">
-          <button (click)="onPrint(true)">附帶螢光筆</button>
-          <button (click)="onPrint(false)">不附帶螢光筆</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <div class="toolbar toolbar-abs top hidden" class="toolbar hidden" #toolbar *ngIf="isToolbarVisible">
   <div class="toolbar-arrow"></div>
   <div class="toolbar-content">
     <!-- 工具列內容 -->
     <div class="line"></div>
-    <button class="toolbar-inner" id="copy-button" (click)="copyContent()" matTooltip="複製" matTooltipClass="custom-tooltip">
+    <button class="toolbar-inner" id="copy-button" (click)="copyContent()" matTooltip="複製"
+      matTooltipClass="custom-tooltip">
       <div>複製</div>
     </button>
     <div class="line"></div>
-    <button class="toolbar-inner" id="quote-copy-button" (click)="copyQuote()" matTooltip="引文複製" matTooltipClass="custom-tooltip">
+    <button class="toolbar-inner" id="quote-copy-button" (click)="copyQuote()" matTooltip="引文複製"
+      matTooltipClass="custom-tooltip">
       <div>引文複製</div>
     </button>
     <div class="line"></div>
-    <span class="marker-icon marker-painter-0" (click)="highlightText('yellow', $event)" matTooltip="黃色" matTooltipClass="custom-tooltip">
+    <span class="marker-icon marker-painter-0" (click)="highlightText('yellow', $event)" matTooltip="黃色"
+      matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
     </span>
-    <span class="marker-icon marker-painter-1" (click)="highlightText('lightgreen', $event)" matTooltip="綠色" matTooltipClass="custom-tooltip">
+    <span class="marker-icon marker-painter-1" (click)="highlightText('lightgreen', $event)" matTooltip="綠色"
+      matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
     </span>
-    <span class="marker-icon marker-painter-2" (click)="highlightText('lightblue', $event)" matTooltip="藍色" matTooltipClass="custom-tooltip">
+    <span class="marker-icon marker-painter-2" (click)="highlightText('lightblue', $event)" matTooltip="藍色"
+      matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
     </span>
-    <span class="marker-icon marker-eraser" (click)="removeHighlightsInRange($event)" matTooltip="刪除選取螢光效果" matTooltipClass="custom-tooltip">
+    <span class="marker-icon marker-eraser" (click)="removeHighlightsInRange($event)" matTooltip="刪除選取螢光效果"
+      matTooltipClass="custom-tooltip">
       <mat-icon class="material-symbols-outlined" aria-hidden="false" aria-label="橡皮擦">ink_eraser</mat-icon>
     </span>
-    <span class="marker-icon marker-eraser" (click)="removeAllHighlights()" matTooltip="刪除全部螢光效果" matTooltipClass="custom-tooltip">
+    <span class="marker-icon marker-eraser" (click)="removeAllHighlights()" matTooltip="刪除全部螢光效果"
+      matTooltipClass="custom-tooltip">
       <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever"></mat-icon>
     </span>
   </div>
 </div>
 
 
-<div>
-  <!-- 高亮文字區域 -->
-  <pre id="toptext" #suptextSpan>{{ suptext }}</pre>
-</div>
 
-<button (click)="returnToPreviousPage()">回上頁</button>
 <!-- <button matTooltip="儲存標籤" matTooltipClass="custom-tooltip">
   <mat-icon>save</mat-icon>
 </button> -->
+<div class="content-wrapper">
+  <!-- 主文內容區域 -->
+  <div class="main-content">
+    <!-- 右上工具列 -->
+    <div class="document__toolbar">
+      <div class="btn-group">
+        <!-- 分享按鈕 -->
+        <!-- <button class="toolbar-button share-button" (click)="onShare()" matTooltip="分享連結" matTooltipClass="custom-tooltip">
+        <mat-icon>link</mat-icon>
+      </button> -->
+        <!--書籤-->
+        <!-- <button class="toolbar-button star-button" (click)="myFavorite()" matTooltip="儲存我的最愛" matTooltipClass="custom-tooltip">
+        <mat-icon>star</mat-icon>
+      </button> -->
+        <!-- 前往判決書網站按鈕 -->
+        <button class="toolbar-button open_in_new-button" (click)="onOpenInNew()" matTooltip="前往官方本文"
+          matTooltipClass="custom-tooltip">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+        <!-- PDF 下載按鈕 -->
+        <button class="toolbar-button pdfdownload-button" (click)="onDownloadPDF()" matTooltip="PDF檔下載"
+          matTooltipClass="custom-tooltip">
+          <mat-icon>picture_as_pdf</mat-icon>
+        </button>
+        <!-- 列印按鈕 -->
+        <div class="toolbar-button print-button">
+          <mat-icon (click)="togglePrintOptions()" matTooltip="列印" matTooltipClass="custom-tooltip">print</mat-icon>
+          <!-- 選項框 -->
+          <div class="print-options" *ngIf="showPrintOptions">
+            <div class="arrow-box">
+              <button (click)="onPrint(true)">附帶螢光筆</button>
+              <button (click)="onPrint(false)">不附帶螢光筆</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主文高亮文字內容 -->
+    <pre id="toptext" #suptextSpan>{{ suptext }}</pre>
+    <!-- 回上頁按鈕 -->
+    <button class="back-button" (click)="returnToPreviousPage()">回上頁</button>
+  </div>
+
+  <!-- 右側 aside 區塊 -->
+  <aside class="aside-container">
+    <h2>相關資訊</h2>
+    <ul>
+      <!-- 相關資訊內容 -->
+    </ul>
+  </aside>
+</div>
