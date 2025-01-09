@@ -22,7 +22,6 @@ export class CaseDetailsComponent {
   chartOptions: Highcharts.Options = {};  // 圖表配置
 
   constructor(
-    private searchSessionService: SearchSessionService,
     public dialog: MatDialog,
     private router : Router,
   ) {
@@ -56,10 +55,6 @@ export class CaseDetailsComponent {
     }
   ];
 
-  // 查看全文
-  viewFullText(){
-    this.router.navigateByUrl('full-text');
-  }
 
   // 圖表區
 

@@ -26,7 +26,7 @@ export class RegisterPageComponent {
     private router: Router,
     private http: HttpClientService,
     private session: SessionServiceService
-  ) { }
+  ) {}
 
   email!: string;
   rawPwd!: string;
@@ -90,12 +90,12 @@ export class RegisterPageComponent {
       next: (response: any) => {
         if (response.body.code == 200) {
           Swal.fire({
-            text: '驗證信已發送，請至信箱查看',
+            text: '驗證信已發送，請至信箱查看，並重新登入',
             icon: 'info',
             confirmButtonText: '關閉'
           });
           this.session.setEmail(this.email);
-          this.router.navigateByUrl('/edit-info')
+          this.router.navigateByUrl('/login')
         }
 
         if (response.body.code != 200) {

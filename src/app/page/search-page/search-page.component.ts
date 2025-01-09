@@ -1,5 +1,5 @@
 import { SearchSessionService } from './../../service/search-session.service';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionModule } from 'primeng/accordion';
@@ -12,10 +12,9 @@ import { SelectItemGroup } from 'primeng/api';
 import { InputSearchData } from '../../service/search-session.service';
 import { Router } from '@angular/router';
 import { Checkbox } from 'primeng/checkbox';
+import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
-import Swal from 'sweetalert2';
-
 
 
 
@@ -64,7 +63,8 @@ export class SearchPageComponent {
     private searchSessionService: SearchSessionService,
     private router: Router,
     public session: SessionServiceService,
-        private http: HttpClientService
+    private http: HttpClientService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.groupedCourts = [
       {
@@ -180,61 +180,60 @@ export class SearchPageComponent {
     this.router.navigate(['/search-result']);
   }
 
-  goLogin(){
+  goLogin() {
     this.router.navigateByUrl('/login')
   }
 
-  goRegister(){
+  goRegister() {
     this.router.navigateByUrl('/register')
   }
 
   goLogout() {
-      this.http.postApi2('http://localhost:8080/accountSystem/logout', '').subscribe({
-        next: (response: any) => {
-          if (response.body.code == 200) {
-            // 登出成功，顯示確認選項
-            Swal.fire({
-              title: '登出成功',
-              text: '確定要登出嗎？',
-              icon: 'info',
-              showCancelButton: true,   // 顯示取消按鈕
-              confirmButtonText: '確定',
-              cancelButtonText: '取消'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // 用戶確認登出，執行登出操作
-                Swal.fire({
-                  text: '您已成功登出。',
-                  icon: 'info',
-                  confirmButtonText: '關閉'
-                });
-              }
-            });
-          } else {
-            // 登出失敗
-            Swal.fire({
-              text: '登出失敗',
-              icon: 'error',
-              confirmButtonText: '確定'
-            });
-          }
-        },
-        error: (error) => {
-          // 請求失敗
+    this.http.postApi2('http://localhost:8080/accountSystem/logout', '').subscribe({
+      next: (response: any) => {
+        if (response.body.code == 200) {
+          // 登出成功，顯示確認選項
+          Swal.fire({
+            title: '登出成功',
+            text: '確定要登出嗎？',
+            icon: 'info',
+            showCancelButton: true,   // 顯示取消按鈕
+            confirmButtonText: '確定',
+            cancelButtonText: '取消'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // 用戶確認登出，執行登出操作
+              Swal.fire({
+                text: '您已成功登出。',
+                icon: 'info',
+                confirmButtonText: '關閉'
+              });
+              this.session.clearIsLogin();
+              console.log(this.session.getIsLogin());
+              // 手動觸發變更檢測，更新顯示登出狀態
+              this.cdRef.detectChanges();
+              this.router.navigateByUrl('/search')
+            }
+          });
+        } else {
+          // 登出失敗
           Swal.fire({
             text: '登出失敗',
             icon: 'error',
             confirmButtonText: '確定'
           });
         }
-      });
-  
-  
-      this.session.clearIsLogin();
-      this.router.navigateByUrl('/search')
-    }
-
-    
+      },
+      error: (error) => {
+        // 請求失敗
+        Swal.fire({
+          text: '登出失敗',
+          icon: 'error',
+          confirmButtonText: '確定'
+        });
+      }
+    });
+  }
 }
 
 

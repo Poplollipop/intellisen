@@ -52,7 +52,6 @@ export class SearchResultPageComponent {
 
   tidyMap!: any; // 整理後的 map
   caseList: any[] = []; // 接後端的東西
-  selectedCaseId!: string; // 選中的案件id
 
   errorMessage: string = ''; // 法條錯誤提示訊息
   lawList!: string[]; // 整理後的法院字串
@@ -79,7 +78,7 @@ export class SearchResultPageComponent {
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private ngxService: NgxUiLoaderService,
-    private router: Router
+    private router : Router
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -301,7 +300,7 @@ export class SearchResultPageComponent {
     this.searchApi(savedConditions);
   }
 
- 
+
   // 頁籤
   itemsPerPage: number = 10; // 每頁顯示的筆數
   totalRecords: number = 0; // 總筆數
@@ -321,4 +320,10 @@ export class SearchResultPageComponent {
     this.visibleCases = this.caseList.slice(start, end);    // 只取該頁要顯示的筆數的 index
   }
 
+  // 觀看全文
+  checkConternt(id : string, item : any){
+    // 將網址與案件 id 綁在一起
+    this.searchSessionService.singleCaseDate = item; // 暫時替代
+    this.router.navigateByUrl('full-text/:' + id);
+  }
 }

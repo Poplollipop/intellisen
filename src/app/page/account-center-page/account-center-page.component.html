@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header">
+    <h2>會員中心</h2>
+  </div>
+
+  <div class="profile-info">
+    <div class="info-group email-status">
+      <div class="email-text">
+        <label for="emailStatus">email 驗證狀態：{{ emailVerified ? '已驗證' : '未驗證' }}</label>
+      </div>
+        <button class="btn-send" (click)="sendVerificationEmail()" [disabled]="emailVerified">
+          重新寄送驗證信
+        </button>
+    </div>
+
+    <div class="info-group">
+      <label for="role">身分：</label>
+      <span>{{ role }}</span>
+    </div>
+
+    <div class="info-group">
+      <label for="name">名稱：</label>
+      <span>{{ name }}</span>
+    </div>
+
+    <div class="info-group">
+      <label for="phone">電話：</label>
+      <span>{{ phone }}</span>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-update" (click)="goToUpdatePage()">更新資訊</button>
+      <button class="btn-delete" (click)="confirmDelete()">刪除會員</button>
+    </div>
+  </div>
+</div>
