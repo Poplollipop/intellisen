@@ -4,13 +4,9 @@
   </div>
 
   <div class="profile-info">
-    <div class="info-group email-status">
-      <div class="email-text">
-        <label for="emailStatus">email 驗證狀態：{{ emailVerified ? '已驗證' : '未驗證' }}</label>
-      </div>
-        <button class="btn-send" (click)="sendVerificationEmail()" [disabled]="emailVerified">
-          重新寄送驗證信
-        </button>
+    <div class="info-group">
+      <label for="email">email：</label>
+      <span>{{ email }}</span>
     </div>
 
     <div class="info-group">
