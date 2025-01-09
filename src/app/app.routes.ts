@@ -9,6 +9,7 @@ import { ViewFullTextPageComponent } from './page/view-full-text-page/view-full-
 import { EditInfoPageComponent } from './page/edit-info-page/edit-info-page.component';
 import { ForgotPasswordPageComponent } from './page/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './page/reset-password-page/reset-password-page.component';
+import { AccountCenterPageComponent } from './page/account-center-page/account-center-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'full-text/:id', component: ViewFullTextPageComponent }, // 查看全文頁面
   { path: 'edit-info', component: EditInfoPageComponent }, // 編輯個人資料頁面
   { path: 'forgot-password', component: ForgotPasswordPageComponent }, // 編輯個人資料頁面
-  { path: 'reset-password', component: ResetPasswordPageComponent } // 重置密碼頁面
+  { path: 'reset-password', component: ResetPasswordPageComponent }, // 重置密碼頁面
+  { path: 'account-center', component: AccountCenterPageComponent } // 會員中心頁面
 ];

@@ -1,34 +1,66 @@
+@font-face {
+  font-family: 'TaipeiSansTCBeta';
+  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'ZanMaru';
+  src: url('../../../../public/ZenMaruGothic-Regular.ttf');
+}
+
+
+
 :host {
   display: block;
-  font-family: Arial, sans-serif;
-  background-image: url('../../../../public/ai-generated-8679700_1280.jpg');
+  background-color: #ccd9ff40; //c4f8eb F0DBC6
   background-size: cover;
-  background-blend-mode: screen;
-  background-attachment: fixed;
   margin: 0;
   padding: 0;
-  min-height: 100vh; /* 保證佔滿整個視窗高度 */
-  padding-top: 6%;
-  padding-bottom: 1%;
+  min-height: 100vh;
+  // overflow: hidden;
 }
+
+.login {
+  text-align: end;
+  margin-right: 1rem;
+  padding: 1rem;
+  font-size: 18px;
+  font-family: 'TaipeiSansTCBeta', 'sans-serif';
+
+  .click {
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: transform 0.2s ;
+
+    &:hover {
+      transform: scale(1.5) ;
+    }
+  }
+
+  span {
+    margin-left: 1rem;
+  }
+}
+
 
 
 .search-area{
   // height: 5%;
   width: 80%;
-  background: #ffffffcf;
+  background: #ffffffd1;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
   margin: 2rem auto;
+  margin-top: 7rem;
   // margin-top: 8rem;
   padding: 2rem;
   // padding-left: 12rem;
   text-align: center;
 
-  h3{
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #333333;
+  h1 {
+    font-family: 'ZanMaru', 'sans-serif';
     margin-bottom: 1rem;
+    font-size: 3rem;
   }
 
   .input-search-button{
@@ -41,19 +73,19 @@
     input{
       width: 60%;
       padding: 10px;
-      border: 1.5px solid #9a9a9a;
+      border: none ;
       border-radius: 8px;
       font-size: 16px;
-      background-color: #fff;
+      background-color: #ffffff;
       color:black;
+      border: 2px solid rgb(0, 30, 111)
     }
 
     button{
       padding: 10px 20px;
       font-size: 18px;
       font-weight: bold;
-      background-color: #28a745; /* 綠色按鈕 */
-      color: #fff;
+      background-color: #031546;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -70,15 +102,15 @@
 
 
   /* 主按鈕樣式 */
-  .btn-outline-primary {
+  .btn {
     font-size: 14px;
     padding: 8px 16px;
     margin-left: 5%;
     border: none;
-    transition: all 0.3s;
+    transition: all 0.2s;
 
     span{
-      color: #ffffff;
+      color: #000000;
       font-size: 1.2rem;
       font-weight: bold;
     }
@@ -98,7 +130,7 @@
     right: 0;
     padding: 10px;
     border: none;
-    background-color: rgba(174, 174, 174, 0.334);
+    // background-color: #878787e3;
 
     .accordion-container {
       width: 47%;
@@ -115,7 +147,7 @@
     .p-accordionheader{
       background-color: transparent;
       border: none;
-      color: #ffffff;
+      color: #0a0a0a;
     }
 
 
@@ -168,7 +200,7 @@ input[type="date"]{
 /* 適用於 ngModel 的 input 框 */
 input[ngModel],
 input[pInputText] {
-  width: 50%;
+  width: 60%;
   padding: 8px 12px;
   margin: 8px 2px;
   border: 1.5px solid #ccc;
@@ -205,7 +237,7 @@ select {
 
 /* 多選框樣式 */
 p-multiselect {
-  width: 100%;
+  width: 70%;
   background-color: #fff;
   color: #000;
 }

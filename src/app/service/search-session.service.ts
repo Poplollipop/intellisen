@@ -40,7 +40,7 @@ export class SearchSessionService {
       charge: '',
       lawList:[],
       courtList: [],
-      caseType: [],
+      caseType: '',
       verdictStartDate: new Date('1950-01-01'),
       verdictEndDate: new Date('9990-01-01'),
       verdictId: '',
@@ -55,7 +55,7 @@ export interface InputSearchData {
   charge: string;// 模糊搜尋名
   lawList: string[];// 法條
   courtList: string[];// 法院
-  caseType: string[];// 案件類型:刑法、名法等等
+  caseType: string;// 案件類型:刑法、名法等等
   verdictStartDate: Date;// 開始時間
   verdictEndDate: Date;// 結束時間
   verdictId: string;// 裁判字號 id

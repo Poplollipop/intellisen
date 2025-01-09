@@ -1,5 +1,19 @@
+<div class="login">
+  <!-- <span class="click" (click)="goLogin()">登入</span>
+  <span style="margin-left: 1rem;">|</span>
+  <span class="click" (click)="goRegister()">註冊</span> -->
+
+  @if (session.getIsLogin()) {
+    <span (click)="goLogout()"  class="click" style="cursor: pointer; margin-left: 1rem;">登出</span>
+  } @else {
+    <span (click)="goLogin()"  class="click" style="cursor: pointer; margin-left: 1rem;">登入</span>
+  }
+  <span style="margin-left: 1rem;">|</span>
+  <span (click)="goRegister()"  class="click" style="cursor: pointer; margin-left: 1rem;">註冊</span>
+</div>
+
 <div class="search-area">
-  <h3>關鍵字搜尋</h3>
+  <h1>法律搜索與量刑資訊平台</h1>
   <div class="input-search-button">
     <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
     <button type="button" class="btn btn-secondary btn-sm" (click)="confirm()">搜尋</button>
@@ -10,7 +24,7 @@
 <!-- 進階條件 -->
 <div class="bottom-area">
   <p>
-    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+    <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample"
       aria-expanded="false" aria-controls="collapseExample" (click)="toggleAdvanced()">
       @if (!isExpanded) {
       <span class="d-flex align-items-center">
@@ -23,7 +37,7 @@
         收起篩選條件 <mat-icon>keyboard_arrow_up</mat-icon>
       </span>
       }
-    </button>
+    </span>
   </p>
 
 
@@ -41,7 +55,6 @@
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="inputCase"
                     placeholder="例如：傷害等" />
-                  <small id="username-help" style="margin-left: 0.3rem ;">請輸入案由</small>
                 </p>
               </p-accordion-content>
             </p-accordion-panel>
@@ -49,8 +62,7 @@
               <p-accordion-header>選擇法院</p-accordion-header>
               <p-accordion-content>
                 <div class="m-0">
-                  <div class="card flex justify-center test">
-
+                  <div class="flex justify-center test">
                     <p-multiselect [options]="groupedCourts" [group]="true" [(ngModel)]="inputCourts"
                       placeholder="請選擇法院" scrollHeight="250px" display="chip" styleClass="w-full md:w-30"
                       appendTo="body" size="small">
@@ -71,7 +83,7 @@
                 <p class="m-0">
                   <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="law"
                     (keyup)="updateLawsList()" placeholder="例如：刑法第277條;刑法271條" />
-                  <small id="username-help" style="display: inline-block; margin-left: 1%;">請輸入法條，不同法條請用分號（;）隔開</small>
+                  <small id="username-help" style="display: inline-block; margin-left: 1%;">不同法條請用分號（;）隔開</small>
                   @if (errorMessage) {
                   <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
                   }
@@ -83,10 +95,10 @@
               <p-accordion-content>
                 <div class="m-0">
                   <div class="case-type">
-                    <p-checkbox inputId="ingredient1" name="lawType" value="刑法" [(ngModel)]="lawType" />
-                    <label for="ingredient1" class="ml-2"> 刑法 </label>
-                    <p-checkbox inputId="ingredient2" name="lawType" value="民法" [(ngModel)]="lawType" />
-                    <label for="ingredient2" class="ml-2"> 民法 </label>
+                    <p-checkbox inputId="ingredient1" name="lawType" value="刑事" [(ngModel)]="lawType" />
+                    <label for="ingredient1" class="ml-2"> 刑事 </label>
+                    <p-checkbox inputId="ingredient2" name="lawType" value="民事" [(ngModel)]="lawType" />
+                    <label for="ingredient2" class="ml-2"> 民事 </label>
                   </div>
                 </div>
               </p-accordion-content>

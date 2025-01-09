@@ -1,14 +1,14 @@
-
 //================================================
-/* 工具表按鈕樣式 */
+// 工具表按鈕樣式
 .marker-icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  margin: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .marker-painter-0 {
@@ -24,15 +24,17 @@
 }
 
 .marker-eraser {
-  width: 24px;
-  height: 24px;
+  width: 50px;
+  height: 50px;
+  background-color: #f8d7da;
 }
 
 .marker-icon:hover {
   transform: scale(1.1);
 }
+
 //==============================================
-/* 工具表外觀 */
+// 工具表外觀
 .toolbar {
   position: absolute;
   background: white;
@@ -41,18 +43,24 @@
   padding: 10px;
   border-radius: 8px;
   z-index: 1000;
+  transform: scale(0.9);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.1s ease, visibility 0.1s ease;
+}
+
+.toolbar-inner {
+  left: auto;
 }
 
 .toolbar.hidden {
   opacity: 0;
   visibility:
-   hidden;
+    hidden;
 }
 
 .toolbar:not(.hidden) {
+  transform: scale(1);
   opacity: 1;
   visibility: visible;
 }
@@ -62,6 +70,26 @@
   box-shadow: #ddd;
   margin: 8px 0;
 }
+
+
+// 工具表按鈕容器
+.toolbar-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+// 工具內按鈕格式
+.toolbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  padding: 8px;
+}
+
+
 //===============================================
 // 螢光筆效果
 span[style*="box-shadow"] {
@@ -72,10 +100,11 @@ span[style*="box-shadow"] {
   transition: box-shadow 0.3s ease !important;
 }
 
-/* 高亮文字的 hover 效果 */
+// 高亮文字的 hover 效果
 span[style*="box-shadow"]:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 //=====================================================
 // 文字區域
 .content-container {
@@ -87,7 +116,7 @@ span[style*="box-shadow"]:hover {
 }
 
 #toptext {
-  font-family: 'Courier New', monospace; /* 固定寬度字體 */
+  font-family: 'Courier New', monospace;
   font-size: 16px;
   background: #ffffff;
   border: 1px solid #ddd;
@@ -95,7 +124,7 @@ span[style*="box-shadow"]:hover {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 80%;
-  overflow-wrap: break-word; /* 防止溢出 */
+  overflow-wrap: break-word;
 }
 
 pre {
@@ -148,10 +177,33 @@ pre {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
 .toolbar-button:hover {
   background-color: #e9ecef;
 }
+//==============================================
+// 頁面載入 渲染處理
+.hidden {
+  visibility: visible;
+  opacity: 0;
+}
+
+.toolbar-button {
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.mat-button, .mat-icon-button {
+  &:focus, &:active {
+    outline: none;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
 
 //===========================================
 // 列印功能
@@ -189,7 +241,7 @@ pre {
 
 .print-options button:focus {
   outline: none;
-  background-color  : 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .print-button {
@@ -207,21 +259,19 @@ pre {
     background-color: white;
   }
 
-  .toolbar, .document__toolbar, .print-options {
-    display: none !important; /* 隱藏工具列 */
+  .toolbar,
+  .document__toolbar,
+  .print-options {
+    display: none !important;
   }
 
   #toptext {
-    font-size: 14px; /* 可調整影印文字大小 */
+    font-size: 14px;
   }
 
-  span[style*="background-color"] {
-    background-color: inherit !important; /* 確保印刷時默認無螢光筆效果 */
-  }
-  span.highlight {
-    background-color: yellow !important;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-
+  .no-highlight {
+    span[style*="background-color"] {
+      background-color: inherit !important;
+    }
   }
 }

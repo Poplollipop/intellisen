@@ -17,9 +17,6 @@ import { Router } from '@angular/router';
 
 export class CaseDetailsComponent {
 
-  @Input() caseId!: string;
-  @Input() showCaseDetail: boolean = false;
-  displayData: any;
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};  // 圖表配置
@@ -32,19 +29,7 @@ export class CaseDetailsComponent {
     this.updateChartOptions('pie');
    }
 
-  ngOnChanges() {
-    // 當 caseId 變更時更新資料
-    this.displayCase();
-    // 切換
-    this.showCaseDetail;
-  }
 
-  displayCase() {
-    if (this.caseId) {
-      this.displayData = this.searchSessionService.tidyMap[this.caseId]
-      this.searchSessionService.singleCaseDate = this.displayData
-    }
-  }
 
   // 表格的動態數據，這裡的數據可以從 API 獲取
   items = [

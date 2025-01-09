@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -16,8 +18,8 @@ export class ForgotPasswordPageComponent {
   forgotPasswordData!: any;
 
   constructor(
-    private session: SessionServiceService,
-    private http: HttpClientService
+    private http: HttpClientService,
+    private router: Router,
   ) {}
 
   // 驗證email格式
@@ -51,14 +53,15 @@ export class ForgotPasswordPageComponent {
             confirmButtonText: '確定'
           });
           console.log(response.body.code);
+          this.router.navigateByUrl('/login');
         }
 
         if (response.body.code != 200) {
           Swal.fire({
-            title: '重置密碼驗證信寄送失敗',
-            text: '請檢查email是否正確。',
+            title: '重置密碼失敗',
+            text: '請檢查重置密碼驗證信內容。',
             icon: 'error',
-            confirmButtonText: '再試一次'
+            confirmButtonText: '確定'
           });
           console.log(response.body.code);
         }

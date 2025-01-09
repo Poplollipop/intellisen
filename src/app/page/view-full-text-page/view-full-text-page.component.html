@@ -1,9 +1,9 @@
-<div class="document__toolbar">
+<div class="document__toolbar" *ngIf="isToolbarVisible" >
   <div class="btn-group">
     <!-- 分享按鈕 -->
-    <button class="toolbar-button share-button" (click)="onShare()" matTooltip="分享連結" matTooltipClass="custom-tooltip">
+    <!-- <button class="toolbar-button share-button" (click)="onShare()" matTooltip="分享連結" matTooltipClass="custom-tooltip">
       <mat-icon>link</mat-icon>
-    </button>
+    </button> -->
     <!-- 前往判決書網站按鈕 -->
     <button class="toolbar-button open_in_new-button" (click)="onOpenInNew()" matTooltip="前往官方本文"
       matTooltipClass="custom-tooltip">
@@ -29,51 +29,37 @@
   </div>
 </div>
 
-<div class="toolbar toolbar-abs top hidden" class="toolbar hidden" #toolbar>
+<div class="toolbar toolbar-abs top hidden" class="toolbar hidden" #toolbar *ngIf="isToolbarVisible">
   <div class="toolbar-arrow"></div>
   <div class="toolbar-content">
-    <!-- 分隔線 -->
+    <!-- 工具列內容 -->
     <div class="line"></div>
-
-    <!-- 複製按鈕 -->
     <button class="toolbar-inner" id="copy-button" (click)="copyContent()" matTooltip="複製" matTooltipClass="custom-tooltip">
       <div>複製</div>
     </button>
-
-    <!-- 分隔線 -->
     <div class="line"></div>
-
-    <!-- 引文複製按鈕 -->
     <button class="toolbar-inner" id="quote-copy-button" (click)="copyQuote()" matTooltip="引文複製" matTooltipClass="custom-tooltip">
       <div>引文複製</div>
     </button>
-
-    <!-- 分隔線 -->
     <div class="line"></div>
-
-    <!-- 高亮標記工具 -->
-    <!-- 黃色高亮 -->
     <span class="marker-icon marker-painter-0" (click)="highlightText('yellow', $event)" matTooltip="黃色" matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
     </span>
-    <!-- 綠色高亮 -->
     <span class="marker-icon marker-painter-1" (click)="highlightText('lightgreen', $event)" matTooltip="綠色" matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
     </span>
-    <!-- 藍色高亮 -->
     <span class="marker-icon marker-painter-2" (click)="highlightText('lightblue', $event)" matTooltip="藍色" matTooltipClass="custom-tooltip">
       <i class="ant ant-marker"></i>
-    </span>
-
-    <!-- 橡皮擦按鈕 -->
-    <span class="marker-icon marker-eraser" (click)="removeAllHighlights()" matTooltip="刪除全部螢光效果" matTooltipClass="custom-tooltip">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever"></mat-icon>
     </span>
     <span class="marker-icon marker-eraser" (click)="removeHighlightsInRange($event)" matTooltip="刪除選取螢光效果" matTooltipClass="custom-tooltip">
       <mat-icon class="material-symbols-outlined" aria-hidden="false" aria-label="橡皮擦">ink_eraser</mat-icon>
     </span>
+    <span class="marker-icon marker-eraser" (click)="removeAllHighlights()" matTooltip="刪除全部螢光效果" matTooltipClass="custom-tooltip">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever"></mat-icon>
+    </span>
   </div>
 </div>
+
 
 <div>
   <!-- 高亮文字區域 -->

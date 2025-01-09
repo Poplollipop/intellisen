@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -18,8 +19,9 @@ export class ResetPasswordPageComponent {
 
   constructor(
     private session: SessionServiceService,
-    private http: HttpClientService
-  ) { }
+    private http: HttpClientService,
+    private router: Router
+  ) {}
 
   // 驗證email格式
   accountValidation(input: string): boolean {
@@ -56,6 +58,7 @@ export class ResetPasswordPageComponent {
             confirmButtonText: '確定'
           });
           console.log(response.body.code);
+          this.router.navigateByUrl('/login')
         }
 
         if (response.body.code != 200) {

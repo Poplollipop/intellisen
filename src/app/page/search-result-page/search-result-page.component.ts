@@ -5,68 +5,80 @@ import { SessionServiceService } from '../../service/session-service.service';
 import { CaseDetailsComponent } from './case-details/case-details.component';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Fluid } from 'primeng/fluid';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AccordionModule } from 'primeng/accordion';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { InputTextModule } from 'primeng/inputtext';
+import { Checkbox } from 'primeng/checkbox';
+import { SelectItemGroup } from 'primeng/api';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ScrollTop } from 'primeng/scrolltop';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-search-result-page',
   imports: [
-    // ScrollPanel,
     CaseDetailsComponent,
     DrawerModule,
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    Fluid,
-    MultiSelectModule
+    MultiSelectModule,
+    MatIconModule,
+    MatExpansionModule,
+    AccordionModule,
+    AvatarModule,
+    BadgeModule,
+    InputTextModule,
+    FormsModule,
+    MultiSelectModule,
+    Checkbox,
+    MatTabsModule,
+    ScrollTop,
+    PaginatorModule,
   ],
   templateUrl: './search-result-page.component.html',
-  styleUrl: './search-result-page.component.scss'
+  styleUrl: './search-result-page.component.scss',
 })
-
 export class SearchResultPageComponent {
-
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
-  tidyMap!: any;    // 整理後的 map
-  caseList: any[] = [];       // 接後端的東西
-  selectedCaseId!: string;    // 選中的案件id
-  showCaseDetail: boolean = false;     // 顯示案件細節
+  tidyMap!: any; // 整理後的 map
+  caseList: any[] = []; // 接後端的東西
+  selectedCaseId!: string; // 選中的案件id
 
-  groupedCourts!: any;
-  searchForm!: FormGroup;
-  visible2: boolean = true;
-  editMode = false;
-  errorMessage: string = '';    // 法條錯誤提示訊息
-  lawList!: string[];     // 整理後的法院字串
+  errorMessage: string = ''; // 法條錯誤提示訊息
+  lawList!: string[]; // 整理後的法院字串
+  isExpanded: boolean = false; // 進階條件是否展開的變數
 
+  // 下面是輸入框的預設值
+  keywords: string = '';
+  inputCase: string = '';
+  law: string = '';
+  lawType!: string[];
+  groupedCourts!: SelectItemGroup[];
+  inputCourts!: string[];
+  inputCaseYear: string = '';
+  startDate!: Date;
+  endDate!: Date;
+  caseType: string = '';
+  year: string = '';
+  zhi: string = '';
+  hao: string = '';
+  combinedId: string = '';
 
   constructor(
     private searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
-    private fb: FormBuilder,
-    private ngxService: NgxUiLoaderService,
+    private ngxService: NgxUiLoaderService
   ) {
-
-    // 初始化表單
-    this.searchForm = this.fb.group({
-      searchName: new FormControl(''),
-      charge: new FormControl(''),
-      lawList: new FormControl(''),
-      caseType: new FormControl(''),
-      courtList: new FormControl([]),
-      verdictId: new FormControl(''),
-      verdictStartDate: new FormControl(''),
-      verdictEndDate: new FormControl(''),
-      docType: new FormControl(''),
-
-    });
-
-
     // 法院選擇
     this.groupedCourts = [
       {
@@ -79,8 +91,7 @@ export class SearchResultPageComponent {
           { label: '臺灣桃園地方法院', value: 'TYD' },
           { label: '臺灣新竹地方法院', value: 'SCD' },
           { label: '臺灣基隆地方法院', value: 'KLD' },
-
-        ]
+        ],
       },
       {
         label: '中部',
@@ -91,7 +102,7 @@ export class SearchResultPageComponent {
           { label: '臺灣南投地方法院', value: 'NTD' },
           { label: '臺灣彰化地方法院', value: 'CHD' },
           { label: '臺灣雲林地方法院', value: 'ULD' },
-        ]
+        ],
       },
       {
         label: '南部',
@@ -102,7 +113,7 @@ export class SearchResultPageComponent {
           { label: '臺灣橋頭地方法院', value: 'CTD' },
           { label: '臺灣高雄地方法院', value: 'KSD' },
           { label: '臺灣屏東地方法院', value: 'PTD' },
-        ]
+        ],
       },
       {
         label: '東部',
@@ -111,7 +122,7 @@ export class SearchResultPageComponent {
           { label: '臺灣臺東地方法院', value: 'TTD' },
           { label: '臺灣花蓮地方法院', value: 'HLD' },
           { label: '臺灣宜蘭地方法院', value: 'ILD' },
-        ]
+        ],
       },
       {
         label: '離島',
@@ -120,69 +131,80 @@ export class SearchResultPageComponent {
           { label: '臺灣澎湖地方法院', value: 'PHD' },
           { label: '福建連江地方法院', value: 'LCD' },
           { label: '福建金門地方法院', value: 'KMD' },
-        ]
+        ],
       },
     ];
   }
 
   ngOnInit(): void {
+    const savedConditions = this.initializeSavedConditions();
 
-    // 從 SearchSessionService 獲取條件
-    // 設定 sessionStorage 保存搜尋條件
-    let savedConditions;
-    if (this.searchSessionService.searchData) {
-      savedConditions = this.searchSessionService.searchData;
-      sessionStorage.setItem("savedConditions", JSON.stringify(savedConditions))
-    }
-
-    // 取得在sessionStorage裡的資料
-    // isPlatformBrowser(this.platformId) : 檢查程式碼是否在瀏覽器上執行(不加會error)
-    if (!this.searchSessionService.searchData && isPlatformBrowser(this.platformId)) {
-      savedConditions = JSON.parse(sessionStorage.getItem("savedConditions")!);
-    }
-
-    // 取得 API 所有搜尋的資料
     if (savedConditions) {
+      console.log('上一頁輸入的條件:', savedConditions);
+      this.fillSearchForm(savedConditions);
       this.searchApi(savedConditions);
     }
-
   }
 
-  // 取得 API 所有搜尋的資料
-  searchApi(savedConditions: any) {
+  // 將 savedConditions 初始化封裝到一個方法中，集中處理
+   initializeSavedConditions() {
+    let savedConditions;
 
+    if (this.searchSessionService.searchData) {
+      savedConditions = this.searchSessionService.searchData;
+    } else if (isPlatformBrowser(this.platformId)) {
+      savedConditions = JSON.parse(sessionStorage.getItem('savedConditions')||'{}');
+    }
+
+    if (savedConditions) {
+      sessionStorage.setItem('savedConditions',JSON.stringify(savedConditions));
+    }
+    return savedConditions;
+  }
+
+  // 將搜尋條件的資料填充到input的邏輯分離出來
+  private fillSearchForm(savedConditions: any): void {
+    this.keywords = savedConditions.searchName || '';
+    this.inputCase = savedConditions.charge || '';
+    this.inputCourts = savedConditions.courtList || [];
+    this.law = (savedConditions.lawList || []).join('; ');
+    this.lawType = savedConditions.caseType
+      ? savedConditions.caseType.split(',').map((item: string) => item.trim())
+      : [];
+    this.combinedId = savedConditions.verdictId || '';
+
+    const match = this.combinedId.match(/^(\d+)?年度(.*)?字第(\d+)?號$/);
+    if (match) {
+      this.year = match[1] || '';
+      this.zhi = match[2] || '';
+      this.hao = match[3] || '';
+    }
+
+    this.startDate = savedConditions.verdictStartDate || '';
+    this.endDate = savedConditions.verdictEndDate || '';
+    this.caseType = savedConditions.docType || '';
+  }
+
+  // 取得 API 所有搜尋的資料方法
+  searchApi(savedConditions: any) {
     this.ngxService.start(); // 啟動 loading 動畫
     let resData: any;
-    this.http.postApi('http://localhost:8080/case/search', savedConditions).subscribe((searchData) => {
-      resData = searchData;
+    this.http
+      .postApi('http://localhost:8080/case/search', savedConditions)
+      .subscribe((searchData) => {
+        resData = searchData;
+        console.log(resData);
 
-      // 儲存搜尋資料
-      this.searchForm.patchValue(savedConditions);
+        // 重組資料
+        this.caseList = resData.caseList;
+        this.tidyMap = this.tidyData(resData.caseList);
 
-      // // 重組資料
-      this.caseList = resData.caseList;
-      this.tidyMap = this.tidyData(resData.caseList);
+        // 計算總頁數
+        this.totalRecords = this.caseList.length; // 計算總記錄數
+        this.updateVisibleCases(); // 初始化第一頁數據
 
-      // // 計算總頁數
-      this.calculateTotalPages();
-      this.updateDisplayedData();
-
-      this.ngxService.stop()// 關閉 loading 動畫
-    });
-  }
-
-  // 將字號轉換為顯示的格式
-  formatCaseId(caseId: string): string {
-    const regex = /(\d+)(年度)?([^字第]+)(字)?(第)?(\d+)/; // 以「/」定義正規表達式的開始與結束
-    const match = caseId.match(regex); // 使用 match() 方法來匹配
-
-    if (match) {
-      // match[1]: 年度的數字, match[3]: 案件類型的字, match[6]: 號數的數字
-      // ${}: {}內允許在字符串中直接嵌入變數或表達式的值
-      return `${match[1]},${match[3]},${match[6]}`;
-    } else {
-      return caseId = '';
-    }
+        this.ngxService.stop(); // 關閉 loading 動畫
+      });
   }
 
   // 重組資料
@@ -194,94 +216,25 @@ export class SearchResultPageComponent {
           caseType: item.caseType,
           charge: item.charge,
           court: this.sessionServiceService.turnCodeToName(item.court),
-          verdictDate: this.sessionServiceService.convertToROCDate(new Date(item.verdictDate)),
+          verdictDate: this.sessionServiceService.convertToROCDate(
+            new Date(item.verdictDate)
+          ),
           defendantName: item.defendantName,
           docType: item.docType,
           groupId: item.groupId,
           judgeName: item.judgeName,
           law: item.law,
-          content: item.content2 ? item.content + "\n" + item.content2 : item.content,
-          url: item.url
-        }
+          content: item.content2
+            ? item.content + '\n' + item.content2
+            : item.content,
+          url: item.url,
+        };
       }
 
       return result;
     }, {});
 
     this.searchSessionService.tidyMap = this.tidyMap;
-  }
-
-
-  page: number = 1; // 當前頁碼
-  itemsPerPage: number = 15; // 每頁顯示的項目數量
-  totalPages: number = 1; // 總頁數
-  pageNumbers: number[] = []; // 儲存頁碼的陣列
-  displayedData: any[] = []; // 當前頁顯示的資料
-
-  calculateTotalPages() {
-    // this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
-    // if (this.totalPages === 0) {
-    //   this.totalPages = 1; // 如果沒有資料，預設為 1 頁
-    // }
-
-    this.totalPages = Math.ceil(this.caseList.length / this.itemsPerPage);
-    if (this.totalPages === 0) {
-      this.totalPages = 1;
-    }
-
-    // 計算頁碼範圍，最多顯示5頁，並且聚焦當前頁
-    let startPage = Math.max(this.page - 2, 1); // 當前頁的前2頁
-    let endPage = Math.min(this.page + 2, this.totalPages); // 當前頁的後2頁
-
-    // 如果顯示的頁碼範圍小於5頁，根據情況調整
-    if (endPage - startPage < 4) {
-      if (startPage === 1) {
-        endPage = Math.min(startPage + 4, this.totalPages); // 從第一頁開始顯示最多5頁
-      } else if (endPage === this.totalPages) {
-        startPage = Math.max(endPage - 4, 1); // 顯示最後的5頁
-      }
-    }
-
-    this.pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-
-    // 如果當前頁超過總頁數，設置為總頁數
-    if (this.page > this.totalPages) {
-      this.page = this.totalPages;
-    }
-
-    this.updateDisplayedData();
-  }
-
-  updateDisplayedData() {
-    const start = (this.page - 1) * this.itemsPerPage;
-    const end = Math.min(this.page * this.itemsPerPage, this.caseList.length); // 保證 end 不會超過資料長度
-    this.displayedData = this.caseList.slice(start, end);
-  }
-
-  previousPage() {
-    if (this.page > 1) {
-      this.page--;
-      this.updateDisplayedData();
-    }
-  }
-
-  nextPage() {
-    if (this.page < this.totalPages) {
-      this.page++;
-      this.updateDisplayedData();
-    }
-  }
-
-  selectPage(pageNumber: number) {
-    if (pageNumber >= 1 && pageNumber <= this.totalPages) {
-      this.page = pageNumber;
-      this.updateDisplayedData();
-    }
-  }
-
-  // 用在父元件傳到子元件的id
-  selectId(id: string) {
-    this.selectedCaseId = id;
   }
 
   // 下面是搜尋條件相關
@@ -293,44 +246,61 @@ export class SearchResultPageComponent {
     return regex.test(input);
   }
 
-  // 法條輸入格式錯誤訊息
-
-
   // 更新法條列表
-  updateLawsList(lawString: any) {
-    if (!lawString) {
-      this.lawList = []
-      return;
-    }
-    if (this.validateInput(lawString)) {
+  updateLawsList() {
+    if (this.validateInput(this.law)) {
       this.errorMessage = '';
-      this.lawList = lawString.split(';').filter((law: string) => law.trim() !== '');
+      this.lawList = this.law.split(';').filter((law) => law.trim() !== '');
     } else {
       this.errorMessage = '輸入內容不可有分號以外的特殊符號，請重新輸入';
     }
   }
 
+  updateCombinedId() {
+    // 將三個輸入框的值合併成一個新值
+    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
+  }
 
-  // 搜尋條件再搜尋
-  searchAgain() {
-    // 取出 form 中的值
-    const updateCondition = this.searchForm.value;
-
-    // 製作 法條陣列
-    this.updateLawsList(updateCondition.lawList)
-
-    // 製作  search pai 的 req 資料
-    const sendApiData = {
-      ...updateCondition,
-      lawList: this.lawList //  整理後的法條
-    }
-
-    // 發送 API 搜尋資料
-    this.searchApi(sendApiData);
+  // 進階搜尋觸發
+  toggleAdvanced() {
+    this.isExpanded = !this.isExpanded;
   }
 
 
+  // 搜尋條件再搜尋
+  searchAgain() {
+    const tidyData = {
+      searchName: this.keywords,// 模糊搜尋名
+      verdictId: this.combinedId,// 裁判字號 id
+      caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
+      charge: this.inputCase,	// 案由
+      courtList: this.inputCourts,// 法院
+      lawList: this.lawList,// 法條
+      verdictStartDate: this.startDate,// 開始時間
+      verdictEndDate: this.endDate,// 結束時間
+      docType: this.caseType,// 文件類型:裁定、判決
+    }
 
+    const savedConditions = tidyData;
+    this.searchApi(savedConditions);
+  }
+
+ 
+  // 頁籤
+  itemsPerPage: number = 10; // 每頁顯示的記錄數
+  totalRecords: number = 0; // 總記錄數
+  first: number = 0; // 當前的起始記錄索引
+  visibleCases: any[] = []; // 當前頁面顯示的案件數據
+
+  onPageChange(event: any): void {
+    this.first = event.first; // 更新起始記錄索引
+    this.itemsPerPage = event.rows; // 更新每頁記錄數
+    this.updateVisibleCases(); // 更新顯示的記錄
+  }
+
+  updateVisibleCases(): void {
+    const start = this.first;
+    const end = this.first + this.itemsPerPage;
+    this.visibleCases = this.caseList.slice(start, end);
+  }
 }
-
-

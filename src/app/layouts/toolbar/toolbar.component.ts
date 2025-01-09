@@ -24,7 +24,7 @@ export class ToolbarComponent {
     private router: Router,
     public session: SessionServiceService,
     private http: HttpClientService
-  ) { }
+  ) {}
 
   goLogin() {
     this.router.navigateByUrl('/login')
@@ -50,6 +50,8 @@ export class ToolbarComponent {
                 icon: 'info',
                 confirmButtonText: '關閉'
               });
+              this.session.clearIsLogin();
+              this.router.navigateByUrl('/search')
             }
           });
         } else {
@@ -70,10 +72,6 @@ export class ToolbarComponent {
         });
       }
     });
-
-
-    this.session.clearIsLogin();
-    this.router.navigateByUrl('/search')
   }
 
   goRegister() {
