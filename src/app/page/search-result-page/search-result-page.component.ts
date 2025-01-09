@@ -253,7 +253,7 @@ export class SearchResultPageComponent {
     return regex.test(input);
   }
 
-  // 更新法條列表
+  // 更新法條列表 (字串轉陣列)
   updateLawsList() {
     if (this.validateInput(this.law)) {
       this.errorMessage = '';
@@ -314,11 +314,11 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
-  
+  // 
   updateVisibleCases(): void {
-    const start = this.first;
-    const end = this.first + this.itemsPerPage;
-    this.visibleCases = this.caseList.slice(start, end);
+    const start = this.first;   // 更新起始的那一筆的 index
+    const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
+    this.visibleCases = this.caseList.slice(start, end);    // 只取該頁要顯示的筆數的 index
   }
 
 }

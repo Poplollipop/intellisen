@@ -1,13 +1,13 @@
 <div class="content">
 
   <div class="register-info">
-    <h3 style="font-weight: bold;">成為會員</h3>
-    <h6 style="font-weight: bold;">註冊帳號</h6>
+    <h2 style="font-weight: bold;">成為會員</h2>
+    <h5 style="font-weight: bold;">註冊帳號</h5>
     <div class="nav"></div>
 
     <div class="input-info">
       <div class="email-area">
-        <label style="display: block;">請輸入Email</label>
+        <label style="display: block; font-size: 18px;">請輸入Email</label>
         <input type="text" class="input-email ng-invalid ng-dirty " pInputText [(ngModel)]="email"
           (keyup)="updateEmailForm()" />
         @if (errorMessage) {
@@ -16,10 +16,10 @@
       </div>
 
       <div class="pwd-area">
-        <label style="display: block; margin-top: 20px;">請輸入密碼</label>
+        <label style="display: block; margin-top: 20px; font-size: 18px;">請輸入密碼</label>
         <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="rawPwd" [feedback]="false"
           [toggleMask]="true" />
-        <label style="display: block; margin-top: 20px;">請再次輸入密碼</label>
+        <label style="display: block; margin-top: 20px; font-size: 18px;">請再次輸入密碼</label>
         <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
           [feedback]="false" [toggleMask]="true" />
         @if (errorMessage2) {
