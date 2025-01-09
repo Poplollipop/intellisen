@@ -314,15 +314,11 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
+  
   updateVisibleCases(): void {
     const start = this.first;
     const end = this.first + this.itemsPerPage;
     this.visibleCases = this.caseList.slice(start, end);
-  }
-
-  viewFullText(id: string){
-
-    this.router.navigate(['full-text']);
   }
 
 }
