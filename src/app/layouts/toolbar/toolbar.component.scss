@@ -9,6 +9,16 @@ mat-toolbar {
     height: 8rem;
 }
 
+@font-face {
+  font-family: 'Noto';
+  src: url('../../../../public/NotoSerifTC-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'TaipeiSansTCBeta';
+  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+}
+
 /* mat-toolbar 的整體容器 */
 .toolbar-container {
   display: flex;
@@ -26,10 +36,10 @@ mat-toolbar {
 
 /* 標題 */
 .left-section .title {
-  font-size: 28px;      /* 調整標題大小 */
-  margin-top: 0.3rem;
+  font-size: 30px;      /* 調整標題大小 */
   font-weight: bold;
   text-align: left;
+  font-family: 'Noto' , 'sans-serif' ;
 }
 
 /* 連結區域 */
@@ -46,6 +56,7 @@ mat-toolbar {
   display: flex;
   text-align: right;          /* 文字靠右對齊 */
   font-size: 16px;            /* 調整登入與註冊的字體大小 */
+  font-family: 'TaipeiSansTCBeta' , 'sans-serif';
   font-weight: bold;
 }
 

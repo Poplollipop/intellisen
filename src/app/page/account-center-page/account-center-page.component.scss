@@ -1,11 +1,10 @@
-// .container {
-//   max-width: 600px;
-//   margin: 50px auto;
-//   padding: 20px;
-//   background-color: #f9f9f9;
-//   border-radius: 10px;
-//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-// }
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;  
+  background-color: #c3cfde;
+}
 
 .content {
   display: flex;
@@ -15,10 +14,11 @@
 }
 
 // 右邊圖區域
-.pic{
-  width: 40%;
+.pic {
+  width: 35%;
   background:url('../../../../public/login.png') 0 0 no-repeat #005593;
   background-size: 100% 100%;
+  box-shadow: 0 0 15px gray;
 }
 
 // 左邊文字區域
@@ -28,6 +28,7 @@
   background-color: #f4f4f4;
   padding: 1rem;
   padding-top: 2rem;
+  box-shadow: 0 0 15px gray;
 }
 
 .header {
@@ -50,35 +51,35 @@
   gap: 10px
 }
 
-.email-text label{
+.email-text label {
   font-weight: bold;
   font-size: 20px;
 }
 
-.btn-send {
-  display: flex;
-  padding: 8px 16px;
-  font-size: 1rem;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+// .btn-send {
+//   display: flex;
+//   padding: 8px 16px;
+//   font-size: 1rem;
+//   background-color: #4CAF50;
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+// }
 
-.btn-send:hover {
-  background-color: #45a049;
-}
+// .btn-send:hover {
+//   background-color: #45a049;
+// }
 
-.btn-send:active {
-  background-color: #388e3c;
-}
+// .btn-send:active {
+//   background-color: #388e3c;
+// }
 
-.btn-send:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
+// .btn-send:disabled {
+//   background-color: #ccc;
+//   cursor: not-allowed;
+// }
 
 
 // 個人資料區域
@@ -90,6 +91,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: #333;
+    font-size: 20px;
   }
   
   span {
@@ -102,7 +104,7 @@
 .action-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 13rem;
+  margin-top: 12rem;
 }
 
 .btn-update, .btn-delete {
@@ -112,32 +114,37 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 48%;
+  
 }
 
 .btn-update {
-  background-color: #6c757d;
-  color: white;
+  background-color: #909cf4;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
   border: none;
 }
 
 .btn-update:hover {
-  background-color: #5a6268;
+  background-color: #676692;
 }
 
 .btn-update:active {
-  background-color: #4e555b;
+  background-color: #0a0b4b;
 }
 
 .btn-delete {
-  background-color: #dc3545;
-  color: white;
+  background-color: #75f1db;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
   border: none;
 }
 
 .btn-delete:hover {
-  background-color: #c82333;
+  background-color: #63bfdb;
 }
 
 .btn-delete:active {
-  background-color: #bd2130;
+  background-color: #117a8f;
 }

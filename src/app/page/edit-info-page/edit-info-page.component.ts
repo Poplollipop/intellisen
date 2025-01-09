@@ -3,10 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { RadioButton } from 'primeng/radiobutton';
+
 
 @Component({
   selector: 'app-edit-info-page',
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    RadioButton
+  ],
   templateUrl: './edit-info-page.component.html',
   styleUrl: './edit-info-page.component.scss'
 })
