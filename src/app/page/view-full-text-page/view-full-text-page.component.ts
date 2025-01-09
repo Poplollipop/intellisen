@@ -47,6 +47,11 @@ export class ViewFullTextPageComponent {
 
 
   ngOnInit(): void {
+    // 從 http 網址網址中取的案件 id
+    this.route.paramMap.subscribe((param) => {
+      this.judgmentJid = param.get('id');
+    })
+
     if (isPlatformBrowser(this.platformId)) {
       // 僅在瀏覽器中執行這些程式碼，避免伺服器渲染時出錯
       document.addEventListener('mouseup', () => this.handleTextSelection());

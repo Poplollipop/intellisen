@@ -166,7 +166,7 @@
           @for (item of visibleCases; track $index) {
           <li class="display-li">
             <div class="main-content">
-              <span class="id">{{ item.id }}</span>
+              <span class="id" (click)="checkConternt(item.id)">{{ item.id }}</span>
               <span class="separator">|</span>
               <span class="court"> {{ this.sessionServiceService.turnCodeToName(item.court) }}</span>
             </div>
@@ -177,13 +177,13 @@
               <div class="summary-detail"><span>案由</span>{{item.charge}}</div>
               <div class="summary-detail"><span>裁判日期</span>{{item.verdictDate}}</div>
             </div>
-          </li>       
+          </li>
           <p>{{item.content}}</p>
           <hr>
           }
         </ul>
         <!-- 分頁控制 -->
-        <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [first]="first" 
+        <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [first]="first"
           (onPageChange)="onPageChange($event)"></p-paginator>
 
       </div>

@@ -20,6 +20,7 @@ import { SelectItemGroup } from 'primeng/api';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollTop } from 'primeng/scrolltop';
 import { PaginatorModule } from 'primeng/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-result-page',
@@ -51,7 +52,6 @@ export class SearchResultPageComponent {
 
   tidyMap!: any; // 整理後的 map
   caseList: any[] = []; // 接後端的東西
-  selectedCaseId!: string; // 選中的案件id
 
   errorMessage: string = ''; // 法條錯誤提示訊息
   lawList!: string[]; // 整理後的法院字串
@@ -77,7 +77,8 @@ export class SearchResultPageComponent {
     private searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private router : Router
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -285,7 +286,7 @@ export class SearchResultPageComponent {
     this.searchApi(savedConditions);
   }
 
- 
+
   // 頁籤
   itemsPerPage: number = 10; // 每頁顯示的記錄數
   totalRecords: number = 0; // 總記錄數
@@ -302,5 +303,11 @@ export class SearchResultPageComponent {
     const start = this.first;
     const end = this.first + this.itemsPerPage;
     this.visibleCases = this.caseList.slice(start, end);
+  }
+
+  // 觀看全文
+  checkConternt(id : string){
+    // 將網址與案件 id 綁在一起
+    this.router.navigateByUrl('full-text/:' + id);
   }
 }
