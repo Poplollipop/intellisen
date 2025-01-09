@@ -42,7 +42,6 @@ export class ForgotPasswordPageComponent {
     this.forgotPasswordData = {
       email: this.email
     }
-
     this.http.postApi2('http://localhost:8080/accountSystem/forgot-password', this.forgotPasswordData).subscribe({
       next: (response: any) => {
         if (response.body.code == 200) {

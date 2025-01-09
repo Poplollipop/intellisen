@@ -128,9 +128,18 @@ export class SearchPageComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  updateCombinedId() {
+  goCombinedId(): string{
     // 將三個輸入框的值合併成一個新值
-    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
+    if(this.year){
+      this.combinedId = this.combinedId + `${this.year}年度`
+    }
+    if(this.zhi){
+      this.combinedId = this.combinedId + `${this.zhi}字`
+    }
+    if(this.hao){
+      this.combinedId = this.combinedId + `第${this.hao}號`
+    }
+    return this.combinedId;
   }
 
 
@@ -154,15 +163,15 @@ export class SearchPageComponent {
 
   confirm() {
     const tidyData = {
-      searchName: this.keywords,// 模糊搜尋名
-      verdictId: this.combinedId,// 裁判字號 id
-      caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
+      searchName: this.keywords,  // 模糊搜尋名
+      verdictId: this.goCombinedId(), // 裁判字號 id
+      caseType: (this.lawType || []).join(', '),  // 案件類型:刑法、民法等等
       charge: this.inputCase,	// 案由
-      courtList: this.inputCourts,// 法院
-      lawList: this.lawList,// 法條
-      verdictStartDate: this.startDate,// 開始時間
-      verdictEndDate: this.endDate,// 結束時間
-      docType: this.caseType,// 文件類型:裁定、判決
+      courtList: this.inputCourts,  // 法院
+      lawList: this.lawList,  // 法條
+      verdictStartDate: this.startDate, // 開始時間
+      verdictEndDate: this.endDate, // 結束時間
+      docType: this.caseType, // 文件類型:裁定、判決
     }
 
     // 將整理的資料暫存到 service

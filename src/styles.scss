@@ -46,6 +46,7 @@ html, body {
 }
 
 
+
 // 搜尋結果頁的往最頂端按鈕
 .p-scrolltop.p-button {
   z-index: 999;
@@ -57,12 +58,15 @@ html, body {
 }
 
 :root{
-  --p-checkbox-background:#ffffff !important;
-  --p-multiselect-option-focus-background:#a5a5a5 !important;
-  --p-multiselect-hover-border-color: #40ee2c !important;
+  --p-checkbox-background:#ffffff !important;   // 多選勾選框的顏色
+  --p-multiselect-option-focus-background:#a5a5a5 !important;   // 法院的多選框顏色
+  --p-multiselect-hover-border-color: #0c41b4 !important;   // 
   --p-inputtext-background: #ffffff !important;
   --p-inputtext-color: #334155 !important;
-  --p-content-border-color: #334155 !important
+  --p-content-border-color: #334155 !important;
+  --p-paginator-background: none !important;
+  --p-paginator-nav-button-color: #000000 !important;
+  --p-highlight-background: #a2dafa !important;
 }
 
 

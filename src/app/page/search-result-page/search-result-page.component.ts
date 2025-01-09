@@ -172,13 +172,18 @@ export class SearchResultPageComponent {
     this.lawType = savedConditions.caseType
       ? savedConditions.caseType.split(',').map((item: string) => item.trim())
       : [];
-    this.combinedId = savedConditions.verdictId || '';
 
-    const match = this.combinedId.match(/^(\d+)?年度(.*)?字第(\d+)?號$/);
+    this.combinedId = savedConditions.verdictId || '';
+    const match = this.combinedId.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
     if (match) {
       this.year = match[1] || '';
       this.zhi = match[2] || '';
       this.hao = match[3] || '';
+    }else {
+      // 如果沒有匹配到任何內容
+      this.year = '';
+      this.zhi = '';
+      this.hao = '';
     }
 
     this.startDate = savedConditions.verdictStartDate || '';
@@ -201,7 +206,7 @@ export class SearchResultPageComponent {
         this.tidyMap = this.tidyData(resData.caseList);
 
         // 計算總頁數
-        this.totalRecords = this.caseList.length; // 計算總記錄數
+        this.totalRecords = this.caseList.length; // 計算總資料筆數
         this.updateVisibleCases(); // 初始化第一頁數據
 
         this.ngxService.stop(); // 關閉 loading 動畫
@@ -247,7 +252,7 @@ export class SearchResultPageComponent {
     return regex.test(input);
   }
 
-  // 更新法條列表
+  // 更新法條列表 (字串轉陣列)
   updateLawsList() {
     if (this.validateInput(this.law)) {
       this.errorMessage = '';
@@ -257,9 +262,18 @@ export class SearchResultPageComponent {
     }
   }
 
-  updateCombinedId() {
+  goCombinedId(): string{
     // 將三個輸入框的值合併成一個新值
-    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
+    if(this.year){
+      this.combinedId = this.combinedId + `${this.year}年度`
+    }
+    if(this.zhi){
+      this.combinedId = this.combinedId + `${this.zhi}字`
+    }
+    if(this.hao){
+      this.combinedId = this.combinedId + `第${this.hao}號`
+    }
+    return this.combinedId;
   }
 
   // 進階搜尋觸發
@@ -272,7 +286,7 @@ export class SearchResultPageComponent {
   searchAgain() {
     const tidyData = {
       searchName: this.keywords,// 模糊搜尋名
-      verdictId: this.combinedId,// 裁判字號 id
+      verdictId: this.goCombinedId(),// 裁判字號 id
       caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
       charge: this.inputCase,	// 案由
       courtList: this.inputCourts,// 法院
@@ -288,21 +302,22 @@ export class SearchResultPageComponent {
 
 
   // 頁籤
-  itemsPerPage: number = 10; // 每頁顯示的記錄數
-  totalRecords: number = 0; // 總記錄數
-  first: number = 0; // 當前的起始記錄索引
+  itemsPerPage: number = 10; // 每頁顯示的筆數
+  totalRecords: number = 0; // 總筆數
+  first: number = 0; // 當前的起始那一筆的索引
   visibleCases: any[] = []; // 當前頁面顯示的案件數據
 
   onPageChange(event: any): void {
-    this.first = event.first; // 更新起始記錄索引
-    this.itemsPerPage = event.rows; // 更新每頁記錄數
-    this.updateVisibleCases(); // 更新顯示的記錄
+    this.first = event.first; // 更新起始那一筆的索引
+    this.itemsPerPage = event.rows; // 更新每頁筆數
+    this.updateVisibleCases(); // 更新顯示的筆數
   }
 
+  // 
   updateVisibleCases(): void {
-    const start = this.first;
-    const end = this.first + this.itemsPerPage;
-    this.visibleCases = this.caseList.slice(start, end);
+    const start = this.first;   // 更新起始的那一筆的 index
+    const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
+    this.visibleCases = this.caseList.slice(start, end);    // 只取該頁要顯示的筆數的 index
   }
 
   // 觀看全文

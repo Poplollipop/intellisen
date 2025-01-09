@@ -1,133 +1,22 @@
 .card {
   padding: 10px;
   border: 1px solid #e9e9e9;
-}
-
-
-/* 總計區域(兩個框框) */
-.number-result {
   display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  .left-result,
-  .right-result {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 18rem; // 最大寬度，避免過大
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    font-size: 20px;
-  }
-
-  .left-result {
-    background-color: #8157C3;
-    color: #000000;
-    opacity: 0.8;
-  }
-
-  .right-result {
-    background-color: #81CA85;
-    color: #000000;
-    opacity: 0.8;
-  }
-
-  .left-result p,
-  .right-result p {
-    font-size: clamp(14px, 1.5vw, 18px);
-    margin-left: 5px;
-    margin-right: 5px;
-    font-weight: bold;
-  }
-
-  .left-result h3,
-  .right-result h3 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-/* 下方區域 */
-.result-container {
+  flex-direction: row;
   gap: 1rem;
-}
-
-/* 圖表區 */
-.chart-container {
-  gap: 10px;
-  margin-top: 1rem;
-  background-color: #f2f2f2;
-  border-radius: 8px;
-  width: 100%;
-
-  .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-left: 20px;
-    margin-top: 20px;
-    padding: 1rem;
-
-    button[mat-raised-button] {
-      font-size: 20px;
-      color: #fff;
-      background-color: #05174e;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    button[mat-raised-button]:hover {
-      background-color: #184b6d;
-      transform: scale(1.05);
-    }
-
-    button[mat-raised-button]:active {
-      background-color: #2b20f9;
-    }
-
-    button[mat-raised-button]:focus {
-      outline: none;
-      box-shadow: 0 0 5px rgb(132, 186, 213);
-    }
-
-  }
-
-  .chart-css {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    height: 40rem;
-  }
-
-  .small-button {
-    padding: 10px;
-    background-color: #04093d;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 20px;
-    border: none;
-  }
 }
 
 /* 表格區 */
 .table-container {
-  width: 100%;
+  width: 50%;
+  height: 30rem;
   background-color: #f2f2f2;
   margin-top: 1rem;
-  border-radius: 8px;
+  border-radius: 8px; 
+  padding-top: 2rem;
 
   .container {
-    max-width: 85%;
+    max-width: 80%;
   }
 
   .responsive-table {
@@ -199,3 +88,121 @@
   }
 
 }
+
+/* 總計區域(兩個框框) */
+.number-result {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .left-result,
+  .right-result {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 18rem; // 最大寬度，避免過大
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    font-size: 20px;
+  }
+
+  .left-result {
+    background-color: #8157C3;
+    color: #000000;
+    opacity: 0.8;
+    padding-top: 0.5rem;
+  }
+
+  .right-result {
+    background-color: #81CA85;
+    color: #000000;
+    opacity: 0.8;
+    padding-top: 0.5rem;
+  }
+
+  .left-result p,
+  .right-result p {
+    font-size: clamp(14px, 1.5vw, 18px);
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  .left-result h3,
+  .right-result h3 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+
+
+/* 圖表區 */
+.chart-container {
+  width: 50%;
+  height: 30rem;
+  gap: 10px;
+  margin-top: 1rem;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0.5rem;
+
+    button[mat-raised-button] {
+      font-size: 16px;
+      color: #fff;
+      background-color: #05174e;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button[mat-raised-button]:hover {
+      background-color: #184b6d;
+      transform: scale(1.05);
+    }
+
+    button[mat-raised-button]:active {
+      background-color: #2b20f9;
+    }
+
+    button[mat-raised-button]:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgb(132, 186, 213);
+    }
+
+  }
+
+  .chart-css {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 20rem;
+  }
+
+  .small-button {
+    padding: 10px;
+    background-color: #04093d;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+  }
+}
+
+
