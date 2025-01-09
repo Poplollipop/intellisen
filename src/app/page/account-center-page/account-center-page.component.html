@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="header">
     <h2>會員中心</h2>
   </div>
@@ -8,9 +8,9 @@
       <div class="email-text">
         <label for="emailStatus">email 驗證狀態：{{ emailVerified ? '已驗證' : '未驗證' }}</label>
       </div>
-        <button class="btn-send" (click)="sendVerificationEmail()" [disabled]="emailVerified">
-          重新寄送驗證信
-        </button>
+      <button class="btn-send" (click)="sendVerificationEmail()" [disabled]="emailVerified">
+        重新寄送驗證信
+      </button>
     </div>
 
     <div class="info-group">
@@ -33,4 +33,57 @@
       <button class="btn-delete" (click)="confirmDelete()">刪除會員</button>
     </div>
   </div>
+</div> -->
+
+
+
+
+<div class="content">
+  
+
+  <div class="account-info">
+    <div class="header">
+      <h2 style="font-weight: bold;">會員中心</h2>
+    </div>
+
+    <div class="nav"></div>
+
+    <div class="email-status">
+      <div class="email-text">
+        <label for="emailStatus">email 驗證狀態：</label>
+          <span> {{ emailVerified ? '已驗證' : '未驗證' }} </span>
+      </div>
+      <button class="btn-send" (click)="sendVerificationEmail()" [disabled]="emailVerified">
+        重新寄送驗證信
+      </button>
+    </div>
+    
+
+    <div class="info-group">
+      <label for="role">身分：</label>
+      <span>{{ role }}</span>
+      <hr>
+    </div>
+
+    <div class="info-group">
+      <label for="name">名稱：</label>
+      <span>{{ name }}</span>
+      <hr>
+    </div>
+
+    <div class="info-group">
+      <label for="phone">電話：</label>
+      <span>{{ phone }}</span>
+      <hr>
+    </div>
+
+
+    <div class="action-buttons">
+      <button class="btn-update" (click)="goToUpdatePage()">更新資訊</button>
+      <button class="btn-delete" (click)="confirmDelete()">刪除會員</button>
+    </div>
+  </div>
+
+  <div class="pic"></div>
+
 </div>
