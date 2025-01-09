@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SessionServiceService } from '../../service/session-service.service';
+import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
-import { SessionServiceService } from '../service/session-service.service';
-import { HttpClientService } from '../service/http-client.service';
 
 @Component({
-  selector: 'app-forgot-password-page',
+  selector: 'app-reset-password-page',
   imports: [FormsModule],
-  templateUrl: './forgot-password-page.component.html',
-  styleUrl: './forgot-password-page.component.scss'
+  templateUrl: './reset-password-page.component.html',
+  styleUrl: './reset-password-page.component.scss'
 })
-export class ForgotPasswordPageComponent {
+export class ResetPasswordPageComponent {
   email!: string;
   errorMessage: string = '';
+  newPassword!: string;
+  resetPasswordData!: any;
 
   constructor(
     private session: SessionServiceService,
@@ -35,13 +37,21 @@ export class ForgotPasswordPageComponent {
     }
   }
 
-  forgotPassword() {
-    this.http.postApi2('http://localhost:8080/accountSystem/forgot-password', this.email).subscribe({
+  // 重置密碼
+  resetPassword() {
+    this.resetPasswordData = {
+      email: this.email,
+      password: this.newPassword
+    }
+
+    console.log(this.resetPasswordData);
+
+    this.http.postApi2('http://localhost:8080/accountSystem/reset-password', this.resetPasswordData).subscribe({
       next: (response: any) => {
         if (response.body.code == 200) {
           Swal.fire({
-            title: '忘記密碼信已發送，請至信箱查看!',
-            text: '歡迎回來！',
+            title: '密碼重置',
+            text: '密碼已更新成功！',
             icon: 'success',
             confirmButtonText: '確定'
           });
@@ -50,8 +60,8 @@ export class ForgotPasswordPageComponent {
 
         if (response.body.code != 200) {
           Swal.fire({
-            title: '登入失敗',
-            text: '請檢查帳號或密碼是否正確。',
+            title: '密碼重置失敗',
+            text: '請檢查密碼重置驗證信是否已點擊。',
             icon: 'error',
             confirmButtonText: '再試一次'
           });
@@ -60,8 +70,8 @@ export class ForgotPasswordPageComponent {
       },
       error: (error) => {
         Swal.fire({
-          title: '登入失敗',
-          text: '請檢查帳號或密碼是否正確。',
+          title: '密碼重置失敗',
+          text: '請檢查密碼重置驗證信是否已點擊。',
           icon: 'error',
           confirmButtonText: '再試一次'
         });
@@ -69,4 +79,3 @@ export class ForgotPasswordPageComponent {
     })
   }
 }
-
