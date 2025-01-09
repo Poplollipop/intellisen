@@ -1,3 +1,4 @@
+import { SessionServiceService } from './../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { FullTextDialogComponent } from './full-text-dialog/full-text-dialog.component';
 import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
@@ -27,6 +28,7 @@ import { log } from 'console';
 // 增加網頁ID，並儲存該ID給伺服器
 export class ViewFullTextPageComponent {
   constructor(
+    private sessionServiceService:SessionServiceService,
     private http: HttpClientService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -44,6 +46,8 @@ export class ViewFullTextPageComponent {
   suptext!: any;
   url!: any;
   judgmentJid!: any;
+  charge!: any;
+  court!: any;
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
@@ -165,6 +169,9 @@ export class ViewFullTextPageComponent {
             : res.caseList[0].content;
           this.url = res.caseList[0].url;
           this.judgmentJid = res.caseList[0].id;
+          this.court = this.sessionServiceService.turnCodeToName(res.caseList[0].court);
+          this.charge = res.caseList[0].charge;
+
         });
   }
 
