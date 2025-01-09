@@ -9,6 +9,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchSessionService } from '../../service/search-session.service';
 import { MatDialog } from '@angular/material/dialog';
+import { color } from 'highcharts';
+import { log } from 'console';
 
 
 
@@ -62,7 +64,8 @@ export class ViewFullTextPageComponent {
         this.isToolbarVisible = true; // 避免初始渲染出現工具列
       }, 10);
       //==============================================================
-      this.suptext = this.searchSessionService.singleCaseDate.content;
+      console.log(this.searchSessionService.singleCaseDate.content);
+      this.suptext = this.searchSessionService.singleCaseDate.content2 ? this.searchSessionService.singleCaseDate.content + '\n' + this.searchSessionService.singleCaseDate.content2 : this.searchSessionService.singleCaseDate.content;
       this.url = this.searchSessionService.singleCaseDate.url;
       this.judgmentJid = this.searchSessionService.singleCaseDate.groupId;
     }
@@ -174,7 +177,7 @@ export class ViewFullTextPageComponent {
   }
 
   // 我的最愛-儲存判決書
-  myFavorite(){
+  myFavorite() {
 
   }
 
