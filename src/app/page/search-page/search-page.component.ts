@@ -12,6 +12,10 @@ import { SelectItemGroup } from 'primeng/api';
 import { InputSearchData } from '../../service/search-session.service';
 import { Router } from '@angular/router';
 import { Checkbox } from 'primeng/checkbox';
+import { SessionServiceService } from '../../service/session-service.service';
+import { HttpClientService } from '../../service/http-client.service';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -58,7 +62,9 @@ export class SearchPageComponent {
 
   constructor(
     private searchSessionService: SearchSessionService,
-    private router: Router
+    private router: Router,
+    public session: SessionServiceService,
+        private http: HttpClientService
   ) {
     this.groupedCourts = [
       {
@@ -122,9 +128,18 @@ export class SearchPageComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  updateCombinedId() {
+  goCombinedId(): string{
     // 將三個輸入框的值合併成一個新值
-    this.combinedId = `${this.year}年度${this.zhi}字第${this.hao}號`;
+    if(this.year){
+      this.combinedId = this.combinedId + `${this.year}年度`
+    }
+    if(this.zhi){
+      this.combinedId = this.combinedId + `${this.zhi}字`
+    }
+    if(this.hao){
+      this.combinedId = this.combinedId + `第${this.hao}號`
+    }
+    return this.combinedId;
   }
 
 
@@ -148,15 +163,15 @@ export class SearchPageComponent {
 
   confirm() {
     const tidyData = {
-      searchName: this.keywords,// 模糊搜尋名
-      verdictId: this.combinedId,// 裁判字號 id
-      caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
+      searchName: this.keywords,  // 模糊搜尋名
+      verdictId: this.goCombinedId(), // 裁判字號 id
+      caseType: (this.lawType || []).join(', '),  // 案件類型:刑法、民法等等
       charge: this.inputCase,	// 案由
-      courtList: this.inputCourts,// 法院
-      lawList: this.lawList,// 法條
-      verdictStartDate: this.startDate,// 開始時間
-      verdictEndDate: this.endDate,// 結束時間
-      docType: this.caseType,// 文件類型:裁定、判決
+      courtList: this.inputCourts,  // 法院
+      lawList: this.lawList,  // 法條
+      verdictStartDate: this.startDate, // 開始時間
+      verdictEndDate: this.endDate, // 結束時間
+      docType: this.caseType, // 文件類型:裁定、判決
     }
 
     // 將整理的資料暫存到 service
@@ -172,6 +187,54 @@ export class SearchPageComponent {
   goRegister(){
     this.router.navigateByUrl('/register')
   }
+
+  goLogout() {
+      this.http.postApi2('http://localhost:8080/accountSystem/logout', '').subscribe({
+        next: (response: any) => {
+          if (response.body.code == 200) {
+            // 登出成功，顯示確認選項
+            Swal.fire({
+              title: '登出成功',
+              text: '確定要登出嗎？',
+              icon: 'info',
+              showCancelButton: true,   // 顯示取消按鈕
+              confirmButtonText: '確定',
+              cancelButtonText: '取消'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // 用戶確認登出，執行登出操作
+                Swal.fire({
+                  text: '您已成功登出。',
+                  icon: 'info',
+                  confirmButtonText: '關閉'
+                });
+              }
+            });
+          } else {
+            // 登出失敗
+            Swal.fire({
+              text: '登出失敗',
+              icon: 'error',
+              confirmButtonText: '確定'
+            });
+          }
+        },
+        error: (error) => {
+          // 請求失敗
+          Swal.fire({
+            text: '登出失敗',
+            icon: 'error',
+            confirmButtonText: '確定'
+          });
+        }
+      });
+  
+  
+      this.session.clearIsLogin();
+      this.router.navigateByUrl('/search')
+    }
+
+    
 }
 
 

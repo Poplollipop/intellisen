@@ -1,7 +1,14 @@
 <div class="login">
-  <span class="click" (click)="goLogin()">登入</span>
+  @if (session.getIsLogin()) {
+    <span (click)="goLogout()" class="click" style="cursor: pointer; margin-left: 1rem;">登出</span>
+  } @else {
+    <span (click)="goLogin()" class="click" style="cursor: pointer; margin-left: 1rem;">登入</span>
+    <span style="margin-left: 1rem;">|</span>
+    <span (click)="goRegister()" class="click" style="cursor: pointer; margin-left: 1rem;">註冊</span>
+  }
+  <!-- <span class="click" (click)="goLogin()">登入</span>
   <span style="margin-left: 1rem;">|</span>
-  <span class="click" (click)="goRegister()">註冊</span>
+  <span class="click" (click)="goRegister()">註冊</span> -->
 </div>
 
 <div class="search-area">
@@ -105,7 +112,7 @@
               <p-accordion-header>裁判字號</p-accordion-header>
               <p-accordion-content>
                 <p class="m-0">
-                  <select [(ngModel)]="year" (ngModelChange)="updateCombinedId()">
+                  <select [(ngModel)]="year">
                     <option value=""></option>
                     @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
                     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index)
@@ -114,9 +121,9 @@
                     }
                   </select>
                   年度
-                  <input [(ngModel)]="zhi" (ngModelChange)="updateCombinedId()">
+                  <input [(ngModel)]="zhi">
                   字第
-                  <input [(ngModel)]="hao" (ngModelChange)="updateCombinedId()">
+                  <input [(ngModel)]="hao">
                   號
                 </p>
               </p-accordion-content>

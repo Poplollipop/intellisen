@@ -13,6 +13,7 @@ import { HttpClientService } from '../service/http-client.service';
 export class ForgotPasswordPageComponent {
   email!: string;
   errorMessage: string = '';
+  forgotPasswordData!: any;
 
   constructor(
     private session: SessionServiceService,
@@ -36,7 +37,10 @@ export class ForgotPasswordPageComponent {
   }
 
   forgotPassword() {
-    this.http.postApi2('http://localhost:8080/accountSystem/forgot-password', this.email).subscribe({
+    this.forgotPasswordData = {
+      email: this.email
+    }
+    this.http.postApi2('http://localhost:8080/accountSystem/forgot-password', this.forgotPasswordData).subscribe({
       next: (response: any) => {
         if (response.body.code == 200) {
           Swal.fire({
