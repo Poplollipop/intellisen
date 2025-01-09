@@ -21,8 +21,8 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './view-full-text-page.component.html',
   styleUrl: './view-full-text-page.component.scss'
 })
+// 增加網頁ID，並儲存該ID給伺服器
 export class ViewFullTextPageComponent {
-  // 額外功能選取文字時 可以知道它的index位置
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -167,6 +167,12 @@ export class ViewFullTextPageComponent {
       this.clipboard.copy(citationFormat);
     }
   }
+
+  // 我的最愛-儲存判決書
+  myFavorite(){
+
+  }
+
   //==========================================================
   // 高亮功能，顏色參數為選擇的顏色
   highlightText(color: string, event?: MouseEvent): void {
@@ -278,26 +284,26 @@ export class ViewFullTextPageComponent {
 
 
   // 更改高亮顏色()
-  changeHighlightColor(color: string): void {
-    if (!this.currentHighlight) {
-      alert('請先選取要更改顏色的高亮文字！');
-      return;
-    }
+  // changeHighlightColor(color: string): void {
+  //   if (!this.currentHighlight) {
+  //     alert('請先選取要更改顏色的高亮文字！');
+  //     return;
+  //   }
 
-    const highlightRange = this.highlightedRanges.find(
-      (h) =>
-        h.text === this.currentHighlight?.textContent &&
-        h.startOffset === this.savedRange?.startOffset &&
-        h.endOffset === this.savedRange?.endOffset
-    );
+  //   const highlightRange = this.highlightedRanges.find(
+  //     (h) =>
+  //       h.text === this.currentHighlight?.textContent &&
+  //       h.startOffset === this.savedRange?.startOffset &&
+  //       h.endOffset === this.savedRange?.endOffset
+  //   );
 
-    if (highlightRange) {
-      highlightRange.color = color;
-      this.renderer.setStyle(this.currentHighlight, 'background-color', color);
-    }
+  //   if (highlightRange) {
+  //     highlightRange.color = color;
+  //     this.renderer.setStyle(this.currentHighlight, 'background-color', color);
+  //   }
 
-    this.updateHighlightStorage(); // 更新儲存
-  }
+  //   this.updateHighlightStorage(); // 更新儲存
+  // }
   //===============================================================
   // 詢問清除全部螢光效果
   removeAllHighlights(): void {
