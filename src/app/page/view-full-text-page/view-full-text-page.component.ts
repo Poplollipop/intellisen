@@ -13,6 +13,7 @@ import { SearchSessionService } from '../../service/search-session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { color } from 'highcharts';
 import { log } from 'console';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 
@@ -37,6 +38,7 @@ export class ViewFullTextPageComponent {
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object,
     private searchSessionService: SearchSessionService,
+    private ngxService: NgxUiLoaderService,
   ) { }
 
   @ViewChild('suptextSpan', { static: false }) suptextSpan!: ElementRef<HTMLSpanElement>;
@@ -159,6 +161,9 @@ export class ViewFullTextPageComponent {
   // api區
   // 搜尋給於id，呼叫後端接收判決書資料
   getJudgmentApi(judgmentJid: string) {
+
+    this.ngxService.start(); // 啟動 loading 動畫
+
     this.http
       .getApi('http://localhost:8080/case/judgmentid?id=' + judgmentJid)
       .subscribe(
@@ -172,6 +177,7 @@ export class ViewFullTextPageComponent {
           this.court = this.sessionServiceService.turnCodeToName(res.caseList[0].court);
           this.charge = res.caseList[0].charge;
 
+        this.ngxService.stop(); // 關閉 loading 動畫
         });
   }
 
