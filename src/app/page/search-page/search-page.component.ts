@@ -128,15 +128,15 @@ export class SearchPageComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  goCombinedId(): string{
+  goCombinedId(): string {
     // 將三個輸入框的值合併成一個新值
-    if(this.year){
+    if (this.year) {
       this.combinedId = this.combinedId + `${this.year}年度`
     }
-    if(this.zhi){
+    if (this.zhi) {
       this.combinedId = this.combinedId + `${this.zhi}字`
     }
-    if(this.hao){
+    if (this.hao) {
       this.combinedId = this.combinedId + `第${this.hao}號`
     }
     return this.combinedId;
@@ -189,48 +189,49 @@ export class SearchPageComponent {
   }
 
   goLogout() {
-    this.http.postApi2('http://localhost:8080/accountSystem/logout', '').subscribe({
-      next: (response: any) => {
-        if (response.body.code == 200) {
-          // 登出成功，顯示確認選項
-          Swal.fire({
-            title: '登出成功',
-            text: '確定要登出嗎？',
-            icon: 'info',
-            showCancelButton: true,   // 顯示取消按鈕
-            confirmButtonText: '確定',
-            cancelButtonText: '取消'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // 用戶確認登出，執行登出操作
+    Swal.fire({
+      title: '登出確認',
+      text: '確定要登出嗎？',
+      icon: 'info',
+      showCancelButton: true,   // 顯示取消按鈕
+      confirmButtonText: '確定',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.postApi2('http://localhost:8080/accountSystem/logout', '').subscribe({
+          next: (response: any) => {
+            if (response.body.code != 200) {
+              // 登出失敗
               Swal.fire({
-                text: '您已成功登出。',
-                icon: 'info',
-                confirmButtonText: '關閉'
+                text: '登出失敗',
+                icon: 'error',
+                confirmButtonText: '確定'
               });
-              this.session.clearIsLogin();
-              console.log(this.session.getIsLogin());
-              // 手動觸發變更檢測，更新顯示登出狀態
-              this.cdRef.detectChanges();
-              this.router.navigateByUrl('/search')
+              return;
             }
-          });
-        } else {
-          // 登出失敗
-          Swal.fire({
-            text: '登出失敗',
-            icon: 'error',
-            confirmButtonText: '確定'
-          });
-        }
-      },
-      error: (error) => {
-        // 請求失敗
-        Swal.fire({
-          text: '登出失敗',
-          icon: 'error',
-          confirmButtonText: '確定'
+          },
+          error: (error) => {
+            // 請求失敗
+            Swal.fire({
+              text: '登出失敗',
+              icon: 'error',
+              confirmButtonText: '確定'
+            });
+            return;
+          }
         });
+        // 用戶確認登出，執行登出操作
+        Swal.fire({
+          text: '您已成功登出。',
+          icon: 'info',
+          confirmButtonText: '關閉'
+        });
+        this.session.clearIsLogin();
+        this.session.clearEmail();
+        console.log(this.session.getIsLogin());
+        // 手動觸發變更檢測，更新顯示登出狀態
+        this.cdRef.detectChanges();
+        this.router.navigateByUrl('/search')
       }
     });
   }
@@ -238,7 +239,7 @@ export class SearchPageComponent {
   goAccountCenter() {
     this.router.navigateByUrl('/account-center')
   }
-  
+
 }
 
 
