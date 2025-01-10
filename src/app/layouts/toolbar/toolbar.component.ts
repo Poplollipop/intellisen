@@ -36,7 +36,7 @@ export class ToolbarComponent {
         if (response.body.code == 200) {
           // 登出成功，顯示確認選項
           Swal.fire({
-            title: '登出成功',
+            title: '登出確認',
             text: '確定要登出嗎？',
             icon: 'info',
             showCancelButton: true,   // 顯示取消按鈕

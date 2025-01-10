@@ -100,7 +100,7 @@ export class RegisterPageComponent {
 
         if (response.body.code != 200) {
           Swal.fire({
-            text: '註冊失敗，請檢查email或密碼格式是否正確',
+            text: '註冊失敗，請檢查email是否重複或填寫內容格式是否正確',
             icon: 'error',
             confirmButtonText: '確定'
           });
@@ -108,7 +108,7 @@ export class RegisterPageComponent {
       },
       error: (error) => {
         Swal.fire({
-          text: '註冊失敗，請檢查email或密碼格式是否正確',
+          text: '註冊失敗，請檢查email是否重複或填寫內容格式是否正確',
           icon: 'error',
           confirmButtonText: '確定'
         });
