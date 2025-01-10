@@ -4,16 +4,28 @@
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  position: relative; /* 為了定位工具列與按鈕 */
+  position: relative; /* 為工具列與按鈕定位 */
 }
-/* 主內容區域 */
+
+/* 主文內容區域 */
 .main-content {
-  flex: 3;
-  position: relative; /* 工具列與回上頁按鈕絕對定位所需 */
+  flex: 2; /* 主文區域占兩倍大小 */
+  position: relative; /* 工具列與按鈕絕對定位所需 */
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 左側瀏覽紀錄欄位 */
+.left-container {
+  flex: 1; /* 占 1 倍大小 */
+  margin-right: 20px; /* 與主文區域間距 */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -31,7 +43,7 @@
 /* 高亮文字的預設樣式 */
 #toptext {
   font-family: 'Courier New', monospace;
-  font-size: 16px;
+  font-size: 20px;
   background: #ffffff;
   padding: 20px;
   border: none;
@@ -149,23 +161,23 @@ span[style*="box-shadow"]:hover {
 //=====================================================
 //回上頁按鈕
 .back-button {
-  position: absolute;
-  top: 20px; /* 顯示在主文區塊的右上角 */
-  right: 200px; /* 調整位置 */
-  padding: 5px 20px; /* 調整內邊距 */
-  font-size: 18px; /* 調整字體大小 */
-  font-weight: bold; /* 加粗文字 */
-  background-color: rgb(3, 21, 70); /* 深藍背景色 */
-  color: white; /* 白色文字 */
-  border: none; /* 移除邊框 */
-  border-radius: 8px; /* 圓角 */
-  cursor: pointer; /* 指針樣式 */
-  transition: background-color 0.3s, transform 0.2s; /* 增加平滑過渡效果 */
+  position: fixed;
+  bottom: 20px; /* 靠近底部 */
+  left: 20px; /* 靠近左側 */
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(3, 21, 70);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .back-button:hover {
-  background-color: rgb(5, 30, 100); /* 懸停時更深的藍色 */
-  transform: scale(1.05); /* 微縮放效果 */
+  background-color: rgb(5, 30, 100);
+  transform: scale(1.05);
 }
 
 
@@ -239,28 +251,29 @@ span[style*="box-shadow"]:hover {
 //===========================================
 // 列印功能
 .print-options {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 260px;
-  right: 20px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 10px); /* 水平居中並向下偏移 */
   background: #f8f9fa;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  padding: 10px 20px;
-  gap: 15px;
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* 垂直排列按鈕和文字區塊 */
+  align-items: center; /* 居中對齊內容 */
+  gap: 10px; /* 按鈕和文字區塊之間的距離 */
 }
 
 .print-options button {
   background-color: #6c757d;
-  color: #ffffff;
+  color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px;
   font-size: 14px;
+  font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -272,12 +285,30 @@ span[style*="box-shadow"]:hover {
 
 .print-options button:focus {
   outline: none;
-  background-color: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
-.print-button {
-  position: relative;
+/* 讓按鈕橫向排列 */
+.arrow-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* 按鈕間距 */
+  white-space: nowrap; /* 禁止文字換行 */
 }
+
+.print-options p {
+  margin: 0;
+  padding: 5px;
+  font-size: 24px;
+  color: #666;
+  text-align: center;
+  line-height: 1.5;
+  font-weight: bold;
+  border: 1px solid #ddd; /* 與按鈕分隔 */
+  width: 100%; /* 確保文字與按鈕對齊 */
+}
+
 
 @mixin print-color-adjust($value) {
   print-color-adjust: $value;

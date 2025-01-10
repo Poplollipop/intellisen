@@ -28,7 +28,7 @@ import { log } from 'console';
 // 增加網頁ID，並儲存該ID給伺服器
 export class ViewFullTextPageComponent {
   constructor(
-    private sessionServiceService:SessionServiceService,
+    private sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -192,12 +192,12 @@ export class ViewFullTextPageComponent {
   copyQuote() {
     const selectedText = window.getSelection()?.toString() || '';
     if (selectedText) {
-      const citationFormat = `「${selectedText}」` + this.judgmentJid + `\n--- 引自 司法院事實型量刑資訊系統`;
+      const citationFormat = `「${selectedText}」\n--- ` + this.judgmentJid;
       this.clipboard.copy(citationFormat);
     }
   }
 
-  // 我的最愛-儲存判決書
+  // 書籤-儲存判決書
   myFavorite() {
 
   }
@@ -522,30 +522,69 @@ export class ViewFullTextPageComponent {
   //===================================================
 
   // 切換選項框顯示狀態
-  togglePrintOptions() {
+  togglePrintOptions(): void {
     this.showPrintOptions = !this.showPrintOptions;
+
+    if (this.showPrintOptions) {
+      // 設置全局事件監聽器，點擊其他地方關閉選項框
+      setTimeout(() => {
+        document.addEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
+      }, 0);
+    } else {
+      // 移除全局事件監聽器
+      document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
+    }
   }
 
   // 點擊列印選項
   onPrint(includeHighlights: boolean): void {
-    console.log(includeHighlights); // 這裡會顯示用戶選擇的值
+    console.log('列印功能，附帶螢光:', includeHighlights);
+    this.showPrintOptions = false;
 
-    const body = document.getElementById('toptext');
+    // 移除全局事件監聽器
+    document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
 
-    if (body) {
-      // 根據 includeHighlights 來動態切換類別
-      if (includeHighlights) {
-        body.classList.remove('no-highlight'); // 加上 highlight 類
-      }
-      if (!includeHighlights) {
-        body.classList.add('no-highlight');  // 移除 highlight 類
-      }
+    // 獲取主文區域內容
+    const mainContent = document.querySelector('.main-content') as HTMLElement;
+    if (!mainContent) {
+      alert('無法找到主文內容進行列印！');
+      return;
     }
 
+    // 暫存原始樣式
+    const originalDisplay = document.body.innerHTML;
+
+    // 準備列印內容
+    const printContent = mainContent.cloneNode(true) as HTMLElement;
+
+    if (!includeHighlights) {
+      printContent.classList.add('no-highlight'); // 添加無螢光樣式
+    }
+
+    // 設置列印內容
+    document.body.innerHTML = printContent.outerHTML;
+
     // 觸發列印
-    setTimeout(() => {
-      window.print();
-    }, 100); // 等待一些時間以確保列印選項被應用
+    window.print();
+
+    // 恢復頁面內容
+    document.body.innerHTML = originalDisplay;
+
+    // 重新綁定 Angular
+    window.location.reload();
+  }
+
+
+
+  // 點擊按鈕外部關閉選項框
+  private closePrintOptionsOnOutsideClick(event: MouseEvent): void {
+    const printOptions = document.querySelector('.print-options');
+    const printButton = document.querySelector('.print-button');
+
+    if (printOptions && !printOptions.contains(event.target as Node) && !printButton?.contains(event.target as Node)) {
+      this.showPrintOptions = false;
+      document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
+    }
   }
 
   //=========================================

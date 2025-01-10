@@ -42,6 +42,16 @@
   <mat-icon>save</mat-icon>
 </button> -->
 <div class="content-wrapper">
+
+  <!-- 左側 aside 區塊 -->
+  <aside class="left-container">
+    <h2>瀏覽紀錄</h2>
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+  </aside>
+
   <!-- 主文內容區域 -->
   <div class="main-content">
     <!-- 右上工具列 -->
@@ -61,10 +71,10 @@
           <mat-icon>open_in_new</mat-icon>
         </button>
         <!-- PDF 下載按鈕 -->
-        <button class="toolbar-button pdfdownload-button" (click)="onDownloadPDF()" matTooltip="PDF檔下載"
+        <!-- <button class="toolbar-button pdfdownload-button" (click)="onDownloadPDF()" matTooltip="PDF檔下載"
           matTooltipClass="custom-tooltip">
           <mat-icon>picture_as_pdf</mat-icon>
-        </button>
+        </button> -->
         <!-- 列印按鈕 -->
         <div class="toolbar-button print-button">
           <mat-icon (click)="togglePrintOptions()" matTooltip="列印" matTooltipClass="custom-tooltip">print</mat-icon>
@@ -74,6 +84,9 @@
               <button (click)="onPrint(true)">附帶螢光筆</button>
               <button (click)="onPrint(false)">不附帶螢光筆</button>
             </div>
+            <div>
+              <p>請開啟更多設定中的背景圖形</p>
+            </div>
           </div>
         </div>
       </div>
@@ -81,16 +94,19 @@
 
     <!-- 主文高亮文字內容 -->
     <pre id="toptext" #suptextSpan>{{ suptext }}</pre>
-    <!-- 回上頁按鈕 -->
-    <button class="back-button" (click)="returnToPreviousPage()">回上頁</button>
   </div>
 
   <!-- 右側 aside 區塊 -->
   <aside class="aside-container">
     <h2>相關資訊</h2>
     <ul>
-      <li>法院: <p>{{court}}</p></li>
-      <li>罪刑: <p>{{charge}}</p></li>
+      <li>法院: <p>{{court}}</p>
+      </li>
+      <li>罪刑: <p>{{charge}}</p>
+      </li>
     </ul>
   </aside>
+
+  <!-- 回上頁按鈕 -->
+  <button class="back-button" (click)="returnToPreviousPage()">回上頁</button>
 </div>
