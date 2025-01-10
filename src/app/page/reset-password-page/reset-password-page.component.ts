@@ -4,10 +4,11 @@ import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-reset-password-page',
-  imports: [FormsModule],
+  imports: [FormsModule, PasswordModule],
   templateUrl: './reset-password-page.component.html',
   styleUrl: './reset-password-page.component.scss'
 })
@@ -15,12 +16,16 @@ export class ResetPasswordPageComponent {
   email!: string;
   errorMessage: string = '';
   newPassword!: string;
+  rawPwd!: string;
+  confirmPwd!: string;
   resetPasswordData!: any;
+  errorMessage2: string = ''
+
 
   constructor(
     private session: SessionServiceService,
     private http: HttpClientService,
-    private router: Router
+    private router: Router,
   ) {}
 
   // 驗證email格式
@@ -36,6 +41,17 @@ export class ResetPasswordPageComponent {
       this.errorMessage = '';
     } else {
       this.errorMessage = '請輸入正確Email格式!';
+    }
+  }
+
+  // 驗證密碼
+  pwdValidation() {
+    if (this.rawPwd != this.confirmPwd) {
+      this.errorMessage2 = '請輸入相同密碼';
+    }
+    else {
+      this.errorMessage2 = '';
+      this.newPassword = this.confirmPwd;
     }
   }
 
