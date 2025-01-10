@@ -45,7 +45,6 @@ export class EditInfoPageComponent {
         if (response.body.code == 200) {
           Swal.fire({
             title: '更新成功!',
-            text: '歡迎！',
             icon: 'success',
             confirmButtonText: '確定'
           });

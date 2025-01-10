@@ -18,8 +18,7 @@
 
     <div class="info-group">
       <label for="role">身分：</label>
-      <span>{{ role }}</span>
-      <hr>
+      <span>{{ role == 'lawFirm' ? '事務所' : role == 'lawyer' ? '律師' : '一般民眾'}}</span>
     </div>
 
     <div class="info-group">
