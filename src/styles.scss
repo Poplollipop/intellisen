@@ -84,7 +84,7 @@ html, body {
 :root{
   --p-checkbox-background:#ffffff !important;   // 多選勾選框的顏色
   --p-multiselect-option-focus-background:#a5a5a5 !important;   // 法院的多選框顏色
-  --p-multiselect-hover-border-color: #0c41b4 !important;   // 
+  --p-multiselect-hover-border-color: #0c41b4 !important;  
   --p-inputtext-background: #ffffff !important;
   --p-inputtext-color: #334155 !important;
   --p-content-border-color: #334155 !important;
@@ -96,6 +96,7 @@ html, body {
   --p-radiobutton-checked-hover-background: #09286d !important;
   --p-radiobutton-checked-hover-border-color: #0c0e8c !important;
   --p-radiobutton-checked-focus-border-color: #061a45 !important;
+  --p-inputtext-invalid-border-color: #575757 !important;
 }
 
 

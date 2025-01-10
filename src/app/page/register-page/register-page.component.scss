@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'TaipeiSansTCBeta';
+  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+}
+
 :host {
   display: block;
   margin: 0;
@@ -33,11 +38,11 @@
   border-radius: 5% 0 0 5%;
 
   h2 {
-    font-weight: bold;
+    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
   }
 
   h5 {
-    font-weight: bold;
+    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
   }
 
   .input-info {

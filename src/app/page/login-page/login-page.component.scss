@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'TaipeiSansTCBeta';
+  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+}
+
 :host{
   display: block;
   margin: 0;
@@ -22,23 +27,29 @@
   box-shadow: 0 0 15px gray;
   border-radius: 0 5% 5% 0 ;
   
+  h1 {
+    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+  }
 
+  h3 {
+    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+  }
 
-  .input{
+  .input {
     margin-top: 2rem;
     margin-bottom: 1em;
   }
 
-  .email-area{
+  .email-area {
     height: 4rem
   }
 
-  .pwd-area{
+  .pwd-area {
     margin-top: 1rem;
     height: 2rem;
   }
 
-  .input-email{
+  .input-email {
     width: 100%;
     max-width: 100%;
     background-color: #f0f0f0;
@@ -58,8 +69,8 @@
   }
 
 
-  .login-btn{
-    margin-top: 20%;
+  .login-btn {
+    margin-top: 30%;
     margin-left: 5%;
   }
 
@@ -71,25 +82,25 @@
     margin-bottom: 10%;
   }
 
-  .forgot-password{
+  .forgot-password {
     margin-left: 80%;
     cursor: pointer;
   }
 
-  .create-account{
+  .create-account {
     display: flex;
     margin-top: 5%;
     margin-left: 5%;
     gap: 20px;
   }
 
-  .create-account-link{
+  .create-account-link {
     color: rgb(52, 153, 255);
     cursor: pointer;
   }
 }
 
-.login-btn{
+.login-btn {
   width: 10rem;
   height: 3rem;
   background-color: #005593;
