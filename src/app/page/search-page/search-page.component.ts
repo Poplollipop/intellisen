@@ -234,6 +234,11 @@ export class SearchPageComponent {
       }
     });
   }
+
+  goAccountCenter() {
+    this.router.navigateByUrl('/account-center')
+  }
+  
 }
 
 

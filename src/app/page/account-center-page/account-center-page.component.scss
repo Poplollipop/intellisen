@@ -86,17 +86,19 @@
 .info-group {
   display: flex;
   margin-top: 2rem;
+  align-items: center;
 
   label {
     font-size: 1rem;
     font-weight: bold;
-    color: #333;
+    color: #132355;
     font-size: 20px;
   }
   
   span {
     font-size: 1rem;
     color: #666;
+    font-weight: bold;
   }
 }
 

@@ -77,6 +77,10 @@ export class ToolbarComponent {
   goRegister() {
     this.router.navigateByUrl('/register')
   }
+
+  goAccountCenter() {
+    this.router.navigateByUrl('/account-center')
+  }
 }
 
 

@@ -27,7 +27,7 @@
       <div class="login">
         @if (session.getIsLogin()) {
           <span (click)="goLogout()" style="cursor: pointer; margin-left: 1rem;">登出</span>
-          <span (click)="goLogout()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
+          <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
         } @else {
           <span (click)="goLogin()" style="cursor: pointer; margin-left: 1rem;">登入</span>
           <span style="margin-left: 1rem;">|</span>
