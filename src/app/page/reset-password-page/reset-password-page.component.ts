@@ -57,10 +57,19 @@ export class ResetPasswordPageComponent {
 
   // 重置密碼
   resetPassword() {
-    this.resetPasswordData = {
-      email: this.email,
-      password: this.newPassword
-    }
+    if (!this.email || !this.rawPwd || !this.confirmPwd) {
+          Swal.fire({
+            text: '帳號或密碼不可為空!',
+            icon: 'error',
+            confirmButtonText: '確定'
+          });
+          return
+        }
+        
+        this.resetPasswordData = {
+          email: this.email,
+          password: this.newPassword
+        }
 
     console.log(this.resetPasswordData);
 
