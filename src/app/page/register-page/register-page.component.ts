@@ -69,7 +69,7 @@ export class RegisterPageComponent {
   }
 
   goRegister() {
-    if (!this.email || !this.password) {
+    if (!this.email || !this.rawPwd || !this.confirmPwd) {
       Swal.fire({
         text: '帳號或密碼不可為空!',
         icon: 'error',
