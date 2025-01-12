@@ -281,6 +281,7 @@ export class SearchResultPageComponent {
   }
 
   goCombinedId(): string{
+    this.combinedId = '';
     // 將三個輸入框的值合併成一個新值
     if(this.year){
       this.combinedId = this.combinedId + `${this.year}年度`
@@ -315,6 +316,8 @@ export class SearchResultPageComponent {
     }
 
     const savedConditions = tidyData;
+    console.log(savedConditions);
+
     this.searchApi(savedConditions);
   }
 
@@ -331,7 +334,7 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
-  // 
+  //
   updateVisibleCases(): void {
     const start = this.first;   // 更新起始的那一筆的 index
     const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
