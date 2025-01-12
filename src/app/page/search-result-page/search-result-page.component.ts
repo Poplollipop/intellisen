@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollTop } from 'primeng/scrolltop';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
+import { log } from 'console';
 
 @Component({
   selector: 'app-search-result-page',
@@ -72,6 +73,7 @@ export class SearchResultPageComponent {
   zhi: string = '';
   hao: string = '';
   combinedId: string = '';
+  id: string = '';
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -173,18 +175,34 @@ export class SearchResultPageComponent {
       ? savedConditions.caseType.split(',').map((item: string) => item.trim())
       : [];
 
-    this.combinedId = savedConditions.verdictId || '';
-    const match = this.combinedId.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
-    if (match) {
+    this.id = savedConditions.verdictId || '';
+    console.log(typeof this.id);
+
+    const match = this.id.match(/^(\d+)?年度$/);
+    console.log(match); // 應該匹配 "109" 並輸出
+    if(match) {
       this.year = match[1] || '';
-      this.zhi = match[2] || '';
-      this.hao = match[3] || '';
-    }else {
-      // 如果沒有匹配到任何內容
-      this.year = '';
-      this.zhi = '';
-      this.hao = '';
+      console.log(this.year);
     }
+
+    
+
+    
+    // const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
+    // console.log(match);
+    
+    // if (match) {
+    //   this.year = match[1] || '';
+    //   this.zhi = match[2] || '';
+    //   this.hao = match[3] || '';
+    // }else {
+    //   // 如果沒有匹配到任何內容
+    //   this.year = '';
+    //   this.zhi = '';
+    //   this.hao = '';
+    // }
+    
+    // console.log(this.year);
 
     this.startDate = savedConditions.verdictStartDate || '';
     this.endDate = savedConditions.verdictEndDate || '';
