@@ -34,8 +34,8 @@ mat-toolbar {
 
 /* 標題 */
 .left-section .title {
-  font-size: 36px;      /* 調整標題大小 */
-  margin-left: 2rem;
+  font-size: 38px;      /* 調整標題大小 */
+  margin-left: 1.5rem;
   font-weight: bold;
   text-align: left;
   font-family: 'Noto' , 'sans-serif' ;
@@ -54,7 +54,7 @@ mat-toolbar {
 .right-section {
   display: flex;
   text-align: right;          /* 文字靠右對齊 */
-  font-size: 18px;            /* 調整登入與註冊的字體大小 */
+  font-size: 20px;            /* 調整登入與註冊的字體大小 */
   font-family: 'TaipeiSansTCBeta' , 'sans-serif';
   font-weight: bold;
 }
