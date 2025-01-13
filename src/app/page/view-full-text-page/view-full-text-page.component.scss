@@ -361,61 +361,7 @@ span[style*="box-shadow"]:hover {
   print-color-adjust: $value;
   -webkit-print-color-adjust: $value;
 }
-// 列印分頁 css
-// @media print {
-//   html, body {
-//     margin: 0 !important;
-//     padding: 0 !important;
-//     width: 100% !important;
-//     height: 100% !important; /* 確保內容占滿頁面高度 */
-//     display: flex;
-//     justify-content: center; /* 水平居中 */
-//     align-items: flex-start; /* 垂直靠上顯示 */
-//     background-color: white;
-//   }
 
-//   body {
-//     background-color: white;
-//   }
-
-//   .content-wrapper {
-//     width: 100% !important;
-//     margin: 0 !important;
-//     padding: 0 !important;
-//     display: block; /* 強制垂直排列，避免左右空白 */
-//   }
-
-//   .main-content {
-//     margin: 40px auto !important; /* 上下留出適當空白，防止文字過於貼邊 */
-//     padding: 20px 40px !important; /* 內間距適中，提升可讀性 */
-//     width: calc(100% - 80px); /* 動態計算內容寬度，適配不同頁面 */
-//     max-width: 800px; /* 設定最大寬度，適合 A4 */
-//     border: none;
-//     box-shadow: none;
-//     text-align: left; /* 文字向左對齊 */
-//     line-height: 1.6;
-//   }
-
-//   pre {
-//     font-size: 14px;
-//     line-height: 1.6;
-//     word-wrap: break-word;
-//     white-space: pre-wrap; /* 保留換行符號並避免文字超出容器 */
-//     margin: 0; /* 避免多餘的外邊距 */
-//   }
-
-//   .back-button,
-//   .document__toolbar,
-//   .print-options {
-//     display: none !important;
-//   }
-
-//   .no-highlight {
-//     span[style*="background-color"] {
-//       background-color: inherit !important;
-//     }
-//   }
-// }
 
 
 

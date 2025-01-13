@@ -627,6 +627,7 @@ export class ViewFullTextPageComponent {
             }
             pre {
               margin: 0;
+              font-size: 22px;
             }
             .back-button,
             .document__toolbar,
@@ -657,7 +658,7 @@ export class ViewFullTextPageComponent {
         if (!printWindow.closed) {
           printWindow.close();
         }
-      }, 1000); // 延遲1秒後關閉視窗
+      }, 500); // 延遲0.5秒後關閉視窗
     }, 100); // 延遲100毫秒確保樣式更新完成
   }
 
