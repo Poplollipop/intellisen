@@ -1,34 +1,20 @@
 :host {
   display: block;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;  
-  background-color: #c3cfde;
+  margin: 0; 
+  padding: 0; 
+  width: 100%;  
+  box-sizing: border-box;
+  background-color: #ccd9ff40;
 }
 
-.content {
-  display: flex;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  justify-content: center;
-}
-
-// 右邊圖區域
-.pic {
-  width: 35%;
-  background:url('../../../../public/login.png') 0 0 no-repeat #005593;
-  background-size: 100% 100%;
-  box-shadow: 0 0 15px gray;
-}
 
 // 左邊文字區域
 .account-info {
+  margin: 0 auto;
   width: 35%;
-  height: 40rem;
-  background-color: #f4f4f4;
+  height: 80vh;
   padding: 1rem;
   padding-top: 2rem;
-  box-shadow: 0 0 15px gray;
 }
 
 .header {
@@ -36,7 +22,7 @@
 }
 
 .nav {
-  width: 200px;
+  width: 300px;
   height: 5px;
   background-color: #005593;
   margin-bottom: 10%;
@@ -105,8 +91,9 @@
 // 下方按鈕
 .action-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 12rem;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 5rem;
 }
 
 .btn-update, .btn-delete {
@@ -116,7 +103,6 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 48%;
-  
 }
 
 .btn-update {

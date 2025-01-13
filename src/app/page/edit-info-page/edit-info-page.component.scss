@@ -1,9 +1,10 @@
 :host {
   display: block;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;  
-  background-color: #c3cfde;
+  margin: 0; 
+  padding: 0; 
+  width: 100%;  
+  box-sizing: border-box;
+  background-color: #ccd9ff40;
 }
 
 .content {
@@ -13,13 +14,6 @@
   justify-content: center;
 }
 
-// 右邊圖區域
-.pic {
-  width: 35%;
-  background:url('../../../../public/login.png') 0 0 no-repeat #005593;
-  background-size: 100% 100%;
-  box-shadow: 0 0 15px gray;
-}
 
 // 左邊文字區域
 .text-area{

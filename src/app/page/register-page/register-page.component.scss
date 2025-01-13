@@ -3,42 +3,31 @@
   src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
 }
 
-:host {
+:host{
   display: block;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;  // 保證佔滿整個視窗高度
-  background-color: #f9f9f9;
-}
-
-.content {
-  display: flex;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  max-width: 100%;
-  justify-content: center;
-  color: white;
-}
-
-.nav {
-  width: 200px;
-  height: 5px;
-  background-color: #FFE8A3;
-  margin-bottom: 10%;
+  margin: 0; 
+  padding: 0; 
+  width: 100%; 
+  box-sizing: border-box;
+  background-color: #ccd9ff40;
 }
 
 
 .register-info {
+  margin: 0 auto;
   width: 35%;
-  height: 40rem;
-  background-color: #005593;
-  padding: 1rem;
+  height: 80vh;
   padding-top: 2rem;
-  box-shadow: 0 0 15px gray;
-  border-radius: 5% 0 0 5%;
 
   h2 {
     font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+  }
+
+  .nav {
+    width: 200px;
+    height: 5px;
+    background-color: #005593;
+    margin-bottom: 2rem;
   }
 
   h5 {
@@ -46,7 +35,7 @@
   }
 
   .input-info {
-    margin-top: 10%;
+    margin-top: 1rem;
   }
 
   .email-area {
@@ -62,6 +51,10 @@
     max-width: 100%;
     background-color: white;
     border: 2px solid #005593;
+  }
+
+  .input-email:focus {
+    border: 2px solid #10b981;
   }
 
   ::ng-deep .p-password {
@@ -82,14 +75,14 @@
 .btn-area {
   display: flex;
   justify-content: end;
-  margin-top: 13rem;
+  margin-top: 7rem;
   gap: 10px;
 }
 
 .btn {
   width: 9rem;
   height: 3rem;
-  background-color: #ffffff;
+  background-color: #b9e1ff;
   border: none;
   color:rgb(0, 0, 0);
   border-radius: 20px;
@@ -98,13 +91,7 @@
 }
 
 .btn:hover {
-  background-color: #e7e7e7;
+  background-color: #8ebbff;
 }
 
-.pic {
-  width: 35%;
-  background:url('../../../../public/login.png') 0 0 no-repeat #e7e7e7;
-  background-size: 100% 100%;
-  box-shadow: 0 0 15px gray;
-  border-radius: 0 5% 5% 0;
-}
+
