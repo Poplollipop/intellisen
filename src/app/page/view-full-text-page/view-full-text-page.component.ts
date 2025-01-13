@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { color } from 'highcharts';
 import { log } from 'console';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-
+import { ScrollTop } from 'primeng/scrolltop';
 
 
 @Component({
@@ -22,6 +22,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   imports: [MatIconModule,
     MatTooltipModule,
     CommonModule,
+    ScrollTop,
   ],
   templateUrl: './view-full-text-page.component.html',
   styleUrl: './view-full-text-page.component.scss'

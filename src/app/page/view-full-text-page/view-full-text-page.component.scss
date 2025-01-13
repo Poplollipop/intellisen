@@ -24,7 +24,8 @@
 /* 主文內容區域 */
 .main-content {
   flex: 2; // 主文區域占兩倍大小
-  position: relative; /* 工具列與按鈕絕對定位所需 */
+  position: relative;
+  /* 工具列與按鈕絕對定位所需 */
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -33,8 +34,10 @@
 
   /* 新增讓文字置中 */
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
 }
 
 
@@ -50,13 +53,21 @@
 }
 
 /* 右側 aside 區塊 */
-.aside-container {
+.aside-wrapper {
   flex: 1;
+  display: flex;
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 5px; /* 子元素之間的間距 */
+  margin-left: 20px;
+}
+
+.aside-container {
+  // flex: 1;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  margin-left: 20px;
+  // margin-left: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
   h2 {
@@ -66,6 +77,22 @@
   li {
     font-size: 1.2rem;
   }
+}
+
+.circle-Selection-Function-Hint {
+  // flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  // margin-left: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  font-size: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 高亮文字的預設樣式 */
@@ -361,7 +388,3 @@ span[style*="box-shadow"]:hover {
   print-color-adjust: $value;
   -webkit-print-color-adjust: $value;
 }
-
-
-
-
