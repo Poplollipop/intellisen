@@ -3,10 +3,13 @@ import { Router } from '@angular/router';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { SidevavComponent } from '../../layouts/sidevav/sidevav.component';
 
 @Component({
   selector: 'app-account-center-page',
-  imports: [],
+  imports: [
+    SidevavComponent,
+  ],
   templateUrl: './account-center-page.component.html',
   styleUrl: './account-center-page.component.scss'
 })

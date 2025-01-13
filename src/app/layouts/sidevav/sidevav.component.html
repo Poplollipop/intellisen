@@ -1,0 +1,19 @@
+<div class="sidenav">
+    <div class="head-pic">頭貼</div>
+
+    @if (session.getIsLogin()) {
+        <a >首頁</a>
+        <a >個人資料</a>
+        <a >書籤</a>
+        <a >觀看紀錄</a>
+        <a >刪除帳號</a>
+    
+    } @else {
+        <a >首頁</a>
+        <a >個人資料</a>
+        <a >書籤</a>
+        <a >觀看紀錄</a>
+        <a >刪除帳號</a>
+    }
+</div>
+

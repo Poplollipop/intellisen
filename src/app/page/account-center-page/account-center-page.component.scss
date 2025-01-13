@@ -12,15 +12,21 @@
   background-color: #ccd9ff40;
 }
 
+.sidenav {
+  height: 80vh; 
+  width: 20%;
+  background-color: #3a3a3a; 
+}
+
 .container {
   display: flex;
   min-height: 80vh;
-  justify-content: center;
-  flex-direction: column; /* 讓內容垂直排列 */
+  margin: 0;
+  padding: 0;
 }
 
 .account-info {
-  margin: 0 auto;
+  margin-left: 5rem;
   width: 50%;
   min-height: 75vh;
   padding: 1rem;
