@@ -74,8 +74,8 @@
           <mat-icon>picture_as_pdf</mat-icon>
         </button> -->
         <!-- 列印按鈕 -->
-        <div class="toolbar-button print-button">
-          <mat-icon (click)="togglePrintOptions()" matTooltip="列印" matTooltipClass="custom-tooltip">print</mat-icon>
+        <div class="toolbar-button print-button" (click)="togglePrintOptions()">
+          <mat-icon  matTooltip="列印" matTooltipClass="custom-tooltip">print</mat-icon>
           <!-- 選項框 -->
           <div class="print-options" *ngIf="showPrintOptions">
             <div class="arrow-box">

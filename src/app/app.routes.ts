@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'search', component: SearchPageComponent},         // 搜尋頁
   { path: 'search-result', component: SearchResultPageComponent }, // 搜尋結果頁面
   { path: 'full-text', component: ViewFullTextPageComponent }, // 查看全文頁面
-  { path: 'full-text/:id', component: ViewFullTextPageComponent }, // 查看全文頁面
+  { path: 'full-text/:groupId', component: ViewFullTextPageComponent }, // 查看全文頁面
   { path: 'edit-info', component: EditInfoPageComponent }, // 編輯個人資料頁面
   { path: 'forgot-password', component: ForgotPasswordPageComponent }, // 編輯個人資料頁面
   { path: 'reset-password', component: ResetPasswordPageComponent }, // 重置密碼頁面

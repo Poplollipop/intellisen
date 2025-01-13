@@ -313,7 +313,7 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
-  // 
+  //
   updateVisibleCases(): void {
     const start = this.first;   // 更新起始的那一筆的 index
     const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
@@ -321,8 +321,8 @@ export class SearchResultPageComponent {
   }
 
   // 觀看全文
-  checkConternt(id : string){
+  checkConternt(groupId:string ,id : string, court:string){
     // 將網址與案件 id 綁在一起
-    this.router.navigateByUrl('full-text/' + id);
+    this.router.navigateByUrl('full-text/'+groupId+'&id='+ id+'&court='+court);
   }
 }

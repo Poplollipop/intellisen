@@ -47,7 +47,10 @@ export class ViewFullTextPageComponent {
 
   suptext!: any;
   url!: any;
+  fullTextParam !:any;
+  judgmentJgroupId!: any;
   judgmentJid!: any;
+  judgmentJcourt!: any;
   charge!: any;
   court!: any;
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
@@ -59,10 +62,28 @@ export class ViewFullTextPageComponent {
   ngOnInit(): void {
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
-      this.judgmentJid = param.get('id');
-      console.log(this.judgmentJid);
-      this.getJudgmentApi(this.judgmentJid);
-    })
+      const fullRouteParam = param.get('groupId'); // 獲取完整的路由字串
+      // console.log(fullRouteParam);
+
+      if (fullRouteParam) {
+        // 拆解參數
+        const [groupId, idAndCourt] = fullRouteParam.split('&id=');
+        const [id, courtParam] = idAndCourt.split('&court=');
+        const court = courtParam;
+
+        // 將拆解出的值賦值到全域變數
+        this.judgmentJgroupId = groupId;
+        this.judgmentJid = id;
+        this.judgmentJcourt = court;
+
+        // console.log('Group ID:', this.judgmentJgroupId);
+        // console.log('Judgment ID:', this.judgmentJid);
+        // console.log('Court:', this.judgmentJcourt);
+
+        // 呼叫 API
+        this.getJudgmentApi(this.judgmentJgroupId, this.judgmentJid, this.judgmentJcourt);
+      }
+    });
 
     if (isPlatformBrowser(this.platformId)) {
       // 僅在瀏覽器中執行這些程式碼，避免伺服器渲染時出錯
@@ -86,8 +107,8 @@ export class ViewFullTextPageComponent {
   }
   // 確保右上工具按鈕在頁面載入時不觸發動畫
   ngAfterViewInit() {
-    const toolbarButtons = document.querySelectorAll('.toolbar-button');
-    toolbarButtons.forEach((button) => (button as HTMLElement).blur()); // 確保按鈕失去焦點
+    // const toolbarButtons = document.querySelectorAll('.toolbar-button');
+    // toolbarButtons.forEach((button) => (button as HTMLElement).blur()); // 確保按鈕失去焦點
   }
 
   //=========================================
@@ -160,15 +181,15 @@ export class ViewFullTextPageComponent {
   //==========================================
   // api區
   // 搜尋給於id，呼叫後端接收判決書資料
-  getJudgmentApi(judgmentJid: string) {
+  getJudgmentApi(judgmentJgroupId: string, judgmentJid: string, judgmentJcourt: string) {
 
     this.ngxService.start(); // 啟動 loading 動畫
-
+    // http://localhost:8080/case/judgmentid?groupId=107年度原訴字第72號&id=107年度原訴字第72號&court=TCD
     this.http
-      .getApi('http://localhost:8080/case/judgmentid?id=' + judgmentJid)
+      .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid +'&court='+ judgmentJcourt)
       .subscribe(
         (res: any) => {
-          console.log(res);
+          // console.log(res);
           this.suptext = res.caseList[0].content2
             ? res.caseList[0].content + '\n' + res.caseList[0].content2
             : res.caseList[0].content;
@@ -177,7 +198,7 @@ export class ViewFullTextPageComponent {
           this.court = this.sessionServiceService.turnCodeToName(res.caseList[0].court);
           this.charge = res.caseList[0].charge;
 
-        this.ngxService.stop(); // 關閉 loading 動畫
+          this.ngxService.stop(); // 關閉 loading 動畫
         });
   }
 
@@ -542,7 +563,8 @@ export class ViewFullTextPageComponent {
     }
   }
 
-  // 點擊列印選項
+
+  // 點擊列印選項(呼叫新分頁)
   onPrint(includeHighlights: boolean): void {
     console.log('列印功能，附帶螢光:', includeHighlights);
     this.showPrintOptions = false;
@@ -550,113 +572,94 @@ export class ViewFullTextPageComponent {
     // 移除全局事件監聽器
     document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
 
-    // 獲取主文區域內容
-    const mainContent = document.querySelector('.main-content') as HTMLElement;
+
+    // 複製主文內容
+    const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
     if (!mainContent) {
       alert('無法找到主文內容進行列印！');
       return;
     }
 
-    // 暫存原始樣式
-    const originalDisplay = document.body.innerHTML;
 
-    // 準備列印內容
-    const printContent = mainContent.cloneNode(true) as HTMLElement;
-
+    // 根據是否附帶螢光筆切換樣式
     if (!includeHighlights) {
-      printContent.classList.add('no-highlight'); // 添加無螢光樣式
+      // 清除所有帶有背景色的元素樣式
+      const spansWithBackground = mainContent.querySelectorAll('*[style*="background-color"]');
+      spansWithBackground.forEach((el) => {
+        el.removeAttribute('style');
+      });
     }
 
-    // 設置列印內容
-    document.body.innerHTML = printContent.outerHTML;
+    // 建立列印窗口
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('無法開啟列印窗口！');
+      return;
+    }
 
-    // 觸發列印
-    window.print();
+    printWindow.document.open();
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>列印</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 0;
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+              min-height: 100vh;
+              background-color: white;
+            }
+            .main-content {
+              max-width: 1000px;
+              width: 90%;
+              margin: 20px auto;
+              padding: 20px;
+              text-align: left;
+              line-height: 1.8;
+              font-size: 14px;
+              word-wrap: break-word;
+              white-space: pre-wrap; /* 保留換行符號 */
+              box-sizing: border-box;
+            }
+            pre {
+              margin: 0;
+            }
+            .back-button,
+            .document__toolbar,
+            .print-options {
+              display: none !important;
+            }
+            .no-highlight span[style*="background-color"] {
+              background-color: inherit !important;
+            }
+          </style>
+        </head>
+        <body>${mainContent.outerHTML}</body>
+      </html>
+    `);
 
-    // 恢復頁面內容
-    document.body.innerHTML = originalDisplay;
 
-    // 重新綁定 Angular
-    window.location.reload();
+    printWindow.document.close();
+
+    // 確保樣式更新後再進行列印
+    setTimeout(() => {
+      printWindow.print();
+
+      // 在列印後自動關閉窗口
+      printWindow.onafterprint = () => printWindow.close();
+
+      // 如果未自動關閉，則手動關閉
+      setTimeout(() => {
+        if (!printWindow.closed) {
+          printWindow.close();
+        }
+      }, 1000); // 延遲1秒後關閉視窗
+    }, 100); // 延遲100毫秒確保樣式更新完成
   }
-
-  // 點擊列印選項(呼叫新分頁)
-  // onPrint(includeHighlights: boolean): void {
-  //   console.log('列印功能，附帶螢光:', includeHighlights);
-  //   this.showPrintOptions = false;
-
-  //   // 移除全局事件監聽器
-  //   document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
-
-  //   // 設置主文區域內的列印內容
-  //   const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
-  //   if (!mainContent) {
-  //     alert('無法找到主文內容進行列印！');
-  //     return;
-  //   }
-
-  //   // 根據是否附帶螢光切換樣式
-  //   if (!includeHighlights) {
-  //     // 如果不附帶螢光筆，添加 no-highlight 類別並強制去除背景顏色
-  //     mainContent.classList.add('no-highlight');
-  //   }
-
-  //   // 建立列印窗口
-  //   const printWindow = window.open('', '_blank');
-  //   if (!printWindow) {
-  //     alert('無法開啟列印窗口！');
-  //     return;
-  //   }
-
-  //   printWindow.document.open();
-  //   printWindow.document.write(`
-  //     <html>
-  //       <head>
-  //         <title>列印</title>
-  //         <style>
-  //           body {
-  //             font-family: Arial, sans-serif;
-  //             padding: 20px;
-  //           }
-  //           .no-highlight span[style*="background-color"] {
-  //             background-color: inherit !important; /* 強制去除背景色 */
-  //           }
-  //           .no-highlight *[style*="background-color"] {
-  //             background-color: inherit !important; /* 強制清除所有背景色 */
-  //           }
-  //           pre {
-  //             font-size: 14px;
-  //             line-height: 1.6;
-  //           }
-  //           .back-button, .document__toolbar {
-  //             display: none !important;
-  //           }
-  //         </style>
-  //       </head>
-  //       <body>${mainContent.innerHTML}</body>
-  //     </html>
-  //   `);
-  //   printWindow.document.close();
-
-  //   // 確保樣式更新後再進行列印
-  //   setTimeout(() => {
-  //     // 觸發列印
-  //     printWindow.print();
-
-  //     // 在列印後自動關閉窗口
-  //     printWindow.onafterprint = () => printWindow.close();
-
-  //     // 如果未自動關閉，則手動關閉
-  //     setTimeout(() => {
-  //       if (!printWindow.closed) {
-  //         printWindow.close();
-  //       }
-  //     }, 2000);  // 延遲2秒後關閉視窗
-  //   }, 100); // 延遲100毫秒確保樣式更新完成
-  // }
-
-
-
 
   // 點擊按鈕外部關閉選項框
   private closePrintOptionsOnOutsideClick(event: MouseEvent): void {
