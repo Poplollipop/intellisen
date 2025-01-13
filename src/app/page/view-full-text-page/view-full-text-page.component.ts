@@ -580,6 +580,82 @@ export class ViewFullTextPageComponent {
     window.location.reload();
   }
 
+  // 點擊列印選項(呼叫新分頁)
+  // onPrint(includeHighlights: boolean): void {
+  //   console.log('列印功能，附帶螢光:', includeHighlights);
+  //   this.showPrintOptions = false;
+
+  //   // 移除全局事件監聽器
+  //   document.removeEventListener('click', this.closePrintOptionsOnOutsideClick.bind(this));
+
+  //   // 設置主文區域內的列印內容
+  //   const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
+  //   if (!mainContent) {
+  //     alert('無法找到主文內容進行列印！');
+  //     return;
+  //   }
+
+  //   // 根據是否附帶螢光切換樣式
+  //   if (!includeHighlights) {
+  //     // 如果不附帶螢光筆，添加 no-highlight 類別並強制去除背景顏色
+  //     mainContent.classList.add('no-highlight');
+  //   }
+
+  //   // 建立列印窗口
+  //   const printWindow = window.open('', '_blank');
+  //   if (!printWindow) {
+  //     alert('無法開啟列印窗口！');
+  //     return;
+  //   }
+
+  //   printWindow.document.open();
+  //   printWindow.document.write(`
+  //     <html>
+  //       <head>
+  //         <title>列印</title>
+  //         <style>
+  //           body {
+  //             font-family: Arial, sans-serif;
+  //             padding: 20px;
+  //           }
+  //           .no-highlight span[style*="background-color"] {
+  //             background-color: inherit !important; /* 強制去除背景色 */
+  //           }
+  //           .no-highlight *[style*="background-color"] {
+  //             background-color: inherit !important; /* 強制清除所有背景色 */
+  //           }
+  //           pre {
+  //             font-size: 14px;
+  //             line-height: 1.6;
+  //           }
+  //           .back-button, .document__toolbar {
+  //             display: none !important;
+  //           }
+  //         </style>
+  //       </head>
+  //       <body>${mainContent.innerHTML}</body>
+  //     </html>
+  //   `);
+  //   printWindow.document.close();
+
+  //   // 確保樣式更新後再進行列印
+  //   setTimeout(() => {
+  //     // 觸發列印
+  //     printWindow.print();
+
+  //     // 在列印後自動關閉窗口
+  //     printWindow.onafterprint = () => printWindow.close();
+
+  //     // 如果未自動關閉，則手動關閉
+  //     setTimeout(() => {
+  //       if (!printWindow.closed) {
+  //         printWindow.close();
+  //       }
+  //     }, 2000);  // 延遲2秒後關閉視窗
+  //   }, 100); // 延遲100毫秒確保樣式更新完成
+  // }
+
+
 
 
   // 點擊按鈕外部關閉選項框
