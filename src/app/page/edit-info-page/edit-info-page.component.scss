@@ -1,38 +1,36 @@
+@font-face {
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
+}
+
 :host {
   display: block;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;  
-  background-color: #c3cfde;
+  margin: 0; 
+  padding: 0; 
+  width: 100%;  
+  box-sizing: border-box;
+  background-color: #ccd9ff40;
 }
 
-.content {
+.container {
   display: flex;
-  padding-top: 2%;
-  padding-bottom: 2%;
+  min-height: 80vh;
   justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
 }
 
-// 右邊圖區域
-.pic {
-  width: 35%;
-  background:url('../../../../public/login.png') 0 0 no-repeat #005593;
-  background-size: 100% 100%;
-  box-shadow: 0 0 15px gray;
-}
 
 // 左邊文字區域
-.text-area{
-  width: 35%;
-  height: 35rem;
+.text-area {
+  margin: 0 auto;
+  width: 50%;
   background-color: #ffffff;
-  padding: 1rem;
-  padding-top: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 0 15px gray;
 }
 
 h2 {
-  font-size: 2rem;
+  font-family: 'GenKiMin' , 'sans-serif';
   color: #333;
   font-weight: bold;
 }
@@ -42,7 +40,7 @@ h2 {
   width: 200px;
   height: 5px;
   background-color: #005593;
-  margin-bottom: 10%;
+  margin-bottom: 2rem;
 }
 
 .update-form {
@@ -66,7 +64,7 @@ h2 {
 }
 
 label {
-  font-size: 1rem;
+  font-size: 20px;
   color: #333;
 }
 

@@ -16,10 +16,7 @@ html {
   ));
 }/* You can add global styles to this file, and also import other style files */
 
-html, body {
-  height: 100%;
-}
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 
 /* src/styles.css */
 
@@ -80,6 +77,11 @@ html, body {
   background-color: white !important; /* 替換成你想要的顏色 */
 }
 
+// 搜尋結果頁的tab
+.mat-mdc-tab .mdc-tab__text-label {
+  font-size: 18px;
+  font-weight: 600;
+}
 
 :root{
   --p-checkbox-background:#ffffff !important;   // 多選勾選框的顏色

@@ -22,6 +22,8 @@ import { ScrollTop } from 'primeng/scrolltop';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-search-result-page',
   imports: [
@@ -56,6 +58,7 @@ export class SearchResultPageComponent {
   errorMessage: string = ''; // 法條錯誤提示訊息
   lawList!: string[]; // 整理後的法院字串
   isExpanded: boolean = false; // 進階條件是否展開的變數
+  isAscending: boolean = false; // 排序方向
 
   // 下面是輸入框的預設值
   keywords: string = '';
@@ -72,6 +75,7 @@ export class SearchResultPageComponent {
   zhi: string = '';
   hao: string = '';
   combinedId: string = '';
+  id: string = '';
 
   constructor(
     private searchSessionService: SearchSessionService,
@@ -173,18 +177,34 @@ export class SearchResultPageComponent {
       ? savedConditions.caseType.split(',').map((item: string) => item.trim())
       : [];
 
-    this.combinedId = savedConditions.verdictId || '';
-    const match = this.combinedId.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
-    if (match) {
+    this.id = savedConditions.verdictId || '';
+    console.log(typeof this.id);
+
+    const match = this.id.match(/^(\d+)?年度$/);
+    console.log(match); // 應該匹配 "109" 並輸出
+    if(match) {
       this.year = match[1] || '';
-      this.zhi = match[2] || '';
-      this.hao = match[3] || '';
-    }else {
-      // 如果沒有匹配到任何內容
-      this.year = '';
-      this.zhi = '';
-      this.hao = '';
+      console.log(this.year);
     }
+
+    
+
+    
+    // const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
+    // console.log(match);
+    
+    // if (match) {
+    //   this.year = match[1] || '';
+    //   this.zhi = match[2] || '';
+    //   this.hao = match[3] || '';
+    // }else {
+    //   // 如果沒有匹配到任何內容
+    //   this.year = '';
+    //   this.zhi = '';
+    //   this.hao = '';
+    // }
+    
+    // console.log(this.year);
 
     this.startDate = savedConditions.verdictStartDate || '';
     this.endDate = savedConditions.verdictEndDate || '';
@@ -208,6 +228,7 @@ export class SearchResultPageComponent {
         // 計算總頁數
         this.totalRecords = this.caseList.length; // 計算總資料筆數
         this.updateVisibleCases(); // 初始化第一頁數據
+        this.sortCases('verdictDate', false); // 預設排序
 
         this.ngxService.stop(); // 關閉 loading 動畫
       });
@@ -304,6 +325,27 @@ export class SearchResultPageComponent {
   }
 
 
+  // 全局排序函數
+  sortCases(sortField: string, ascending: boolean) {
+    const direction = ascending ? 1 : -1;
+    this.caseList.sort((a, b) => {
+      const valueA = new Date(a[sortField]).getTime();
+      const valueB = new Date(b[sortField]).getTime();
+      return (valueA - valueB) * direction;
+    });
+
+    // 更新當前頁面數據
+    this.updateVisibleCases();
+  }
+
+  // 排序切換處理
+  toggleSort() {
+    this.isAscending = !this.isAscending; // 切換排序方向
+    this.sortCases('verdictDate', this.isAscending); // 重新排序
+  }
+
+
+
   // 頁籤
   itemsPerPage: number = 10; // 每頁顯示的筆數
   totalRecords: number = 0; // 總筆數
@@ -316,7 +358,7 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
-  //
+  // 更新顯示資料
   updateVisibleCases(): void {
     const start = this.first;   // 更新起始的那一筆的 index
     const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
@@ -324,7 +366,7 @@ export class SearchResultPageComponent {
   }
 
   // 觀看全文
-  checkConternt(groupId:string ,id : string, court:string){
+  checkContent(groupId:string ,id : string, court:string){
     // 將網址與案件 id 綁在一起
     this.router.navigateByUrl('full-text/'+groupId+'&id='+ id+'&court='+court);
   }

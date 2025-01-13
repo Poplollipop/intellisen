@@ -12,20 +12,28 @@
 
 :host {
   display: block;
-  background-color: #ccd9ff40; //c4f8eb F0DBC6
-  background-size: cover;
-  margin: 0;
-  padding: 0;
+  background-color: #ccd9ff40; 
+  margin: 0; 
+  padding: 0; 
+  width: 100%;  
+  box-sizing: border-box;
+  position: relative; /* 設置父容器為定位基準 */
+}
+
+.container {
+  display: flex;
   min-height: 100vh;
-  // overflow: hidden;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
 }
 
 .login {
-  text-align: end;
-  margin-right: 1rem;
-  padding: 1rem;
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'TaipeiSansTCBeta', 'sans-serif';
+  position: absolute;
+  right: 20px;
+  top: 5px;
 
   .click {
     cursor: pointer;
@@ -45,22 +53,19 @@
 
 
 .search-area{
-  // height: 5%;
-  width: 80%;
+  width: 90%;
   background: #ffffffd1;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-  margin: 2rem auto;
-  margin-top: 7rem;
-  // margin-top: 8rem;
-  padding: 2rem;
-  // padding-left: 12rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 3rem;
   text-align: center;
 
   h1 {
     font-family: 'ZanMaru', 'sans-serif';
     margin-bottom: 1rem;
-    font-size: 3rem;
+    font-size: 56px;
   }
 
   .input-search-button{
@@ -82,8 +87,8 @@
     }
 
     button{
-      padding: 10px 20px;
-      font-size: 18px;
+      padding: 8px 20px;
+      font-size: 22px;
       font-weight: bold;
       background-color: #031546;
       border: none;
@@ -103,7 +108,7 @@
 
   /* 主按鈕樣式 */
   .btn {
-    font-size: 14px;
+    font-size: 20px;
     padding: 8px 16px;
     margin-left: 5%;
     border: none;
@@ -111,7 +116,7 @@
 
     span{
       color: #000000;
-      font-size: 1.2rem;
+      font-size: 26px;
       font-weight: bold;
     }
   }
@@ -148,6 +153,7 @@
       background-color: transparent;
       border: none;
       color: #0a0a0a;
+      font-size: 20px;
     }
 
 

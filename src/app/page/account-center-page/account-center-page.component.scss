@@ -1,42 +1,46 @@
+@font-face {
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
+}
+
 :host {
   display: block;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;  
-  background-color: #c3cfde;
+  margin: 0; 
+  padding: 0; 
+  width: 100%;  
+  box-sizing: border-box;
+  background-color: #ccd9ff40;
 }
 
-.content {
+.container {
   display: flex;
-  padding-top: 2%;
-  padding-bottom: 2%;
+  min-height: 80vh;
   justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
 }
 
-// 右邊圖區域
-.pic {
-  width: 35%;
-  background:url('../../../../public/login.png') 0 0 no-repeat #005593;
-  background-size: 100% 100%;
-  box-shadow: 0 0 15px gray;
-}
-
-// 左邊文字區域
 .account-info {
-  width: 35%;
-  height: 40rem;
-  background-color: #f4f4f4;
+  margin: 0 auto;
+  width: 50%;
+  min-height: 75vh;
   padding: 1rem;
-  padding-top: 2rem;
+  background-color: #ffffff;
   box-shadow: 0 0 15px gray;
+  position: relative; /* 設置父容器為定位基準 */
 }
 
 .header {
   margin-bottom: 20px;
+  
+  h1 {
+    font-weight: bold; 
+    font-family: 'GenKiMin','sans-serif';
+  }
+
 }
 
 .nav {
-  width: 200px;
+  width: 300px;
   height: 5px;
   background-color: #005593;
   margin-bottom: 10%;
@@ -53,50 +57,23 @@
 
 .email-text label {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 24px;
 }
-
-// .btn-send {
-//   display: flex;
-//   padding: 8px 16px;
-//   font-size: 1rem;
-//   background-color: #4CAF50;
-//   color: white;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   transition: background-color 0.3s ease;
-// }
-
-// .btn-send:hover {
-//   background-color: #45a049;
-// }
-
-// .btn-send:active {
-//   background-color: #388e3c;
-// }
-
-// .btn-send:disabled {
-//   background-color: #ccc;
-//   cursor: not-allowed;
-// }
 
 
 // 個人資料區域
 .info-group {
-  display: flex;
   margin-top: 2rem;
-  align-items: center;
 
   label {
     font-size: 1rem;
     font-weight: bold;
     color: #132355;
-    font-size: 20px;
+    font-size: 24px;
   }
   
   span {
-    font-size: 1rem;
+    font-size: 20px;
     color: #666;
     font-weight: bold;
   }
@@ -105,18 +82,20 @@
 // 下方按鈕
 .action-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 12rem;
+  position: absolute;
+  gap: 10px;
+  bottom: 10px;
+  left: 20px;  
 }
 
 .btn-update, .btn-delete {
   padding: 8px 16px;
   font-size: 1rem;
   border-radius: 5px;
+  width: 10rem;
+  height: 2.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 48%;
-  
 }
 
 .btn-update {
