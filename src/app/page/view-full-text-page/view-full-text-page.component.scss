@@ -3,35 +3,48 @@
   src: url('../../../../public/NotoSansTC-Regular.ttf');
 }
 
-:host{
+
+
+:host {
   display: block;
   background-color: #e5e5e5;
 }
 
-/* 主容器排版 */
+
+
+// 主容器排版
 .content-wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  position: relative; /* 為工具列與按鈕定位 */
+  position: relative; //為工具列與按鈕定位
 }
 
 /* 主文內容區域 */
 .main-content {
-  flex: 2; /* 主文區域占兩倍大小 */
-  position: relative; /* 工具列與按鈕絕對定位所需 */
+  flex: 2; // 主文區域占兩倍大小
+  position: relative;
+  /* 工具列與按鈕絕對定位所需 */
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* 新增讓文字置中 */
+  display: flex;
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
 }
+
 
 /* 左側瀏覽紀錄欄位 */
 .left-container {
-  flex: 1; /* 占 1 倍大小 */
-  margin-right: 20px; /* 與主文區域間距 */
+  flex: 1;
+  margin-right: 20px;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -40,14 +53,22 @@
 }
 
 /* 右側 aside 區塊 */
-.aside-container {
+.aside-wrapper {
   flex: 1;
+  display: flex;
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 5px; /* 子元素之間的間距 */
+  margin-left: 20px;
+}
+
+.aside-container {
+  // flex: 1;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  margin-left: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) ;
+  // margin-left: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
   h2 {
     font-size: 1.5rem;
@@ -58,10 +79,26 @@
   }
 }
 
+.circle-Selection-Function-Hint {
+  // flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  // margin-left: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  font-size: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* 高亮文字的預設樣式 */
 #toptext {
   font-family: 'Noto1', 'monospace';
-  font-size: 23px;
+  font-size: 25px;
   background: #ffffff;
   padding: 20px;
   border: none;
@@ -151,6 +188,7 @@
   align-items: center;
   gap: 12px;
 }
+
 // 工具內按鈕格式
 .toolbar-content {
   display: flex;
@@ -181,8 +219,10 @@ span[style*="box-shadow"]:hover {
 //回上頁按鈕
 .back-button {
   position: fixed;
-  bottom: 20px; /* 靠近底部 */
-  left: 20px; /* 靠近左側 */
+  bottom: 20px;
+  /* 靠近底部 */
+  left: 20px;
+  /* 靠近左側 */
   padding: 10px 20px;
   font-size: 18px;
   font-weight: bold;
@@ -204,8 +244,10 @@ span[style*="box-shadow"]:hover {
 // 右上工具列
 .document__toolbar {
   position: absolute;
-  top: 20px; /* 顯示在主文區塊的右上角 */
-  right:20px; /* 留出空間給回上頁按鈕 */
+  top: 20px;
+  /* 顯示在主文區塊的右上角 */
+  right: 20px;
+  /* 留出空間給回上頁按鈕 */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -215,6 +257,7 @@ span[style*="box-shadow"]:hover {
   padding: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+
   .mat-icon {
     color: #000000 !important;
   }
@@ -250,6 +293,7 @@ span[style*="box-shadow"]:hover {
 }
 
 .toolbar-button {
+
   &:focus,
   &:active {
     outline: none;
@@ -258,8 +302,11 @@ span[style*="box-shadow"]:hover {
   }
 }
 
-.mat-button, .mat-icon-button {
-  &:focus, &:active {
+.mat-button,
+.mat-icon-button {
+
+  &:focus,
+  &:active {
     outline: none;
     box-shadow: none;
     transform: none;
@@ -273,7 +320,8 @@ span[style*="box-shadow"]:hover {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translate(-50%, 10px); /* 水平居中並向下偏移 */
+  transform: translate(-50%, 10px);
+  /* 水平居中並向下偏移 */
   background: #f8f9fa;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -281,9 +329,12 @@ span[style*="box-shadow"]:hover {
   z-index: 1000;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* 垂直排列按鈕和文字區塊 */
-  align-items: center; /* 居中對齊內容 */
-  gap: 10px; /* 按鈕和文字區塊之間的距離 */
+  flex-direction: column;
+  /* 垂直排列按鈕和文字區塊 */
+  align-items: center;
+  /* 居中對齊內容 */
+  gap: 10px;
+  /* 按鈕和文字區塊之間的距離 */
 }
 
 .print-options button {
@@ -312,8 +363,10 @@ span[style*="box-shadow"]:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* 按鈕間距 */
-  white-space: nowrap; /* 禁止文字換行 */
+  gap: 10px;
+  /* 按鈕間距 */
+  white-space: nowrap;
+  /* 禁止文字換行 */
 }
 
 .print-options p {
@@ -324,35 +377,14 @@ span[style*="box-shadow"]:hover {
   text-align: center;
   line-height: 1.5;
   font-weight: bold;
-  border: 1px solid #ddd; /* 與按鈕分隔 */
-  width: 100%; /* 確保文字與按鈕對齊 */
+  border: 1px solid #ddd;
+  /* 與按鈕分隔 */
+  width: 100%;
+  /* 確保文字與按鈕對齊 */
 }
 
 
 @mixin print-color-adjust($value) {
   print-color-adjust: $value;
   -webkit-print-color-adjust: $value;
-}
-
-@media print {
-
-  body {
-    background-color: white;
-  }
-
-  .toolbar,
-  .document__toolbar,
-  .print-options {
-    display: none !important;
-  }
-
-  #toptext {
-    font-size: 14px;
-  }
-
-  .no-highlight {
-    span[style*="background-color"] {
-      background-color: inherit !important;
-    }
-  }
 }
