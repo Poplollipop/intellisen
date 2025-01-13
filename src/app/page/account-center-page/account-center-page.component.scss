@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
+}
+
 :host {
   display: block;
   margin: 0; 
@@ -7,18 +12,31 @@
   background-color: #ccd9ff40;
 }
 
+.container {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
+}
 
-// 左邊文字區域
 .account-info {
   margin: 0 auto;
-  width: 35%;
-  height: 80vh;
+  width: 50%;
+  min-height: 75vh;
   padding: 1rem;
-  padding-top: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px gray;
+  position: relative; /* 設置父容器為定位基準 */
 }
 
 .header {
   margin-bottom: 20px;
+  
+  h1 {
+    font-weight: bold; 
+    font-family: 'GenKiMin','sans-serif';
+  }
+
 }
 
 .nav {
@@ -39,50 +57,23 @@
 
 .email-text label {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 24px;
 }
-
-// .btn-send {
-//   display: flex;
-//   padding: 8px 16px;
-//   font-size: 1rem;
-//   background-color: #4CAF50;
-//   color: white;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   transition: background-color 0.3s ease;
-// }
-
-// .btn-send:hover {
-//   background-color: #45a049;
-// }
-
-// .btn-send:active {
-//   background-color: #388e3c;
-// }
-
-// .btn-send:disabled {
-//   background-color: #ccc;
-//   cursor: not-allowed;
-// }
 
 
 // 個人資料區域
 .info-group {
-  display: flex;
   margin-top: 2rem;
-  align-items: center;
 
   label {
     font-size: 1rem;
     font-weight: bold;
     color: #132355;
-    font-size: 20px;
+    font-size: 24px;
   }
   
   span {
-    font-size: 1rem;
+    font-size: 20px;
     color: #666;
     font-weight: bold;
   }
@@ -91,18 +82,20 @@
 // 下方按鈕
 .action-buttons {
   display: flex;
-  justify-content: end;
+  position: absolute;
   gap: 10px;
-  margin-top: 5rem;
+  bottom: 10px;
+  left: 20px;  
 }
 
 .btn-update, .btn-delete {
   padding: 8px 16px;
   font-size: 1rem;
   border-radius: 5px;
+  width: 10rem;
+  height: 2.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 48%;
 }
 
 .btn-update {

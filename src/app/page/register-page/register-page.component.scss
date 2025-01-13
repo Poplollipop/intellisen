@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'TaipeiSansTCBeta';
-  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
 }
 
 :host{
@@ -12,26 +12,39 @@
   background-color: #ccd9ff40;
 }
 
+.container {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
+}
 
 .register-info {
-  margin: 0 auto;
-  width: 35%;
-  height: 80vh;
-  padding-top: 2rem;
+  margin: 5px auto;
+  width: 50%;
+  min-height: 75vh;
+  padding: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px gray;
+  position: relative; /* 設置父容器為定位基準 */
+
 
   h2 {
-    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+    font-family: 'GenKiMin' , 'sans-serif';
+    font-weight: bold;
   }
 
   .nav {
-    width: 200px;
+    width: 20rem;
     height: 5px;
     background-color: #005593;
     margin-bottom: 2rem;
   }
 
-  h5 {
-    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+  h3 {
+    font-size: 22px;
+    font-family: 'GenKiMin' , 'sans-serif';
+    margin-top: 2rem;
   }
 
   .input-info {
@@ -50,7 +63,7 @@
     width: 100%;
     max-width: 100%;
     background-color: white;
-    border: 2px solid #005593;
+    border: 2px solid #dedcdc;
   }
 
   .input-email:focus {
@@ -66,7 +79,7 @@
     width: 100% ;
     max-width: 100% ;
     background-color: white;
-    border: 2px solid #005593;
+    border: 2px solid #dedcdc;
   }
 
 }
@@ -74,18 +87,18 @@
 
 .btn-area {
   display: flex;
-  justify-content: end;
-  margin-top: 7rem;
   gap: 10px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
 }
 
 .btn {
   width: 9rem;
-  height: 3rem;
-  background-color: #b9e1ff;
+  height: 2.5rem;
+  background-color: #005593;
   border: none;
-  color:rgb(0, 0, 0);
-  border-radius: 20px;
+  color: #ffffff;
   font-size: 20px;
   font-weight: bold;
 }

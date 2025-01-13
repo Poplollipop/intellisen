@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'TaipeiSansTCBeta';
-  src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
 }
 
 
@@ -13,19 +13,30 @@
   background-color: #ccd9ff40;
 }
 
+.container {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  flex-direction: column; /* 讓內容垂直排列 */
+}
+
 .login-info {
   margin: 0 auto;
-  width: 35%;
-  height: 80vh;
+  width: 50%;
+  min-height: 75vh;
   padding: 1rem;
-  padding-top: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px gray;
+  position: relative; /* 設置父容器為定位基準 */
+
   
   h1 {
-    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+    font-size: 40px;
+    font-family: 'GenKiMin' , 'sans-serif';
   }
 
   h3 {
-    font-family: 'TaipeiSansTCBeta' , 'sans-serif';
+    font-family: 'GenKiMin' , 'sans-serif';
   }
 
   .input {
@@ -34,7 +45,7 @@
   }
 
   .email-area {
-    height: 4rem
+    height: 4rem;
   }
 
   .pwd-area {
@@ -46,6 +57,11 @@
     width: 100%;
     max-width: 100%;
     background-color: #ffffff;
+    border: 2px solid #dedcdc;
+  }
+
+  .input-email:focus {
+    border: 2px solid #10b981;
   }
 
 
@@ -59,6 +75,11 @@
     max-width: 100% !important;
     background-color: #ffffff; /* 背景色 */
     border-radius: 5px; /* 圓角 */
+    border: 2px solid #dedcdc;
+  }
+
+  ::ng-deep .p-password input.p-inputtext:focus {
+    border: 2px solid #10b981;
   }
 
 
@@ -67,7 +88,7 @@
     width: 200px;
     height: 5px;
     background-color: #005593;
-    margin-bottom: 10%;
+    margin-bottom: 2rem;
   }
 
   .forget-password {
@@ -75,12 +96,30 @@
     text-align: end;
     margin-top: 2rem;
     cursor: pointer;
+    font-size: 18px;
+  }
+
+  .login-btn {
+    width: 9rem;
+    height: 2.5rem;
+    background-color: #005593;
+    border: none;
+    border-radius: 5px;
+    color:white;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    bottom: 46px;
+    left: 20px;
   }
   
   .create-account {
     display: flex;
-    margin-top: 1rem;
     gap: 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 18px;
   }
   
   .create-account-link {
@@ -88,17 +127,7 @@
     cursor: pointer;
   }
   
-  .login-btn {
-    width: 10rem;
-    height: 3rem;
-    margin-top: 2rem;
-    background-color: #005593;
-    border: none;
-    color:white;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: bold;
-  }
+
 
   
 }
