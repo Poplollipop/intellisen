@@ -247,9 +247,9 @@ export class CaseDetailsComponent {
   // 開啟Dialog，並將「件數」作為參數傳遞
   openDialog(count: number): void {
     const dialogRef = this.dialog.open(CaseViewComponent, {
-      maxWidth: '80vw',
-      height: '60%',
-      width: '60%',
+      maxWidth: '100vw',
+      height: '90%',
+      width: '90%',
       data: { count: count } // 傳入該行的件數
     });
 
