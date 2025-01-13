@@ -110,16 +110,14 @@
   }
 
   .left-result {
-    background-color: #c4a0fd;
-    color: #000000;
-    opacity: 0.8;
+    background-color: #001b50;
+    color: #ffffff;
     padding-top: 0.5rem;
   }
 
   .right-result {
-    background-color: #9fd9a2b6;
-    color: #000000;
-    opacity: 0.8;
+    background-color: #001b50;
+    color: #ffffff;
     padding-top: 0.5rem;
   }
 
@@ -156,13 +154,13 @@
     margin-left: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
-    padding: 0.5rem;
+    padding: 2rem;
 
     button[mat-raised-button] {
-      font-size: 16px;
+      font-size: 20px;
       color: #fff;
       background-color: #05174e;
-      padding: 6px 10px;
+      padding: 8px 10px;
       border: none;
       border-radius: 6px;
       cursor: pointer;

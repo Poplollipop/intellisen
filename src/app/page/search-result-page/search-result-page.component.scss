@@ -13,6 +13,11 @@
   src: url('../../../../public/TaipeiSansTCBeta-Bold.ttf');
 }
 
+@font-face {
+  font-family: 'GenKiMin';
+  src: url('../../../../public/GenKiMin2TW-M.otf');
+}
+
 
 .search-area{
   width: 100%;
@@ -60,7 +65,7 @@
 
   // 主按鈕樣式
   .btn {
-    font-size: 20px;
+    font-size: 22px;
     padding: 8px 16px;
     margin-top: 2px;
     margin-left: 5%;
@@ -231,7 +236,7 @@ select:focus {
       align-items: center;
       
       .id {
-        flex: 0 0 20rem;  /* 固定寬度 */ 
+        flex: 0 0 24rem;  /* 固定寬度 */ 
         font-size: 28px;
         font-family: 'merri' , 'libre' , 'sans-serif' ;
         font-weight: bold;
