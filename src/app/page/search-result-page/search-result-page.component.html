@@ -3,7 +3,8 @@
   <!-- 關鍵字區域 -->
   <div class="keyword-search">
     <div class="input-search-button">
-      <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
+      <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞"
+        (keyup.enter)="searchAgain()"><!--按 enter 直接搜尋-->
       <button type="button" class="btn btn-secondary btn-sm" (click)="searchAgain()">搜尋</button>
     </div>
   </div>
@@ -13,7 +14,7 @@
   <div class="bottom-area">
     <p>
       <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
-        aria-controls="collapseExample"  (click)="toggleAdvanced()">
+        aria-controls="collapseExample" (click)="toggleAdvanced()">
         @if (!isExpanded) {
         <span class="d-flex align-items-center">
           進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
@@ -106,7 +107,7 @@
                       @for (year of ['89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
                       '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113']; track $index)
                       {
-                      <option [value] = "year">{{ year }}</option>
+                      <option [value]="year">{{ year }}</option>
                       }
                     </select>
                     年度
@@ -168,37 +169,38 @@
               <th (click)="toggleSort()" style="cursor: pointer">
                 裁判日期：
                 @if (isAscending) {
-                  <span>&#9650;由舊至新</span>
+                <span>&#9650;由舊至新</span>
                 }
                 @if (!isAscending) {
-                  <span>&#9660;由新至舊</span>
+                <span>&#9660;由新至舊</span>
                 }
               </th>
             </tr>
           </thead>
           <tbody>
             @for (item of visibleCases; track item.id) {
-              <tr>
-                <td class="display-li">
-                  <div class="main-content">
-                    <span class="court">{{ this.sessionServiceService.turnCodeToName(item.court) }}</span>
-                    <span class="separator">|</span>
-                    <span class="id" (click)="checkContent(item.groupId, item.id, item.court)">{{ item.id }}</span>
-                    <span class="separator">|</span>
-                    <span class="id">{{ item.verdictDate }}</span>
-                  </div>
-                  <div class="summary">
-                    <div class="summary-detail"><span>法官：</span>{{ item.judgeName }}</div>
-                    <div class="summary-detail"><span>被告：</span>{{ item.defendantName }}</div>
-                    <div class="summary-detail"><span>裁判種類：</span>{{ item.docType }}</div>
-                    <div class="summary-detail"><span>案由：</span>{{ item.charge }}</div>
-                    <div class="summary-detail"><span>裁判日期：</span>{{ item.verdictDate }}</div>
-                  </div>
-                  <div class="view-text">
-                    <p>{{ item.content }} </p><button (click)="checkContent(item.groupId, item.id, item.court)">顯示全文</button>
-                  </div>
-                </td>
-              </tr>
+            <tr>
+              <td class="display-li">
+                <div class="main-content">
+                  <span class="court">{{ this.sessionServiceService.turnCodeToName(item.court) }}</span>
+                  <span class="separator">|</span>
+                  <span class="id" (click)="checkContent(item.groupId, item.id, item.court)">{{ item.id }}</span>
+                  <span class="separator">|</span>
+                  <span class="date">{{ item.verdictDate }}</span>
+                </div>
+                <div class="summary">
+                  <div class="summary-detail"><span>法官：</span>{{ item.judgeName }}</div>
+                  <div class="summary-detail"><span>被告：</span>{{ item.defendantName }}</div>
+                  <div class="summary-detail"><span>裁判種類：</span>{{ item.docType }}</div>
+                  <div class="summary-detail"><span>案由：</span>{{ item.charge }}</div>
+                  <div class="summary-detail"><span>裁判日期：</span>{{ item.verdictDate }}</div>
+                </div>
+                <div class="view-text">
+                  <p [innerHTML]="highlightKeywordOnce(searchSessionService.searchData.searchName, item.content)"></p>
+                  <button (click)="checkContent(item.groupId, item.id, item.court)">顯示全文</button>
+                </div>
+              </td>
+            </tr>
             }
           </tbody>
         </table>
@@ -218,7 +220,7 @@
 
   </mat-tab-group>
 </div>
-<p-scrolltop/>
+<p-scrolltop />
 
 
 <!-- drawer

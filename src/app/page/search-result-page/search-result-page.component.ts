@@ -78,11 +78,11 @@ export class SearchResultPageComponent {
   id: string = '';
 
   constructor(
-    private searchSessionService: SearchSessionService,
+    protected searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private ngxService: NgxUiLoaderService,
-    private router : Router
+    private router: Router
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -152,17 +152,18 @@ export class SearchResultPageComponent {
   }
 
   // 將 savedConditions 初始化封裝到一個方法中，集中處理
-   initializeSavedConditions() {
+  initializeSavedConditions() {
     let savedConditions;
 
     if (this.searchSessionService.searchData) {
       savedConditions = this.searchSessionService.searchData;
     } else if (isPlatformBrowser(this.platformId)) {
-      savedConditions = JSON.parse(sessionStorage.getItem('savedConditions')||'{}');
+      savedConditions = JSON.parse(sessionStorage.getItem('savedConditions') || '{}');
+      this.searchSessionService.searchData = savedConditions;
     }
 
     if (savedConditions) {
-      sessionStorage.setItem('savedConditions',JSON.stringify(savedConditions));
+      sessionStorage.setItem('savedConditions', JSON.stringify(savedConditions));
     }
     return savedConditions;
   }
@@ -182,17 +183,17 @@ export class SearchResultPageComponent {
 
     const match = this.id.match(/^(\d+)?年度$/);
     console.log(match); // 應該匹配 "109" 並輸出
-    if(match) {
+    if (match) {
       this.year = match[1] || '';
       console.log(this.year);
     }
 
-    
 
-    
+
+
     // const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
     // console.log(match);
-    
+
     // if (match) {
     //   this.year = match[1] || '';
     //   this.zhi = match[2] || '';
@@ -203,7 +204,7 @@ export class SearchResultPageComponent {
     //   this.zhi = '';
     //   this.hao = '';
     // }
-    
+
     // console.log(this.year);
 
     this.startDate = savedConditions.verdictStartDate || '';
@@ -283,16 +284,16 @@ export class SearchResultPageComponent {
     }
   }
 
-  goCombinedId(): string{
+  goCombinedId(): string {
     this.combinedId = '';
     // 將三個輸入框的值合併成一個新值
-    if(this.year){
+    if (this.year) {
       this.combinedId = this.combinedId + `${this.year}年度`
     }
-    if(this.zhi){
+    if (this.zhi) {
       this.combinedId = this.combinedId + `${this.zhi}字`
     }
-    if(this.hao){
+    if (this.hao) {
       this.combinedId = this.combinedId + `第${this.hao}號`
     }
     return this.combinedId;
@@ -319,11 +320,10 @@ export class SearchResultPageComponent {
     }
 
     const savedConditions = tidyData;
-    console.log(savedConditions);
+    this.searchSessionService.searchData.searchName = this.keywords;
 
     this.searchApi(savedConditions);
   }
-
 
   // 全局排序函數
   sortCases(sortField: string, ascending: boolean) {
@@ -366,8 +366,44 @@ export class SearchResultPageComponent {
   }
 
   // 觀看全文
-  checkContent(groupId:string ,id : string, court:string){
+  checkContent(groupId: string, id: string, court: string) {
     // 將網址與案件 id 綁在一起
-    this.router.navigateByUrl('full-text/'+groupId+'&id='+ id+'&court='+court);
+    this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
+  }
+
+  /**
+  * 提取包含關鍵字的文字片段，並將關鍵字加上高亮顯示（只處理第一次找到的結果）。
+  * @param keyword - 要搜尋的關鍵字。
+  * @param content - 文章全文。
+  * @returns 包含高亮顯示關鍵字的文字片段；如果找不到關鍵字，回傳空字串。
+  */
+  highlightKeywordOnce(keyword: string, content: string): string {
+    // 如果關鍵字跟內文都是 null 就回空字串
+    if (!keyword && !content) {
+      return content;
+    }
+
+    // 只有關鍵字都是 null 就會回主文
+    if (!keyword) {
+      return content;
+    }
+
+    // 建立正則表達式，匹配關鍵字（不區分大小寫）
+    const keywordRegex = new RegExp(`(${keyword})`, "i");
+    const match = keywordRegex.exec(content);
+
+    if (!match) {
+      return content; // 如果找不到關鍵字，回傳空字串
+    }
+
+    // 計算要截取的文字片段的開始和結束位置
+    const start = Math.max(0, match.index - 50);
+    const end = Math.min(content.length, match.index + keyword.length + 150);
+
+    // 提取文字片段，並將關鍵字加上高亮顯示
+    const snippet = content.substring(start, end)
+      .replace(keywordRegex, `<span class="keyword" >$1</span>`);
+
+    return snippet;
   }
 }

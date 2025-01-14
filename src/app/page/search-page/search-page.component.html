@@ -1,14 +1,14 @@
 <div class="container">
   <div class="login">
     @if (session.getIsLogin()) {
-      <span (click)="goLogout()" class="click" style="cursor: pointer; margin-left: 1rem;">登出</span>
-      <span style="margin-left: 1rem;">|</span>
-      <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
+    <span (click)="goLogout()" class="click" style="cursor: pointer; margin-left: 1rem;">登出</span>
+    <span style="margin-left: 1rem;">|</span>
+    <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
 
     } @else {
-      <span (click)="goLogin()" class="click" style="cursor: pointer; margin-left: 1rem;">登入</span>
-      <span style="margin-left: 1rem;">|</span>
-      <span (click)="goRegister()" class="click" style="cursor: pointer; margin-left: 1rem;">註冊</span>
+    <span (click)="goLogin()" class="click" style="cursor: pointer; margin-left: 1rem;">登入</span>
+    <span style="margin-left: 1rem;">|</span>
+    <span (click)="goRegister()" class="click" style="cursor: pointer; margin-left: 1rem;">註冊</span>
     }
     <!--  <span class="click" (click)="goLogin()">登入</span>
     <span style="margin-left: 1rem;">|</span>
@@ -16,9 +16,10 @@
   </div>
 
   <div class="search-area">
-    <h1>法律搜索與量刑資訊平台</h1>
+    <h1>法律雲平台</h1>
     <div class="input-search-button">
-      <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞">
+      <input [(ngModel)]="keywords" placeholder="可輸入法院名稱、裁判案號、案由、全文檢索字詞"
+      (keyup.enter)="confirm()"><!--按 enter 直接搜尋-->
       <button type="button" class="btn btn-secondary btn-sm" (click)="confirm()">搜尋</button>
     </div>
   </div>
@@ -27,8 +28,8 @@
   <!-- 進階條件 -->
   <div class="bottom-area">
     <p>
-      <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-        aria-expanded="false" aria-controls="collapseExample" (click)="toggleAdvanced()">
+      <span class="btn" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+        aria-controls="collapseExample" (click)="toggleAdvanced()">
         @if (!isExpanded) {
         <span class="d-flex align-items-center">
           進階篩選條件 <mat-icon>keyboard_arrow_down</mat-icon>
@@ -56,8 +57,8 @@
                 <p-accordion-header>裁判案由</p-accordion-header>
                 <p-accordion-content>
                   <p class="m-0">
-                    <input pInputText id="username" aria-describedby="username-help" pSize="small" [(ngModel)]="inputCase"
-                      placeholder="例如：傷害等" />
+                    <input pInputText id="username" aria-describedby="username-help" pSize="small"
+                      [(ngModel)]="inputCase" placeholder="例如：傷害等" />
                   </p>
                 </p-accordion-content>
               </p-accordion-panel>
@@ -166,4 +167,4 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
