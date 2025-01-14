@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { SidevavComponent } from '../../layouts/sidevav/sidevav.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-account-center-page',
   imports: [
     SidevavComponent,
+    RouterOutlet,
   ],
   templateUrl: './account-center-page.component.html',
   styleUrl: './account-center-page.component.scss'
 })
 export class AccountCenterPageComponent {
+  
   role!: string;
   name!: string;
   phone!: string;
@@ -34,11 +37,13 @@ export class AccountCenterPageComponent {
     }
     this.http.postApi2('http://localhost:8080/accountSystem/get-user-info', this.userDataReq).subscribe({
       next: (response: any) => {
+        console.log('response:',response);
         if (response.body.code == 200) {
-          console.log(response);
           this.role = response.body.role != 'guest' ? response.body.role : '尚無身分資訊';
           this.name = response.body.name != 'guest' ? response.body.name : '尚無名稱資訊';
           this.phone = response.body.phone != '0' ? response.body.phone : '尚無電話資訊';
+          console.log('role:',this.role);
+          sessionStorage.setItem('role', this.role)
         }
       },
       error: (error) => {
@@ -47,6 +52,8 @@ export class AccountCenterPageComponent {
         this.phone = '';
       }
     })
+
+    
   }
 
   goToUpdatePage() {
