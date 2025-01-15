@@ -12,11 +12,12 @@ import { ResetPasswordPageComponent } from './page/reset-password-page/reset-pas
 import { AccountCenterPageComponent } from './page/account-center-page/account-center-page.component';
 import { AccountMainPageComponent } from './page/account-center-page/account-main-page/account-main-page.component';
 import { AccountProfilePageComponent } from './page/account-center-page/account-profile-page/account-profile-page.component';
-import { MembersManagementComponent } from './page/account-center-page/members-management/members-management.component';
+import { HistoricalRecordComponent } from './page/account-center-page/historical-record/historical-record.component';
 import { MyBookmarksComponent } from './page/account-center-page/my-bookmarks/my-bookmarks.component';
-import { DeleteAccountComponent } from './page/account-center-page/delete-account/delete-account.component';
-import { ViewHistoryComponent } from './page/account-center-page/view-history/view-history.component';
 import { ClientManagementComponent } from './page/account-center-page/client-management/client-management.component';
+import { DeleteAccountComponent } from './page/account-center-page/delete-account/delete-account.component';
+import { MembersManagementComponent } from './page/account-center-page/members-management/members-management.component';
+import { ViewHistoryComponent } from './page/account-center-page/view-history/view-history.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -41,6 +42,8 @@ export const routes: Routes = [
       { path: 'members-management', component: MembersManagementComponent },  // 成員管理
       { path: 'client-management', component: ClientManagementComponent },  // 成員管理
       { path: 'delete-account', component: DeleteAccountComponent },   // 刪除帳號
+      { path: 'management', component: MembersManagementComponent },  // 管理
+      { path: 'historical-record', component : HistoricalRecordComponent},
     ]
   }
 ];

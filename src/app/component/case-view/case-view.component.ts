@@ -44,13 +44,6 @@ export class CaseViewComponent {
 
     // 設置分頁器
     this.dataSource.paginator = this.paginator;
-
-    //顯示頁數、將預設顯示的英文更改成中文
-    this.dataSource.paginator._intl.itemsPerPageLabel = "顯示筆數:";
-    this.dataSource.paginator._intl.firstPageLabel = "第一頁:";
-    this.dataSource.paginator._intl.previousPageLabel = "上一頁";
-    this.dataSource.paginator._intl.nextPageLabel = "下一頁";
-    this.dataSource.paginator._intl.lastPageLabel = "最後一頁";
   }
   change(check : boolean){
     if(this.yeardescription == '依年度近到遠排序'){
@@ -95,14 +88,9 @@ export interface caseData {
 
 // 有期徒刑案件一覽表
 const cases: caseData[] = [
-  { id: '112年度訴字第123號刑事判決', verdictYear: '112', charge: '傷害', judge: '李大明', lawyer: '陳小明', url: 'http://...' },
-  { id: '112年度訴字第151號刑事判決', verdictYear: '112', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第126號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第152號刑事判決', verdictYear: '111', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第157號刑事判決', verdictYear: '110', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第142號刑事判決', verdictYear: '109', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第18號刑事判決', verdictYear: '108', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第12號刑事判決', verdictYear: '107', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第65號刑事判決', verdictYear: '106', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' },
-  { id: '112年度訴字第89號刑事判決', verdictYear: '104', charge: '竊盜', judge: '王曉明', lawyer: '陳大明', url: 'http://...' }
+  { id: '111年度原易字第51號刑事判決', verdictYear: '111', charge: '竊盜', judge: '曾耀緯', lawyer: '無', url: 'http://localhost:4200/full-text/111%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC51%E8%99%9F&id%3D111%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC51%E8%99%9F&court%3DTYD' },
+  { id: '112年度原易字第103號刑事判決', verdictYear: '112', charge: '竊盜', judge: '曹智恒', lawyer: '阮慶文', url: 'http://localhost:4200/full-text/112%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC103%E8%99%9F&id%3D112%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC103%E8%99%9F&court%3DHLD' },
+  { id: '112年度易字第1404號刑事判決', verdictYear: '112', charge: '竊盜', judge: '粘凱庭', lawyer: '無', url: 'http://localhost:4200/full-text/112%E5%B9%B4%E5%BA%A6%E6%98%93%E5%AD%97%E7%AC%AC1404%E8%99%9F&id%3D112%E5%B9%B4%E5%BA%A6%E6%98%93%E5%AD%97%E7%AC%AC1404%E8%99%9F&court%3DPCD' },
+  { id: '113年度上易字第58號刑事判決', verdictYear: '113', charge: '竊盜', judge: '陳慧珊', lawyer: '陳浩華', url: 'http://localhost:4200/full-text/113%E5%B9%B4%E5%BA%A6%E4%B8%8A%E6%98%93%E5%AD%97%E7%AC%AC58%E8%99%9F&id%3D113%E5%B9%B4%E5%BA%A6%E4%B8%8A%E6%98%93%E5%AD%97%E7%AC%AC58%E8%99%9F&court%3DTCH' },
+  { id: '112年度原易字第38號刑事判決', verdictYear: '112', charge: '竊盜', judge: '李辛茹', lawyer: '楊大維', url: 'http://localhost:4200/full-text/112%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC38%E8%99%9F&id%3D112%E5%B9%B4%E5%BA%A6%E5%8E%9F%E6%98%93%E5%AD%97%E7%AC%AC38%E8%99%9F&court%3DKLD' },
 ];

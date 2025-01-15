@@ -44,7 +44,7 @@
       <!-- Url Column -->
       <ng-container matColumnDef="url">
         <th mat-header-cell *matHeaderCellDef > 判決書連結 </th>
-        <td mat-cell *matCellDef="let row"><a href="">連結</a></td>
+        <td mat-cell *matCellDef="let row"><a [href]="row.url">連結</a></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
