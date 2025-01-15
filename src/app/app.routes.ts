@@ -33,7 +33,7 @@ export const routes: Routes = [
       { path: 'account-main', component: AccountMainPageComponent },  // 首頁
       { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
       { path: 'management', component: ManagementPageComponent },  // 管理
-      { path: 'historicalRecord', component : HistoricalRecordComponent},
+      { path: 'historical-record', component : HistoricalRecordComponent},
     ]
   }
 ];
