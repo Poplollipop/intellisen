@@ -34,7 +34,7 @@ export class SidevavComponent {
           // { label: '書籤', link: '/account-center/' },
           // { label: '觀看紀錄', link: '/account-center/' },
           // { label: '刪除帳號', link: '/account-center/' },
-          // { label: '成員管理', link: '/account-center/' },
+          { label: '成員管理', link: '/account-center/management' },
         ];
         break;
       case 'lawyer':

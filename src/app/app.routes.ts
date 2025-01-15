@@ -12,6 +12,7 @@ import { ResetPasswordPageComponent } from './page/reset-password-page/reset-pas
 import { AccountCenterPageComponent } from './page/account-center-page/account-center-page.component';
 import { AccountMainPageComponent } from './page/account-center-page/account-main-page/account-main-page.component';
 import { AccountProfilePageComponent } from './page/account-center-page/account-profile-page/account-profile-page.component';
+import { ManagementPageComponent } from './page/account-center-page/management-page/management-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -30,6 +31,7 @@ export const routes: Routes = [
     children: [
       { path: 'account-main', component: AccountMainPageComponent },  // 首頁
       { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
+      { path: 'management', component: ManagementPageComponent },  // 管理
     ]
   } 
 ];
