@@ -4,6 +4,7 @@ import { ScrollTop } from 'primeng/scrolltop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SessionServiceService } from '../../../service/session-service.service';
 @Component({
   selector: 'app-my-bookmarks',
   imports: [MatTabsModule,
@@ -16,7 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class MyBookmarksComponent implements OnInit {
   constructor(
-    private router: Router
+    private router: Router,
+    private sessionServiceService: SessionServiceService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +26,7 @@ export class MyBookmarksComponent implements OnInit {
 
   checkContent(groupId: string, id: string, court: string) {
     this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
+    this.sessionServiceService.url = this.router.url;
   }
 
 

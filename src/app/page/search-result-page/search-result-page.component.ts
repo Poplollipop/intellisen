@@ -369,6 +369,7 @@ export class SearchResultPageComponent {
   checkContent(groupId: string, id: string, court: string) {
     // 將網址與案件 id 綁在一起
     this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
+    this.sessionServiceService.url = this.router.url;
   }
 
   /**

@@ -61,7 +61,7 @@ export class ViewFullTextPageComponent {
   historicalRecord: Array<{
     id: string, groupId: string, court: string,
     year: number, month: number, date: number
-  }> = [];// 觀看紀錄列表
+  }> = new Array();// 觀看紀錄列表
 
 
   ngOnInit(): void {
@@ -715,7 +715,11 @@ export class ViewFullTextPageComponent {
   //=========================================
   // 回上頁
   returnToPreviousPage() {
-    this.router.navigate(['/search-result']);
+    if(this.sessionServiceService.url){
+      this.router.navigate([this.sessionServiceService.url]);
+    }else{
+      this.router.navigate(['/search-result']);
+    }
   }
   //=========================================
   // 高亮文字索引位置儲存方法:

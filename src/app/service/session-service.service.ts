@@ -112,9 +112,10 @@ export class SessionServiceService {
     ["JCC", "憲法法庭憲法"],
   ]);
 
-
   private email: string;
   private isLogin: boolean;
+
+  url!: string;
 
   constructor() {
     // 檢查是否在瀏覽器端執行
