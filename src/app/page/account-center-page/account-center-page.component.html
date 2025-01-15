@@ -4,42 +4,6 @@
   </div>
   
   <div class="account-info">
-    <div class="header">
-      <h1>會員中心</h1>
-    </div>
-
-    <div class="nav"></div>
-
-    <div class="email-status">
-      <div class="email-text">
-        <label for="email">Email：</label>
-          <span> {{ email }} </span>
-      </div>
-    </div>
-    
-
-    <div class="info-group">
-      <label for="role">身分：</label>
-      <span>{{ role == 'lawFirm' ? '事務所' : role == 'lawyer' ? '律師' : '一般民眾'}}</span>
-    </div>
-
-    <div class="info-group">
-      <label for="name">名稱：</label>
-      <span>{{ name }}</span>
-    </div>
-
-    <div class="info-group">
-      <label for="phone">電話：</label>
-      <span>{{ phone }}</span>
-    </div>
-
-
-    <div class="action-buttons">
-      <button class="btn-update" (click)="goToUpdatePage()">更新資訊</button>
-      <button class="btn-delete" (click)="confirmDelete()">刪除會員</button>
-    </div>
-    
+    <router-outlet></router-outlet>
   </div>
-
-
 </div>

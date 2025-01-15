@@ -1,19 +1,19 @@
 <div class="sidenav">
-    <div class="head-pic">頭貼</div>
+    <div class="header">
+        <div class="pic">
+            <img src="assets/avatar.jpg" alt="頭像" width="100">
+        </div>
+        <h2>王大明</h2>
+        <h5>律師</h5>
+    </div>
 
-    @if (session.getIsLogin()) {
-        <a >首頁</a>
-        <a >個人資料</a>
-        <a >書籤</a>
-        <a >觀看紀錄</a>
-        <a >刪除帳號</a>
-    
-    } @else {
-        <a >首頁</a>
-        <a >個人資料</a>
-        <a >書籤</a>
-        <a >觀看紀錄</a>
-        <a >刪除帳號</a>
-    }
+    <nav>
+        <ul>
+            @for (item of menuItems; track $index) {
+            <li routerLinkActive="active">
+                <a [routerLink]="item.link">{{ item.label }}</a>
+            </li>
+            }
+        </ul>
+    </nav>
 </div>
-

@@ -10,6 +10,9 @@ import { EditInfoPageComponent } from './page/edit-info-page/edit-info-page.comp
 import { ForgotPasswordPageComponent } from './page/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './page/reset-password-page/reset-password-page.component';
 import { AccountCenterPageComponent } from './page/account-center-page/account-center-page.component';
+import { AccountMainPageComponent } from './page/account-center-page/account-main-page/account-main-page.component';
+import { AccountProfilePageComponent } from './page/account-center-page/account-profile-page/account-profile-page.component';
+import { ManagementPageComponent } from './page/account-center-page/management-page/management-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -24,5 +27,11 @@ export const routes: Routes = [
   { path: 'edit-info', component: EditInfoPageComponent }, // 編輯個人資料頁面
   { path: 'forgot-password', component: ForgotPasswordPageComponent }, // 編輯個人資料頁面
   { path: 'reset-password', component: ResetPasswordPageComponent }, // 重置密碼頁面
-  { path: 'account-center', component: AccountCenterPageComponent } // 會員中心頁面
+  { path: 'account-center', component: AccountCenterPageComponent, 
+    children: [
+      { path: 'account-main', component: AccountMainPageComponent },  // 首頁
+      { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
+      { path: 'management', component: ManagementPageComponent },  // 管理
+    ]
+  } 
 ];

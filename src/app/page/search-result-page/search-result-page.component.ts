@@ -50,6 +50,7 @@ import { Router } from '@angular/router';
   styleUrl: './search-result-page.component.scss',
 })
 export class SearchResultPageComponent {
+
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
   tidyMap!: any; // 整理後的 map
