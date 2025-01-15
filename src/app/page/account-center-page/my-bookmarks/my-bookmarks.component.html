@@ -1,0 +1,65 @@
+<div>
+  <mat-tab-group dynamicHeight>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">star</mat-icon> 我的書籤
+      </ng-template>
+      <table class="bookmark-table">
+        @for (bookmark of myBookmarks; track $index) {
+        <tbody>
+          <tr>
+            <td>
+              <!-- 法院與字號與時間 -->
+              <div>
+                <span class="bookmark-header">{{ bookmark.court }}</span>
+                <span class="bookmark-header" (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">
+                  {{bookmark.id }}</span>
+                <span class="bookmark-header">{{ bookmark.verdictDate }}</span>
+              </div>
+              <!-- 詳細資訊 -->
+              <div class="summary">
+                <div class="summary-detail"><span>法官：</span>{{ bookmark.judgeName }}</div>
+                <div class="summary-detail"><span>被告：</span>{{ bookmark.defendantName }}</div>
+                <div class="summary-detail"><span>裁判種類：</span>{{ bookmark.docType }}</div>
+                <div class="summary-detail"><span>案由：</span>{{ bookmark.charge }}</div>
+              </div>
+              <p (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">瀏覽全文...</p>
+            </td>
+          </tr>
+        </tbody>
+        }
+      </table>
+    </mat-tab>
+
+    <!-- 螢光筆書籤 -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="font-family: 'Material Symbols Outlined'">format_ink_highlighter
+        </mat-icon>
+        螢光筆書籤
+      </ng-template>
+      <table class="highlight-table">
+        @for (highlight of apiResponse; track $index) {
+        <tr>
+          <td>
+            <div class="highlight-header">
+              <span class="court">{{highlight.court}}</span>
+              <span class="judgment" (click)="checkContent(highlight.groupId, highlight.id, highlight.court)">
+                {{ highlight.id }}</span>
+            </div>
+            <div class="highlight-content">
+              @for (content of highlight.content; track content.text) {
+              <div class="highlight-item">
+                <span [ngStyle]="{ 'background-color': content.color }">{{ content.text }}</span>
+              </div>
+              }
+            </div>
+            <p (click)="checkContent(highlight.groupId, highlight.id, highlight.court)">瀏覽全文...</p>
+          </td>
+        </tr>
+        }
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<p-scrolltop />
