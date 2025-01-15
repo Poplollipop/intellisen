@@ -1,17 +1,17 @@
 .container {
     display: flex;
-    flex-direction: column; /* 按行排列 */
-    align-items: center; /* 水平置中 */
-    justify-content: center; /* 垂直置中 */
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center; 
     min-height: 80vh;
     padding: 2rem;
-    gap: 2rem; /* 區塊之間的間距 */
-    width: 100%; /* 填滿父容器 */
-    max-width: 100%; /* 防止被限制寬度 */
+    gap: 2rem; 
+    width: 100%; 
+    max-width: 100%; 
   }
   
   .hello {
-    width: 80%; /* 填滿容器寬度 */
+    width: 80%; 
     text-align: center;
     background-color: #f9f9f9;
     padding: 1.5rem;
@@ -19,18 +19,22 @@
   }
   
   .content {
-    display: flex; /* 啟用 Flexbox 佈局 */
-    justify-content: space-between; /* 讓內部元素左右對齊 */
-    gap: 2rem; /* 增加區塊之間的間距 */
-    width: 100%; /* 填滿父容器寬度 */
+    display: flex; 
+    justify-content: space-between; 
+    gap: 2rem; 
+    width: 100%;
   }
   
   .profile, .delete {
-    flex: 1; /* 平分寬度 */
+    flex: 1; 
     background-color: #fff;
     padding: 1rem;
     border: 1px solid #ccc;
-    text-align: center; /* 垂直置中文字 */
+    // text-align: center; 
+
+    h2 {
+      text-align: center;
+    }
   }
   
   .message {

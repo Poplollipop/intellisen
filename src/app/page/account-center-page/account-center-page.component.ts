@@ -43,7 +43,8 @@ export class AccountCenterPageComponent {
           this.name = response.body.name != 'guest' ? response.body.name : '尚無名稱資訊';
           this.phone = response.body.phone != '0' ? response.body.phone : '尚無電話資訊';
           console.log('role:',this.role);
-          sessionStorage.setItem('role', this.role)
+          sessionStorage.setItem('role', this.role);
+          sessionStorage.setItem('name', this.name);
         }
       },
       error: (error) => {

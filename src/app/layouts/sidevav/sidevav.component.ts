@@ -14,6 +14,7 @@ export class SidevavComponent {
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
   role: string | null = '';
+  name: string | null = '';
   menuItems: { label: string; link: string }[] = [];
 
   constructor(
@@ -24,10 +25,12 @@ export class SidevavComponent {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.role = sessionStorage.getItem('role');
+      this.name = sessionStorage.getItem('name');
     }
 
     switch (this.role) {
       case 'lawFirm':
+        this.role = '事務所'
         this.menuItems = [
           { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
@@ -38,6 +41,7 @@ export class SidevavComponent {
         ];
         break;
       case 'lawyer':
+        this.role = '律師'
         this.menuItems = [
           { label: '首頁', link: '/account-center/account-main' },
           // { label: '個人資料', link: '/account-center/' },
@@ -48,6 +52,7 @@ export class SidevavComponent {
         ];
         break;
       case 'user':
+        this.role = '一般使用者'
         this.menuItems = [
           { label: '首頁', link: '/account-center/account-main' },
           // { label: '個人資料', link: '/account-center/' },
@@ -57,11 +62,12 @@ export class SidevavComponent {
         ];
         break;
       case 'guest':
-          this.menuItems = [
-            { label: '首頁', link: '/account-center/account-main' },
-            // { label: '個人資料', link: '/account-center/' },
-            // { label: '刪除帳號', link: '/account-center/' },
-          ];
+        this.role = '訪客'
+        this.menuItems = [
+          { label: '首頁', link: '/account-center/account-main' },
+          // { label: '個人資料', link: '/account-center/' },
+          // { label: '刪除帳號', link: '/account-center/' },
+        ];
         break;  
     }
   }

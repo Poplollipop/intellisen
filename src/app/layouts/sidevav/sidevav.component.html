@@ -3,15 +3,15 @@
         <div class="pic">
             <img src="assets/avatar.jpg" alt="頭像" width="100">
         </div>
-        <h2>王大明</h2>
-        <h5>律師</h5>
+        <h2>{{this.name}}</h2>
+        <h5>{{this.role}}</h5>
     </div>
 
     <nav>
         <ul>
             @for (item of menuItems; track $index) {
-            <li routerLinkActive="active">
-                <a [routerLink]="item.link">{{ item.label }}</a>
+            <li [routerLink]="item.link" routerLinkActive="active">
+                <a>{{ item.label }}</a>
             </li>
             }
         </ul>
