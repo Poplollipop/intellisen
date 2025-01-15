@@ -1,13 +1,14 @@
 <div class="container">
 
   <div class="register-info">
-    <h2>註冊會員帳號</h2>
-    <h3>請輸入以下資料以完成註冊</h3>
+    <h1>註冊會員帳號</h1>
     <div class="nav"></div>
+    <h3>請輸入以下資料以完成註冊</h3>
+
 
     <div class="input-info">
       <div class="email-area">
-        <label style="display: block; font-size: 18px;">請輸入Email</label>
+        <label style="font-size: 18px;">請輸入Email</label>
         <input type="text" class="input-email ng-invalid ng-dirty " pInputText [(ngModel)]="email"
           (keyup)="updateEmailForm()" />
         @if (errorMessage) {
@@ -16,26 +17,29 @@
       </div>
 
       <div class="pwd-area">
-        <label style="display: block; margin-top: 20px; font-size: 18px;">請輸入密碼</label>
-        <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="rawPwd" [feedback]="false"
-          [toggleMask]="true" />
-        <label style="display: block; margin-top: 20px; font-size: 18px;">請再次輸入密碼</label>
-        <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
-          [feedback]="false" [toggleMask]="true" />
-        @if (errorMessage2) {
-        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage2}}</small>
-        }
+        <div class="input-psw">
+          <label style="margin-top: 20px; font-size: 18px;">請輸入密碼</label>
+          <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="rawPwd" [feedback]="false"
+            [toggleMask]="true" />
+        </div>
+        <div class="input-psw">
+          <label style="margin-top: 20px; font-size: 18px;">請再次輸入密碼</label>
+          <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
+            [feedback]="false" [toggleMask]="true" />
+          @if (errorMessage2) {
+          <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage2}}</small>
+          }
+        </div>
       </div>
+
+      <div class="btn-area">
+        <button class="btn" (click)="goRegister()">註冊</button>
+        <button class="btn" (click)="goBack()">取消</button>
+      </div>
+
     </div>
 
-    <div class="btn-area">
-      <button class="btn" (click)="goRegister()">註冊</button>
-      <button class="btn" (click)="goBack()">取消</button>
-    </div>
-    
+
+
+
   </div>
-
-  
-
-
-</div>
