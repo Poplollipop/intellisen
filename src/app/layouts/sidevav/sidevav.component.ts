@@ -34,7 +34,7 @@ export class SidevavComponent {
         this.menuItems = [
           { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
-          // { label: '書籤', link: '/account-center/' },
+          { label: '書籤', link: '/account-center/my-bookmarks' },
           // { label: '觀看紀錄', link: '/account-center/' },
           // { label: '刪除帳號', link: '/account-center/' },
           { label: '成員管理', link: '/account-center/management' },

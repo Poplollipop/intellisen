@@ -1,0 +1,189 @@
+// 全局樣式
+:host {
+  display: block;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+// mat-tab-group 樣式
+mat-tab-group {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+//====================================
+// 我的書籤樣式
+//====================================
+.bookmark-table {
+  width: 100%; /* 占滿頁籤寬度 */
+  border-spacing: 0; /* 去除單元格間距 */
+  border-collapse: collapse; /* 合併表格線 */
+  margin-top: 20px; /* 與頁籤內容距離 */
+  font-family: 'TaipeiSansTCBeta', sans-serif;
+
+  tr {
+    width: 100%;
+    position: relative; /* 為了讓內部元素相對定位 */
+    &:nth-child(even) {
+      background-color: #f9f9f9; /* 偶數行背景色 */
+    }
+
+    &:hover {
+      background-color: #ececec; /* 滑鼠懸停時背景色 */
+    }
+  }
+
+  td {
+    width: 100%;
+    padding: 15px; /* 單元格內邊距 */
+    border-bottom: 1px solid #ddd; /* 底部分隔線 */
+    vertical-align: top; /* 內容靠上對齊 */
+    position: relative; /* 為了讓右下角的文字定位 */
+  }
+
+  // 標題列樣式
+  .bookmark-header {
+    display: inline-block; /* 確保在同一行內 */
+    font-size: 28px; /* 調整標題字體大小 */
+    font-weight: bold;
+    color: #000000; /* 標題文字顏色 */
+    margin-right: 20px; /* 各標題之間的間距 */
+  }
+
+  // 詳細資料樣式
+  .summary {
+    display: flex; /* 單行內水平排列 */
+    flex-wrap: wrap; /* 如果空間不足，會自動換行 */
+    gap: 15px; /* 各項目間的距離 */
+    font-size: 20px; /* 詳細資料字體大小 */
+    line-height: 1.5;
+    color: #555;
+
+    .summary-detail {
+      font-weight: bold;
+
+      span:first-child {
+        color: #007bff; /* 標題加深顏色 */
+      }
+
+      span:last-child {
+        margin-left: 5px; /* 標題與內容距離 */
+      }
+    }
+  }
+
+  // 「瀏覽全文...」樣式
+  p {
+    position: absolute; /* 絕對定位 */
+    bottom: 10px; /* 距離底部 */
+    right: 15px; /* 距離右邊 */
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* 顏色藍色 */
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #0056b3; /* 滑鼠懸停時變深 */
+    }
+  }
+}
+
+// 小螢幕適配
+@media screen and (max-width: 768px) {
+  .bookmark-header {
+    font-size: 24px; /* 調整字體大小以適配小螢幕 */
+    margin-right: 10px; /* 縮小標題間距 */
+  }
+
+  .summary {
+    flex-direction: column; /* 詳細資料改為垂直排列 */
+    font-size: 18px; /* 縮小字體大小 */
+  }
+}
+
+//====================================
+// 螢光筆書籤樣式
+//====================================
+.highlight-table {
+  width: 100%; /* 占滿頁籤寬度 */
+  border-spacing: 0; /* 去除單元格間距 */
+  border-collapse: collapse; /* 合併表格線 */
+  margin-top: 20px; /* 與頁籤內容距離 */
+  font-family: 'TaipeiSansTCBeta', sans-serif;
+
+  tr {
+    width: 100%;
+    position: relative; /* 為了讓內部元素相對定位 */
+    &:nth-child(even) {
+      background-color: #f9f9f9; /* 偶數行背景色 */
+    }
+
+    &:hover {
+      background-color: #ececec; /* 滑鼠懸停時背景色 */
+    }
+  }
+
+  td {
+    padding: 15px; /* 單元格內邊距 */
+    border-bottom: 1px solid #ddd; /* 底部分隔線 */
+    vertical-align: top; /* 內容靠上對齊 */
+    position: relative; /* 為了讓右下角的文字定位 */
+  }
+
+  .highlight-header {
+    display: inline-block; /* 確保在同一行內 */
+    font-size: 28px; /* 調整標題字體大小 */
+    font-weight: bold;
+    color: #000000; /* 標題文字顏色 */
+    margin-right: 20px; /* 各標題之間的間距 */
+  }
+
+  .highlight-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .highlight-item {
+      font-size: 20px;
+      line-height: 1.5;
+
+      span {
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  // 「瀏覽全文...」樣式
+  p {
+    position: absolute; /* 絕對定位 */
+    bottom: 10px; /* 距離底部 */
+    right: 15px; /* 距離右邊 */
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* 顏色藍色 */
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #0056b3; /* 滑鼠懸停時變深 */
+    }
+  }
+}
+
+// 小螢幕適配樣式
+@media screen and (max-width: 768px) {
+  .highlight-header {
+    flex-direction: column; /* 切換為垂直排列 */
+    align-items: flex-start;
+  }
+
+  .highlight-item {
+    font-size: 0.85rem; /* 縮小文字大小 */
+  }
+}
