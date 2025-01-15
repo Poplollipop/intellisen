@@ -3,14 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
-import { RadioButton } from 'primeng/radiobutton';
 
 
 @Component({
   selector: 'app-edit-info-page',
   imports: [
     FormsModule,
-    RadioButton
   ],
   templateUrl: './edit-info-page.component.html',
   styleUrl: './edit-info-page.component.scss'
@@ -26,7 +24,10 @@ export class EditInfoPageComponent {
   // 事務所
   address!: string;
   lawFirmNumber!: string;
-
+  
+  // 律師
+  licenseNumber!: string;
+  lawFirm!: string;
 
   constructor(
     private session: SessionServiceService,

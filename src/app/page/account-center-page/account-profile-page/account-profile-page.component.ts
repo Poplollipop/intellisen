@@ -26,9 +26,19 @@ export class AccountProfilePageComponent {
     email: string | null = '';
     role: string | null = '';
 
-    lawFirmNumber: string = '';
-    address: string = '';
+
     udpdateData!: any;
+
+    // 事務所
+    address!: string;
+    lawFirmNumber!: string;
+  
+    // 律師
+    licenseNumber!: string;
+    lawFirm!: string;
+
+    // 一般使用者
+    city!: string;
 
     editMode = {
       basicInfo: false,
@@ -46,21 +56,31 @@ export class AccountProfilePageComponent {
       if (isPlatformBrowser(this.platformId)) {
         // 把 sessionStorage 的東西取出來，要用 parse
         const userData = JSON.parse(sessionStorage.getItem('userData')!);
+        this.email = this.session.getEmail();
         this.name = userData.name;
-        this.phone = userData.phone;
         this.role = userData.role;
         if(userData.role == 'lawFirm') {
           this.role = '事務所'
+          this.phone = userData.phone;
+          this.address = userData.address;
+          this.lawFirmNumber = userData.lawFirmNumber
         }
         if(userData.role == 'lawyer') {
           this.role = '律師'
+          this.phone = userData.phone;
+          this.lawFirm = userData.lawFirm;
+          this.licenseNumber = userData.licenseNumber
         }
         if(userData.role == 'user') {
           this.role = '一般使用者'
+          this.city = userData.city
         }
-        this.address = userData.address;
-        this.lawFirmNumber = userData.lawFirmNumber
-        this.email = this.session.getEmail();
+        if(userData.role == 'guest') {
+          this.role = '訪客'
+        }
+        
+        
+        
         console.log(this.email);
       }
     }

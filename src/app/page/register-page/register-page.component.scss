@@ -9,7 +9,7 @@
   padding: 0; 
   width: 100%; 
   box-sizing: border-box;
-  background-color: #ccd9ff40;
+  background: linear-gradient(110deg, #8ca6f4, #e4efff);
 }
 
 .container {
@@ -21,7 +21,7 @@
 
 .register-info {
   margin: 5px auto;
-  width: 50%;
+  width: 90%;
   min-height: 75vh;
   padding: 1rem;
   background-color: #ffffff;
@@ -29,15 +29,17 @@
   position: relative; /* 設置父容器為定位基準 */
 
 
-  h2 {
+  h1 {
     font-family: 'GenKiMin' , 'sans-serif';
     font-weight: bold;
+    text-align: center;
   }
 
   .nav {
     width: 20rem;
     height: 5px;
     background-color: #005593;
+    margin: auto;
     margin-bottom: 2rem;
   }
 
@@ -45,23 +47,35 @@
     font-size: 22px;
     font-family: 'GenKiMin' , 'sans-serif';
     margin-top: 2rem;
+    text-align: center;
+
   }
 
   .input-info {
-    margin-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+
   }
 
   .email-area {
-    height: 5rem
+      label {
+        width: 200px;
+      }
   }
 
   .pwd-area {
-    height: 5rem
+    height: 5rem;
+  }
+
+  .input-psw {
+      label {
+        width: 200px;
+      }
   }
 
   .input-email {
-    width: 100%;
-    max-width: 100%;
+    width: 40%;
+    max-width: 40%;
     background-color: white;
     border: 2px solid #dedcdc;
   }
@@ -71,8 +85,8 @@
   }
 
   ::ng-deep .p-password {
-    width: 100%;
-    max-width: 100%;
+    width: 40%;
+    max-width: 40%;
   }
 
   ::ng-deep .p-password input.p-inputtext {
@@ -87,15 +101,15 @@
 
 .btn-area {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   position: absolute;
-  bottom: 10px;
-  left: 20px;
+  bottom: 60px;
+  right: 360px;
 }
 
 .btn {
-  width: 9rem;
-  height: 2.5rem;
+  width: 12rem;
+  height: 3rem;
   background-color: #005593;
   border: none;
   color: #ffffff;
@@ -104,7 +118,14 @@
 }
 
 .btn:hover {
-  background-color: #8ebbff;
+  background-color: #42a2e7; 
+  transform: scale(1.1);  
+}
+
+.btn:active {
+  background-color: #004080; 
+  transform: scale(0.95);    
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* 內縮陰影 */
 }
 
 

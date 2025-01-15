@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    min-width: 75vw;
 }
 
 // 左邊區域、右邊區域
@@ -62,7 +63,7 @@ span {
     margin-bottom: 2rem;
     padding: 15px;
     padding-left: 20px;
-    background-color: #bcd2ffb2;
+    background-color: #f0f0f0;
     border-radius: 5px;
 }
 
@@ -72,7 +73,7 @@ span {
     margin-bottom: 2rem;
     padding: 15px;
     padding-left: 20px;
-    background-color: #bcd2ffb2;
+    background-color: #f0f0f0;
     border-radius: 5px;
 }
 
@@ -112,7 +113,7 @@ input:focus {
 
 // 目前使用者類型
 .current-role {
-    background-color: #fff873b6;
+    background-color: #b5d4fa;
     padding: 20px;
 }
 
