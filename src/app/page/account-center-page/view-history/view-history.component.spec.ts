@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagementPageComponent } from './management-page.component';
+import { ViewHistoryComponent } from './view-history.component';
 
-describe('ManagementPageComponent', () => {
-  let component: ManagementPageComponent;
-  let fixture: ComponentFixture<ManagementPageComponent>;
+describe('ViewHistoryComponent', () => {
+  let component: ViewHistoryComponent;
+  let fixture: ComponentFixture<ViewHistoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManagementPageComponent]
+      imports: [ViewHistoryComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ManagementPageComponent);
+    fixture = TestBed.createComponent(ViewHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

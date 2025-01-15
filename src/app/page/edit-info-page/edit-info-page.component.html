@@ -5,51 +5,92 @@
     <div class="header">
       <h2>用戶資訊更新</h2>
     </div>
-    
+
     <div class="nav"></div>
+
+    <label>您目前的使用者類型為：</label><span>{{this.role}}</span>
 
     <div class="update-form">
       <div class="form-group">
-        <label for="role">身分：</label>
-        <div class="flex flex-wrap gap-4">
-          <div class="flex items-center">
-            <p-radiobutton itemid="lawFirm" name="role" value="lawFirm" [(ngModel)]="role" />
-            <label for="lawFirm" class="ml-3">事務所</label>
-          </div>
-
-          <div class="flex items-center">
-            <p-radiobutton inputId="lawyer" name="role" value="lawyer" [(ngModel)]="role" />
-            <label for="lawyer" class="ml-3">律師</label>
-          </div>
-
-          <div class="flex items-center">
-            <p-radiobutton inputId="user" name="role" value="user" [(ngModel)]="role" />
-            <label for="user" class="ml-3">一般民眾</label>
-          </div>
+        <label for="role">我想切換的使用者類型為：</label>
+        <div class="flex flex-wrap gap-4"></div>
+        @if (this.role == '事務所') {
+        <div class="flex items-center">
+          <p-radiobutton inputId="lawyer" name="role" value="lawyer" [(ngModel)]="newRole" />
+          <label for="lawyer" class="ml-3">律師</label>
         </div>
+
+        <div class="flex items-center">
+          <p-radiobutton inputId="user" name="role" value="user" [(ngModel)]="newRole" />
+          <label for="user" class="ml-3">一般民眾</label>
+        </div>
+        }
+
+        @if (this.role == '律師') {
+        <div class="flex items-center">
+          <p-radiobutton itemid="lawFirm" name="role" value="lawFirm" [(ngModel)]="newRole" />
+          <label for="lawFirm" class="ml-3">事務所</label>
+        </div>
+
+        <div class="flex items-center">
+          <p-radiobutton inputId="user" name="role" value="user" [(ngModel)]="newRole" />
+          <label for="user" class="ml-3">一般民眾</label>
+        </div>
+        }
+
+        @if (this.role == '一般使用者') {
+        <div class="flex items-center">
+          <p-radiobutton itemid="lawFirm" name="role" value="lawFirm" [(ngModel)]="newRole" />
+          <label for="lawFirm" class="ml-3">事務所</label>
+        </div>
+
+        <div class="flex items-center">
+          <p-radiobutton inputId="lawyer" name="role" value="lawyer" [(ngModel)]="newRole" />
+          <label for="lawyer" class="ml-3">律師</label>
+        </div>
+        }
+
       </div>
+    </div>
 
 
 
-
-
+    @if (this.newRole == 'lawFirm') {
       <div class="form-group">
         <label for="name">名稱：</label>
         <input type="text" id="name" [(ngModel)]="name" placeholder="請輸入名稱" class="form-control" required>
       </div>
-
+  
       <div class="form-group">
         <label for="phone">電話：</label>
-        <input type="tel" id="phone" [(ngModel)]="phone" placeholder="請輸入聯絡電話" class="form-control" required>
+        <input type="text" id="phone" [(ngModel)]="phone" placeholder="請輸入聯絡電話" class="form-control" required>
       </div>
 
       <div class="form-group">
-        <button type="button" class="btn-submit" (click)="updateInfo()">送出</button>
+        <label for="address">地址：</label>
+        <input type="text" id="address" [(ngModel)]="address" placeholder="請輸入地址" class="form-control" required>
       </div>
+
+      <div class="form-group">
+        <label for="lawFirmNumber">事務所統編：</label>
+        <input type="text" id="lawFirmNumber" [(ngModel)]="lawFirmNumber" placeholder="請輸入地址" class="form-control" required>
+      </div>
+
+    }
+
+    <div class="form-group">
+      <label for="name">名稱：</label>
+      <input type="text" id="name" [(ngModel)]="name" placeholder="請輸入名稱" class="form-control" required>
     </div>
 
+    <div class="form-group">
+      <label for="phone">電話：</label>
+      <input type="tel" id="phone" [(ngModel)]="phone" placeholder="請輸入聯絡電話" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <button type="button" class="btn-submit" (click)="updateInfo()">送出</button>
+    </div>
   </div>
-
-
 
 </div>

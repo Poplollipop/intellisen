@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+}
+
+// 左邊區域、右邊區域
+.left-section , .right-section {
+    margin-left: 5rem;
+    margin-top: 2rem;
+}
+
+// 左邊區域
+.left-section {
+    min-width: 60%;
+}
+
+// 右邊區域
+.right-section {
+    margin-left: 7rem;
+}
+
+label {
+    font-size: 22px;
+}
+
+span {
+    font-size: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 10px;
+
+    h3 {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
+    mat-icon {
+        cursor: pointer;
+    }
+}
+
+// 頭貼
+.pic {
+    margin-bottom: 2rem;
+    margin-left: 1.5rem;
+
+    img {
+        width: 100px;
+        height: 100px;
+        margin-left: 2rem;
+    }
+}
+
+
+
+// 基本資料
+.basic-info {
+    margin-bottom: 2rem;
+    padding: 15px;
+    padding-left: 20px;
+    background-color: #bcd2ffb2;
+    border-radius: 5px;
+}
+
+
+// 聯絡資料
+.contact-info {
+    margin-bottom: 2rem;
+    padding: 15px;
+    padding-left: 20px;
+    background-color: #bcd2ffb2;
+    border-radius: 5px;
+}
+
+
+// 資料內容格式
+.info {
+    margin: 3rem 0;
+    margin-left: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 2rem;
+    height: 2.5rem;
+}
+
+label {
+    min-width: 150px;
+    font-weight: bold;
+}
+
+input {
+    flex: 2;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 25rem
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+// 目前使用者類型
+.current-role {
+    background-color: #fff873b6;
+    padding: 20px;
+}
+
+
+
+
+

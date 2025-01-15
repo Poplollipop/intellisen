@@ -12,8 +12,11 @@ import { ResetPasswordPageComponent } from './page/reset-password-page/reset-pas
 import { AccountCenterPageComponent } from './page/account-center-page/account-center-page.component';
 import { AccountMainPageComponent } from './page/account-center-page/account-main-page/account-main-page.component';
 import { AccountProfilePageComponent } from './page/account-center-page/account-profile-page/account-profile-page.component';
-import { ManagementPageComponent } from './page/account-center-page/management-page/management-page.component';
+import { MembersManagementComponent } from './page/account-center-page/members-management/members-management.component';
 import { MyBookmarksComponent } from './page/account-center-page/my-bookmarks/my-bookmarks.component';
+import { DeleteAccountComponent } from './page/account-center-page/delete-account/delete-account.component';
+import { ViewHistoryComponent } from './page/account-center-page/view-history/view-history.component';
+import { ClientManagementComponent } from './page/account-center-page/client-management/client-management.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -30,10 +33,14 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordPageComponent }, // 重置密碼頁面
   { path: 'account-center', component: AccountCenterPageComponent,
     children: [
+      { path: '', component: AccountMainPageComponent},   // 預設首頁
       { path: 'account-main', component: AccountMainPageComponent },  // 首頁
       { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
-      { path: 'management', component: ManagementPageComponent },  // 管理
-      { path: 'my-bookmarks', component: MyBookmarksComponent } // 我的書籤
+      { path: 'my-bookmarks', component: MyBookmarksComponent },   // 我的書籤
+      { path: 'view-history', component: ViewHistoryComponent },   // 觀看紀錄
+      { path: 'members-management', component: MembersManagementComponent },  // 成員管理
+      { path: 'client-management', component: ClientManagementComponent },  // 成員管理
+      { path: 'delete-account', component: DeleteAccountComponent },   // 刪除帳號
     ]
   }
 ];

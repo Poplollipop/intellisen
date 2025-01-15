@@ -3,16 +3,15 @@ import { Component } from '@angular/core';
 import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
-  selector: 'app-management-page',
+  selector: 'app-client-management',
   imports: [
     CommonModule,
     PaginatorModule
   ],
-  templateUrl: './management-page.component.html',
-  styleUrl: './management-page.component.scss'
+  templateUrl: './client-management.component.html',
+  styleUrl: './client-management.component.scss'
 })
-export class ManagementPageComponent {
-
+export class ClientManagementComponent {
   ngOnInit(): void {
     this.totalRecords = this.members.length; // 初始化總筆數
     this.updateVisibleCases(); // 初始化顯示的資料

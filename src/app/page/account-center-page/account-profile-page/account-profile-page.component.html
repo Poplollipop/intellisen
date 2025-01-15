@@ -1,1 +1,100 @@
-<p>account-profile-page works!</p>
+<div class="container">
+
+    <div class="left-section">
+        <div class="basic-info">
+            <div class="header">
+                <h3>基本資料</h3>
+                <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Example home icon" 
+                    fontIcon="edit"
+                    (click)="toggleEdit('basicInfo')"
+                    >
+                </mat-icon>
+            </div> 
+            <div class="pic">
+                <label>頭像：</label>
+                <img src="assets/avatar.jpg">
+            </div>
+            <div class="info">
+                <div class="info-row">
+                    <label for="name">名稱：</label>
+                    @if (!editMode.basicInfo) {
+                        <span id="name">{{this.name}}</span>
+                    }
+                    @else {
+                        <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱" >
+                    }    
+                </div>
+                <div class="info-row">
+                    <label for="address">地址：</label>
+                    @if (!editMode.basicInfo) {
+                        <span>{{this.address}}</span>
+                    }
+                    @else {
+                        <input [(ngModel)]="address" id="address" type="text" placeholder="請輸入地址" >
+                    }                   
+                </div>
+                <div class="info-row">
+                    <label for="lawFirmNumber">事務所統編：</label>
+                    @if (!editMode.basicInfo) {
+                        <span>{{this.lawFirmNumber}}</span>
+                    }
+                    @else {
+                        <input [(ngModel)]="lawFirmNumber" id="lawFirmNumber" type="text" placeholder="請輸入統編" >
+                    }  
+                </div>
+            </div>
+            @if (editMode.basicInfo) {
+                <div class="update-btn">
+                    <button (click)="updateInfo()">完成</button>
+                </div>
+            }
+        </div>
+           
+        
+        <div class="contact-info">
+            <div class="header">
+                <h3>聯絡資料</h3>
+                <mat-icon
+                    aria-hidden="false"
+                    aria-label="Example home icon" 
+                    fontIcon="edit"
+                    (click)="toggleEdit('contactInfo')"
+                    ></mat-icon>
+            </div> 
+            <div class="info">
+                <div class="info-row">
+                    <label for="email">電子郵件：</label>
+                    <span id="email">{{this.email}}</span>
+                </div>
+                <div class="info-row">
+                    <label for="phone">電話：</label>
+                    @if (!editMode.contactInfo) {
+                        <span id="phone">{{this.phone}}</span>
+                    }
+                    @else {
+                        <input [(ngModel)]="phone" id="phone" type="text" placeholder="請輸入地址" >
+                    }
+                </div>
+            </div>
+            @if (editMode.contactInfo) {
+                <div class="update-btn">
+                    <button (click)="updateInfo()">完成</button>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <div class="right-section">
+        <div class="current-role">
+            <h3>目前使用者類型</h3>
+            <div class="plan-box">
+                <p>{{this.role}}</p>
+                <button class="change-plan-button" (click)="goChangeRole()" >更換方案</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+

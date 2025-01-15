@@ -42,10 +42,8 @@ export class AccountCenterPageComponent {
           this.role = response.body.role != 'guest' ? response.body.role : '尚無身分資訊';
           this.name = response.body.name != 'guest' ? response.body.name : '尚無名稱資訊';
           this.phone = response.body.phone != '0' ? response.body.phone : '尚無電話資訊';
-          console.log('role:',this.role);
-          sessionStorage.setItem('role', this.role);
-          sessionStorage.setItem('name', this.name);
         }
+        sessionStorage.setItem('userData', JSON.stringify(response.body))
       },
       error: (error) => {
         this.role = '';

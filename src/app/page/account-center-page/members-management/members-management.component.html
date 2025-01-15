@@ -24,15 +24,7 @@
         <td>{{ member.email }}</td>
         <td>{{ member.cases }}</td>
         <td>{{ member.clients }}</td>
-        <td>
-          <p [ngClass]="{
-                  'closed': member.status == '已結案',
-                  'in-progress': member.status == '進行中',
-                  'contact': member.status == '已聯絡',
-                  'no-contact': member.status == '未聯絡'}">
-            {{ member.status }}
-          </p>
-        </td>
+        <td></td>
         <td><button class="delete-button">🗑</button></td>
       </tr>
       }

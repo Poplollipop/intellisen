@@ -21,6 +21,12 @@ export class EditInfoPageComponent {
   name!: string; // 名稱
   phone!: string; // 電話
   udpdateData!: any;
+  newRole!: string;
+
+  // 事務所
+  address!: string;
+  lawFirmNumber!: string;
+
 
   constructor(
     private session: SessionServiceService,
@@ -29,6 +35,16 @@ export class EditInfoPageComponent {
 
   ngOnInit(): void {
     this.email = this.session.getEmail();
+    this.role = JSON.parse(sessionStorage.getItem('userData')!).role
+    if(this.role == 'lawFirm') {
+      this.role = '事務所'
+    }
+    if(this.role == 'lawyer') {
+      this.role = '律師'
+    }
+    if(this.role == 'user') {
+      this.role = '一般使用者'
+    }
   }
 
   updateInfo() {

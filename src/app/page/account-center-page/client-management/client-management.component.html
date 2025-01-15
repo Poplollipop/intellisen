@@ -1,0 +1,46 @@
+<div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>成員</th>
+          <th>電話</th>
+          <th>電子郵件</th>
+          <th>案件數量</th>
+          <th>客戶人數</th>
+          <th>備註</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (member of visibleCases; track $index) {
+        <tr>
+          <td>
+            <div class="member-cell">
+              <div class="avatar"></div>
+              <a href="#">{{ member.name }}</a>
+            </div>
+          </td>
+          <td>{{ member.phone }}</td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.cases }}</td>
+          <td>{{ member.clients }}</td>
+          <td>
+            <p [ngClass]="{
+                    'closed': member.status == '已結案',
+                    'in-progress': member.status == '進行中',
+                    'contact': member.status == '已聯絡',
+                    'no-contact': member.status == '未聯絡'}">
+              {{ member.status }}
+            </p>
+          </td>
+          <td><button class="delete-button">🗑</button></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  
+  <div ><!-- 分頁控制 -->
+    <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [first]="first"
+      (onPageChange)="onPageChange($event)"></p-paginator>
+  </div>
