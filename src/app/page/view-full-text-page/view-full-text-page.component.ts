@@ -2,7 +2,7 @@ import { SessionServiceService } from './../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { FullTextDialogComponent } from './full-text-dialog/full-text-dialog.component';
 import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common'; // 匯入 CommonModule
@@ -11,15 +11,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchSessionService } from '../../service/search-session.service';
 import { MatDialog } from '@angular/material/dialog';
-import { color } from 'highcharts';
-import { log } from 'console';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ScrollTop } from 'primeng/scrolltop';
 
 
 @Component({
   selector: 'app-view-full-text-page',
-  imports: [MatIconModule,
+  imports: [
+    MatIconModule,
     MatTooltipModule,
     CommonModule,
     ScrollTop,
@@ -42,13 +41,14 @@ export class ViewFullTextPageComponent {
     private ngxService: NgxUiLoaderService,
   ) { }
 
+
   @ViewChild('suptextSpan', { static: false }) suptextSpan!: ElementRef<HTMLSpanElement>;
   @ViewChild('toolbar', { static: false }) toolbarRef!: ElementRef<HTMLDivElement>;
 
 
   suptext!: any;
   url!: any;
-  fullTextParam !:any;
+  fullTextParam !: any;
   judgmentJgroupId!: any;
   judgmentJid!: any;
   judgmentJcourt!: any;
@@ -58,9 +58,14 @@ export class ViewFullTextPageComponent {
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
   isToolbarVisible = false; // 控制工具列表起始狀態:為 false 不啟用
+  historicalRecord: Array<{
+    id: string, groupId: string, court: string,
+    year: number, month: number, date: number
+  }> = [];// 觀看紀錄列表
 
 
   ngOnInit(): void {
+
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
       const fullRouteParam = param.get('groupId'); // 獲取完整的路由字串
@@ -83,6 +88,39 @@ export class ViewFullTextPageComponent {
 
         // 呼叫 API
         this.getJudgmentApi(this.judgmentJgroupId, this.judgmentJid, this.judgmentJcourt);
+      }
+
+      // // 紀錄觀看紀錄
+      if (isPlatformBrowser(this.platformId) && sessionStorage.getItem('isLogin') === 'true') {
+        // 確認是否已有觀看紀錄
+        let record: Array<{
+          id: string, groupId: string, court: string,
+          year: number, month: number, date: number
+        }> = JSON.parse(localStorage.getItem('historicalRecord_' + sessionStorage.getItem('email'))!) ?
+            JSON.parse(localStorage.getItem('historicalRecord_' + sessionStorage.getItem('email'))!) : new Array();
+
+        // 放入 historicalRecord 中
+        this.historicalRecord = record;
+
+        console.log(this.historicalRecord);
+        const date = new Date();
+        // 更新觀看紀錄
+        record.unshift({
+          id: this.judgmentJid,
+          groupId: this.judgmentJgroupId,
+          court: this.judgmentJcourt,
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          date: date.getDate(),
+        })
+
+        // 限制記錄比數為 10 筆
+        if (record.length > 10) {
+          record.pop(); // 刪除最後一筆
+        }
+
+        //更新觀看紀錄
+        localStorage.setItem('historicalRecord_' + sessionStorage.getItem('email'), JSON.stringify(record));
       }
     });
 
@@ -187,7 +225,7 @@ export class ViewFullTextPageComponent {
     this.ngxService.start(); // 啟動 loading 動畫
     // http://localhost:8080/case/judgmentid?groupId=107年度原訴字第72號&id=107年度原訴字第72號&court=TCD
     this.http
-      .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid +'&court='+ judgmentJcourt)
+      .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid + '&court=' + judgmentJcourt)
       .subscribe(
         (res: any) => {
           // console.log(res);
@@ -724,6 +762,18 @@ export class ViewFullTextPageComponent {
     return { startOffset: startIndex, endOffset: endIndex };
   }
 
+  addHour(date: Date, hours: number): Date {
+    const dateCopy = new Date(date.getTime());
+    const hoursToAdd = hours * 60 * 60 * 1000;
+    dateCopy.setTime(date.getTime() + hoursToAdd);
+    return dateCopy;
+  }
+
+  // 觀看全文
+  checkContent(groupId: string, id: string, court: string) {
+    // 將網址與案件 id 綁在一起
+    this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
+  }
 }
 // 儲存高亮文字位置格式
 interface HighlightRange {

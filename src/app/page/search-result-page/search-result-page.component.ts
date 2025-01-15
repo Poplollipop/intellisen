@@ -183,7 +183,6 @@ export class SearchResultPageComponent {
     console.log(typeof this.id);
 
     const match = this.id.match(/^(\d+)?年度$/);
-    console.log(match); // 應該匹配 "109" 並輸出
     if (match) {
       this.year = match[1] || '';
       console.log(this.year);

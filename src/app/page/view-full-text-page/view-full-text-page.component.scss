@@ -160,6 +160,16 @@
 
 .toolbar-inner {
   left: auto;
+  border-radius: 10px;
+  background-color: #5a6268;
+  color: white;
+  font-size: 23px;
+  border: none;
+  transition: 0.25s;
+
+  &:hover{
+    transform: scale(1.05,1.05);
+  }
 }
 
 .toolbar.hidden {

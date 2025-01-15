@@ -34,21 +34,21 @@ export class CaseDetailsComponent {
   items = [
     {
       type: '死刑',
-      count: 3,
+      count: 1,
       min: '',
       max: '',
       avg: ''
     },
     {
       type: '有期徒刑',
-      count: 30,
+      count: 5,
       min: '1年',
       max: '10年',
       avg: '5年'
     },
     {
       type: '無期徒刑',
-      count: 40,
+      count: 3,
       min: '',
       max: '',
       avg: ''

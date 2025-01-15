@@ -47,6 +47,17 @@
   <aside class="left-container">
     <h2 style="font-size: 1.5rem;">瀏覽紀錄</h2>
     <ul>
+      @for(item of historicalRecord ; track $index){
+      <li style="display: flex; justify-content: space-between; margin-top: 1rem;">
+        <span style="color: blue; cursor: pointer; text-decoration: underline"
+          (click)="checkContent(item.groupId, item.id, item.court)">{{item.id}}</span>
+        <span>
+          {{item.year}}/
+          {{item.month}}/
+          {{item.date}}
+        </span>
+      </li>
+      }
     </ul>
   </aside>
 
