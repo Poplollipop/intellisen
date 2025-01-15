@@ -32,7 +32,7 @@ export class SidevavComponent {
           { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           // { label: '書籤', link: '/account-center/' },
-          // { label: '觀看紀錄', link: '/account-center/' },
+          { label: '觀看紀錄', link: '/account-center/historicalRecord' },
           // { label: '刪除帳號', link: '/account-center/' },
           { label: '成員管理', link: '/account-center/management' },
         ];
@@ -42,7 +42,7 @@ export class SidevavComponent {
           { label: '首頁', link: '/account-center/account-main' },
           // { label: '個人資料', link: '/account-center/' },
           // { label: '書籤', link: '/account-center/' },
-          // { label: '觀看紀錄', link: '/account-center/' },
+          { label: '觀看紀錄', link: '/account-center/historicalRecord'},
           // { label: '刪除帳號', link: '/account-center/' },
           // { label: '客戶管理', link: '/account-center/' },
         ];
@@ -52,7 +52,7 @@ export class SidevavComponent {
           { label: '首頁', link: '/account-center/account-main' },
           // { label: '個人資料', link: '/account-center/' },
           // { label: '書籤', link: '/account-center/' },
-          // { label: '觀看紀錄', link: '/account-center/' },
+          { label: '觀看紀錄', link: '/account-center/historicalRecord' },
           // { label: '刪除帳號', link: '/account-center/' },
         ];
         break;
@@ -62,7 +62,7 @@ export class SidevavComponent {
             // { label: '個人資料', link: '/account-center/' },
             // { label: '刪除帳號', link: '/account-center/' },
           ];
-        break;  
+        break;
     }
   }
 }
