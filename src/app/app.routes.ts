@@ -43,7 +43,7 @@ export const routes: Routes = [
       { path: 'client-management', component: ClientManagementComponent },  // 成員管理
       { path: 'delete-account', component: DeleteAccountComponent },   // 刪除帳號
       { path: 'management', component: MembersManagementComponent },  // 管理
-      { path: 'historical-record', component : HistoricalRecordComponent},
+      { path: 'historical-record', component : HistoricalRecordComponent}, // 觀看紀錄
     ]
   }
 ];

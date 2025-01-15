@@ -22,7 +22,7 @@ export class SidevavComponent {
     public session: SessionServiceService,
     private http: HttpClientService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -37,10 +37,9 @@ export class SidevavComponent {
           { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           { label: '書籤', link: '/account-center/my-bookmarks' },
-          { label: '成員管理', link: '/account-center/members-management' },
           { label: '觀看紀錄', link: '/account-center/historical-record' },
-          // { label: '刪除帳號', link: '/account-center/' },
-          { label: '成員管理', link: '/account-center/management' },
+          { label: '成員管理', link: '/account-center/members-management' },
+          // { label: '刪除帳號', link: '/account-center/delete-account' },
         ];
         break;
       case 'lawyer':
@@ -49,10 +48,9 @@ export class SidevavComponent {
           { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           { label: '書籤', link: '/account-center/my-bookmarks' },
+          { label: '觀看紀錄', link: '/account-center/historical-record' },
           { label: '客戶管理', link: '/account-center/client-management' },
-          { label: '觀看紀錄', link: '/account-center/historical-record'},
-          // { label: '刪除帳號', link: '/account-center/' },
-          // { label: '客戶管理', link: '/account-center/' },
+          // { label: '刪除帳號', link: '/account-center/delete-account' },
         ];
         break;
       case 'user':
