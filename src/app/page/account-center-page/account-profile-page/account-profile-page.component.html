@@ -1,173 +1,185 @@
 <div class="container">
 
-    <div class="section">
-        <div class="basic-info card">
+  <div class="section">
+    <div class="basic-info card">
 
-            <div class="header">
-                <h3>基本資料</h3>
-                <mat-icon fontIcon="edit" (click)="toggleEdit('basicInfo')"></mat-icon>
-            </div>
+      <div class="header">
+        <h3>基本資料</h3>
+        <mat-icon fontIcon="edit" (click)="toggleEdit('basicInfo')"></mat-icon>
+      </div>
 
-            <div class="nav"></div>
+      <div class="nav"></div>
 
-            <div class="flex-info">
-                <div class="pic">
-                    <label>頭像</label>
-                    <img src="assets/avatar.jpg" alt="User Avatar">
-                </div>
+      <div class="flex-info">
+        <div class="pic">
+          <label>頭像</label>
 
-                <div class="info">
-                    @if (this.role == '事務所') {
-                    <div class="info-row">
-                        <label for="name">名稱</label>
-                        @if (!editMode.basicInfo) {
-                        <p id="name">{{this.name}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
-                        }
-                    </div>
-                    <div class="info-row">
-                        <label for="address">地址</label>
-                        @if (!editMode.basicInfo) {
-                        <p>{{this.address}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="address" id="address" type="text" placeholder="請輸入地址">
-                        }
-                    </div>
-                    <div class="info-row">
-                        <label for="lawFirmNumber">事務所統編</label>
-                        @if (!editMode.basicInfo) {
-                        <p>{{this.lawFirmNumber}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="lawFirmNumber" id="lawFirmNumber" type="text" placeholder="請輸入統編">
-                        }
-                    </div>
-                    }
-                    @if (this.role == '律師') {
-                    <div class="info-row">
-                        <label for="name">姓名</label>
-                        @if (!editMode.basicInfo) {
-                        <p id="name">{{this.name}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
-                        }
-                    </div>
-                    <div class="info-row">
-                        <label for="lawFirm">所屬事務所</label>
-                        @if (!editMode.basicInfo) {
-                        <p>{{this.lawFirm}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="lawFirm" id="lawFirm" type="text" placeholder="請輸入所屬事務所">
-                        }
-                    </div>
-                    <div class="info-row">
-                        <label for="licenseNumber">律師證書字號</label>
-                        @if (!editMode.basicInfo) {
-                        <p>{{this.licenseNumber}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="licenseNumber" id="licenseNumber" type="text" placeholder="請輸入律師證書字號">
-                        }
-                    </div>
-                    }
-                    @if (this.role == '一般使用者') {
-                    <div class="info-row">
-                        <label for="name">姓名</label>
-                        @if (!editMode.basicInfo) {
-                        <p id="name">{{this.name}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
-                        }
-                    </div>
-                    <div class="info-row">
-                        <label for="city">所在縣市</label>
-                        @if (!editMode.basicInfo) {
-                        <p id="city">{{this.city}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="city" id="city" type="text" placeholder="請輸入所在縣市">
-                        }
-                    </div>
-                    }
-                    @if (this.role == '訪客') {
-                    <div class="info-row">
-                        <label for="name">姓名</label>
-                        @if (!editMode.basicInfo) {
-                        <p id="name">{{this.name}}</p>
-                        }
-                        @else {
-                        <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
-                        }
-                    </div>
-                    }
-                </div>
-            </div>
+          @if (imageUrl) {
+          <img [src]="imageUrl" alt="Profile Picture" width="100" />
+          } @else {
+          <img src="assets/avatar.jpg" alt="頭像" width="100">
+          }
 
-            @if (editMode.basicInfo) {
-            <div class="update-btn">
-                <button (click)="updateInfo()">完成</button>
-            </div>
-            }
+          @if (editMode.basicInfo) {
+              <form (ngSubmit)="onSubmit()">
+                <input type="file" id="file" class="select-btn" (change)="onFileChange($event)" accept="image/*" />
+                <button type="submit" [disabled]="!selectedFile">上傳</button>
+              </form>
+          }
         </div>
 
-
-        <div class="contact-info card">
-            @if (this.role == "律師" || this.role == "事務所" || this.role == "一般使用者") {
-            <div class="header">
-                <h3>聯絡資料</h3>
-                <mat-icon fontIcon="edit" (click)="toggleEdit('contactInfo')"></mat-icon>
-            </div>
-            <div class="nav"></div>
-            <div class="info">
-                <div class="info-row">
-                    <label for="email">電子郵件</label>
-                    <p id="email">{{this.email}}</p>
-                </div>
-
-                <div class="info-row">
-                    <label for="phone">電話</label>
-                    @if (!editMode.contactInfo) {
-                    <p id="phone">{{this.phone}}</p>
-                    }
-                    @else {
-                    <input [(ngModel)]="phone" id="phone" type="text" placeholder="請輸入電話">
-                    }
-                </div>
-            </div>
-            } @else {
-            <div class="header">
-                <h3>聯絡資料</h3>
-            </div>
-            <div class="info">
-                <div class="info-row">
-                    <label for="email">電子郵件</label>
-                    <p id="email">{{this.email}}</p>
-                </div>
-            </div>
+        <div class="info">
+          @if (this.role == '事務所') {
+          <div class="info-row">
+            <label for="name">名稱</label>
+            @if (!editMode.basicInfo) {
+            <p id="name">{{this.name}}</p>
             }
-            @if (editMode.contactInfo) {
-            <div class="update-btn">
-                <button (click)="updateInfo()">完成</button>
-            </div>
+            @else {
+            <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
             }
+          </div>
+          <div class="info-row">
+            <label for="address">地址</label>
+            @if (!editMode.basicInfo) {
+            <p>{{this.address}}</p>
+            }
+            @else {
+            <input [(ngModel)]="address" id="address" type="text" placeholder="請輸入地址">
+            }
+          </div>
+          <div class="info-row">
+            <label for="lawFirmNumber">事務所統編</label>
+            @if (!editMode.basicInfo) {
+            <p>{{this.lawFirmNumber}}</p>
+            }
+            @else {
+            <input [(ngModel)]="lawFirmNumber" id="lawFirmNumber" type="text" placeholder="請輸入統編">
+            }
+          </div>
+          }
+          @if (this.role == '律師') {
+          <div class="info-row">
+            <label for="name">姓名</label>
+            @if (!editMode.basicInfo) {
+            <p id="name">{{this.name}}</p>
+            }
+            @else {
+            <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
+            }
+          </div>
+          <div class="info-row">
+            <label for="lawFirm">所屬事務所</label>
+            @if (!editMode.basicInfo) {
+            <p>{{this.lawFirm}}</p>
+            }
+            @else {
+            <input [(ngModel)]="lawFirm" id="lawFirm" type="text" placeholder="請輸入所屬事務所">
+            }
+          </div>
+          <div class="info-row">
+            <label for="licenseNumber">律師證書字號</label>
+            @if (!editMode.basicInfo) {
+            <p>{{this.licenseNumber}}</p>
+            }
+            @else {
+            <input [(ngModel)]="licenseNumber" id="licenseNumber" type="text" placeholder="請輸入律師證書字號">
+            }
+          </div>
+          }
+          @if (this.role == '一般使用者') {
+          <div class="info-row">
+            <label for="name">姓名</label>
+            @if (!editMode.basicInfo) {
+            <p id="name">{{this.name}}</p>
+            }
+            @else {
+            <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
+            }
+          </div>
+          <div class="info-row">
+            <label for="city">所在縣市</label>
+            @if (!editMode.basicInfo) {
+            <p id="city">{{this.city}}</p>
+            }
+            @else {
+            <input [(ngModel)]="city" id="city" type="text" placeholder="請輸入所在縣市">
+            }
+          </div>
+          }
+          @if (this.role == '訪客') {
+          <div class="info-row">
+            <label for="name">姓名</label>
+            @if (!editMode.basicInfo) {
+            <p id="name">{{this.name}}</p>
+            }
+            @else {
+            <input [(ngModel)]="name" id="name" type="text" placeholder="請輸入名稱">
+            }
+          </div>
+          }
         </div>
+      </div>
+
+      @if (editMode.basicInfo) {
+      <div class="update-btn">
+        <button (click)="updateInfo()">完成</button>
+      </div>
+      }
     </div>
 
 
-    <div class="section">
-        <div class="current-role card">
-            <h3>目前使用者類型</h3>
-            <div class="nav-role"></div>
-            <div class="plan-box">
-                <p style="font-size: 20px;">{{this.role}}</p>
-                <button class="change-plan-button" (click)="goChangeRole()">更換方案</button>
-            </div>
+    <div class="contact-info card">
+      @if (this.role == "律師" || this.role == "事務所" || this.role == "一般使用者") {
+      <div class="header">
+        <h3>聯絡資料</h3>
+        <mat-icon fontIcon="edit" (click)="toggleEdit('contactInfo')"></mat-icon>
+      </div>
+      <div class="nav"></div>
+      <div class="info">
+        <div class="info-row">
+          <label for="email">電子郵件</label>
+          <p id="email">{{this.email}}</p>
         </div>
+
+        <div class="info-row">
+          <label for="phone">電話</label>
+          @if (!editMode.contactInfo) {
+          <p id="phone">{{this.phone}}</p>
+          }
+          @else {
+          <input [(ngModel)]="phone" id="phone" type="text" placeholder="請輸入電話">
+          }
+        </div>
+      </div>
+      } @else {
+      <div class="header">
+        <h3>聯絡資料</h3>
+      </div>
+      <div class="info">
+        <div class="info-row">
+          <label for="email">電子郵件</label>
+          <p id="email">{{this.email}}</p>
+        </div>
+      </div>
+      }
+      @if (editMode.contactInfo) {
+      <div class="update-btn">
+        <button (click)="updateInfo()">完成</button>
+      </div>
+      }
     </div>
+  </div>
+
+
+  <div class="section">
+    <div class="current-role card">
+      <h3>目前使用者類型</h3>
+      <div class="nav-role"></div>
+      <div class="plan-box">
+        <p style="font-size: 20px;">{{this.role}}</p>
+        <button class="change-plan-button" (click)="goChangeRole()">更換方案</button>
+      </div>
+    </div>
+  </div>
 </div>

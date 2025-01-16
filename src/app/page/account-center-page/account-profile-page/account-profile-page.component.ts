@@ -210,7 +210,16 @@ export class AccountProfilePageComponent {
         return;
       }
 
+      // 顯示即時預覽圖片
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result; // 更新預覽圖片的 URL
+      };
+      reader.readAsDataURL(file); // 讀取檔案作為 Base64 字串
+
       this.selectedFile = file;
+
+
     }
   }
 
