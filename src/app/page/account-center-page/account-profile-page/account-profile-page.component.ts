@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientService } from '../../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../../service/session-service.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 
 
@@ -21,10 +21,10 @@ import { HttpResponse } from '@angular/common/http';
 export class AccountProfilePageComponent {
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
-  name: string | null = '';
-  phone: string | null = '';
-  email: string | null = '';
-  role: string | null = '';
+  name: string | null = null;
+  phone: string | null = null;
+  email: string | null = null;
+  role: string | null = null;
   imageUrl: string | null = null; // 用戶圖像路徑
   selectedFile: File | null = null;
   maxFileSize: number = 5 * 1024 * 1024; // 最大檔案大小 5MB
@@ -34,15 +34,15 @@ export class AccountProfilePageComponent {
   udpdateData!: any;
 
   // 事務所
-  address!: string;
-  lawFirmNumber!: string;
+  address: string | null = null;
+  lawFirmNumber: string | null = null;
 
   // 律師
-  licenseNumber!: string;
-  lawFirm!: string;
+  licenseNumber: string | null = null;
+  lawFirm: string | null = null;
 
   // 一般使用者
-  city!: string;
+  city: string | null = null;
 
   editMode = {
     basicInfo: false,
@@ -53,10 +53,28 @@ export class AccountProfilePageComponent {
   constructor(
     private http: HttpClientService,
     private session: SessionServiceService,
-    private router: Router
-  ) { }
+    private router: Router,  
+  ) { 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && event.urlAfterRedirects === '/account-center/account-profile') {
+        this.showProfile();
+      }
+    });
+  }
 
   ngOnInit() {
+    this.session.taskCompleted$.subscribe(() =>{
+      this.showProfile();
+    })
+  }
+
+  // ngOnChanges() {
+  //   // this.session.taskCompleted$.subscribe(() =>{
+  //   //   this.showProfile();
+  //   // })
+  // }
+
+  showProfile() {
     if (isPlatformBrowser(this.platformId)) {
       // 把 sessionStorage 的東西取出來，要用 parse
       const userData = JSON.parse(sessionStorage.getItem('userData')!);
@@ -67,17 +85,18 @@ export class AccountProfilePageComponent {
         this.role = '事務所'
         this.phone = userData.phone;
         this.address = userData.address;
-        this.lawFirmNumber = userData.lawFirmNumber
+        this.lawFirmNumber = userData.lawFirmNumber;
       }
       if (userData.role == 'lawyer') {
         this.role = '律師'
         this.phone = userData.phone;
         this.lawFirm = userData.lawFirm;
-        this.licenseNumber = userData.licenseNumber
+        this.licenseNumber = userData.licenseNumber;
       }
       if (userData.role == 'user') {
         this.role = '一般使用者'
-        this.city = userData.city
+        this.phone = userData.phone;
+        this.city = userData.city;
       }
       if (userData.role == 'guest') {
         this.role = '訪客'
@@ -88,6 +107,8 @@ export class AccountProfilePageComponent {
       console.log(this.email);
     }
   }
+    
+  
 
   // 切換編輯模式
   toggleEdit(section: keyof typeof this.editMode) {
@@ -103,6 +124,9 @@ export class AccountProfilePageComponent {
       name: this.name,
       phone: this.phone,
       email: this.email,
+      licenseNumber: this.licenseNumber,
+      lawFirm: this.lawFirm,
+      city: this.city,
     }
     console.log(this.udpdateData);
 

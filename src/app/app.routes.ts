@@ -17,7 +17,6 @@ import { MyBookmarksComponent } from './page/account-center-page/my-bookmarks/my
 import { ClientManagementComponent } from './page/account-center-page/client-management/client-management.component';
 import { DeleteAccountComponent } from './page/account-center-page/delete-account/delete-account.component';
 import { MembersManagementComponent } from './page/account-center-page/members-management/members-management.component';
-import { ViewHistoryComponent } from './page/account-center-page/view-history/view-history.component';
 
 export const routes: Routes = [
   { path: '', redirectTo:'/search', pathMatch:'full' },     // 導向首頁
@@ -38,7 +37,6 @@ export const routes: Routes = [
       { path: 'account-main', component: AccountMainPageComponent },  // 首頁
       { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
       { path: 'my-bookmarks', component: MyBookmarksComponent },   // 我的書籤
-      { path: 'view-history', component: ViewHistoryComponent },   // 觀看紀錄
       { path: 'members-management', component: MembersManagementComponent },  // 成員管理
       { path: 'client-management', component: ClientManagementComponent },  // 成員管理
       { path: 'delete-account', component: DeleteAccountComponent },   // 刪除帳號

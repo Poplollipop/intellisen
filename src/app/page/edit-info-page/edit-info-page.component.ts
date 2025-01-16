@@ -16,19 +16,23 @@ import { Router } from '@angular/router';
 })
 export class EditInfoPageComponent {
   email!: string;
-  role!: string; // 身分
-  name!: string; // 名稱
-  phone!: string; // 電話
-  udpdateData!: any;
-  newRole!: string;
+  role: string | null = null; 
+  name: string | null = null;
+  phone: string | null = null;
+  udpdateData!: any
+  newRole: string | null = null;
+
+  // 一般使用者
+  city: string | null = null;
 
   // 事務所
-  address!: string;
-  lawFirmNumber!: string;
+  address: string | null = null;
+  lawFirmNumber: string | null = null;
   
   // 律師
-  licenseNumber!: string;
-  lawFirm!: string;
+  licenseNumber: string | null = null;
+  lawFirm: string | null = null;
+
 
   constructor(
     private session: SessionServiceService,
@@ -48,14 +52,22 @@ export class EditInfoPageComponent {
     if(this.role == 'user') {
       this.role = '一般使用者'
     }
+    if(this.role == 'guest') {
+      this.role = '訪客'
+    }
   }
 
   updateInfo() {
     this.udpdateData = {
       email: this.email,
-      role: this.role,
+      role: this.newRole,
       name: this.name,
-      phone: this.phone
+      phone: this.phone,
+      address: this.address,
+      lawFirmNumber: this.lawFirmNumber,
+      licenseNumber: this.licenseNumber,
+      lawFirm: this.lawFirm,
+      city: this.city,
     }
     console.log(this.udpdateData);
 
@@ -67,8 +79,11 @@ export class EditInfoPageComponent {
             icon: 'success',
             confirmButtonText: '確定'
           });
-          console.log(response);
+          console.log("更新帳戶回傳",response);
+          this.session.setEmail(this.email);
+          this.router.navigateByUrl('/account-center')
         }
+
 
         if (response.body.code != 200) {
           Swal.fire({

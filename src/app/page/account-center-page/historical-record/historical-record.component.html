@@ -1,15 +1,21 @@
-<h2 style="font-size: 1.5rem; text-align: center; margin-top: 1rem;">瀏覽紀錄</h2>
-<ul>
-  @for(item of historicalRecord ; track $index){
-  <li style="display: flex; justify-content: space-evenly; margin-top: 1rem;">
-    <span style="color: blue; cursor: pointer; text-decoration: underline"
-      (click)="checkContent(item.groupId, item.id, item.court)">{{item.id}}</span>
-    <span>
-      {{item.year}}/
-      {{item.month}}/
-      {{item.date}}
-    </span>
-  </li>
-  <hr>
-  }
-</ul>
+<div class="container">
+  <h2>瀏覽紀錄</h2>
+  <div class="nav"></div>
+  <nav></nav>
+  <ul>
+    <li class="header">
+      <span class="id-header">字號</span>
+      <span class="date-header">瀏覽日期</span>
+    </li>
+    @for(item of historicalRecord ; track $index){
+    <li class="content">
+      <span class="id" (click)="checkContent(item.groupId, item.id, item.court)">{{item.id}}</span>
+      <span class="date">
+        {{item.year}}/
+        {{item.month}}/
+        {{item.date}}
+      </span>
+    </li>
+    }
+  </ul>
+</div>

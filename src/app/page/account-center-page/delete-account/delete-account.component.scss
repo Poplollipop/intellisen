@@ -1,0 +1,65 @@
+@font-face {
+    font-family: "TaipeiR";
+    src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
+  }
+  
+.container {
+  text-align: center;
+  margin-top: 8rem;
+  padding: 1.5rem;
+  width: 60rem;
+  height: 18rem;
+  background-color: #f0f0f0;
+
+  .nav {
+    width: 50%;
+    height: 5px;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: #6969697b;
+  }
+
+  h2 {
+    font-family: 'TaipeiR';
+    font-size: 36px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .btn-area {
+    margin-top: 2rem;
+  }
+
+  .delete {
+    width: 8rem;
+    height: 2.5rem;
+    background-color: #ff4b33;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+
+  .cancel {
+    width: 8rem;
+    height: 2.5rem;
+    background-color: #004bc3;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .delete:hover {
+    background-color: #a91e1e;
+    transform: scale(1.1);
+  }
+
+  .cancel:hover {
+    background-color: #00307e;
+    transform: scale(1.1);
+  }
+}
