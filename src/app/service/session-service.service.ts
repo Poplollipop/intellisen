@@ -214,6 +214,20 @@ export class SessionServiceService {
     return this.court_code.get(code)
   }
 
+  // 英文變中文
+  toChinese(role : string) :string {
+    const roleMap: Map<string, string> = new Map([
+      ['lawFirm', '事務所'],
+      ['lawyer', '律師'],
+      ['user', ''],
+      ['guest', '']
+    ]);
+    if(roleMap.has(role)){
+      return roleMap.get(role)!;
+    }
+    return '';
+  }
+
   // 西元轉民國
   convertToROCDate(date: Date): string {
     // 取得西元年份

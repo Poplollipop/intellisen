@@ -1,5 +1,5 @@
 import { SearchSessionService } from './../../service/search-session.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, PLATFORM_ID, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionModule } from 'primeng/accordion';
@@ -15,6 +15,7 @@ import { Checkbox } from 'primeng/checkbox';
 import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
+import { isPlatformBrowser } from '@angular/common';
 
 
 
@@ -37,6 +38,8 @@ import { HttpClientService } from '../../service/http-client.service';
 })
 export class SearchPageComponent {
 
+
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
   readonly panelOpenState = signal(false);
 
   keywords: string = '';
@@ -54,6 +57,9 @@ export class SearchPageComponent {
   zhi: string = '';
   hao: string = '';
   combinedId: string = '';
+
+  userName !: string;
+  userRole !: string;
 
   isExpanded: boolean = false;  // 進階條件是否展開的變數
   errorMessage: string = '';    // 法條錯誤提示訊息
@@ -123,9 +129,33 @@ export class SearchPageComponent {
     ];
   }
 
+  ngOnInit() {
+    if(isPlatformBrowser(this.platformId)){
+      // 取得會員資訊
+      const data = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')!) : false;
+      if (data) {
+        this.userName = data.name;
+        this.userRole = data.role;
+      }
+    }
+  }
+
 
   toggleAdvanced() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  toChinese(role: string): string {
+    const roleMap: Map<string, string> = new Map([
+      ['lawFirm', '事務所'],
+      ['lawyer', '律師'],
+      ['user', ''],
+      ['guest', '']
+    ]);
+    if (roleMap.has(role)) {
+      return roleMap.get(role)!;
+    }
+    return '';
   }
 
   goCombinedId(): string {
@@ -232,6 +262,7 @@ export class SearchPageComponent {
         // 手動觸發變更檢測，更新顯示登出狀態
         this.cdRef.detectChanges();
         this.router.navigateByUrl('/search')
+        sessionStorage.removeItem('userData')
       }
     });
   }

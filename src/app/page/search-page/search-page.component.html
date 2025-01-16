@@ -1,6 +1,8 @@
 <div class="container">
   <div class="login">
     @if (session.getIsLogin()) {
+    <span> 你好 {{userName}}  {{toChinese(userRole)}}</span>
+    <span style="margin-left: 1rem;">|</span>
     <span (click)="goLogout()" class="click" style="cursor: pointer; margin-left: 1rem;">登出</span>
     <span style="margin-left: 1rem;">|</span>
     <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
