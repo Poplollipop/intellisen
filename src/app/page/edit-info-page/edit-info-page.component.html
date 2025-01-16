@@ -52,6 +52,23 @@
         </div>
         }
 
+        @if (this.role == '訪客') {
+          <div class="option">
+            <input type="radio" id="lawFirm" name="role" value="lawFirm" [(ngModel)]="this.newRole">
+            <label for="lawFirm">事務所</label><br>
+          </div>
+  
+          <div class="option">
+            <input type="radio" id="lawyer" name="role" value="lawyer" [(ngModel)]="this.newRole">
+            <label for="lawyer">律師</label><br>
+          </div>
+
+          <div class="option">
+            <input type="radio" id="user" name="role" value="user" [(ngModel)]="this.newRole">
+            <label for="user">一般使用者</label><br>
+          </div>
+          }
+
       </div>
     </div>
 
@@ -112,6 +129,11 @@
       <div class="form-group">
         <label for="phone">電話：</label>
         <input type="text" id="phone" [(ngModel)]="phone" placeholder="請輸入聯絡電話" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">所在縣市：</label>
+        <input type="text" id="city" [(ngModel)]="city" placeholder="請輸入所在縣市" class="form-control" required>
       </div>
       }
 

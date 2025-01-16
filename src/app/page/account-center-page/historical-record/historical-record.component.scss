@@ -1,0 +1,88 @@
+@font-face {
+  font-family: "TaipeiR";
+  src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
+}
+
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
+}
+
+.container {
+  padding: 2rem;
+  height: 100%;
+  width: 100%;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  color: #333;
+  font-weight: bold;
+  font-family: "TaipeiR" , sans-serif;
+}
+
+.nav {
+  width: 30%;
+  height: 5px;
+  margin-bottom: 2rem;
+  background-color: #6969697b;
+}
+
+ul {
+  list-style: none; // 移除默認項目符號
+  padding: 0;
+  margin: 2rem auto;
+  max-width: 80%;
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+
+    .id-header {
+      width: 30rem;
+      font-size: 24px;
+    }
+
+    .date-header {
+      font-size: 24px;
+    }
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+
+    .id {
+      width: 30rem;
+    }
+
+    span {
+      font-size: 20px;
+      color: #555;
+
+      &:first-child {
+        color: #007bff;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #0056b3;
+        }
+      }
+    }
+  }
+}

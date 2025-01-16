@@ -98,17 +98,27 @@ h2 {
 
 .btn-submit , .btn-cancel {
   width: 20%;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-right: 2rem;
   padding: 10px 20px;
   font-size: 20px;
   font-weight: bold;
   background-color: #005593;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.btn-submit {
+  background-color: #005593;
+  color: white;
+}
+
+.btn-cancel {
+  color: rgb(0, 0, 0);
+  background-color: #f7f7f7;
+  border: 2px solid #c8c8c8;
 }
 
 .btn-submit:hover {
@@ -120,10 +130,10 @@ h2 {
 }
 
 .btn-cancel:hover {
-  background-color: #357ABD;
+  background-color: #7f7f7f;
 }
 
 .btn-cancel:active {
-  background-color: #2a5c89;
+  background-color: #959595;
 }
 

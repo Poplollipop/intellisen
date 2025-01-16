@@ -49,7 +49,7 @@ export class SidevavComponent {
           // { label: '首頁', link: '/account-center/account-main' },
           { icon: "person" , label: '個人資料', link: '/account-center/account-profile' },
           { icon: 'bookmark' , label: '書籤', link: '/account-center/my-bookmarks' },
-          { icon: 'history' , label: '觀看紀錄', link: '/account-center/historical-record' },
+          { icon: 'history' , label: '瀏覽紀錄', link: '/account-center/historical-record' },
           { icon: 'manage_accounts' , label: '成員管理', link: '/account-center/members-management' },
           { icon: 'person_remove' , label: '刪除帳號', link: '/account-center/delete-account' },
         ];
@@ -60,8 +60,8 @@ export class SidevavComponent {
           // { label: '首頁', link: '/account-center/account-main' },
           { icon: "person" ,  label: '個人資料', link: '/account-center/account-profile' },
           { icon: 'bookmark' ,  label: '書籤', link: '/account-center/my-bookmarks' },
-          { icon: 'history' ,  label: '觀看紀錄', link: '/account-center/historical-record' },
-          // { icon: 'manage_accounts' ,  label: '客戶管理', link: '/account-center/client-management' },
+          { icon: 'history' ,  label: '瀏覽紀錄', link: '/account-center/historical-record' },
+          { icon: 'manage_accounts' ,  label: '客戶管理', link: '/account-center/client-management' },
           { icon: 'person_remove' ,  label: '刪除帳號', link: '/account-center/delete-account' },
         ];
         break;
@@ -71,7 +71,7 @@ export class SidevavComponent {
           // { label: '首頁', link: '/account-center/account-main' },
           { icon: 'person' ,  label: '個人資料', link: '/account-center/account-profile' },
           { icon: 'bookmark' ,  label: '書籤', link: '/account-center/my-bookmarks' },
-          { icon: 'history' ,  label: '觀看紀錄', link: '/account-center/' },
+          { icon: 'history' ,  label: '瀏覽紀錄', link: '/account-center/historical-record' },
           { icon: 'person_remove' ,  label: '刪除帳號', link: '/account-center/delete-account' },
         ];
         break;
