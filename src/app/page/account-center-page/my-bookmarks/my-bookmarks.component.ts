@@ -44,7 +44,7 @@ export class MyBookmarksComponent implements OnInit {
     {
       groupId: "113年度中簡字第1265號",
       id: "113年度中簡字第1265號",
-      court: "TCD",
+      court: "臺灣臺中地方法院",
       verdictDate: "2024-05-31",
       url: "https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TCDM%2c113%2c中簡%2c1265%2c20240531%2c1",
       charge: "毒品危害防制條例",
@@ -59,7 +59,7 @@ export class MyBookmarksComponent implements OnInit {
     {
       groupId: "113年度中簡字第1267號",
       id: "113年度中簡字第1267號",
-      court: "TCD",
+      court: "臺灣臺中地方法院",
       verdictDate: "2024-05-31",
       url: "https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TCDM%2c113%2c中簡%2c1267%2c20240531%2c1",
       charge: "竊盜",

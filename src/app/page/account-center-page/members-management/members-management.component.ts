@@ -19,12 +19,12 @@ export class MembersManagementComponent {
   }
 
   members = [
-    { id: 1, name: '王大明', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 8, clients: 8, status: '已結案'},
-    { id: 2, name: '王大湳', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 2, clients: 2, status: '進行中'},
-    { id: 3, name: '王大梅', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 6, clients: 6, status: '未聯絡'},
-    { id: 4, name: '王大立', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 9, clients: 9, status: '已聯絡'},
-    { id: 5, name: '王大千', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 8, clients: 8, status: '進行中'},
-    { id: 6, name: '王大至', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 5, clients: 5, status: '已結案'}
+    { id: 1, name: '王大明', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 8, clients: 8, status: '放假'},
+    { id: 2, name: '王大湳', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 2, clients: 2, status: '接案'},
+    { id: 3, name: '王大梅', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 6, clients: 6, status: '接案'},
+    { id: 4, name: '王大立', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 9, clients: 9, status: '未接案'},
+    { id: 5, name: '王大千', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 8, clients: 8, status: '放假'},
+    { id: 6, name: '王大至', phone: '0912345678', email: 'fffgggg@hhhrrrr', cases: 5, clients: 5, status: '未接案'}
   ];
 
   // 頁籤

@@ -13,8 +13,6 @@
 }
 
 .container {
-  // display: flex;
-  // flex-wrap: wrap;
   gap: 10rem;
   padding: 2rem;
   min-height: 100vh;
@@ -25,14 +23,9 @@
   width: 30%;
   height: 5px;
   margin-bottom: 2rem;
-  background-color: #6969697b;
+  background-color: #005593;
 }
 
-// // 左右區域
-// .left-section,
-// .right-section {
-//   flex: 1;
-// }
 
 // 卡片樣式
 .card {
@@ -69,6 +62,7 @@
   }
 }
 
+// 頭像&基本資料
 .flex-info {
   display: flex;
   gap: 2rem;
@@ -85,7 +79,7 @@
 
   label {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
     color: #555;
   }
 
@@ -100,11 +94,12 @@
   }
 
   img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    // border-radius: 50%;
     border: 2px solid #ddd;
     transition: transform 0.3s;
+    margin-left: 1.5rem;
 
     button:hover {
       transform: scale(1.1);
@@ -119,13 +114,17 @@
 
   label {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
     color: #555;
+  }
+
+  p {
+    font-size: 20px;
   }
 
   span,
   input {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   input {
@@ -145,6 +144,7 @@
   }
 }
 
+// 聯絡資料
 .contact-info .info {
   margin: 0 2rem;
 }
@@ -163,6 +163,8 @@ button {
   color: #ffffff;
   font-size: 20px;
   font-weight: bold;
+  border-radius: 8px;
+  transition: transform 0.3s;
 
   &:hover {
     background-color: #42a2e7;
@@ -176,6 +178,11 @@ button {
   }
 }
 
+.change-plan-button {
+  width: 15rem;
+  height: 3rem;
+}
+
 // 身分欄
 .current-role {
   width: 40%;
@@ -184,12 +191,11 @@ button {
     font-family: "TaipeiR";
   }
 
-
   .nav-role {
     width: 70%;
     height: 5px;
     margin-bottom: 1.5rem;
-    background-color: #6969697b;
+    background-color: #005593;
   }
 
 

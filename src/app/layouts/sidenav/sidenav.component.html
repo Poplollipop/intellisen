@@ -1,0 +1,27 @@
+<div class="sidenav">
+    <div class="header">
+        <div class="pic">
+            <!-- <img src="assets/avatar.jpg" alt="頭像" width="100"> -->
+
+            @if (imageUrl) {
+              <img [src]="imageUrl" alt="Profile Picture" width="100" />
+            } @else {
+              <img src="assets/avatar.jpg" alt="頭像" width="100">
+            }
+
+        </div>
+        <h2>{{this.name}}</h2>
+        <h5>{{this.role}}</h5>
+    </div>
+
+    <nav>
+        <ul>
+            @for (item of menuItems; track $index) {
+            <li [routerLink]="item.link" routerLinkActive="active">
+                <mat-icon [fontIcon] = "item.icon" [routerLink]="item.link" routerLinkActive="active1"></mat-icon>
+                <p routerLinkActive="active1">{{ item.label }}</p>
+            </li>
+            }
+        </ul>
+    </nav>
+</div>

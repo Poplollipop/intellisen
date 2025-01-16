@@ -7,7 +7,7 @@
         <th>電子郵件</th>
         <th>案件數量</th>
         <th>客戶人數</th>
-        <th>備註</th>
+        <th>狀態</th>
         <th></th>
       </tr>
     </thead>
@@ -24,7 +24,15 @@
         <td>{{ member.email }}</td>
         <td>{{ member.cases }}</td>
         <td>{{ member.clients }}</td>
-        <td></td>
+        <td>
+          <p [ngClass]="{
+            'on-case': member.status == '接案',
+            'no-case': member.status == '未接案',
+            'off-duty': member.status == '放假',
+            }">
+            {{ member.status }}
+          </p>
+        </td>
         <td><button class="delete-button">🗑</button></td>
       </tr>
       }
@@ -32,7 +40,7 @@
   </table>
 </div>
 
-<div ><!-- 分頁控制 -->
+<div><!-- 分頁控制 -->
   <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [first]="first"
     (onPageChange)="onPageChange($event)"></p-paginator>
 </div>
