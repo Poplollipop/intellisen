@@ -53,8 +53,8 @@ export class AccountProfilePageComponent {
   constructor(
     private http: HttpClientService,
     private session: SessionServiceService,
-    private router: Router,  
-  ) { 
+    private router: Router,
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd && event.urlAfterRedirects === '/account-center/account-profile') {
         this.showProfile();
@@ -107,8 +107,8 @@ export class AccountProfilePageComponent {
       console.log(this.email);
     }
   }
-    
-  
+
+
 
   // 切換編輯模式
   toggleEdit(section: keyof typeof this.editMode) {
@@ -276,9 +276,10 @@ export class AccountProfilePageComponent {
             title: '圖片上傳成功!',
             icon: 'success',
             confirmButtonText: '確定'
-          });
-          window.location.reload(); // 強制刷新頁面
-        },
+          }).then((result) => {
+            window.location.reload(); // 強制刷新頁面
+          }
+        )},
         error: (error) => {
           Swal.fire({
             title: '圖片上傳失敗，請重新上傳',
