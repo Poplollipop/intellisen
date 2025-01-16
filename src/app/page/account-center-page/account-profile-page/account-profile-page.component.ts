@@ -117,6 +117,18 @@ export class AccountProfilePageComponent {
 
   // 更新資料
   updateInfo() {
+    if(this.role == '律師'){
+      this.role = 'lawyer'
+    }
+    if(this.role == '事務所'){
+      this.role = 'lawFirm'
+    }
+    if(this.role == '一般使用者'){
+      this.role = 'user'
+    }
+    if(this.role == '訪客'){
+      this.role = 'guest'
+    }
     this.udpdateData = {
       role: this.role,
       address: this.address,
@@ -141,7 +153,8 @@ export class AccountProfilePageComponent {
           console.log(response);
           this.editMode.basicInfo = false;
           this.editMode.contactInfo = false;
-          sessionStorage.setItem('userData', JSON.stringify(this.udpdateData))
+          sessionStorage.setItem('userData', JSON.stringify(this.udpdateData));
+          window.location.reload(); // 強制刷新頁面
         }
 
         if (response.body.code != 200) {

@@ -15,8 +15,8 @@
       </div>
       <div class="pwd-area">
         <label class="input-label">密碼</label>
-        <p-password class="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
-        placeholder="請輸入密碼"  (keyup.enter)="login()"/>
+        <p-password class="input-psw" name="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
+        placeholder="請輸入密碼"  (keyup.enter)="login()" autocomplete="off"/>
       </div>
     </div>
     <a class="forget-password" (click)="goForgotPassword()">忘記密碼？</a>

@@ -43,23 +43,10 @@
     margin-right: 15px;
   }
 
-  .cancel {
-    width: 8rem;
-    height: 2.5rem;
-    background-color: #004bc3;
-    border: none;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: bold;
-  }
 
   .delete:hover {
     background-color: #a91e1e;
     transform: scale(1.1);
   }
 
-  .cancel:hover {
-    background-color: #00307e;
-    transform: scale(1.1);
-  }
 }
