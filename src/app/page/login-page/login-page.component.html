@@ -5,13 +5,16 @@
     <h3>法律雲平台登入系統</h3>
     <div class="input">
       <div class="email-area">
+        <label class="input-label">信箱</label>
         <input type="text" class="input-email" pInputText [(ngModel)]="email"
-          (keyup)="updateEmailForm()" placeholder="請輸入Email" />
+          (keyup)="updateEmailForm($event)" placeholder="請輸入Email" />
         @if (errorMessage) {
-        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+          <br>
+        <small style="color: red; display: inline-block; margin-left: 1%;position: absolute;left: 22.4%;">{{errorMessage}}</small>
         }
       </div>
       <div class="pwd-area">
+        <label class="input-label">密碼</label>
         <p-password class="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
         placeholder="請輸入密碼"  (keyup.enter)="login()"/>
       </div>

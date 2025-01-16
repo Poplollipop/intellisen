@@ -6,9 +6,9 @@
 
 :host{
   display: block;
-  margin: 0; 
-  padding: 0; 
-  width: 100%;  
+  margin: 0;
+  padding: 0;
+  width: 100%;
   box-sizing: border-box;
   background: linear-gradient(110deg, #8ca6f4, #e4efff);
 }
@@ -29,7 +29,7 @@
   box-shadow: 0 0 15px gray;
   position: relative; /* 設置父容器為定位基準 */
 
-  
+
   h1 {
     font-size: 40px;
     font-family: 'GenKiMin' , 'sans-serif';
@@ -49,6 +49,7 @@
 
   .email-area {
     height: 4rem;
+    position: relative;
   }
 
   .pwd-area {
@@ -118,16 +119,16 @@
   }
 
   .login-btn:hover {
-    background-color: #42a2e7; 
-    transform: scale(1.1);  
+    background-color: #42a2e7;
+    transform: scale(1.1);
   }
 
   .login-btn:active {
-    background-color: #004080; 
-    transform: scale(0.95);    
+    background-color: #004080;
+    transform: scale(0.95);
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* 內縮陰影 */
   }
-  
+
   .create-account {
     display: flex;
     gap: 20px;
@@ -136,15 +137,20 @@
     left: 490px;
     font-size: 18px;
   }
-  
+
   .create-account-link {
     color: rgb(52, 153, 255);
     cursor: pointer;
   }
-  
+
+  .input-label{
+    font-size: 25px;
+    margin-right: 1.5rem;
+  }
 
 
-  
+
+
 }
 
 
