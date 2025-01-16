@@ -14,9 +14,12 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
+
+   
     
     li {
         padding: 0.5em 1em 0.5em 3em;
+        height: 4rem;
         font-size: 0.95em;
         font-weight: regular;
         background-repeat: no-repeat;
@@ -24,6 +27,19 @@ ul {
         background-size: auto 20px;
         transition: all 0.15s linear;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        mat-icon {
+            cursor: pointer;
+            color: #5e5e5e;
+            transition: color 0.3s;
+            width: 30px;
+        
+            &:hover {
+              color: #2c2c2c;
+            }
+          }
     }
 
     li:hover {

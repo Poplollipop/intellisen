@@ -1,0 +1,135 @@
+.table-container {
+    width: 90%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+    font-size: 20px;
+  }
+
+  
+  th, td {
+    text-align: left;
+    padding: 18px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+  }
+  
+  .member-cell {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #888;
+  }
+  
+  .delete-button:hover {
+    color: #e74c3c;
+  }
+  
+  .pagination {
+    text-align: center;
+    padding: 10px;
+    background-color: #f2f2f2;
+  }
+  
+  .pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .pagination a:hover {
+    text-decoration: underline;
+  }
+  
+  // 已結案
+  .closed {
+    margin: 0;
+    width: 60px;
+    text-align: center;
+    background-color: #14AE5C; 
+    border-radius: 5px;
+    color: #ffffff;
+  }
+  
+  // 進行中
+  .in-progress {
+    margin: 0;
+    width: 60px;
+    text-align: center;
+    background-color: #F24822; 
+    border-radius: 5px;
+    color: #ffffff;
+
+  }
+
+  // 已聯絡
+  .contact {
+    margin: 0;
+    width: 60px;
+    text-align: center;
+    background-color: #EBB400;
+    border-radius: 5px;
+    color: #ffffff;
+
+  }
+
+  // 未聯絡
+  .no-contact {
+    margin: 0;
+    width: 60px;
+    text-align: center;
+    background-color: #757575; 
+    border-radius: 5px;
+    color: #ffffff;
+
+  }
+
+
+  // 頁籤
+  .pagination button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  .page-numbers {
+    display: flex;
+    gap: 5px;
+    margin: 0 1rem 0 1rem;
+  }
+  .ellipsis {
+    margin: 0 5px;
+  }

@@ -1,123 +1,182 @@
+@font-face {
+  font-family: "TaipeiR";
+  src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
+}
+
 :host {
-    display: block;
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 2rem;
-    min-height: 100vh;
-  }
-  
-  // 左右區域
-  .left-section, .right-section {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  // 卡片樣式
-  .card {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  // 標題樣式
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  
-    h3 {
-      font-size: 28px;
-      color: #333;
-      margin: 0;
-    }
-  
-    mat-icon {
-      cursor: pointer;
-      color: #007bff;
-      transition: color 0.3s;
-  
-      &:hover {
-        color: #0056b3;
-      }
-    }
-  }
-  
-  // 頭像樣式
-  .pic {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid #ddd;
-      transition: transform 0.3s;
-  
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
-  
-  // 資訊列
-  .info-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  
-    label {
-      flex: 1;
-      font-weight: bold;
-      color: #555;
-    }
-  
-    span, input {
-      flex: 2;
-      font-size: 16px;
-    }
-  
-    input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      transition: border-color 0.3s;
-  
-      &:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-      }
-    }
-  }
-  
-  // 按鈕樣式
-  button {
-    padding: 10px 15px;
-    background: #007bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  
-    &:hover {
-      background-color: #0056b3;
-    }
-  }
-  
+  // display: flex;
+  // flex-wrap: wrap;
+  gap: 10rem;
+  padding: 2rem;
+  min-height: 100vh;
+  width: 100%;
+}
 
+.nav {
+  width: 30%;
+  height: 5px;
+  margin-bottom: 2rem;
+  background-color: #6969697b;
+}
+
+// // 左右區域
+// .left-section,
+// .right-section {
+//   flex: 1;
+// }
+
+// 卡片樣式
+.card {
+  background: #ffffff;
+  padding: 1.5rem;
+  // border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  border: none;
+}
+
+// 標題樣式
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  h3 {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+    font-family: "TaipeiR";
+  }
+
+  mat-icon {
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
+}
+
+.flex-info {
+  display: flex;
+  gap: 20rem;
+}
+
+// 頭像樣式
+.pic {
+  display: flex;
+  gap: 1rem;
+  margin: 0 2rem;
+
+  label {
+    font-weight: bold;
+    font-size: 20px;
+    color: #555;
+  }
+
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// 資訊列
+.info-row {
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: bold;
+    font-size: 20px;
+    color: #555;
+  }
+
+  span,
+  input {
+    font-size: 16px;
+  }
+
+  input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+    background-color: #ffffff;
+    display: block;
+    width: 20rem;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+  }
+}
+
+.contact-info .info {
+  margin: 0 2rem;
+}
+
+// 按鈕樣式
+.update-btn {
+  text-align: end;
+  margin-top: 2rem;
+}
+
+button {
+  width: 7rem;
+  height: 2rem;
+  background-color: #005593;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #42a2e7;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    background-color: #004080; 
+    transform: scale(0.95);    
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); /* 內縮陰影 */
+  }
+}
+
+// 身分欄
+.current-role {
+  width: 40%;
+
+  h3 {
+    font-family: "TaipeiR";
+  }
+
+  
+  .nav-role {
+    width: 70%;
+    height: 5px;
+    margin-bottom: 2rem;
+    background-color: #6969697b;
+  }
+
+}

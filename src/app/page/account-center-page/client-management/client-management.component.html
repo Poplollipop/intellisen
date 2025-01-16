@@ -2,11 +2,11 @@
     <table>
       <thead>
         <tr>
-          <th>成員</th>
+          <th>客戶</th>
+          <th>客戶類型</th>
           <th>電話</th>
           <th>電子郵件</th>
           <th>案件數量</th>
-          <th>客戶人數</th>
           <th>備註</th>
           <th></th>
         </tr>
@@ -20,10 +20,10 @@
               <a href="#">{{ member.name }}</a>
             </div>
           </td>
+          <td>{{ member.type }}</td>
           <td>{{ member.phone }}</td>
           <td>{{ member.email }}</td>
           <td>{{ member.cases }}</td>
-          <td>{{ member.clients }}</td>
           <td>
             <p [ngClass]="{
                     'closed': member.status == '已結案',

@@ -11,12 +11,10 @@
         <ul>
             @for (item of menuItems; track $index) {
             <li [routerLink]="item.link" routerLinkActive="active">
+                <mat-icon [fontIcon] = "item.icon" ></mat-icon>
                 <a>{{ item.label }}</a>
             </li>
             }
         </ul>
-        <div class="del">
-            <button (click)="goDelete()" >刪除帳號</button>
-        </div>
     </nav>
 </div>
