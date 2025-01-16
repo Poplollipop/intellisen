@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SessionServiceService {
+
+  // 建立一個 Subject 的物件
+  private taskCompleted = new Subject<void>();
+
+  // Observable 用來讓其他 Component 訂閱
+  taskCompleted$ = this.taskCompleted.asObservable();
+
+  // 通知任務完成
+  notifyTaskCompleted() {
+    this.taskCompleted.next();
+  }
 
   private selectedData: SelectedData = {
     courts: [],

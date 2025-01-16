@@ -27,6 +27,15 @@ export class SidevavComponent {
   ) { }
 
   ngOnInit() {
+    // 訂閱 session 的 taskCompleted 實體
+    // 等待 account-center-page 的 get_user_info api 取資料後
+    // 再執行 show_sidevav 顯示 sidevav 可選擇的內容
+    this.session.taskCompleted$.subscribe(() =>{
+      this.show_sidevav();
+    })
+  }
+
+  show_sidevav(){
     if (isPlatformBrowser(this.platformId)) {
       this.role = JSON.parse(sessionStorage.getItem('userData')!).role;
       this.name = JSON.parse(sessionStorage.getItem('userData')!).name;;
