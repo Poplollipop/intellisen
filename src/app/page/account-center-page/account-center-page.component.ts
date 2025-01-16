@@ -3,13 +3,13 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
-import { SidevavComponent } from '../../layouts/sidevav/sidevav.component';
+import { SidenavComponent } from '../../layouts/sidenav/sidenav.component';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-account-center-page',
   imports: [
-    SidevavComponent,
+    SidenavComponent,
     RouterOutlet,
   ],
   templateUrl: './account-center-page.component.html',

@@ -44,6 +44,7 @@ export class AccountProfilePageComponent {
   // 一般使用者
   city: string | null = null;
 
+  // 預設非編輯模式
   editMode = {
     basicInfo: false,
     contactInfo: false,
@@ -63,16 +64,12 @@ export class AccountProfilePageComponent {
   }
 
   ngOnInit() {
+    // 訂閱sessionStorage更新完成後才執行提取資料的方法
     this.session.taskCompleted$.subscribe(() =>{
       this.showProfile();
     })
   }
 
-  // ngOnChanges() {
-  //   // this.session.taskCompleted$.subscribe(() =>{
-  //   //   this.showProfile();
-  //   // })
-  // }
 
   showProfile() {
     if (isPlatformBrowser(this.platformId)) {
@@ -81,6 +78,7 @@ export class AccountProfilePageComponent {
       this.email = this.session.getEmail();
       this.name = userData.name;
       this.role = userData.role;
+      // 根據回傳角色配對中文
       if (userData.role == 'lawFirm') {
         this.role = '事務所'
         this.phone = userData.phone;

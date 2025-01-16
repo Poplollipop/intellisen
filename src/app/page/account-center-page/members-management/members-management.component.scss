@@ -1,3 +1,4 @@
+  // 容器
   .table-container {
     width: 90%;
     margin: 20px auto;
@@ -7,12 +8,14 @@
     overflow: hidden;
   }
   
+  // 表格整體樣式
   table {
     width: 100%;
     border-collapse: collapse;
     border: none;
   }
   
+  // 表頭
   thead {
     background-color: #f2f2f2;
     font-size: 20px;
@@ -23,7 +26,7 @@
     text-align: left;
     padding: 18px;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
+    font-size: 20px;
   }
   
   .member-cell {
@@ -76,20 +79,20 @@
     text-decoration: underline;
   }
   
-  // 已結案
-  .closed {
+  // 接案
+  .on-case {
     margin: 0;
-    width: 60px;
+    width: 70px;
     text-align: center;
     background-color: #14AE5C; 
     border-radius: 5px;
     color: #ffffff;
   }
   
-  // 進行中
+  // 
   .in-progress {
     margin: 0;
-    width: 60px;
+    width: 70px;
     text-align: center;
     background-color: #F24822; 
     border-radius: 5px;
@@ -97,10 +100,10 @@
 
   }
 
-  // 已聯絡
-  .contact {
+  // 未接案
+  .no-case {
     margin: 0;
-    width: 60px;
+    width: 70px;
     text-align: center;
     background-color: #EBB400;
     border-radius: 5px;
@@ -108,10 +111,10 @@
 
   }
 
-  // 未聯絡
-  .no-contact {
+  // 休息
+  .off-duty {
     margin: 0;
-    width: 60px;
+    width: 70px;
     text-align: center;
     background-color: #757575; 
     border-radius: 5px;

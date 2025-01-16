@@ -3,6 +3,11 @@
   src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Jyuu";
+  src: url("../../../../../public/GenJyuuGothicL-Monospace-Normal.ttf");
+}
+
 :host {
   display: block;
   margin: 0;
@@ -16,15 +21,13 @@
 .container {
   padding: 2rem;
   height: 100%;
-  width: 100%;
+  width: 90%;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-top: 1rem;
-  margin-left: 1.5rem;
   color: #333;
-  font-weight: bold;
   font-family: "TaipeiR" , sans-serif;
 }
 
@@ -32,29 +35,32 @@ h2 {
   width: 30%;
   height: 5px;
   margin-bottom: 2rem;
-  background-color: #6969697b;
+  background-color: #005593;
 }
 
 ul {
   list-style: none; // 移除默認項目符號
   padding: 0;
   margin: 2rem auto;
-  max-width: 80%;
+  max-width: 100%;
 
   .header {
     display: flex;
     align-items: center;
     margin-top: 1rem;
     padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 3px solid #a5a5a5;
 
     .id-header {
-      width: 30rem;
-      font-size: 24px;
+      width: 50rem;
+      font-size: 22px;
+      margin-left: 1.2rem;
+      font-weight: bold;
     }
 
     .date-header {
-      font-size: 24px;
+      font-size: 22px;
+      font-weight: bold;
     }
   }
 
@@ -62,11 +68,15 @@ ul {
     display: flex;
     align-items: center;
     margin-top: 1rem;
-    padding: 10px 0;
+    padding: 10px 10px;
     border-bottom: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
     .id {
-      width: 30rem;
+      width: 50rem;
+      font-family: "Jyuu" , sans-serif;
     }
 
     span {
