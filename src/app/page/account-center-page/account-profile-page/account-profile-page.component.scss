@@ -1,123 +1,123 @@
+:host {
+    display: block;
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
+}
+
 .container {
     display: flex;
-    min-width: 75vw;
-}
-
-// 左邊區域、右邊區域
-.left-section , .right-section {
-    margin-left: 5rem;
-    margin-top: 2rem;
-}
-
-// 左邊區域
-.left-section {
-    min-width: 60%;
-}
-
-// 右邊區域
-.right-section {
-    margin-left: 7rem;
-}
-
-label {
-    font-size: 22px;
-}
-
-span {
-    font-size: 20px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-    gap: 10px;
-
-    h3 {
-        margin-top: 10px;
-        font-weight: bold;
-        font-size: 30px;
-    }
-
-    mat-icon {
-        cursor: pointer;
-    }
-}
-
-// 頭貼
-.pic {
-    margin-bottom: 2rem;
-    margin-left: 1.5rem;
-
-    img {
-        width: 100px;
-        height: 100px;
-        margin-left: 2rem;
-    }
-}
-
-
-
-// 基本資料
-.basic-info {
-    margin-bottom: 2rem;
-    padding: 15px;
-    padding-left: 20px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-}
-
-
-// 聯絡資料
-.contact-info {
-    margin-bottom: 2rem;
-    padding: 15px;
-    padding-left: 20px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-}
-
-
-// 資料內容格式
-.info {
-    margin: 3rem 0;
-    margin-left: 1.5rem;
-}
-
-.info-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-wrap: wrap;
     gap: 2rem;
-    height: 2.5rem;
-}
-
-label {
-    min-width: 150px;
-    font-weight: bold;
-}
-
-input {
-    flex: 2;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 25rem
-}
-
-input:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-// 目前使用者類型
-.current-role {
-    background-color: #b5d4fa;
-    padding: 20px;
-}
-
-
-
-
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  // 左右區域
+  .left-section, .right-section {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  // 卡片樣式
+  .card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  // 標題樣式
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  
+    h3 {
+      font-size: 28px;
+      color: #333;
+      margin: 0;
+    }
+  
+    mat-icon {
+      cursor: pointer;
+      color: #007bff;
+      transition: color 0.3s;
+  
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }
+  
+  // 頭像樣式
+  .pic {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+      transition: transform 0.3s;
+  
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  // 資訊列
+  .info-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  
+    label {
+      flex: 1;
+      font-weight: bold;
+      color: #555;
+    }
+  
+    span, input {
+      flex: 2;
+      font-size: 16px;
+    }
+  
+    input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s;
+  
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+    }
+  }
+  
+  // 按鈕樣式
+  button {
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+  
 

@@ -34,7 +34,7 @@ export class SidevavComponent {
       case 'lawFirm':
         this.role = '事務所'
         this.menuItems = [
-          { label: '首頁', link: '/account-center/account-main' },
+          // { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           { label: '書籤', link: '/account-center/my-bookmarks' },
           { label: '觀看紀錄', link: '/account-center/historical-record' },
@@ -45,7 +45,7 @@ export class SidevavComponent {
       case 'lawyer':
         this.role = '律師'
         this.menuItems = [
-          { label: '首頁', link: '/account-center/account-main' },
+          // { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           { label: '書籤', link: '/account-center/my-bookmarks' },
           { label: '觀看紀錄', link: '/account-center/historical-record' },
@@ -56,7 +56,7 @@ export class SidevavComponent {
       case 'user':
         this.role = '一般使用者'
         this.menuItems = [
-          { label: '首頁', link: '/account-center/account-main' },
+          // { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
           { label: '書籤', link: '/account-center/my-bookmarks' },
           { label: '觀看紀錄', link: '/account-center/' },
@@ -65,7 +65,7 @@ export class SidevavComponent {
       case 'guest':
         this.role = '訪客'
         this.menuItems = [
-          { label: '首頁', link: '/account-center/account-main' },
+          // { label: '首頁', link: '/account-center/account-main' },
           { label: '個人資料', link: '/account-center/account-profile' },
         ];
         break;
