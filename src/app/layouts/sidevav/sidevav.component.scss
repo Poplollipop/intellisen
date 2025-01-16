@@ -1,47 +1,53 @@
 .header {
-    background-color: rgb(184, 184, 184);
-    padding: 1.5em 0.5em;
-    text-align: center;
-    
-    
-    h2 {
-        margin-top: 2rem;
-        margin-bottom: 0;
-    }
+  background-color: rgb(184, 184, 184);
+  padding: 1.5em 0.5em;
+  text-align: center;
+
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
 }
 
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    
-    li {
-        padding: 0.5em 1em 0.5em 3em;
-        font-size: 0.95em;
-        font-weight: regular;
-        background-repeat: no-repeat;
-        background-position: left 15px center;
-        background-size: auto 20px;
-        transition: all 0.15s linear;
-        cursor: pointer;
-    }
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-    li:hover {
-        background-color: rgba(0,0,0,0.1);
-    }
+  li {
+    padding: 0.5em 1em 0.5em 3em;
+    font-size: 0.95em;
+    font-weight: regular;
+    background-repeat: no-repeat;
+    background-position: left 15px center;
+    background-size: auto 20px;
+    transition: all 0.15s linear;
+    cursor: pointer;
+  }
 
-    .active {
-        background-color: rgba(141, 210, 238, 0.395);
-        font-weight: bold;
-    }
+  li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .active {
+    background-color: rgba(141, 210, 238, 0.395);
+    font-weight: bold;
+  }
 }
 
 
 a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .del {
-    margin: 2rem 6rem;
+  margin: 2rem 6rem;
+}
+
+img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }

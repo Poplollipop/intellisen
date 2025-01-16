@@ -1,7 +1,14 @@
 <div class="sidenav">
     <div class="header">
         <div class="pic">
-            <img src="assets/avatar.jpg" alt="頭像" width="100">
+            <!-- <img src="assets/avatar.jpg" alt="頭像" width="100"> -->
+
+            @if (imageUrl) {
+              <img [src]="imageUrl" alt="Profile Picture" width="100" />
+            } @else {
+              <img src="assets/avatar.jpg" alt="頭像" width="100">
+            }
+
         </div>
         <h2>{{this.name}}</h2>
         <h5>{{this.role}}</h5>

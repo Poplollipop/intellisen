@@ -147,8 +147,6 @@ export class SessionServiceService {
     }
   }
 
-
-
   // 清空 email
   clearIsLogin() {
     this.isLogin = false;

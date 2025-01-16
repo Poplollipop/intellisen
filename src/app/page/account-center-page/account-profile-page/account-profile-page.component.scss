@@ -1,7 +1,7 @@
 :host {
     display: block;
-    margin: 0; 
-    padding: 0; 
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
 }
@@ -13,13 +13,13 @@
     padding: 2rem;
     min-height: 100vh;
   }
-  
+
   // 左右區域
   .left-section, .right-section {
     flex: 1;
     min-width: 300px;
   }
-  
+
   // 卡片樣式
   .card {
     background: #ffffff;
@@ -28,74 +28,74 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
   }
-  
+
   // 標題樣式
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-  
+
     h3 {
       font-size: 28px;
       color: #333;
       margin: 0;
     }
-  
+
     mat-icon {
       cursor: pointer;
       color: #007bff;
       transition: color 0.3s;
-  
+
       &:hover {
         color: #0056b3;
       }
     }
   }
-  
+
   // 頭像樣式
   .pic {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
-  
+
     img {
       width: 80px;
       height: 80px;
       border-radius: 50%;
       border: 2px solid #ddd;
       transition: transform 0.3s;
-  
+
       &:hover {
         transform: scale(1.1);
       }
     }
   }
-  
+
   // 資訊列
   .info-row {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-  
+
     label {
       flex: 1;
       font-weight: bold;
       color: #555;
     }
-  
+
     span, input {
       flex: 2;
       font-size: 16px;
     }
-  
+
     input {
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 6px;
       transition: border-color 0.3s;
-  
+
       &:focus {
         border-color: #007bff;
         outline: none;
@@ -103,7 +103,7 @@
       }
     }
   }
-  
+
   // 按鈕樣式
   button {
     padding: 10px 15px;
@@ -114,10 +114,16 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
-  
+
     &:hover {
       background-color: #0056b3;
     }
   }
-  
+
+  .select-btn {
+    padding: 8px;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+
 
