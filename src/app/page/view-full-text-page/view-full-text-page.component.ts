@@ -48,7 +48,7 @@ export class ViewFullTextPageComponent {
 
   suptext!: any;
   url!: any;
-  fullTextParam !:any;
+  fullTextParam !: any;
   judgmentJgroupId!: any;
   judgmentJid!: any;
   judgmentJcourt!: any;
@@ -185,9 +185,9 @@ export class ViewFullTextPageComponent {
   getJudgmentApi(judgmentJgroupId: string, judgmentJid: string, judgmentJcourt: string) {
 
     this.ngxService.start(); // 啟動 loading 動畫
-    // http://localhost:8080/case/judgmentid?groupId=107年度原訴字第72號&id=107年度原訴字第72號&court=TCD
+
     this.http
-      .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid +'&court='+ judgmentJcourt)
+      .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid + '&court=' + judgmentJcourt)
       .subscribe(
         (res: any) => {
           // console.log(res);
@@ -201,6 +201,17 @@ export class ViewFullTextPageComponent {
 
           this.ngxService.stop(); // 關閉 loading 動畫
         });
+  }
+
+  // 儲存書籤api
+  postBookmarkApi(email:string, groupId:string, id:string, court:string){
+
+    // this.http.postApi('http://localhost:8080/accountSystem/bookmark',)
+  }
+
+  // 儲存螢光筆api
+  postHighlighterApi(email:string, groupId:string, id:string, court:string, highlights:any){
+
   }
 
 
@@ -227,7 +238,28 @@ export class ViewFullTextPageComponent {
 
   // 書籤-儲存判決書
   myFavorite() {
+    const email='';
+    const groupId = this.judgmentJgroupId;
+    const id = this.judgmentJid;
+    const court = this.judgmentJcourt;
+    if (email == null){
+      alert('請登入帳號');
+    } else{
+      this.postBookmarkApi(email, groupId, id, court);
+    }
+  }
 
+  // 儲存螢光筆
+  myhighlighters() {
+    const email=1;
+    const groupId = this.judgmentJgroupId;
+    const id = this.judgmentJid;
+    const court = this.judgmentJcourt;
+    if (email == null){
+      alert('請登入帳號');
+    } else{
+
+    }
   }
 
   //==========================================================
@@ -339,28 +371,6 @@ export class ViewFullTextPageComponent {
     this.suptextSpan.nativeElement.appendChild(fragment);
   }
 
-
-  // 更改高亮顏色()
-  // changeHighlightColor(color: string): void {
-  //   if (!this.currentHighlight) {
-  //     alert('請先選取要更改顏色的高亮文字！');
-  //     return;
-  //   }
-
-  //   const highlightRange = this.highlightedRanges.find(
-  //     (h) =>
-  //       h.text === this.currentHighlight?.textContent &&
-  //       h.startOffset === this.savedRange?.startOffset &&
-  //       h.endOffset === this.savedRange?.endOffset
-  //   );
-
-  //   if (highlightRange) {
-  //     highlightRange.color = color;
-  //     this.renderer.setStyle(this.currentHighlight, 'background-color', color);
-  //   }
-
-  //   this.updateHighlightStorage(); // 更新儲存
-  // }
   //===============================================================
   // 詢問清除全部螢光效果
   removeAllHighlights(): void {
