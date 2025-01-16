@@ -46,7 +46,7 @@ export class ViewFullTextPageComponent {
   @ViewChild('toolbar', { static: false }) toolbarRef!: ElementRef<HTMLDivElement>;
 
 
-  email!:any;
+  email!: any;
   suptext!: any;
   url!: any;
   fullTextParam !: any;
@@ -238,32 +238,32 @@ export class ViewFullTextPageComponent {
   }
 
   // 儲存書籤api
-  postBookmarkApi(email:string, groupId:string, id:string, court:string){
-    const bookmark={
-      email:email,
-      groupId:groupId,
-      id:id,
-      court:court
+  postBookmarkApi(email: string, groupId: string, id: string, court: string) {
+    const bookmark = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court
     }
     console.log(bookmark);
-    this.http.postApi('http://localhost:8080/accountSystem/bookmark',bookmark).subscribe({
-          next: (response: any) => {
-            console.log(response);
-          }
-        })
+    this.http.postApi('http://localhost:8080/accountSystem/bookmark', bookmark).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      }
+    })
   }
 
   // 儲存螢光筆api
-  postHighlighterApi(email:string, groupId:string, id:string, court:string, highlights:any){
-    const highlighter={
-      email:email,
-      groupId:groupId,
-      id:id,
-      court:court,
-      highlights:highlights
+  postHighlighterApi(email: string, groupId: string, id: string, court: string, highlights: any) {
+    const highlighter = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court,
+      highlights: highlights
     }
     console.log(highlighter);
-    this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte',highlighter).subscribe({
+    this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte', highlighter).subscribe({
       next: (response: any) => {
         console.log(response);
       }
@@ -294,29 +294,35 @@ export class ViewFullTextPageComponent {
 
   // 書籤-儲存判決書
   myFavorite() {
-    const email=this.email;
+    const email = this.email;
     const groupId = this.judgmentJgroupId;
     const id = this.judgmentJid;
     const court = this.judgmentJcourt;
-    if (email == null){
+    if (!email || email.trim() === '') {
       alert('請登入帳號');
-    } else{
-      this.postBookmarkApi(email, groupId, id, court);
+      return;
     }
+    this.postBookmarkApi(email, groupId, id, court);
   }
 
   // 儲存螢光筆
   myhighlighters() {
-    const email=this.email;
+    const email = this.email;
     const groupId = this.judgmentJgroupId;
     const id = this.judgmentJid;
     const court = this.judgmentJcourt;
     const highlights = this.highlightedRanges;
-    if (email == null){
+    if (!email || email.trim() === '') {
       alert('請登入帳號');
-    } else{
-      this.postHighlighterApi(email, groupId, id, court, highlights)
+      return;
     }
+
+    if (!highlights || highlights.length === 0 || highlights.some(highlight => !highlight.selectText || highlight.selectText.trim() === '')) {
+      alert('未使用螢光筆');
+      return;
+    }
+
+    this.postHighlighterApi(email, groupId, id, court, highlights);
   }
 
   //==========================================================
@@ -744,9 +750,9 @@ export class ViewFullTextPageComponent {
   //=========================================
   // 回上頁
   returnToPreviousPage() {
-    if(this.sessionServiceService.url){
+    if (this.sessionServiceService.url) {
       this.router.navigate([this.sessionServiceService.url]);
-    }else{
+    } else {
       this.router.navigate(['/search-result']);
     }
   }
