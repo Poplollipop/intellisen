@@ -217,6 +217,8 @@ export class AccountProfilePageComponent {
       };
       reader.readAsDataURL(file); // 讀取檔案作為 Base64 字串
 
+
+
       this.selectedFile = file;
 
 
@@ -238,6 +240,7 @@ export class AccountProfilePageComponent {
             icon: 'success',
             confirmButtonText: '確定'
           });
+          window.location.reload(); // 強制刷新頁面
         },
         error: (error) => {
           Swal.fire({
