@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class EditInfoPageComponent {
 
   constructor(
     private session: SessionServiceService,
-    private http: HttpClientService
+    private http: HttpClientService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -87,5 +89,9 @@ export class EditInfoPageComponent {
         });
       }
     })
+  }
+
+  backToAccountCenter() {
+    this.router.navigateByUrl('/account-center/account-profile')
   }
 }
