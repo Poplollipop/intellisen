@@ -60,7 +60,7 @@
 
   mat-icon {
     cursor: pointer;
-    color: #007bff;
+    color: #757575;
     transition: color 0.3s;
 
     &:hover {
@@ -175,8 +175,9 @@ button {
   .nav-role {
     width: 70%;
     height: 5px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     background-color: #6969697b;
   }
+
 
 }

@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientService } from '../../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../../service/session-service.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 
 
@@ -53,10 +53,28 @@ export class AccountProfilePageComponent {
   constructor(
     private http: HttpClientService,
     private session: SessionServiceService,
-    private router: Router
-  ) { }
+    private router: Router,  
+  ) { 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && event.urlAfterRedirects === '/account-center/account-profile') {
+        this.showProfile();
+      }
+    });
+  }
 
   ngOnInit() {
+    this.session.taskCompleted$.subscribe(() =>{
+      this.showProfile();
+    })
+  }
+
+  // ngOnChanges() {
+  //   // this.session.taskCompleted$.subscribe(() =>{
+  //   //   this.showProfile();
+  //   // })
+  // }
+
+  showProfile() {
     if (isPlatformBrowser(this.platformId)) {
       // 把 sessionStorage 的東西取出來，要用 parse
       const userData = JSON.parse(sessionStorage.getItem('userData')!);
@@ -88,6 +106,8 @@ export class AccountProfilePageComponent {
       console.log(this.email);
     }
   }
+    
+  
 
   // 切換編輯模式
   toggleEdit(section: keyof typeof this.editMode) {
