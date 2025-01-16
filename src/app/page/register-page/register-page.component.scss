@@ -58,6 +58,7 @@
   }
 
   .email-area {
+    position: relative;
       label {
         width: 200px;
       }
@@ -65,9 +66,12 @@
 
   .pwd-area {
     height: 5rem;
+    margin-top: 1.2rem;
   }
 
   .input-psw {
+    position: relative;
+    margin-top: 1.2rem;
       label {
         width: 200px;
       }

@@ -81,11 +81,22 @@
   gap: 1rem;
   margin: 0 2rem;
   flex-direction: column;
+  width: 40%;
 
   label {
     font-weight: bold;
     font-size: 20px;
     color: #555;
+  }
+
+  button {
+    display: block;
+    margin-top: 1.5rem;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+    transform: none;
   }
 
   img {
@@ -95,7 +106,7 @@
     border: 2px solid #ddd;
     transition: transform 0.3s;
 
-    &:hover {
+    button:hover {
       transform: scale(1.1);
     }
   }

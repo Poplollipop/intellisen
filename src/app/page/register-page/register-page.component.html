@@ -12,7 +12,10 @@
         <input type="text" class="input-email ng-invalid ng-dirty " pInputText [(ngModel)]="email"
           (keyup)="updateEmailForm()" />
         @if (errorMessage) {
-        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
+        <br>
+        <small style="color: red; display: inline-block; margin-left: 1%; position: absolute;left: 38%;">
+          {{errorMessage}}
+        </small>
         }
       </div>
 
@@ -27,7 +30,10 @@
           <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
             [feedback]="false" [toggleMask]="true" />
           @if (errorMessage2) {
-          <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage2}}</small>
+            <br>
+          <small style="color: red; display: inline-block; margin-left: 1%; position: absolute;left: 38%;">
+            {{errorMessage2}}
+          </small>
           }
         </div>
       </div>
