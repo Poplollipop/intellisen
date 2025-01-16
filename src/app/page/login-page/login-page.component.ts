@@ -36,13 +36,13 @@ export class LoginPageComponent {
 
   // 驗證email格式
   accountValidation(input: string):boolean{
-    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;;
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     return regex.test(input);
   }
 
   // 顯示email錯誤
-  updateEmailForm(){
-    const isValid = this.accountValidation(this.email);
+  updateEmailForm(event : Event){
+    const isValid = this.accountValidation((event.target as HTMLInputElement).value);
     if (isValid) {
       this.errorMessage = '';
     } else {
