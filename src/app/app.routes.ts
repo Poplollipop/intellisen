@@ -34,7 +34,7 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordPageComponent }, // 重置密碼頁面
   { path: 'account-center', component: AccountCenterPageComponent,
     children: [
-      { path: '', component: AccountProfilePageComponent},   // 預設首頁
+      { path: '', redirectTo:'account-profile', pathMatch:'full'},   // 預設首頁
       { path: 'account-main', component: AccountMainPageComponent },  // 首頁
       { path: 'account-profile', component: AccountProfilePageComponent },  // 個人資訊
       { path: 'my-bookmarks', component: MyBookmarksComponent },   // 我的書籤

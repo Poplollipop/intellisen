@@ -18,6 +18,10 @@
 
     <div class="right-section">
       <!-- 在首頁以外的畫面顯示回首頁按鈕 -->
+      @if(session.getIsLogin()){
+      <span class="hello"> 你好 {{userName}} {{toChinese(userRole)}}</span>
+      <span style="margin-left: 1rem;margin-right: 1rem;">|</span>
+      }
       @if(routerUrl != '/' && routerUrl != '/search'){
       <div>
         <a class="link-css" routerLink="/search">首頁</a>
@@ -26,15 +30,14 @@
       }
       <div class="login">
         @if (session.getIsLogin()) {
-          <span (click)="goLogout()" style="cursor: pointer; margin-left: 1rem;">登出</span>
-          <span style="margin-left: 1rem;">|</span>
-          <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
+        <span (click)="goLogout()" style="cursor: pointer; margin-left: 1rem;">登出</span>
+        <span style="margin-left: 1rem;">|</span>
+        <span (click)="goAccountCenter()" style="cursor: pointer; margin-left: 1rem;">會員中心</span>
         } @else {
-          <span (click)="goLogin()" style="cursor: pointer; margin-left: 1rem;">登入</span>
-          <span style="margin-left: 1rem;">|</span>
-          <span (click)="goRegister()" style="cursor: pointer; margin-left: 1rem;">註冊</span>
+        <span (click)="goLogin()" style="cursor: pointer; margin-left: 1rem;">登入</span>
+        <span style="margin-left: 1rem;">|</span>
+        <span (click)="goRegister()" style="cursor: pointer; margin-left: 1rem;">註冊</span>
         }
-        
       </div>
     </div>
   </div>

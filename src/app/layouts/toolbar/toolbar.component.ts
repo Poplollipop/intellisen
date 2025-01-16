@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { isPlatformBrowser } from '@angular/common';
 
 
 
@@ -17,8 +18,12 @@ import Swal from 'sweetalert2';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
+
   // 從 app.component 取得當前路徑
   @Input() routerUrl: string = '';
+  userName !: string;
+  userRole !: string;
 
   constructor(
     private router: Router,
@@ -29,6 +34,17 @@ export class ToolbarComponent {
 
   goLogin() {
     this.router.navigateByUrl('/login')
+  }
+
+  ngOnInit() {
+    // 取得會員資訊
+    if (isPlatformBrowser(this.platformId)) {
+      const data = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')!) : false;
+      if (data) {
+        this.userName = data.name;
+        this.userRole = data.role;
+      }
+    }
   }
 
   goLogout() {
@@ -85,6 +101,10 @@ export class ToolbarComponent {
 
   goAccountCenter() {
     this.router.navigateByUrl('/account-center')
+  }
+
+  toChinese(role: string): string {
+    return this.session.toChinese(role);
   }
 }
 

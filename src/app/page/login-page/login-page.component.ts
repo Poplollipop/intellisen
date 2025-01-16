@@ -32,16 +32,16 @@ export class LoginPageComponent {
     private router: Router,
     private http: HttpClientService,
     private session: SessionServiceService
-  ){}
+  ) { }
 
   // 驗證email格式
-  accountValidation(input: string):boolean{
+  accountValidation(input: string): boolean {
     const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     return regex.test(input);
   }
 
   // 顯示email錯誤
-  updateEmailForm(event : Event){
+  updateEmailForm(event: Event) {
     const isValid = this.accountValidation((event.target as HTMLInputElement).value);
     if (isValid) {
       this.errorMessage = '';
@@ -51,8 +51,8 @@ export class LoginPageComponent {
   }
 
   // 登入
-  login(){
-    if(!this.email || !this.password){
+  login() {
+    if (!this.email || !this.password) {
       Swal.fire({
         text: '帳號或密碼不可為空!',
         icon: 'error',
@@ -79,7 +79,7 @@ export class LoginPageComponent {
           this.session.setIsLogin(true);
           this.session.setEmail(this.email);
           console.log(this.session.getIsLogin());
-          this.router.navigateByUrl('/search')
+          this.getUserInfo();
         }
 
         if (response.body.code != 200) {
@@ -103,8 +103,23 @@ export class LoginPageComponent {
     })
   }
 
+  // 獲得會員資訊
+  getUserInfo() {
+    this.http.postApi2('http://localhost:8080/accountSystem/get-user-info', {email : this.email}).subscribe({
+      next: (response: any) => {
+        console.log('response:', response);
+        if (response.body.code == 200) {
+          sessionStorage.setItem('userData', JSON.stringify(response.body))
+        }
+        this.router.navigateByUrl('/search')
+      },
+      error: (error) => {
+      }
+    })
+  }
+
   // 建立帳號
-  goRegister(){
+  goRegister() {
     this.router.navigateByUrl('/register')
   }
 
