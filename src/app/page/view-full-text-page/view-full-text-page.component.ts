@@ -37,7 +37,7 @@ export class ViewFullTextPageComponent {
     private clipboard: Clipboard,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private searchSessionService: SearchSessionService,
+    private SessionServiceService: SessionServiceService,
     private ngxService: NgxUiLoaderService,
   ) { }
 
@@ -46,6 +46,7 @@ export class ViewFullTextPageComponent {
   @ViewChild('toolbar', { static: false }) toolbarRef!: ElementRef<HTMLDivElement>;
 
 
+  email!:any;
   suptext!: any;
   url!: any;
   fullTextParam !: any;
@@ -69,7 +70,6 @@ export class ViewFullTextPageComponent {
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
       const fullRouteParam = param.get('groupId'); // 獲取完整的路由字串
-      // console.log(fullRouteParam);
 
       if (fullRouteParam) {
         // 拆解參數
@@ -78,13 +78,10 @@ export class ViewFullTextPageComponent {
         const court = courtParam;
 
         // 將拆解出的值賦值到全域變數
+        this.email = this.sessionServiceService.getEmail();
         this.judgmentJgroupId = groupId;
         this.judgmentJid = id;
         this.judgmentJcourt = court;
-
-        // console.log('Group ID:', this.judgmentJgroupId);
-        // console.log('Judgment ID:', this.judgmentJid);
-        // console.log('Court:', this.judgmentJcourt);
 
         // 呼叫 API
         this.getJudgmentApi(this.judgmentJgroupId, this.judgmentJid, this.judgmentJcourt);
@@ -223,12 +220,11 @@ export class ViewFullTextPageComponent {
   getJudgmentApi(judgmentJgroupId: string, judgmentJid: string, judgmentJcourt: string) {
 
     this.ngxService.start(); // 啟動 loading 動畫
-    // http://localhost:8080/case/judgmentid?groupId=107年度原訴字第72號&id=107年度原訴字第72號&court=TCD
+
     this.http
       .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid + '&court=' + judgmentJcourt)
       .subscribe(
         (res: any) => {
-          // console.log(res);
           this.suptext = res.caseList[0].content2
             ? res.caseList[0].content + '\n' + res.caseList[0].content2
             : res.caseList[0].content;
@@ -239,6 +235,39 @@ export class ViewFullTextPageComponent {
 
           this.ngxService.stop(); // 關閉 loading 動畫
         });
+  }
+
+  // 儲存書籤api
+  postBookmarkApi(email:string, groupId:string, id:string, court:string){
+    const bookmark={
+      email:email,
+      groupId:groupId,
+      id:id,
+      court:court
+    }
+    console.log(bookmark);
+    this.http.postApi('http://localhost:8080/accountSystem/bookmark',bookmark).subscribe({
+          next: (response: any) => {
+            console.log(response);
+          }
+        })
+  }
+
+  // 儲存螢光筆api
+  postHighlighterApi(email:string, groupId:string, id:string, court:string, highlights:any){
+    const highlighter={
+      email:email,
+      groupId:groupId,
+      id:id,
+      court:court,
+      highlights:highlights
+    }
+    console.log(highlighter);
+    this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte',highlighter).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      }
+    })
   }
 
 
@@ -265,7 +294,29 @@ export class ViewFullTextPageComponent {
 
   // 書籤-儲存判決書
   myFavorite() {
+    const email=this.email;
+    const groupId = this.judgmentJgroupId;
+    const id = this.judgmentJid;
+    const court = this.judgmentJcourt;
+    if (email == null){
+      alert('請登入帳號');
+    } else{
+      this.postBookmarkApi(email, groupId, id, court);
+    }
+  }
 
+  // 儲存螢光筆
+  myhighlighters() {
+    const email=this.email;
+    const groupId = this.judgmentJgroupId;
+    const id = this.judgmentJid;
+    const court = this.judgmentJcourt;
+    const highlights = this.highlightedRanges;
+    if (email == null){
+      alert('請登入帳號');
+    } else{
+      this.postHighlighterApi(email, groupId, id, court, highlights)
+    }
   }
 
   //==========================================================
@@ -297,7 +348,7 @@ export class ViewFullTextPageComponent {
         updatedRanges.push({
           ...highlight,
           endOffset: startOffset,
-          text: this.suptext.slice(highlight.startOffset, startOffset),
+          selectText: this.suptext.slice(highlight.startOffset, startOffset),
         });
       }
 
@@ -306,7 +357,7 @@ export class ViewFullTextPageComponent {
         updatedRanges.push({
           ...highlight,
           startOffset: endOffset,
-          text: this.suptext.slice(endOffset, highlight.endOffset),
+          selectText: this.suptext.slice(endOffset, highlight.endOffset),
         });
       }
 
@@ -317,8 +368,8 @@ export class ViewFullTextPageComponent {
     const newHighlight: HighlightRange = {
       startOffset,
       endOffset,
-      text: this.suptext.slice(startOffset, endOffset),
-      color,
+      selectText: this.suptext.slice(startOffset, endOffset),
+      highlighterColor: color,
     };
     this.highlightedRanges.push(newHighlight);
 
@@ -350,7 +401,7 @@ export class ViewFullTextPageComponent {
     const fragment = document.createDocumentFragment();
     let lastIndex = 0;
 
-    this.highlightedRanges.forEach(({ startOffset, endOffset, color }) => {
+    this.highlightedRanges.forEach(({ startOffset, endOffset, highlighterColor: color }) => {
       // 新增普通文字
       if (startOffset > lastIndex) {
         const textNode = document.createTextNode(content.slice(lastIndex, startOffset));
@@ -377,28 +428,6 @@ export class ViewFullTextPageComponent {
     this.suptextSpan.nativeElement.appendChild(fragment);
   }
 
-
-  // 更改高亮顏色()
-  // changeHighlightColor(color: string): void {
-  //   if (!this.currentHighlight) {
-  //     alert('請先選取要更改顏色的高亮文字！');
-  //     return;
-  //   }
-
-  //   const highlightRange = this.highlightedRanges.find(
-  //     (h) =>
-  //       h.text === this.currentHighlight?.textContent &&
-  //       h.startOffset === this.savedRange?.startOffset &&
-  //       h.endOffset === this.savedRange?.endOffset
-  //   );
-
-  //   if (highlightRange) {
-  //     highlightRange.color = color;
-  //     this.renderer.setStyle(this.currentHighlight, 'background-color', color);
-  //   }
-
-  //   this.updateHighlightStorage(); // 更新儲存
-  // }
   //===============================================================
   // 詢問清除全部螢光效果
   removeAllHighlights(): void {
@@ -532,7 +561,7 @@ export class ViewFullTextPageComponent {
         updatedRanges.push({
           ...highlight,
           endOffset: startOffset,
-          text: this.suptextSpan.nativeElement.textContent!.slice(
+          selectText: this.suptextSpan.nativeElement.textContent!.slice(
             highlight.startOffset,
             startOffset
           ),
@@ -544,7 +573,7 @@ export class ViewFullTextPageComponent {
         updatedRanges.push({
           ...highlight,
           startOffset: endOffset,
-          text: this.suptextSpan.nativeElement.textContent!.slice(
+          selectText: this.suptextSpan.nativeElement.textContent!.slice(
             endOffset,
             highlight.endOffset
           ),
@@ -725,7 +754,7 @@ export class ViewFullTextPageComponent {
   // 高亮文字索引位置儲存方法:
   highlightedRanges: HighlightRange[] = []; // 儲存高亮範圍
   // 監控高亮文字位置儲存狀態
-  updateHighlightStorage(range?: { startOffset: number; endOffset: number }, add: boolean = false, color: string = 'yellow'): void {
+  updateHighlightStorage(range?: { startOffset: number; endOffset: number }, add: boolean = false, highlighterColor: string = 'yellow'): void {
     if (!range) {
       console.log('更新高亮範圍儲存：', this.highlightedRanges);
       return;
@@ -733,11 +762,11 @@ export class ViewFullTextPageComponent {
 
     if (add) {
       // 新增高亮範圍，補全 HighlightRange 的屬性
-      const text = this.suptextSpan.nativeElement.textContent?.slice(range.startOffset, range.endOffset) || '';
+      const selectText = this.suptextSpan.nativeElement.textContent?.slice(range.startOffset, range.endOffset) || '';
       this.highlightedRanges.push({
         ...range,
-        text, // 提取範圍內的文字
-        color, // 指定顏色
+        selectText: selectText, // 提取範圍內的文字
+        highlighterColor: highlighterColor, // 指定顏色
       });
     } else {
       // 移除範圍內的高亮
@@ -783,6 +812,6 @@ export class ViewFullTextPageComponent {
 interface HighlightRange {
   startOffset: number; // 起始位置
   endOffset: number; // 結束位置
-  text: string; // 提取的文字
-  color: string; // 顏色
+  selectText: string; // 提取的文字
+  highlighterColor: string; // 顏色
 }
