@@ -71,9 +71,14 @@
         </button>
         <!--書籤-->
         <button class="toolbar-button star-button" (click)="myFavorite()" matTooltip="加入至我的書籤"
-          matTooltipClass="custom-tooltip">
-          <mat-icon>star</mat-icon>
+          matTooltipClass="custom-tooltip"
+          [ngClass]="{ 'active': Bookmarkcode === 200, 'inactive': Bookmarkcode !== 200 }">
+          <mat-icon [ngClass]="{ 'icon-active': Bookmarkcode === 200, 'icon-inactive': Bookmarkcode !== 200 }">
+            star
+          </mat-icon>
         </button>
+
+        <!--螢光筆儲存-->
         <button class="toolbar-button star-button" (click)="myhighlighters()" matTooltip="儲存螢光筆"
           matTooltipClass="custom-tooltip">
           <mat-icon>save</mat-icon>

@@ -25,7 +25,7 @@ export class MyBookmarksComponent implements OnInit {
   email!: any;
 
   // 螢光筆書籤容器
-  apiResponse : any[] = [];
+  apiResponse: any[] = [];
 
   ngOnInit(): void {
     this.email = this.sessionServiceService.getEmail();
@@ -83,6 +83,8 @@ export class MyBookmarksComponent implements OnInit {
       .getApi('http://localhost:8080/accountSystem/email-all-bookmark?email=' + email)
       .subscribe(
         (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res === null) return;
           console.log(res);
         });
   }
@@ -91,6 +93,8 @@ export class MyBookmarksComponent implements OnInit {
     this.http
       .getApi('http://localhost:8080/accountSystem/email-all-highlighte?email=' + email)
       .subscribe((res: any) => {
+        // 如果螢光筆資料庫沒有資料直接回傳
+        if (res === null) return;
         // 提取 highlighteList
         const highlighteList = res.highlighteList;
 
@@ -141,22 +145,22 @@ export class MyBookmarksComponent implements OnInit {
 
 // 螢光筆書籤假資料
 
-  // apiResponse = [
-  //   {
-  //     groupId: "113年度中簡字第1265號",
-  //     id: "113年度中簡字第1265號",
-  //     court: "TCD",
-  //     content: [
-  //       { startOffset: 83, endOffset: 92, text: '列被告因公共危險案', color: 'yellow' },
-  //       { startOffset: 132, endOffset: 145, text: '中華民國113年7月31日', color: 'lightgreen' },
-  //     ],
-  //   },
-  //   {
-  //     groupId: "113年度中簡字第1267號",
-  //     id: "113年度中簡字第1267號",
-  //     court: "TCD",
-  //     content: [
-  //       { startOffset: 200, endOffset: 220, text: '判決中的其他重點部分', color: 'lightblue' },
-  //     ],
-  //   },
-  // ];
+// apiResponse = [
+//   {
+//     groupId: "113年度中簡字第1265號",
+//     id: "113年度中簡字第1265號",
+//     court: "TCD",
+//     content: [
+//       { startOffset: 83, endOffset: 92, text: '列被告因公共危險案', color: 'yellow' },
+//       { startOffset: 132, endOffset: 145, text: '中華民國113年7月31日', color: 'lightgreen' },
+//     ],
+//   },
+//   {
+//     groupId: "113年度中簡字第1267號",
+//     id: "113年度中簡字第1267號",
+//     court: "TCD",
+//     content: [
+//       { startOffset: 200, endOffset: 220, text: '判決中的其他重點部分', color: 'lightblue' },
+//     ],
+//   },
+// ];
