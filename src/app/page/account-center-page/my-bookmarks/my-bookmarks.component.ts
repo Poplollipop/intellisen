@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollTop } from 'primeng/scrolltop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SessionServiceService } from '../../../service/session-service.service';
 import { HttpClientService } from '../../../service/http-client.service';
 import Swal from 'sweetalert2';
@@ -20,6 +20,10 @@ export class MyBookmarksComponent implements OnInit {
     protected sessionServiceService: SessionServiceService,
     private http: HttpClientService
   ) {}
+
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
+  
+
   email!: any;
 
   // 螢光筆書籤容器
@@ -80,8 +84,11 @@ export class MyBookmarksComponent implements OnInit {
 
   // 取得書籤資料
   getBookmarks(): any[] {
-    const storedBookmarks = sessionStorage.getItem('myBookmarks');
+    if(isPlatformBrowser(this.platformId)) {
+      const storedBookmarks = sessionStorage.getItem('myBookmarks');
     return storedBookmarks ? JSON.parse(storedBookmarks) : [];
+    }
+    return [];
   }
 
   // 清除單一書籤
