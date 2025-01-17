@@ -187,6 +187,7 @@
                   <span class="id" (click)="checkContent(item.groupId, item.id, item.court)">{{ item.id }}</span>
                   <span class="separator">|</span>
                   <span class="date">{{ item.verdictDate }}</span>
+                  <mat-icon style="cursor: pointer;" fontIcon = "bookmark" routerLinkActive="active" (click)="addBookmark(item)" ></mat-icon>
                 </div>
                 <div class="summary">
                   <div class="summary-detail"><span>法官：</span>{{ item.judgeName }}</div>

@@ -21,8 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollTop } from 'primeng/scrolltop';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
-
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search-result-page',
@@ -50,7 +49,6 @@ import { Router } from '@angular/router';
   styleUrl: './search-result-page.component.scss',
 })
 export class SearchResultPageComponent {
-
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
   tidyMap!: any; // 整理後的 map
@@ -77,6 +75,9 @@ export class SearchResultPageComponent {
   hao: string = '';
   combinedId: string = '';
   id: string = '';
+
+  // 書籤變數
+  myBookmarks: any[] = [];
 
   constructor(
     protected searchSessionService: SearchSessionService,
@@ -159,12 +160,17 @@ export class SearchResultPageComponent {
     if (this.searchSessionService.searchData) {
       savedConditions = this.searchSessionService.searchData;
     } else if (isPlatformBrowser(this.platformId)) {
-      savedConditions = JSON.parse(sessionStorage.getItem('savedConditions') || '{}');
+      savedConditions = JSON.parse(
+        sessionStorage.getItem('savedConditions') || '{}'
+      );
       this.searchSessionService.searchData = savedConditions;
     }
 
     if (savedConditions) {
-      sessionStorage.setItem('savedConditions', JSON.stringify(savedConditions));
+      sessionStorage.setItem(
+        'savedConditions',
+        JSON.stringify(savedConditions)
+      );
     }
     return savedConditions;
   }
@@ -187,9 +193,6 @@ export class SearchResultPageComponent {
       this.year = match[1] || '';
       console.log(this.year);
     }
-
-
-
 
     // const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
     // console.log(match);
@@ -288,13 +291,13 @@ export class SearchResultPageComponent {
     this.combinedId = '';
     // 將三個輸入框的值合併成一個新值
     if (this.year) {
-      this.combinedId = this.combinedId + `${this.year}年度`
+      this.combinedId = this.combinedId + `${this.year}年度`;
     }
     if (this.zhi) {
-      this.combinedId = this.combinedId + `${this.zhi}字`
+      this.combinedId = this.combinedId + `${this.zhi}字`;
     }
     if (this.hao) {
-      this.combinedId = this.combinedId + `第${this.hao}號`
+      this.combinedId = this.combinedId + `第${this.hao}號`;
     }
     return this.combinedId;
   }
@@ -304,20 +307,19 @@ export class SearchResultPageComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-
   // 搜尋條件再搜尋
   searchAgain() {
     const tidyData = {
-      searchName: this.keywords,// 模糊搜尋名
-      verdictId: this.goCombinedId(),// 裁判字號 id
-      caseType: (this.lawType || []).join(', '),// 案件類型:刑法、民法等等
-      charge: this.inputCase,	// 案由
-      courtList: this.inputCourts,// 法院
-      lawList: this.lawList,// 法條
-      verdictStartDate: this.startDate,// 開始時間
-      verdictEndDate: this.endDate,// 結束時間
-      docType: this.caseType,// 文件類型:裁定、判決
-    }
+      searchName: this.keywords, // 模糊搜尋名
+      verdictId: this.goCombinedId(), // 裁判字號 id
+      caseType: (this.lawType || []).join(', '), // 案件類型:刑法、民法等等
+      charge: this.inputCase, // 案由
+      courtList: this.inputCourts, // 法院
+      lawList: this.lawList, // 法條
+      verdictStartDate: this.startDate, // 開始時間
+      verdictEndDate: this.endDate, // 結束時間
+      docType: this.caseType, // 文件類型:裁定、判決
+    };
 
     const savedConditions = tidyData;
     this.searchSessionService.searchData.searchName = this.keywords;
@@ -344,8 +346,6 @@ export class SearchResultPageComponent {
     this.sortCases('verdictDate', this.isAscending); // 重新排序
   }
 
-
-
   // 頁籤
   itemsPerPage: number = 10; // 每頁顯示的筆數
   totalRecords: number = 0; // 總筆數
@@ -360,24 +360,26 @@ export class SearchResultPageComponent {
 
   // 更新顯示資料
   updateVisibleCases(): void {
-    const start = this.first;   // 更新起始的那一筆的 index
-    const end = this.first + this.itemsPerPage;   // 更新結束的那一筆的 index
-    this.visibleCases = this.caseList.slice(start, end);    // 只取該頁要顯示的筆數的 index
+    const start = this.first; // 更新起始的那一筆的 index
+    const end = this.first + this.itemsPerPage; // 更新結束的那一筆的 index
+    this.visibleCases = this.caseList.slice(start, end); // 只取該頁要顯示的筆數的 index
   }
 
   // 觀看全文
   checkContent(groupId: string, id: string, court: string) {
     // 將網址與案件 id 綁在一起
-    this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
+    this.router.navigateByUrl(
+      'full-text/' + groupId + '&id=' + id + '&court=' + court
+    );
     this.sessionServiceService.url = this.router.url;
   }
 
   /**
-  * 提取包含關鍵字的文字片段，並將關鍵字加上高亮顯示（只處理第一次找到的結果）。
-  * @param keyword - 要搜尋的關鍵字。
-  * @param content - 文章全文。
-  * @returns 包含高亮顯示關鍵字的文字片段；如果找不到關鍵字，回傳空字串。
-  */
+   * 提取包含關鍵字的文字片段，並將關鍵字加上高亮顯示（只處理第一次找到的結果）。
+   * @param keyword - 要搜尋的關鍵字。
+   * @param content - 文章全文。
+   * @returns 包含高亮顯示關鍵字的文字片段；如果找不到關鍵字，回傳空字串。
+   */
   highlightKeywordOnce(keyword: string, content: string): string {
     // 如果關鍵字跟內文都是 null 就回空字串
     if (!keyword && !content) {
@@ -390,7 +392,7 @@ export class SearchResultPageComponent {
     }
 
     // 建立正則表達式，匹配關鍵字（不區分大小寫）
-    const keywordRegex = new RegExp(`(${keyword})`, "i");
+    const keywordRegex = new RegExp(`(${keyword})`, 'i');
     const match = keywordRegex.exec(content);
 
     if (!match) {
@@ -402,9 +404,40 @@ export class SearchResultPageComponent {
     const end = Math.min(content.length, match.index + keyword.length + 150);
 
     // 提取文字片段，並將關鍵字加上高亮顯示
-    const snippet = content.substring(start, end)
+    const snippet = content
+      .substring(start, end)
       .replace(keywordRegex, `<span class="keyword" >$1</span>`);
 
     return snippet;
+  }
+
+  // 新增書籤
+  addBookmark(caseItem: any): void {
+    // 從 sessionStorage 讀取現有書籤資料
+    const storedBookmarks = sessionStorage.getItem('myBookmarks');
+    let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+
+    // 檢查是否已存在書籤
+    const exists = bookmarks.some(
+      (bookmark: any) => bookmark.id == caseItem.id
+    );
+    if (!exists) {
+      // 如果不存在，新增書籤
+      bookmarks.push(caseItem);
+
+      // 更新 sessionStorage
+      sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+      Swal.fire({
+        title: '書籤新增成功!',
+        icon: 'success',
+        confirmButtonText: '確定',
+      });
+    } else {
+      Swal.fire({
+        title: '該案件已經在書籤中',
+        icon: 'success',
+        confirmButtonText: '確定',
+      });
+    }
   }
 }
