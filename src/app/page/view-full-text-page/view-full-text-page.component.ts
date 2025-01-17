@@ -13,6 +13,8 @@ import { SearchSessionService } from '../../service/search-session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ScrollTop } from 'primeng/scrolltop';
+import { ClickDialogComponent } from './click-dialog/click-dialog.component';
+import { log } from 'node:console';
 
 
 @Component({
@@ -55,6 +57,8 @@ export class ViewFullTextPageComponent {
   judgmentJcourt!: any;
   charge!: any;
   court!: any;
+  // 檢查書籤是否已存在
+  Bookmarkcode !: any;
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
@@ -83,8 +87,11 @@ export class ViewFullTextPageComponent {
         this.judgmentJid = id;
         this.judgmentJcourt = court;
 
-        // 呼叫 API
+        // 呼叫 API，將文章內容載入頁面
         this.getJudgmentApi(this.judgmentJgroupId, this.judgmentJid, this.judgmentJcourt);
+
+        // 檢查書籤是否已存在
+        this.getBookmarkAlreadyExists(this.email, groupId, id, court);
       }
 
       // // 紀錄觀看紀錄
@@ -238,20 +245,50 @@ export class ViewFullTextPageComponent {
   }
 
   // 儲存書籤api
-  postBookmarkApi(email: string, groupId: string, id: string, court: string) {
-    const bookmark = {
-      email: email,
-      groupId: groupId,
-      id: id,
-      court: court
+  postSeveBookmarkApi(email: string, groupId: string, id: string, court: string): void {
+    const bookmark = { email, groupId, id, court };
+
+    // 檢查是否已存在書籤
+    this.getBookmarkAlreadyExists(email, groupId, id, court);
+
+    if (this.Bookmarkcode === 200) {
+      this.openDialog('書籤已儲存，不須重複儲存！');
+      return;
     }
-    console.log(bookmark);
+
     this.http.postApi('http://localhost:8080/accountSystem/bookmark', bookmark).subscribe({
-      next: (response: any) => {
-        console.log(response);
-      }
-    })
+      next: (res: any) => {
+        console.log('書籤儲存成功:', res);
+
+        // 更新書籤狀態
+        this.Bookmarkcode = 200;
+
+        this.openDialog('書籤已成功儲存！');
+      },
+      error: (err) => {
+        console.error('儲存書籤時發生錯誤:', err);
+      },
+    });
   }
+
+
+  postDeleteBookmarkApi(){
+
+  }
+
+
+  // 確認書籤是否已存在
+  getBookmarkAlreadyExists(email: string, groupId: string, id: string, court: string) {
+    this.http
+      .getApi('http://localhost:8080/accountSystem/bookmark-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
+      .subscribe(
+        (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res === null) return;
+          this.Bookmarkcode = res.code;
+        });
+  }
+
 
   // 儲存螢光筆api
   postHighlighterApi(email: string, groupId: string, id: string, court: string, highlights: any) {
@@ -262,13 +299,17 @@ export class ViewFullTextPageComponent {
       court: court,
       highlights: highlights
     }
-    console.log(highlighter);
+    // console.log(highlighter);
     this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte', highlighter).subscribe({
-      next: (response: any) => {
-        console.log(response);
+      next: () => {
+        this.openDialog('螢光筆儲存成功!');
       }
     })
   }
+  // 確認螢光筆是否已存在
+  getHighlighterAlreadyExists() { }
+
+
 
 
   //==========================================
@@ -298,11 +339,14 @@ export class ViewFullTextPageComponent {
     const groupId = this.judgmentJgroupId;
     const id = this.judgmentJid;
     const court = this.judgmentJcourt;
+
     if (!email || email.trim() === '') {
-      alert('請登入帳號');
+      this.openDialog('請先登入帳號');
       return;
     }
-    this.postBookmarkApi(email, groupId, id, court);
+
+    // 呼叫儲存書籤 API
+    this.postSeveBookmarkApi(email, groupId, id, court);
   }
 
   // 儲存螢光筆
@@ -313,16 +357,23 @@ export class ViewFullTextPageComponent {
     const court = this.judgmentJcourt;
     const highlights = this.highlightedRanges;
     if (!email || email.trim() === '') {
-      alert('請登入帳號');
+      this.openDialog('請先登入帳號');
       return;
     }
 
     if (!highlights || highlights.length === 0 || highlights.some(highlight => !highlight.selectText || highlight.selectText.trim() === '')) {
-      alert('未使用螢光筆');
+      this.openDialog('未使用螢光筆');
       return;
     }
 
     this.postHighlighterApi(email, groupId, id, court, highlights);
+  }
+
+  // 打開通知對話框
+  openDialog(message: string): void {
+    this.dialog.open(ClickDialogComponent, {
+      data: { message }
+    });
   }
 
   //==========================================================
