@@ -1,35 +1,34 @@
 <div class="container">
-  <h2>書籤</h2>
-  <div class="nav"></div>
   <mat-tab-group dynamicHeight>
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">star</mat-icon> 我的書籤
       </ng-template>
-      <ul class="bookmark-list">
-        @for (bookmark of bookmarks; track $index) {
-        <li class="bookmark-item">
-          <!-- 法院與字號與時間 -->
-          <div>
-            <span class="bookmark-header">{{ this.sessionServiceService.turnCodeToName(bookmark.court) }}</span>
-            <span class="bookmark-header" (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">
-              {{ bookmark.id }}
-            </span>
-            <span class="bookmark-header">{{ bookmark.verdictDate }}</span>
-            <mat-icon fontIcon = "bookmark_remove"  routerLinkActive="active" (click)="removeBookmark(bookmark.id)" ></mat-icon>
-          </div>
-          <!-- 詳細資訊 -->
-          <div class="summary">
-            <div class="summary-detail"><span>法官：</span>{{ bookmark.judgeName }}</div>
-            <div class="summary-detail"><span>被告：</span>{{ bookmark.defendantName }}</div>
-            <div class="summary-detail"><span>裁判種類：</span>{{ bookmark.docType }}</div>
-            <div class="summary-detail"><span>案由：</span>{{ bookmark.charge }}</div>
-          </div>
-          <p (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">瀏覽全文...</p>
-        </li>
+      <table class="bookmark-table">
+        @for (bookmark of myBookmarks; track $index) {
+        <tbody>
+          <tr>
+            <td>
+              <!-- 法院與字號與時間 -->
+              <div>
+                <span class="bookmark-header">{{ bookmark.court }}</span>
+                <span class="bookmark-header" (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">
+                  {{bookmark.id }}</span>
+                <span class="bookmark-header">{{ bookmark.verdictDate }}</span>
+              </div>
+              <!-- 詳細資訊 -->
+              <div class="summary">
+                <div class="summary-detail"><span>法官：</span>{{ bookmark.judgeName }}</div>
+                <div class="summary-detail"><span>被告：</span>{{ bookmark.defendantName }}</div>
+                <div class="summary-detail"><span>裁判種類：</span>{{ bookmark.docType }}</div>
+                <div class="summary-detail"><span>案由：</span>{{ bookmark.charge }}</div>
+              </div>
+              <p (click)="checkContent(bookmark.groupId, bookmark.id, bookmark.court)">瀏覽全文...</p>
+            </td>
+          </tr>
+        </tbody>
         }
-      </ul>
-      
+      </table>
     </mat-tab>
 
     <!-- 螢光筆書籤 -->

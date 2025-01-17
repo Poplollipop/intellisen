@@ -6,44 +6,25 @@
   src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
 }
 
-@font-face {
-  font-family: "Jyuu";
-  src: url("../../../../../public/GenJyuuGothicL-Monospace-Normal.ttf");
-}
-
 :host {
   display: block;
   margin: 0;
   padding: 0;
   width: 100%;
   box-sizing: border-box;
-  // background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
+  background: linear-gradient(135deg, #f5f7fa, #c3d5eb);
 }
 
 .container {
   padding: 2rem;
   height: 100%;
-  width: 90%;
-}
-
-h2 {
-  font-size: 28px;
-  margin-top: 1rem;
-  color: #333;
-  font-family: "TaipeiR" , sans-serif;
-}
-
-.nav {
-  width: 30%;
-  height: 5px;
-  margin-bottom: 2rem;
-  background-color: #005593;
+  width: 100%;
 }
 
 mat-tab-group {
-  // background-color: #f2f2f2;
-  // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  background-color: #fff;
+  // border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* 與其他內容的間距 */
   overflow: hidden; /* 防止切換過程中內容外溢 */
   transition: height 0.3s ease-in-out; /* 添加高度變化的動畫 */
@@ -56,75 +37,41 @@ mat-tab-group .mat-tab-body-wrapper {
 /*==============================*/
 /* 我的書籤樣式 */
 /*==============================*/
-// .bookmark-table {
-//   width: 100%;
-//   border-spacing: 0;
-//   border-collapse: collapse;
-//   background-color: #fff;
-//   // margin-top: 20px;
-// }
-
-.bookmark-list {
-  list-style: none; // 移除默認項目符號
-  padding: 0;
-  margin: 2rem auto;
-  max-width: 100%;
+.bookmark-table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  // margin-top: 20px;
 }
 
-.bookmark-item {
-  align-items: center;
-  margin-top: 1rem;
-  padding: 10px 10px;
-  border-bottom: 1px solid #ddd;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.bookmark-table tr {
+  width: 100%;
   position: relative;
 }
 
-.bookmark-item p {
-  position: absolute;
-  bottom: 10px;
-  right: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.3s;
+.bookmark-table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-.bookmark-item p:hover {
-  color: #0056b3;
+.bookmark-table tr:hover {
+  background-color: #ececec;
 }
 
-// .bookmark-table tr {
-//   width: 100%;
-//   position: relative;
-// }
-
-// .bookmark-table tr:nth-child(even) {
-//   background-color: #f9f9f9;
-// }
-
-// .bookmark-table tr:hover {
-//   background-color: #ececec;
-// }
-
-// .bookmark-table td {
-//   width: 100%;
-//   padding: 15px;
-//   border-bottom: 1px solid #ddd;
-//   vertical-align: top;
-//   position: relative;
-// }
+.bookmark-table td {
+  width: 100%;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+  position: relative;
+}
 
 .bookmark-header {
   display: inline-block;
   font-size: 22px;
+  font-weight: bold;
   color: #000000;
   margin-right: 20px;
-  font-family: 'Jyuu', 'sans-serif';
-  font-weight: 500;
+  font-family: 'TaipeiR', 'sans-serif';
 }
 
 .summary {
@@ -136,29 +83,32 @@ mat-tab-group .mat-tab-body-wrapper {
   color: #555;
 }
 
+.summary-detail {
+  font-weight: bold;
+}
 
-.summary-detail span {
+.summary-detail span:first-child {
   color: #007bff;
 }
 
-// .summary-detail span:last-child {
-//   margin-left: 5px;
-// }
+.summary-detail span:last-child {
+  margin-left: 5px;
+}
 
-// .bookmark-table p {
-//   position: absolute;
-//   bottom: 10px;
-//   right: 15px;
-//   font-size: 16px;
-//   font-weight: bold;
-//   color: #007bff;
-//   cursor: pointer;
-//   transition: color 0.3s;
-// }
+.bookmark-table p {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-// .bookmark-table p:hover {
-//   color: #0056b3;
-// }
+.bookmark-table p:hover {
+  color: #0056b3;
+}
 
 /*==============================*/
 /* 小螢幕適配 (我的書籤) */
@@ -210,7 +160,7 @@ mat-tab-group .mat-tab-body-wrapper {
   font-weight: bold;
   color: #000000;
   margin-right: 20px;
-  font-family: 'Jyuu', 'sans-serif';
+  font-family: 'TaipeiR', 'sans-serif';
 }
 
 .highlight-content {
