@@ -21,8 +21,6 @@ export class AccountCenterPageComponent {
   role!: string;
   name!: string;
   phone!: string;
-  email!: string;
-  userDataReq!: any;
   deleteUserData!: any;
 
   // 登入狀態變數
@@ -32,21 +30,25 @@ export class AccountCenterPageComponent {
     private router: Router,
     public session: SessionServiceService,
     private http: HttpClientService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
     if (isLogin) {
-      this.http.postApi2('http://localhost:8080/accountSystem/get-user-info',this.userDataReq).subscribe({
-          next: (response: any) => {
-            console.log('取得的帳戶資訊:', response);
-            if (response.body.code == 200) {
-              sessionStorage.setItem('userData', JSON.stringify(response.body));
-              this.session.notifyTaskCompleted(); // 通知 sidevav 顯示可選擇的內容
-            }
-          },
-          error: (error) => {},
-        });
+      this.http.postApi2('http://localhost:8080/accountSystem/get-user-info', { email: this.session.getEmail() }).subscribe({
+        next: (response: any) => {
+          console.log('取得的帳戶資訊:', response);
+          if (response.body.code == 200) {
+            sessionStorage.setItem('userData', JSON.stringify(response.body));
+            this.session.notifyTaskCompleted(); // 通知 sidevav 顯示可選擇的內容
+          }
+        },
+        error: (error) => {
+
+          console.log('error');
+
+        },
+      });
     } else {
       Swal.fire({
         title: '請先登入!',
