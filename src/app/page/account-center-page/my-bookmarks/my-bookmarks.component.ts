@@ -29,7 +29,7 @@ export class MyBookmarksComponent implements OnInit {
   bookmarks: any[] = [];
 
   ngOnInit(): void {
-    // this.email = this.sessionServiceService.getEmail();
+    this.email = this.sessionServiceService.getEmail();
     // this.getBookmarksApi(this.email);
     this.getHighlightersApi(this.email);
     this.bookmarks = this.getBookmarks(); // 取得書籤

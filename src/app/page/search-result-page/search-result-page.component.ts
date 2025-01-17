@@ -77,7 +77,9 @@ export class SearchResultPageComponent {
   id: string = '';
 
   // 書籤變數
+  isLogin: boolean = false;  // 判斷是否為登入狀態
   myBookmarks: any[] = [];
+
 
   constructor(
     protected searchSessionService: SearchSessionService,
@@ -151,6 +153,10 @@ export class SearchResultPageComponent {
       this.fillSearchForm(savedConditions);
       this.searchApi(savedConditions);
     }
+
+    // 確認是否是登入狀態以顯示書遷icon
+    this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+
   }
 
   // 將 savedConditions 初始化封裝到一個方法中，集中處理
@@ -411,6 +417,8 @@ export class SearchResultPageComponent {
     return snippet;
   }
 
+  
+  
   // 新增書籤
   addBookmark(caseItem: any): void {
     // 從 sessionStorage 讀取現有書籤資料
