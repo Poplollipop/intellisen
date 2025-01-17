@@ -102,7 +102,7 @@ export class MyBookmarksComponent implements OnInit {
         window.location.reload(); // 在按下「確定」後執行刷新
       }
     });
-    
+
     // console.log('已刪除書籤:', bookmarkId);
   }
 

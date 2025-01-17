@@ -41,7 +41,7 @@ export class ToolbarComponent {
     if (isPlatformBrowser(this.platformId)) {
       const data = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')!) : false;
       if (data) {
-        this.userName = data.name;
+        this.userName = data.name === 'guest' ? '會員' : data.name; // 防止預設名稱顯示在畫面上
         this.userRole = data.role;
       }
     }

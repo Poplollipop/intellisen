@@ -130,11 +130,11 @@ export class SearchPageComponent {
   }
 
   ngOnInit() {
-    if(isPlatformBrowser(this.platformId)){
+    if (isPlatformBrowser(this.platformId)) {
       // 取得會員資訊
       const data = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')!) : false;
       if (data) {
-        this.userName = data.name;
+        this.userName = data.name === 'guest' ? '會員' : data.name; // 防止預設名稱顯示在畫面上
         this.userRole = data.role;
       }
     }
@@ -146,16 +146,7 @@ export class SearchPageComponent {
   }
 
   toChinese(role: string): string {
-    const roleMap: Map<string, string> = new Map([
-      ['lawFirm', '事務所'],
-      ['lawyer', '律師'],
-      ['user', ''],
-      ['guest', '']
-    ]);
-    if (roleMap.has(role)) {
-      return roleMap.get(role)!;
-    }
-    return '';
+    return this.session.toChinese(role);
   }
 
   goCombinedId(): string {
