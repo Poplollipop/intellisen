@@ -149,12 +149,12 @@ export class SessionServiceService {
     }
   }
 
-  // 取得 email
+  // 取得登入狀態
   getIsLogin(): boolean {
     return this.isLogin;
   }
 
-  // 設定 email
+  // 設定登入狀態
   setIsLogin(isLogin: boolean) {
     this.isLogin = isLogin;
     if (
@@ -165,7 +165,7 @@ export class SessionServiceService {
     }
   }
 
-  // 清空 email
+  // 清空登入狀態
   clearIsLogin() {
     this.isLogin = false;
     if (
