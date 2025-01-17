@@ -44,9 +44,6 @@ export class AccountCenterPageComponent {
           }
         },
         error: (error) => {
-
-          console.log('error');
-
         },
       });
     } else {
