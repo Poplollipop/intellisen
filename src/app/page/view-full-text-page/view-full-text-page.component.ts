@@ -515,10 +515,10 @@ export class ViewFullTextPageComponent {
 
   // 讀取 取得email所擁有的螢光筆文字替換進文章中
   replaceTextWithHighlights(): void {
-    if (!this.suptext || typeof this.suptext !== 'string') {
-      console.error('suptext is not initialized or is not a valid string.');
-      return; // 中止操作
-    }
+    // if (!this.suptext || typeof this.suptext !== 'string') {
+    //   console.error('suptext is not initialized or is not a valid string.');
+    //   return; // 中止操作
+    // }
 
     let textWithHighlights = this.suptext; // 初始化為原文
     let offsetCorrection = 0; // 偏移修正變數
@@ -942,12 +942,12 @@ export class ViewFullTextPageComponent {
   }
 
   //===========================================================================
-  addHour(date: Date, hours: number): Date {
-    const dateCopy = new Date(date.getTime());
-    const hoursToAdd = hours * 60 * 60 * 1000;
-    dateCopy.setTime(date.getTime() + hoursToAdd);
-    return dateCopy;
-  }
+  // addHour(date: Date, hours: number): Date {
+  //   const dateCopy = new Date(date.getTime());
+  //   const hoursToAdd = hours * 60 * 60 * 1000;
+  //   dateCopy.setTime(date.getTime() + hoursToAdd);
+  //   return dateCopy;
+  // }
 
   // 觀看瀏覽紀錄所指定的全文
   checkContent(groupId: string, id: string, court: string) {

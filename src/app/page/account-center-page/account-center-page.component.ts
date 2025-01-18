@@ -33,14 +33,18 @@ export class AccountCenterPageComponent {
   ) { }
 
   ngOnInit(): void {
-    const isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    // const isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    const isLogin = this.session.getIsLogin();
+
     if (isLogin) {
+      console.log(this.session.getEmail());
       this.http.postApi2('http://localhost:8080/accountSystem/get-user-info', { email: this.session.getEmail() }).subscribe({
         next: (response: any) => {
           console.log('取得的帳戶資訊:', response);
           if (response.body.code == 200) {
             sessionStorage.setItem('userData', JSON.stringify(response.body));
             this.session.notifyTaskCompleted(); // 通知 sidevav 顯示可選擇的內容
+            console.log(this.session.getEmail());
           }
         },
         error: (error) => {
@@ -51,11 +55,13 @@ export class AccountCenterPageComponent {
         title: '請先登入!',
         icon: 'error',
         confirmButtonText: '確定',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigateByUrl('/search')
-        }
-      });
+      })
+      this.router.navigateByUrl('/login')
+        // .then((result) => {
+        //   if (result.isConfirmed) {
+        //     this.router.navigateByUrl('/search')
+        //   }
+        // });
     }
     // this.email = this.session.getEmail();
     // this.userDataReq = {
