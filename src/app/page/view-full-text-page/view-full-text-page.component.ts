@@ -57,6 +57,11 @@ export class ViewFullTextPageComponent {
   judgmentJcourt!: any;
   charge!: any;
   court!: any;
+  judgeName!: any;
+  defendantName!: any;
+  docType!: any;
+  caseType!: any;
+  verdictDate!: any;
   // 檢查書籤是否已存在
   Bookmarkcode !: any;
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
@@ -92,9 +97,11 @@ export class ViewFullTextPageComponent {
 
         // 檢查書籤是否已存在
         this.getBookmarkAlreadyExists(this.email, groupId, id, court);
+
+        this.getHighlighterAlreadyExists(this.email, groupId, id, court);
       }
 
-      // // 紀錄觀看紀錄
+      // 紀錄觀看紀錄
       if (isPlatformBrowser(this.platformId) && sessionStorage.getItem('isLogin') === 'true') {
         // 確認是否已有觀看紀錄
         let record: Array<{
@@ -232,21 +239,30 @@ export class ViewFullTextPageComponent {
       .getApi('http://localhost:8080/case/judgmentid?groupId=' + judgmentJgroupId + '&id=' + judgmentJid + '&court=' + judgmentJcourt)
       .subscribe(
         (res: any) => {
+          console.log(res);
+
           this.suptext = res.caseList[0].content2
             ? res.caseList[0].content + '\n' + res.caseList[0].content2
             : res.caseList[0].content;
+
           this.url = res.caseList[0].url;
           this.judgmentJid = res.caseList[0].id;
           this.court = this.sessionServiceService.turnCodeToName(res.caseList[0].court);
           this.charge = res.caseList[0].charge;
-
+          this.verdictDate = res.caseList[0].verdictDate;
+          this.defendantName = res.caseList[0].defendantName;
+          this.judgeName = res.caseList[0].judgeName;
+          this.caseType = res.caseList[0].caseType;
+          this.docType = res.caseList[0].docType;
           this.ngxService.stop(); // 關閉 loading 動畫
         });
   }
 
   // 儲存書籤api
-  postSeveBookmarkApi(email: string, groupId: string, id: string, court: string): void {
-    const bookmark = { email, groupId, id, court };
+  postSeveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
+    const bookmark = { email, groupId, id, court, verdictDate, charge, defendantName, judgeName, caseType, docType };
+
+    console.log(bookmark);
 
     // 檢查是否已存在書籤
     this.getBookmarkAlreadyExists(email, groupId, id, court);
@@ -265,14 +281,11 @@ export class ViewFullTextPageComponent {
 
         this.openDialog('書籤已成功儲存！');
       },
-      error: (err) => {
-        console.error('儲存書籤時發生錯誤:', err);
-      },
     });
   }
 
-
-  postDeleteBookmarkApi(){
+  // 刪除書籤
+  postDeleteBookmarkApi() {
 
   }
 
@@ -306,11 +319,20 @@ export class ViewFullTextPageComponent {
       }
     })
   }
-  // 確認螢光筆是否已存在
-  getHighlighterAlreadyExists() { }
 
-
-
+  // 螢光筆取得
+  getHighlighterAlreadyExists(email: string, groupId: string, id: string, court: string) {
+    this.http
+      .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
+      .subscribe(
+        (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res.code != 200) return;
+          console.log(res);
+          this.storeHighlightRanges(res.highlighteList);
+          this.replaceTextWithHighlights();
+        });
+  }
 
   //==========================================
   // Clipboard 複製功能
@@ -339,6 +361,12 @@ export class ViewFullTextPageComponent {
     const groupId = this.judgmentJgroupId;
     const id = this.judgmentJid;
     const court = this.judgmentJcourt;
+    const charge = this.charge;
+    const judgeName = this.judgeName;
+    const defendantName = this.defendantName;
+    const docType = this.docType;
+    const caseType = this.caseType;
+    const verdictDate = this.verdictDate;
 
     if (!email || email.trim() === '') {
       this.openDialog('請先登入帳號');
@@ -346,7 +374,7 @@ export class ViewFullTextPageComponent {
     }
 
     // 呼叫儲存書籤 API
-    this.postSeveBookmarkApi(email, groupId, id, court);
+    this.postSeveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
   }
 
   // 儲存螢光筆
@@ -484,6 +512,53 @@ export class ViewFullTextPageComponent {
     this.suptextSpan.nativeElement.innerHTML = '';
     this.suptextSpan.nativeElement.appendChild(fragment);
   }
+
+  // 讀取 取得email所擁有的螢光筆文字替換進文章中
+  replaceTextWithHighlights(): void {
+    if (!this.suptext || typeof this.suptext !== 'string') {
+      console.error('suptext is not initialized or is not a valid string.');
+      return; // 中止操作
+    }
+
+    let textWithHighlights = this.suptext; // 初始化為原文
+    let offsetCorrection = 0; // 偏移修正變數
+
+    this.highlightedRanges
+      .sort((a, b) => a.startOffset - b.startOffset)
+      .forEach((range) => {
+        const { startOffset, endOffset, selectText, highlighterColor } = range;
+
+        const adjustedStart = startOffset + offsetCorrection;
+        const adjustedEnd = endOffset + offsetCorrection;
+
+        // 防禦性檢查：確保範圍不超出文字長度
+        if (adjustedStart < 0 || adjustedEnd > textWithHighlights.length) {
+          console.warn(
+            `Invalid range: adjustedStart=${adjustedStart}, adjustedEnd=${adjustedEnd}, textLength=${textWithHighlights.length}`
+          );
+          return; // 跳過無效範圍
+        }
+
+        const currentText = textWithHighlights.slice(adjustedStart, adjustedEnd);
+        if (currentText !== selectText) {
+          console.warn(
+            `範圍文字不匹配：預期 "${selectText}"，實際 "${currentText}"`
+          );
+          return;
+        }
+
+        const highlightedText = `<span style="background-color: ${highlighterColor};">${selectText}</span>`;
+        const beforeText = textWithHighlights.slice(0, adjustedStart);
+        const afterText = textWithHighlights.slice(adjustedEnd);
+        textWithHighlights = beforeText + highlightedText + afterText;
+
+        offsetCorrection += highlightedText.length - selectText.length;
+      });
+
+    this.suptextSpan.nativeElement.innerHTML = textWithHighlights;
+  }
+
+
 
   //===============================================================
   // 詢問清除全部螢光效果
@@ -799,7 +874,7 @@ export class ViewFullTextPageComponent {
   }
 
   //=========================================
-  // 回上頁
+  // 回搜尋頁
   returnToPreviousPage() {
     if (this.sessionServiceService.url) {
       this.router.navigate([this.sessionServiceService.url]);
@@ -810,6 +885,8 @@ export class ViewFullTextPageComponent {
   //=========================================
   // 高亮文字索引位置儲存方法:
   highlightedRanges: HighlightRange[] = []; // 儲存高亮範圍
+
+  highlighterData: any[] = []; // 從後端取得的高亮資料
   // 監控高亮文字位置儲存狀態
   updateHighlightStorage(range?: { startOffset: number; endOffset: number }, add: boolean = false, highlighterColor: string = 'yellow'): void {
     if (!range) {
@@ -852,6 +929,19 @@ export class ViewFullTextPageComponent {
     return { startOffset: startIndex, endOffset: endIndex };
   }
 
+  // 將高亮資料存入 highlightedRanges 容器
+  storeHighlightRanges(highlighterData: any[]): void {
+    this.highlightedRanges = highlighterData.map((item) => ({
+      startOffset: item.start_offset,
+      endOffset: item.end_offset,
+      selectText: item.Select_text,
+      highlighterColor: item.highlighter_color
+    }));
+
+    console.log('儲存的高亮範圍：', this.highlightedRanges);
+  }
+
+  //===========================================================================
   addHour(date: Date, hours: number): Date {
     const dateCopy = new Date(date.getTime());
     const hoursToAdd = hours * 60 * 60 * 1000;
@@ -859,7 +949,7 @@ export class ViewFullTextPageComponent {
     return dateCopy;
   }
 
-  // 觀看全文
+  // 觀看瀏覽紀錄所指定的全文
   checkContent(groupId: string, id: string, court: string) {
     // 將網址與案件 id 綁在一起
     this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
