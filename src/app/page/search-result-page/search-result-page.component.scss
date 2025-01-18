@@ -288,9 +288,7 @@ select:focus {
 
       // 每個小摘要
       .summary-detail{
-        flex: 1; 
-        min-width: 15rem; 
-        width: 12rem; 
+        width: 19rem; 
         font-size: 18px; 
         display: flex;
         align-items: center;
@@ -308,7 +306,7 @@ select:focus {
       max-height: 15rem; 
       max-width: 80rem;
       padding: 10px; 
-      font-size: 18px; 
+      font-size: 18px;      
     }
 
   }
@@ -375,4 +373,13 @@ select:focus {
 ::ng-deep .keyword{
   color: red;
   font-weight: bold;
+}
+
+
+.bookmark-black {
+  color: black;
+}
+
+.bookmark-gray {
+  color: gray;
 }

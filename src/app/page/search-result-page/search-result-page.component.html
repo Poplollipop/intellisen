@@ -188,16 +188,18 @@
                   <span class="separator">|</span>
                   <span class="date">{{ item.verdictDate }}</span>
                   @if (this.isLogin) {
-                  <i class="pi pi-bookmark-fill" (click)="toggleBookmark(item)" style="font-size: 1.5rem; cursor: pointer;"
+                  <i class="pi pi-bookmark-fill" (click)="toggleBookmark(item)" 
+                  style="font-size: 1.5rem; cursor: pointer;"
+                  [ngClass]="item.isBookmarked ? 'bookmark-black' : 'bookmark-gray'"
                     >
                   </i>
                   }
                 </div>
                 <div class="summary">
-                  <div class="summary-detail"><span>法官：</span>{{ item.judgeName }}</div>
-                  <div class="summary-detail"><span>被告：</span>{{ item.defendantName }}</div>
-                  <div class="summary-detail"><span>裁判種類：</span>{{ item.docType }}</div>
-                  <div class="summary-detail"><span>案由：</span>{{ item.charge }}</div>
+                  <div class="summary-detail" style="width: 12rem;"><span>法官：</span>{{ item.judgeName }}</div>
+                  <div class="summary-detail" style="width: 15rem;"><span>被告：</span>{{ item.defendantName }}</div>
+                  <div class="summary-detail" style="width: 13rem;" ><span>裁判種類：</span>{{ item.docType }}</div>
+                  <div class="summary-detail" style="width: 22rem;" ><span>案由：</span>{{ item.charge }}</div>
                   <div class="summary-detail"><span>裁判日期：</span>{{ item.verdictDate }}</div>
                 </div>
                 <div class="view-text">

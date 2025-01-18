@@ -7,7 +7,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -46,6 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatTabsModule,
     ScrollTop,
     PaginatorModule,
+    CommonModule
   ],
   templateUrl: './search-result-page.component.html',
   styleUrl: './search-result-page.component.scss',
@@ -87,7 +88,6 @@ export class SearchResultPageComponent {
   // 檢查書籤是否已存在
   Bookmarkcode !: any;
 
-  
 
   // tab頁籤
   defaultTabIndex: number = 0; // 預設開啟第一個頁籤 (索引 0)
@@ -171,6 +171,8 @@ export class SearchResultPageComponent {
       this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
     }
 
+    
+
   }
 
   // 將 savedConditions 初始化封裝到一個方法中，集中處理
@@ -251,6 +253,9 @@ export class SearchResultPageComponent {
         this.updateVisibleCases(); // 初始化第一頁數據
         this.sortCases('verdictDate', false); // 預設排序
 
+        // 初始化案件列表及書籤狀態
+        this.initializeBookmarks(this.sessionServiceService.getEmail());
+
         this.ngxService.stop(); // 關閉 loading 動畫
       });
   }
@@ -261,24 +266,24 @@ export class SearchResultPageComponent {
     const end = this.first + this.itemsPerPage; // 更新結束的那一筆的 index
     this.visibleCases = this.caseList.slice(start, end); // 只取該頁要顯示的筆數的 index
 
-    // 為每個項目動態新增 isBookmarked
-    this.visibleCases = this.caseList.map((item) => ({
-      ...item,
-      isBookmarked: false,
-    }));
+    // // 為每個項目動態新增 isBookmarked
+    // this.visibleCases = this.caseList.map((item) => ({
+    //   ...item,
+    //   isBookmarked: false,
+    // }));
 
-    // 確認sessionStorage裡面是否已有書籤
-    const storedBookmarks = sessionStorage.getItem('myBookmarks');
-    let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+    // // 確認sessionStorage裡面是否已有書籤
+    // const storedBookmarks = sessionStorage.getItem('myBookmarks');
+    // let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
 
     // 把sessionStorage裡面已經存在的書籤id和畫面顯示的列表id做比對
-    const existingItems = this.visibleCases.filter(   // 把visibleCases的每個物件取出成caseItem並進行比對
-      caseItem => bookmarks.some(      // 遍歷 bookmarks 陣列，檢查是否有至少一個bookmark滿足條件
-        (bookmark: any) => bookmark.id == caseItem.id   
-      )
-    );
+    // const existingItems = this.visibleCases.filter(   // 把visibleCases的每個物件取出成caseItem並進行比對
+    //   caseItem => bookmarks.some(      // 遍歷 bookmarks 陣列，檢查是否有至少一個bookmark滿足條件
+    //     (bookmark: any) => bookmark.id == caseItem.id   
+    //   )
+    // );
 
-    existingItems.forEach(item => item.isBookmarked = true)
+    // existingItems.forEach(item => item.isBookmarked = true)
       
   }
 
@@ -389,6 +394,8 @@ export class SearchResultPageComponent {
     this.isAscending = !this.isAscending; // 切換排序方向
     this.sortCases('verdictDate', this.isAscending); // 重新排序
   }
+
+
 
   // 頁籤
   itemsPerPage: number = 10; // 每頁顯示的筆數
@@ -546,8 +553,36 @@ export class SearchResultPageComponent {
   //     // console.log('已刪除書籤:', bookmarkId);
   //   }
 
+  initializeBookmarks(email: string) {
+    // 呼叫後端 API 獲取書籤清單
+    this.http.getApi('http://localhost:8080/accountSystem/email-all-bookmark?email=' + email).subscribe((res: any) => {
+      // 如果資料庫沒有資料直接回傳
+      if (res == null) return;
+      console.log(res);
+      // 處理書籤資料（直接賦值即可，因為資料結構與模板已匹配）
+      const bookmarksList = res.bookmarkList;
+
+      // 賦值給 myBookmarks
+      this.myBookmarks = bookmarksList;
+
+      // 和案件列表比對
+      // 遍歷案件列表，初始化書籤狀態
+      this.caseList.forEach(caseItem => {
+        caseItem.isBookmarked = this.myBookmarks.some(
+          bookmark => bookmark.id == caseItem.id && bookmark.court == caseItem.court
+        );
+      });
+
+      // Debug: 顯示結果
+      // console.log(this.myBookmarks);
+
+    });
+  }
+
   toggleBookmark(caseItem: any) {
-        const email = this.sessionServiceService.getEmail();
+        // 從 sessionServiceService 獲取當前用戶的 email
+        const email = this.sessionServiceService.getEmail();  
+        // 取得案件相關資訊
         const groupId = caseItem.groupId;
         const id = caseItem.id;
         const court = caseItem.court;
@@ -558,56 +593,69 @@ export class SearchResultPageComponent {
         const caseType = caseItem.caseType;
         const verdictDate = caseItem.verdictDate;
         
-        // 呼叫新增書籤api
-        this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
-        
+        // 檢查書籤是否存在，然後決定新增或提示
+        this.getBookmarkAlreadyExists(email, groupId, id, court).subscribe({
+          next: (res: any) => {
+            if (res == null) {
+              // 書籤不存在，呼叫儲存書籤 API
+              this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
+              caseItem.isBookmarked = true; // 即時更新狀態
+            } else {
+              // 書籤已存在
+              this.openDialog('書籤已儲存，不須重複儲存！');
+            }
+          },
+          error: (error: any) => {
+            // 處理檢查書籤時的錯誤
+            console.error('檢查書籤失敗:', error);
+            this.openDialog('檢查書籤失敗，請稍後再試！');
+          },
+        });        
       }
     
 
-   // 儲存書籤api
-  postSaveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
+  // 儲存書籤 API
+  postSaveBookmarkApi(
+    email: string,
+    groupId: string,
+    id: string,
+    court: string,
+    charge: string,
+    judgeName: string,
+    defendantName: string,
+    docType: string,
+    caseType: string,
+    verdictDate: string
+  ): void {
+    // 將書籤資訊組裝成物件
     const bookmark = { email, groupId, id, court, verdictDate, charge, defendantName, judgeName, caseType, docType };
 
     console.log("儲存的書籤:", bookmark);
 
-    // 檢查是否已存在書籤
-    this.getBookmarkAlreadyExists(email, groupId, id, court);
-
-    if (this.Bookmarkcode == 200) {
-      this.openDialog('書籤已儲存，不須重複儲存！');
-      return;
-    }
-
     this.http.postApi('http://localhost:8080/accountSystem/bookmark', bookmark).subscribe({
       next: (res: any) => {
         console.log('書籤儲存成功:', res);
-
-        // 更新書籤狀態
-        // this.Bookmarkcode = 200;
-        
         this.openDialog('書籤已成功儲存！');
+        
+      },
+      error: (error: any) => {
+        console.error('儲存書籤失敗:', error);
+        this.openDialog('儲存書籤失敗，請稍後再試！');
       },
     });
   }
 
 
-  // 確認書籤是否已存在
+  // 確認書籤是否已存在 API
   getBookmarkAlreadyExists(email: string, groupId: string, id: string, court: string) {
-    this.http
-      .getApi('http://localhost:8080/accountSystem/bookmark-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
-      .subscribe(
-        (res: any) => {
-          // 如果螢光筆資料庫沒有資料直接回傳
-          if (res == null) return;
-          this.Bookmarkcode = res.code;
-          console.log("重複檢查結果:",this.Bookmarkcode)
-        });
+    const url = `http://localhost:8080/accountSystem/bookmark-already-exists?email=${email}&groupId=${groupId}&id=${id}&court=${court}`;
+    return this.http.getApi(url);
   }
 
   // 打開通知對話框
-    openDialog(message: string): void {
-      this.dialog.open(ClickDialogComponent, {
-        data: { message }
-      });
-    }
+  openDialog(message: string): void {
+    this.dialog.open(ClickDialogComponent, {
+      data: { message }
+    });
+  }
 }
