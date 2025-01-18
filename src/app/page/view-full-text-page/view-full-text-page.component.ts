@@ -259,7 +259,7 @@ export class ViewFullTextPageComponent {
   }
 
   // 儲存書籤api
-  postSeveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
+  postSaveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
     const bookmark = { email, groupId, id, court, verdictDate, charge, defendantName, judgeName, caseType, docType };
 
     console.log(bookmark);
@@ -374,7 +374,7 @@ export class ViewFullTextPageComponent {
     }
 
     // 呼叫儲存書籤 API
-    this.postSeveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
+    this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
   }
 
   // 儲存螢光筆

@@ -48,41 +48,41 @@ export class MyBookmarksComponent implements OnInit {
 
   // =====================================================================================================================================
 
-  // 取得書籤資料
-  getBookmarks(): any[] {
-    if(isPlatformBrowser(this.platformId)) {
-      const storedBookmarks = sessionStorage.getItem('myBookmarks');
-    return storedBookmarks ? JSON.parse(storedBookmarks) : [];
-    }
-    return [];
-  }
+  // // 取得書籤資料
+  // getBookmarks(): any[] {
+  //   if(isPlatformBrowser(this.platformId)) {
+  //     const storedBookmarks = sessionStorage.getItem('myBookmarks');
+  //   return storedBookmarks ? JSON.parse(storedBookmarks) : [];
+  //   }
+  //   return [];
+  // }
 
-  // 清除單一書籤
-  removeBookmark(bookmarkId: string): void {
-    const storedBookmarks = sessionStorage.getItem('myBookmarks');
-    let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+  // // 清除單一書籤
+  // removeBookmark(bookmarkId: string): void {
+  //   const storedBookmarks = sessionStorage.getItem('myBookmarks');
+  //   let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
 
-    // 過濾掉要刪除的書籤
-    bookmarks = bookmarks.filter((bookmark: any) => bookmark.id != bookmarkId);
-    // 更新 sessionStorage
-    sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
-    Swal.fire({
-      title: '移除書籤成功!',
-      icon: 'success',
-      confirmButtonText: '確定',
-    }).then((result) => {
-      if ( result.isConfirmed) {
-        window.location.reload(); // 在按下「確定」後執行刷新
-      }
-    });
+  //   // 過濾掉要刪除的書籤
+  //   bookmarks = bookmarks.filter((bookmark: any) => bookmark.id != bookmarkId);
+  //   // 更新 sessionStorage
+  //   sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+  //   Swal.fire({
+  //     title: '移除書籤成功!',
+  //     icon: 'success',
+  //     confirmButtonText: '確定',
+  //   }).then((result) => {
+  //     if ( result.isConfirmed) {
+  //       window.location.reload(); // 在按下「確定」後執行刷新
+  //     }
+  //   });
 
-    // console.log('已刪除書籤:', bookmarkId);
-  }
+  //   // console.log('已刪除書籤:', bookmarkId);
+  // }
 
-  // 清除所有書籤
-  clearBookmarks(): void {
-    this.sessionServiceService.clearBookmarks();
-  }
+  // // 清除所有書籤
+  // clearBookmarks(): void {
+  //   this.sessionServiceService.clearBookmarks();
+  // }
 
   // =====================================================================================================================================
   // 取得該email的所有儲存書籤

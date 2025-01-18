@@ -22,6 +22,8 @@ import { ScrollTop } from 'primeng/scrolltop';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ClickDialogComponent } from '../view-full-text-page/click-dialog/click-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-search-result-page',
@@ -76,10 +78,16 @@ export class SearchResultPageComponent {
   combinedId: string = '';
   id: string = '';
 
+  
+
   // 書籤變數
   isLogin: boolean = false; // 判斷是否為登入狀態
-  // isBookmarked: boolean = false;  // icon 切換顏色的變數
   myBookmarks: any[] = [];
+
+  // 檢查書籤是否已存在
+  Bookmarkcode !: any;
+
+  
 
   // tab頁籤
   defaultTabIndex: number = 0; // 預設開啟第一個頁籤 (索引 0)
@@ -89,7 +97,8 @@ export class SearchResultPageComponent {
     public sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     private ngxService: NgxUiLoaderService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -178,10 +187,7 @@ export class SearchResultPageComponent {
     }
 
     if (savedConditions) {
-      sessionStorage.setItem(
-        'savedConditions',
-        JSON.stringify(savedConditions)
-      );
+      sessionStorage.setItem('savedConditions', JSON.stringify(savedConditions));
     }
     return savedConditions;
   }
@@ -442,46 +448,46 @@ export class SearchResultPageComponent {
     return snippet;
   }
 
-  // 新增&刪除書籤
-  toggleBookmark(caseItem: any) {
-    // 從 sessionStorage 讀取現有書籤資料
-    const storedBookmarks = sessionStorage.getItem('myBookmarks');
-    let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+  // // 新增&刪除書籤
+  // toggleBookmark(caseItem: any) {
+  //   // 從 sessionStorage 讀取現有書籤資料
+  //   const storedBookmarks = sessionStorage.getItem('myBookmarks');
+  //   let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
 
-    // 檢查是否已存在書籤，如果不存在就新增，如果已存在就刪除
-    const exists = bookmarks.some(
-      (bookmark: any) => bookmark.id == caseItem.id
-    );
-    if (!exists) {
-      // 如果不存在，新增書籤
-      bookmarks.push(caseItem);
-      // 改變書籤icon變數
-      caseItem.isBookmarked = true;
-      // 更新 sessionStorage
-      sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
-      Swal.fire({
-        title: '書籤新增成功!',
-        icon: 'success',
-        confirmButtonText: '確定',
-      });
-    } else {
-      // 過濾掉要刪除的書籤
-      bookmarks = bookmarks.filter(
-        (bookmark: any) => bookmark.id != caseItem.id
-      );
-      // 改變書籤icon變數
-      caseItem.isBookmarked = false;
-      // 更新 sessionStorage
-      sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
-      Swal.fire({
-        title: '移除書籤成功!',
-        icon: 'success',
-        confirmButtonText: '確定',
-      });
+  //   // 檢查是否已存在書籤，如果不存在就新增，如果已存在就刪除
+  //   const exists = bookmarks.some(
+  //     (bookmark: any) => bookmark.id == caseItem.id
+  //   );
+  //   if (!exists) {
+  //     // 如果不存在，新增書籤
+  //     bookmarks.push(caseItem);
+  //     // 改變書籤icon變數
+  //     caseItem.isBookmarked = true;
+  //     // 更新 sessionStorage
+  //     sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+  //     Swal.fire({
+  //       title: '書籤新增成功!',
+  //       icon: 'success',
+  //       confirmButtonText: '確定',
+  //     });
+  //   } else {
+  //     // 過濾掉要刪除的書籤
+  //     bookmarks = bookmarks.filter(
+  //       (bookmark: any) => bookmark.id != caseItem.id
+  //     );
+  //     // 改變書籤icon變數
+  //     caseItem.isBookmarked = false;
+  //     // 更新 sessionStorage
+  //     sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+  //     Swal.fire({
+  //       title: '移除書籤成功!',
+  //       icon: 'success',
+  //       confirmButtonText: '確定',
+  //     });
 
-      console.log('已刪除書籤:', caseItem.id);
-    }
-  }
+  //     console.log('已刪除書籤:', caseItem.id);
+  //   }
+  // }
 
   // // 新增書籤
   // addBookmark(caseItem: any) {
@@ -539,4 +545,69 @@ export class SearchResultPageComponent {
 
   //     // console.log('已刪除書籤:', bookmarkId);
   //   }
+
+  toggleBookmark(caseItem: any) {
+        const email = this.sessionServiceService.getEmail();
+        const groupId = caseItem.groupId;
+        const id = caseItem.id;
+        const court = caseItem.court;
+        const charge = caseItem.charge;
+        const judgeName = caseItem.judgeName;
+        const defendantName = caseItem.defendantName;
+        const docType = caseItem.docType;
+        const caseType = caseItem.caseType;
+        const verdictDate = caseItem.verdictDate;
+        
+        // 呼叫新增書籤api
+        this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
+        
+      }
+    
+
+   // 儲存書籤api
+  postSaveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
+    const bookmark = { email, groupId, id, court, verdictDate, charge, defendantName, judgeName, caseType, docType };
+
+    console.log("儲存的書籤:", bookmark);
+
+    // 檢查是否已存在書籤
+    this.getBookmarkAlreadyExists(email, groupId, id, court);
+
+    if (this.Bookmarkcode == 200) {
+      this.openDialog('書籤已儲存，不須重複儲存！');
+      return;
+    }
+
+    this.http.postApi('http://localhost:8080/accountSystem/bookmark', bookmark).subscribe({
+      next: (res: any) => {
+        console.log('書籤儲存成功:', res);
+
+        // 更新書籤狀態
+        // this.Bookmarkcode = 200;
+        
+        this.openDialog('書籤已成功儲存！');
+      },
+    });
+  }
+
+
+  // 確認書籤是否已存在
+  getBookmarkAlreadyExists(email: string, groupId: string, id: string, court: string) {
+    this.http
+      .getApi('http://localhost:8080/accountSystem/bookmark-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
+      .subscribe(
+        (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res == null) return;
+          this.Bookmarkcode = res.code;
+          console.log("重複檢查結果:",this.Bookmarkcode)
+        });
+  }
+
+  // 打開通知對話框
+    openDialog(message: string): void {
+      this.dialog.open(ClickDialogComponent, {
+        data: { message }
+      });
+    }
 }
