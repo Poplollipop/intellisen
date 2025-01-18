@@ -87,7 +87,7 @@
             }
           </div>
           }
-          @if (this.role == '一般使用者') {
+          @if (this.role == '一般會員') {
           <div class="info-row">
             <label for="name">姓名</label>
             @if (!editMode.basicInfo) {
@@ -130,7 +130,7 @@
 
 
     <div class="contact-info card">
-      @if (this.role == "律師" || this.role == "事務所" || this.role == "一般使用者") {
+      @if (this.role == "律師" || this.role == "事務所" || this.role == "一般會員") {
       <div class="header">
         <h3>聯絡資料</h3>
         <mat-icon fontIcon="edit" (click)="toggleEdit('contactInfo')"></mat-icon>
