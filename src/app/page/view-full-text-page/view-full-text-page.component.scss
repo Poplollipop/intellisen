@@ -252,12 +252,11 @@ span[style*="box-shadow"]:hover {
 
 //=====================================================
 // 右上工具列
+/* 工具列主要樣式 */
 .document__toolbar {
   position: absolute;
   top: 20px;
-  /* 顯示在主文區塊的右上角 */
   right: 20px;
-  /* 留出空間給回上頁按鈕 */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -270,14 +269,17 @@ span[style*="box-shadow"]:hover {
 
   .mat-icon {
     color: #000000 !important;
+    transition: color 0.3s ease;
   }
 }
 
+/* 按鈕組樣式 */
 .btn-group {
   display: flex;
   gap: 10px;
 }
 
+/* 工具列按鈕的基礎樣式 */
 .toolbar-button {
   display: flex;
   align-items: center;
@@ -288,12 +290,37 @@ span[style*="box-shadow"]:hover {
   border-radius: 4px;
   background-color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s;
+
+  &:hover {
+    background-color: #b3b3b3;
+  }
 }
 
-.toolbar-button:hover {
-  background-color: #b3b3b3;
+/* 書籤按鈕樣式（根據狀態變化） */
+.toolbar-button.star-button {
+  &.active {
+    background-color: black;
+    border-color: black;
+    color: white;
+
+    .mat-icon {
+      color: white !important;
+    }
+  }
+
+  &.inactive {
+    background-color: white;
+    border-color: #ccc;
+    color: black;
+
+    .mat-icon {
+      color: black !important;
+    }
+  }
 }
+
+
 
 //==============================================
 // 頁面載入 渲染處理

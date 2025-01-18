@@ -1,0 +1,54 @@
+/* 對話框整體樣式 */
+:host {
+  display: block;
+  font-family: 'TaipeiSansTCBeta', sans-serif;
+}
+
+/* 標題文字樣式 */
+h2[mat-dialog-title] {
+  font-size: 30px; /* 文字大小 */
+  font-weight: bold;
+  margin-bottom: 0px;
+  color: #333;
+}
+
+/* 內容文字樣式 */
+mat-dialog-content p{
+  font-size: 24px; /* 文字大小 */
+  color: #000000;
+  margin-bottom: 100px; /* 預留底部空間，避免按鈕重疊 */
+  line-height: 1.6; /* 行距，提升可讀性 */
+  text-align: center; /* 文字置中 */
+}
+
+/* 對話框操作區域 */
+mat-dialog-actions {
+  position: absolute;
+  bottom: 20px; /* 距離底部 */
+  right: 20px; /* 距離右側 */
+  margin: 0;
+}
+
+/* 按鈕樣式 */
+button[mat-button] {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(3, 21, 70);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+
+  /* 滑鼠懸停效果 */
+  &:hover {
+    background-color: rgb(5, 30, 100);
+    transform: scale(1.05);
+  }
+
+  /* 按下效果 */
+  &:active {
+    transform: scale(0.95);
+  }
+}

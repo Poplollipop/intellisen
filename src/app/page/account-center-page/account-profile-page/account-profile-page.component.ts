@@ -144,18 +144,19 @@ export class AccountProfilePageComponent {
       next: (response: any) => {
         if (response.body.code == 200) {
           Swal.fire({
-            title: '更新成功!',
-            icon: 'success',
-            confirmButtonText: '確定'
-          }).then((result) => {
-            window.location.reload(); // 強制刷新頁面
-          }
-        )
+                title: '移除書籤成功!',
+                icon: 'success',
+                confirmButtonText: '確定',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload(); // 在按下「確定」後執行刷新
+                }
+              });
           console.log(response);
           this.editMode.basicInfo = false;
           this.editMode.contactInfo = false;
           sessionStorage.setItem('userData', JSON.stringify(this.udpdateData));
-          // window.location.reload(); // 強制刷新頁面  
+          // window.location.reload(); // 強制刷新頁面
         }
 
         if (response.body.code != 200) {

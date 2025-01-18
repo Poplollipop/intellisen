@@ -78,6 +78,7 @@ export class SearchResultPageComponent {
 
   // 書籤變數
   isLogin: boolean = false;  // 判斷是否為登入狀態
+  isLogin: boolean = false;  // 判斷是否為登入狀態
   myBookmarks: any[] = [];
 
   // tab頁籤
@@ -422,6 +423,8 @@ export class SearchResultPageComponent {
     return snippet;
   }
 
+  
+  
   // 新增書籤
   addBookmark(caseItem: any): void {
     // 從 sessionStorage 讀取現有書籤資料
