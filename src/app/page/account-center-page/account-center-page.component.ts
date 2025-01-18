@@ -18,6 +18,8 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './account-center-page.component.scss',
 })
 export class AccountCenterPageComponent {
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
+
   role!: string;
   name!: string;
   phone!: string;
@@ -33,9 +35,8 @@ export class AccountCenterPageComponent {
   ) { }
 
   ngOnInit(): void {
-    // const isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
-    const isLogin = this.session.getIsLogin();
-
+    if (isPlatformBrowser(this.platformId)) {
+    const isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
     if (isLogin) {
       console.log(this.session.getEmail());
       this.http.postApi2('http://localhost:8080/accountSystem/get-user-info', { email: this.session.getEmail() }).subscribe({
@@ -78,6 +79,7 @@ export class AccountCenterPageComponent {
     //   error: (error) => {
     //   }
     // })
+    }
   }
 
   goToUpdatePage() {

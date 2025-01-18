@@ -72,7 +72,6 @@
 // 頭像樣式
 .pic {
   display: flex;
-  gap: 1rem;
   margin: 0 2rem;
   flex-direction: column;
   width: 40%;
@@ -94,9 +93,9 @@
   }
 
   img {
-    width: 150px;
-    height: 150px;
-    // border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
     border: 2px solid #ddd;
     transition: transform 0.3s;
     margin-left: 1.5rem;

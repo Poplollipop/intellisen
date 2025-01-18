@@ -12,7 +12,7 @@
       <label style="font-size: 22px;">您目前的使用者類型為：</label>
       <span>{{this.role}}</span>
 
-
+      <!-- 根據角色顯示要切換的使用者類型 -->
       <div class="form-group">
         <label for="role" style="font-size: 22px;">我想切換的使用者類型為：</label>
 
@@ -24,7 +24,7 @@
 
         <div class="option">
           <input type="radio" id="user" name="role" value="user" [(ngModel)]="this.newRole">
-          <label for="user">一般使用者</label><br>
+          <label for="user">一般會員</label><br>
         </div>
         }
 
@@ -36,7 +36,7 @@
 
         <div class="option">
           <input type="radio" id="user" name="role" value="user" [(ngModel)]="this.newRole">
-          <label for="user">一般使用者</label><br>
+          <label for="user">一般會員</label><br>
         </div>
         }
 
@@ -53,26 +53,26 @@
         }
 
         @if (this.role == '訪客') {
-          <div class="option">
-            <input type="radio" id="lawFirm" name="role" value="lawFirm" [(ngModel)]="this.newRole">
-            <label for="lawFirm">事務所</label><br>
-          </div>
-  
-          <div class="option">
-            <input type="radio" id="lawyer" name="role" value="lawyer" [(ngModel)]="this.newRole">
-            <label for="lawyer">律師</label><br>
-          </div>
+        <div class="option">
+          <input type="radio" id="lawFirm" name="role" value="lawFirm" [(ngModel)]="this.newRole">
+          <label for="lawFirm">事務所</label><br>
+        </div>
 
-          <div class="option">
-            <input type="radio" id="user" name="role" value="user" [(ngModel)]="this.newRole">
-            <label for="user">一般使用者</label><br>
-          </div>
-          }
+        <div class="option">
+          <input type="radio" id="lawyer" name="role" value="lawyer" [(ngModel)]="this.newRole">
+          <label for="lawyer">律師</label><br>
+        </div>
+
+        <div class="option">
+          <input type="radio" id="user" name="role" value="user" [(ngModel)]="this.newRole">
+          <label for="user">一般會員</label><br>
+        </div>
+        }
 
       </div>
     </div>
 
-
+    <!-- 根據選擇的使用者類型顯示input框 -->
     <div class="input-area">
       @if (this.newRole == 'lawFirm') {
       <div class="form-group">
@@ -94,6 +94,12 @@
         <label for="lawFirmNumber">事務所統編：</label>
         <input type="text" id="lawFirmNumber" [(ngModel)]="lawFirmNumber" placeholder="請輸入地址" class="form-control"
           required>
+      </div>
+
+      <!-- 確認與取消按鈕 -->
+      <div class="btn-area">
+        <button type="button" class="btn-submit" (click)="updateInfo()">送出</button>
+        <button type="button" class="btn-cancel" (click)="backToAccountCenter()">取消</button>
       </div>
       }
 
@@ -118,6 +124,12 @@
         <label for="lawFirm">所屬事務所：</label>
         <input type="text" id="lawFirm" [(ngModel)]="lawFirm" placeholder="請輸入所屬事務所" class="form-control" required>
       </div>
+
+      <!-- 確認與取消按鈕 -->
+      <div class="btn-area">
+        <button type="button" class="btn-submit" (click)="updateInfo()">送出</button>
+        <button type="button" class="btn-cancel" (click)="backToAccountCenter()">取消</button>
+      </div>
       }
 
       @if (this.newRole == 'user') {
@@ -135,14 +147,48 @@
         <label for="city">所在縣市：</label>
         <input type="text" id="city" [(ngModel)]="city" placeholder="請輸入所在縣市" class="form-control" required>
       </div>
-      }
 
+      <!-- 確認與取消按鈕 -->
       <div class="btn-area">
         <button type="button" class="btn-submit" (click)="updateInfo()">送出</button>
         <button type="button" class="btn-cancel" (click)="backToAccountCenter()">取消</button>
       </div>
+      }
 
     </div>
+
   </div>
+
+  <!-- 方案介紹 -->
+  <div class="plan-area">
+    <h2>會員方案介紹</h2>
+    <div class="flex user">
+      <h3>一般會員</h3>
+      <div class="line"></div>
+      <div class="plan-content">
+        <p>書籤</p>
+        <p>瀏覽紀錄</p>
+      </div>
+    </div>
+    <div class="flex lawyer">
+      <h3>律師</h3>
+      <div class="line"></div>
+      <div class="plan-content">
+        <p>書籤</p>
+        <p>瀏覽紀錄</p>
+        <p>客戶管理</p>
+      </div>
+    </div>
+    <div class="flex lawFirm">
+      <h3>事務所</h3>
+      <div class="line"></div>
+      <div class="plan-content">
+        <p>書籤</p>
+        <p>瀏覽紀錄</p>
+        <p>成員管理</p>
+      </div>
+    </div>
+  </div>
+
 
 </div>

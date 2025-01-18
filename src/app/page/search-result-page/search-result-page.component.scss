@@ -18,7 +18,10 @@
   src: url('../../../../public/GenKiMin2TW-M.otf');
 }
 
+@import "primeicons/primeicons.css";
 
+
+// 上方搜尋區域
 .search-area{
   width: 100%;
   background: #c1e5ff;
@@ -26,7 +29,7 @@
   margin: 1rem auto;
   padding: 1rem;
 
-
+  // 關鍵字搜尋
   .input-search-button{
     display: flex; /* 使用 Flexbox */
     align-items: center; /* 垂直居中對齊 */
@@ -60,6 +63,7 @@
 
 }
 
+// 進階條件
 .bottom-area{
   width: 100%;
 
@@ -84,6 +88,7 @@
     transform: scale(1.1); /* 縮放比例 */
   }
 
+  // 進階條件中的搜尋
   .layout-container {
     display: flex;
     justify-content: space-around;
@@ -210,6 +215,9 @@ select:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+
+
+// 案件列表
 .case-list {
   display: flex;
   flex-direction: column;
@@ -218,6 +226,7 @@ select:focus {
   overflow-y: auto;
   padding: 10px 0;
 
+  // 每一筆顯示的資料列
   .display-li {
     width: 100%;
     padding: 10px 10px;
@@ -266,9 +275,10 @@ select:focus {
 
     }
 
+    // 標題下方的小摘要
     .summary {
       max-height: 0; /* 預設隱藏 */
-      max-width: 70rem; /* 與列表寬度一致 */
+      max-width: 80rem; /* 與列表寬度一致 */
       padding: 0 10px; /* 展開時增加內邊距 */
       overflow: hidden; /* 隱藏內容 */
       display: flex;
@@ -276,34 +286,35 @@ select:focus {
       color: #555;
       transition: max-height 0.3s ease, padding 0.3s ease;
 
+      // 每個小摘要
       .summary-detail{
-        flex: 1; /* 讓每個條目根據內容自適應寬度 */
-        min-width: 10rem; /* 設置最小寬度，防止過窄 */
-        width: 12rem; /* 調整寬度讓內容對齊 */
-        font-size: 18px; /* 字體稍大 */
+        flex: 1; 
+        min-width: 15rem; 
+        width: 12rem; 
+        font-size: 18px; 
         display: flex;
         align-items: center;
 
         span {
-          font-weight: bold; /* 標題加粗 */
+          font-weight: bold; 
           color: #03528b;
-          margin-right: 10px; /* 標題與內容間距 */
+          margin-right: 10px; 
         }
       }
 
     }
 
     &:hover .summary {
-      max-height: 15rem; /* 展開時設置最大高度 */
-      max-width: 70rem; /* 展開時增加寬度 */
-      padding: 10px; /* 展開時增加內邊距 */
-      font-size: 18px; /* 展開時字體變大 */
+      max-height: 15rem; 
+      max-width: 80rem;
+      padding: 10px; 
+      font-size: 18px; 
     }
-
-
 
   }
 
+
+  // 查看全文
   .view-text {
     display: flex;
 
@@ -338,6 +349,7 @@ select:focus {
 
 }
 
+// 統計圖
 .case-details {
   flex: 2;
   overflow-y: auto;

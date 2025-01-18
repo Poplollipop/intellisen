@@ -77,9 +77,12 @@ export class SearchResultPageComponent {
   id: string = '';
 
   // 書籤變數
-  isLogin: boolean = false;  // 判斷是否為登入狀態
+  isLogin: boolean = false; // 判斷是否為登入狀態
+  // isBookmarked: boolean = false;  // icon 切換顏色的變數
   myBookmarks: any[] = [];
 
+  // tab頁籤
+  defaultTabIndex: number = 0; // 預設開啟第一個頁籤 (索引 0)
 
   constructor(
     protected searchSessionService: SearchSessionService,
@@ -154,8 +157,10 @@ export class SearchResultPageComponent {
       this.searchApi(savedConditions);
     }
 
-    // 確認是否是登入狀態以顯示書遷icon
-    this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    // 確認是否是登入狀態以改變書籤點擊後動作
+    if (isPlatformBrowser(this.platformId)) {
+      this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    }
 
   }
 
@@ -242,6 +247,33 @@ export class SearchResultPageComponent {
 
         this.ngxService.stop(); // 關閉 loading 動畫
       });
+  }
+
+  // 更新顯示資料
+  updateVisibleCases() {
+    const start = this.first; // 更新起始的那一筆的 index
+    const end = this.first + this.itemsPerPage; // 更新結束的那一筆的 index
+    this.visibleCases = this.caseList.slice(start, end); // 只取該頁要顯示的筆數的 index
+
+    // 為每個項目動態新增 isBookmarked
+    this.visibleCases = this.caseList.map((item) => ({
+      ...item,
+      isBookmarked: false,
+    }));
+
+    // 確認sessionStorage裡面是否已有書籤
+    const storedBookmarks = sessionStorage.getItem('myBookmarks');
+    let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+
+    // 把sessionStorage裡面已經存在的書籤id和畫面顯示的列表id做比對
+    const existingItems = this.visibleCases.filter(   // 把visibleCases的每個物件取出成caseItem並進行比對
+      caseItem => bookmarks.some(      // 遍歷 bookmarks 陣列，檢查是否有至少一個bookmark滿足條件
+        (bookmark: any) => bookmark.id == caseItem.id   
+      )
+    );
+
+    existingItems.forEach(item => item.isBookmarked = true)
+      
   }
 
   // 重組資料
@@ -364,13 +396,6 @@ export class SearchResultPageComponent {
     this.updateVisibleCases(); // 更新顯示的筆數
   }
 
-  // 更新顯示資料
-  updateVisibleCases(): void {
-    const start = this.first; // 更新起始的那一筆的 index
-    const end = this.first + this.itemsPerPage; // 更新結束的那一筆的 index
-    this.visibleCases = this.caseList.slice(start, end); // 只取該頁要顯示的筆數的 index
-  }
-
   // 觀看全文
   checkContent(groupId: string, id: string, court: string) {
     // 將網址與案件 id 綁在一起
@@ -417,22 +442,21 @@ export class SearchResultPageComponent {
     return snippet;
   }
 
-  
-  
-  // 新增書籤
-  addBookmark(caseItem: any): void {
+  // 新增&刪除書籤
+  toggleBookmark(caseItem: any) {
     // 從 sessionStorage 讀取現有書籤資料
     const storedBookmarks = sessionStorage.getItem('myBookmarks');
     let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
 
-    // 檢查是否已存在書籤
+    // 檢查是否已存在書籤，如果不存在就新增，如果已存在就刪除
     const exists = bookmarks.some(
       (bookmark: any) => bookmark.id == caseItem.id
     );
     if (!exists) {
       // 如果不存在，新增書籤
       bookmarks.push(caseItem);
-
+      // 改變書籤icon變數
+      caseItem.isBookmarked = true;
       // 更新 sessionStorage
       sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
       Swal.fire({
@@ -441,11 +465,78 @@ export class SearchResultPageComponent {
         confirmButtonText: '確定',
       });
     } else {
+      // 過濾掉要刪除的書籤
+      bookmarks = bookmarks.filter(
+        (bookmark: any) => bookmark.id != caseItem.id
+      );
+      // 改變書籤icon變數
+      caseItem.isBookmarked = false;
+      // 更新 sessionStorage
+      sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
       Swal.fire({
-        title: '該案件已經在書籤中',
+        title: '移除書籤成功!',
         icon: 'success',
         confirmButtonText: '確定',
       });
+
+      console.log('已刪除書籤:', caseItem.id);
     }
   }
+
+  // // 新增書籤
+  // addBookmark(caseItem: any) {
+  //   // 從 sessionStorage 讀取現有書籤資料
+  //   const storedBookmarks = sessionStorage.getItem('myBookmarks');
+  //   let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+
+  //   // 檢查是否已存在書籤
+  //   const exists = bookmarks.some(
+  //     (bookmark: any) => bookmark.id == caseItem.id
+  //   );
+  //   if (!exists) {
+  //     // 如果不存在，新增書籤
+  //     bookmarks.push(caseItem);
+  //     // 改變書籤icon變數
+  //     this.isBookmarked = true;
+  //     // 更新 sessionStorage
+  //     sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+  //     Swal.fire({
+  //       title: '書籤新增成功!',
+  //       icon: 'success',
+  //       confirmButtonText: '確定',
+  //     });
+  //   } else {
+  //     Swal.fire({
+  //       title: '該案件已經在書籤中',
+  //       icon: 'success',
+  //       confirmButtonText: '確定',
+  //     });
+  //   }
+  // }
+
+  // // 刪除書籤
+  // // 清除單一書籤
+  //   removeBookmark(bookmarkId: string): void {
+  //     // 從 sessionStorage 讀取現有書籤資料
+  //     const storedBookmarks = sessionStorage.getItem('myBookmarks');
+  //     let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+
+  //     // 過濾掉要刪除的書籤
+  //     bookmarks = bookmarks.filter((bookmark: any) => bookmark.id != bookmarkId);
+  //     // 改變書籤icon變數
+  //     this.isBookmarked = false;
+  //     // 更新 sessionStorage
+  //     sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
+  //     Swal.fire({
+  //       title: '移除書籤成功!',
+  //       icon: 'success',
+  //       confirmButtonText: '確定',
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         window.location.reload(); // 在按下「確定」後執行刷新
+  //       }
+  //     });
+
+  //     // console.log('已刪除書籤:', bookmarkId);
+  //   }
 }
