@@ -80,6 +80,9 @@ export class SearchResultPageComponent {
   isLogin: boolean = false;  // 判斷是否為登入狀態
   myBookmarks: any[] = [];
 
+  // tab頁籤
+  defaultTabIndex: number = 0; // 預設開啟第二個頁籤 (索引 1)
+
   constructor(
     protected searchSessionService: SearchSessionService,
     public sessionServiceService: SessionServiceService,
@@ -153,8 +156,10 @@ export class SearchResultPageComponent {
       this.searchApi(savedConditions);
     }
 
-    // 確認是否是登入狀態以顯示書遷icon
-    this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    // 確認是否是登入狀態以改變書籤點擊後動作
+    if(isPlatformBrowser(this.platformId)) {
+      this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
+    }
   }
 
   

@@ -92,12 +92,12 @@ export class AccountProfilePageComponent {
         this.licenseNumber = userData.licenseNumber;
       }
       if (userData.role == 'user') {
-        this.role = '一般使用者'
+        this.role = '一般會員'
         this.phone = userData.phone;
         this.city = userData.city;
       }
       if (userData.role == 'guest') {
-        this.role = '訪客'
+        this.role = '使用者'
       }
 
       this.getUserProfilePicture(); // 取得用戶頭像
@@ -121,10 +121,10 @@ export class AccountProfilePageComponent {
     if(this.role == '事務所'){
       this.role = 'lawFirm'
     }
-    if(this.role == '一般使用者'){
+    if(this.role == '一般會員'){
       this.role = 'user'
     }
-    if(this.role == '訪客'){
+    if(this.role == '使用者'){
       this.role = 'guest'
     }
     this.udpdateData = {
@@ -147,12 +147,15 @@ export class AccountProfilePageComponent {
             title: '更新成功!',
             icon: 'success',
             confirmButtonText: '確定'
-          });
+          }).then((result) => {
+            window.location.reload(); // 強制刷新頁面
+          }
+        )
           console.log(response);
           this.editMode.basicInfo = false;
           this.editMode.contactInfo = false;
           sessionStorage.setItem('userData', JSON.stringify(this.udpdateData));
-          window.location.reload(); // 強制刷新頁面
+          // window.location.reload(); // 強制刷新頁面  
         }
 
         if (response.body.code != 200) {

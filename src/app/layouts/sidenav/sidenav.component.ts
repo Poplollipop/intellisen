@@ -67,7 +67,7 @@ export class SidenavComponent {
         ];
         break;
       case 'user':
-        this.role = '一般使用者'
+        this.role = '一般會員'
         this.menuItems = [
           // { label: '首頁', link: '/account-center/account-main' },
           { icon: 'person' ,  label: '個人資料', link: '/account-center/account-profile' },
@@ -77,7 +77,7 @@ export class SidenavComponent {
         ];
         break;
       case 'guest':
-        this.role = '訪客'
+        this.role = '使用者'
         this.menuItems = [
           // { label: '首頁', link: '/account-center/account-main' },
           { icon: 'person' ,  label: '個人資料', link: '/account-center/account-profile' },
