@@ -9,23 +9,27 @@
   padding: 0; 
   width: 100%;  
   box-sizing: border-box;
-  background: linear-gradient(110deg, #8ca6f4, #e4efff);
+  background: linear-gradient(50deg, #95a7dd, #e4efff);
 }
 
 .container {
   display: flex;
   min-height: 80vh;
-  justify-content: center;
-  flex-direction: column; /* 讓內容垂直排列 */
+  gap: 20px;
+  // justify-content: center;
+  // flex-direction: column; /* 讓內容垂直排列 */
 }
 
 
 .text-area {
-  margin: 0 auto;
-  width: 90%;
+  min-height: 30rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  min-width: 40rem;
   background-color: #ffffff;
-  padding: 1.5rem;
   box-shadow: 0 0 15px gray;
+  padding: 1.5rem;
+  position: relative;
 }
 
 h2 {
@@ -36,7 +40,7 @@ h2 {
 
 
 .nav {
-  width: 600px;
+  width: 500px;
   height: 5px;
   background-color: #005593;
   margin-bottom: 2rem;
@@ -97,8 +101,8 @@ h2 {
 
 
 .btn-submit , .btn-cancel {
-  width: 20%;
-  margin-top: 3rem;
+  width: 15%;
+  margin-top: 4rem;
   margin-right: 2rem;
   padding: 10px 20px;
   font-size: 20px;
@@ -117,12 +121,11 @@ h2 {
 
 .btn-cancel {
   color: rgb(0, 0, 0);
-  background-color: #f7f7f7;
-  border: 2px solid #c8c8c8;
+  background-color: #dcdcdc;
 }
 
 .btn-submit:hover {
-  background-color: #357ABD;
+  background-color: #4c88c4;
 }
 
 .btn-submit:active {
@@ -130,10 +133,64 @@ h2 {
 }
 
 .btn-cancel:hover {
-  background-color: #7f7f7f;
+  background-color: #b5b5b5;
 }
 
 .btn-cancel:active {
   background-color: #959595;
 }
 
+
+// 會員方案
+.plan-area {
+  min-height: 29rem;
+  max-height: 29rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  min-width: 40rem;
+  // background-color: #ffffff;
+  padding: 1.1rem;
+  // box-shadow: 0 0 15px gray;
+  border: 2px solid #5c6b86;
+  border-radius: 8px;
+
+  h2 {
+    text-align: center;
+    background-color: #75a3e287;
+    color: #00146f;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .plan-nav {
+    width: 500px;
+    height: 5px;
+    background-color: #005593;
+    margin: auto;
+    margin-bottom: 2rem;
+  }
+
+  .flex {
+    margin-top: 10px;
+    display: flex;
+  }
+
+  h3 {
+    width: 130px;
+    text-align: end;
+  }
+
+  p {
+    margin-left: 1.5rem;
+    font-size: 20px;
+    color: #4e5b72;
+  }
+
+  .line {
+    width: 5px;
+    height: 30px;
+    margin-left: 1.5rem;
+    background-color: #005593;
+  }
+
+}

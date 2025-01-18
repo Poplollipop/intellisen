@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { Router } from '@angular/router';
   styleUrl: './edit-info-page.component.scss'
 })
 export class EditInfoPageComponent {
+  private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
+  
   email!: string;
   role: string | null = null; 
   name: string | null = null;
@@ -42,7 +45,8 @@ export class EditInfoPageComponent {
 
   ngOnInit(): void {
     this.email = this.session.getEmail();
-    this.role = JSON.parse(sessionStorage.getItem('userData')!).role
+    if (isPlatformBrowser(this.platformId)) {
+      this.role = JSON.parse(sessionStorage.getItem('userData')!).role
     if(this.role == 'lawFirm') {
       this.role = '事務所'
     }
@@ -54,6 +58,7 @@ export class EditInfoPageComponent {
     }
     if(this.role == 'guest') {
       this.role = '訪客'
+    }
     }
   }
 

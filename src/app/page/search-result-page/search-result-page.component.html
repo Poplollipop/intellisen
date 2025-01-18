@@ -178,7 +178,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (item of visibleCases; track item.id) {
+            @for (item of visibleCases; track item.id ) {
             <tr>
               <td class="display-li">
                 <div class="main-content">
@@ -188,7 +188,9 @@
                   <span class="separator">|</span>
                   <span class="date">{{ item.verdictDate }}</span>
                   @if (this.isLogin) {
-                    <mat-icon style="cursor: pointer;" fontIcon = "bookmark" routerLinkActive="active" (click)="addBookmark(item)" ></mat-icon>
+                  <i class="pi pi-bookmark" (click)="toggleBookmark(item)" style="font-size: 1.5rem; cursor: pointer;"
+                    [style.color]="item.isBookmarked ? 'red' : 'green'">
+                  </i>
                   }
                 </div>
                 <div class="summary">
@@ -224,75 +226,3 @@
   </mat-tab-group>
 </div>
 <p-scrolltop />
-
-
-<!-- drawer
-<p-drawer header="您目前的搜尋條件：" [(visible)]="visible2" position="right" [style]="{ width: '400px' }">
-  <form [formGroup]="searchForm">
-    <p-fluid>
-
-      <div class="p-field">
-        <label for="searchName">關鍵字:</label>
-        <input id="searchName" type="text" pInputText formControlName="searchName" />
-      </div>
-
-      <div class="p-field">
-        <label for="charge">案由：</label>
-        <input id="charge" type="text" pInputText formControlName="charge" />
-      </div>
-
-      <div class="p-field">
-        <label for="law">法條：</label>
-        <input id="law" type="text" pInputText formControlName="lawList" />
-        @if (errorMessage) {
-        <small style="color: red; display: inline-block; margin-left: 1%">{{errorMessage}}</small>
-        }
-      </div>
-
-      <div class="p-field">
-        <label for="caseType">案件類型：</label>
-        <input id="caseType" type="text" pInputText formControlName="caseType" />
-      </div>
-
-      <div class="p-field">
-        <label for="courtList">法院：</label>
-        <p-multiselect class="muti-select" [options]="groupedCourts" [group]="true" formControlName="courtList"
-          scrollHeight="250px" display="chip" appendTo="body" styleClass="w-full">
-          <ng-template let-group #group>
-            <div class="flex items-center">
-              <span>{{ group.label }}</span>
-            </div>
-          </ng-template>
-        </p-multiselect>
-      </div>
-
-      <div class="p-field">
-        <label for="verdictId">字號：</label>
-        <input id="verdictId" type="text" pInputText formControlName="verdictId" />
-      </div>
-
-      <div class="p-field">
-        <label for="verdictStartDate">起始日期：</label>
-        <input id="verdictStartDate" type="date" pInputText formControlName="verdictStartDate" />
-      </div>
-
-      <div class="p-field">
-        <label for="verdictEndDate">結束日期：</label>
-        <input id="verdictEndDate" type="date" pInputText [min]="searchForm.get('verdictStartDate')?.value"
-          formControlName="verdictEndDate" />
-      </div>
-
-      <div class="p-field">
-        <label for="docType">裁判種類：</label>
-        <select id="docType" formControlName="docType">
-          <option value=""></option>
-          <option value="判決">判決</option>
-          <option value="裁定">裁定</option>
-        </select>
-      </div>
-
-      <p-button type="button" class="btn" label="搜尋" (click)="searchAgain()"></p-button>
-
-    </p-fluid>
-  </form>
-</p-drawer> -->
