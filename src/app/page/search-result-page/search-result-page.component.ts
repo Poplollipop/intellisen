@@ -1,4 +1,4 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { SearchSessionService } from '../../service/search-session.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { SessionServiceService } from '../../service/session-service.service';
@@ -23,10 +23,17 @@ import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ClickDialogComponent } from '../view-full-text-page/click-dialog/click-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HighchartsChartModule } from 'highcharts-angular';
 import Highcharts from 'highcharts';
 import { CaseViewComponent } from '../../component/case-view/case-view.component';
+import { Dialog } from 'primeng/dialog';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-search-result-page',
@@ -50,7 +57,13 @@ import { CaseViewComponent } from '../../component/case-view/case-view.component
     ScrollTop,
     PaginatorModule,
     CommonModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTooltipModule
   ],
   templateUrl: './search-result-page.component.html',
   styleUrl: './search-result-page.component.scss',
@@ -99,6 +112,7 @@ export class SearchResultPageComponent {
     private ngxService: NgxUiLoaderService,
     private router: Router,
     public dialog: MatDialog,
+
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -156,7 +170,9 @@ export class SearchResultPageComponent {
       },
     ];
 
+    // 圖表
     this.updateChartOptions('pie');
+    // dialog
   }
 
   ngOnInit(): void {
@@ -256,7 +272,9 @@ export class SearchResultPageComponent {
         this.sortCases('verdictDate', false); // 預設排序
 
         // 初始化案件列表及書籤狀態
-        this.initializeBookmarks(this.sessionServiceService.getEmail());
+        if(this.isLogin) {
+          this.initializeBookmarks(this.sessionServiceService.getEmail());
+        }
 
         this.ngxService.stop(); // 關閉 loading 動畫
       });
@@ -822,6 +840,6 @@ export class SearchResultPageComponent {
       }
 
 
-      // 統計圖回上頁
-      
 }
+
+    

@@ -591,3 +591,109 @@ select:focus {
 }
 
 
+
+
+
+// dialog
+.title {
+  background-color: #2E86C1; // 藍色背景
+  width: 80%; // 使用百分比設置寬度，根據螢幕大小自適應
+  max-width: 400px; // 設置最大寬度，避免過大
+  height: 8vh; // 使用視窗高度單位
+  min-height: 50px; // 設置最小高度，確保文字不會太小
+  margin: 10px auto;
+  display: flex; // 使用 flexbox
+  justify-content: center; // 水平置中
+  align-items: center; // 垂直置中
+
+  h1 {
+    font-size: 1.5vw; // 使用視窗寬度單位設置字體大小
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2; // 確保文字在不同高度下都能垂直居中
+  }
+}
+
+.dialog-actions {
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  color: #757575; // 灰色關閉按鈕
+}
+
+// close-icon
+.large {
+  font-size: 25px;
+}
+
+// 搜尋框
+.input-area{
+  margin-left: 5%;
+  margin-bottom: 1rem;
+  input{
+    background-color: white;
+    color: black
+  }
+}
+
+// 表格內容樣式
+.mat-elevation-z8 mat-table{
+  border: none;
+}
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  letter-spacing: normal;
+  outline: 0;
+  padding-bottom: 10px;
+}
+
+.mat-mdc-row {
+  height: 40px !important;
+  font-size: 15px;
+  text-align: center; /* 水平置中 */
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background-color: #F4F6F8 !important;
+}
+
+.mat-mdc-row:nth-child(even) {
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  border: none !important;
+}
+
+.mat-mdc-header-cell {
+  background-color: #48588D !important;
+  color: #ffffff;
+  font-weight: bold !important;
+  font-size: 18px;
+  padding-bottom: 1rem;
+}
+
+
+ mat-paginator {
+  background-color: #f7f7f7 !important;
+  border: 1px solid rgb(71, 71, 71);
+  margin-bottom: 1rem;
+}
+
+// 強制顯示排序箭頭
+::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+  opacity: 0.54 !important;
+  transform: translateY(0px) !important;
+}
