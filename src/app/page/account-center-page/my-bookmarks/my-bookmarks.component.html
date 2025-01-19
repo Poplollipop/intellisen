@@ -16,7 +16,7 @@
               {{ bookmark.id }}
             </span>
             <span class="bookmark-header">{{ bookmark.verdict_date }}</span>
-            <mat-icon fontIcon = "bookmark_remove"  routerLinkActive="active" (click)="removeBookmark(bookmark.id)" ></mat-icon>
+            <mat-icon fontIcon = "bookmark_remove"  routerLinkActive="active" (click)="postDeleteBookmarkApi(bookmark.group_id,bookmark.id,bookmark.court)" ></mat-icon>
           </div>
           <!-- 詳細資訊 -->
           <div class="summary">
@@ -29,7 +29,6 @@
         </li>
         }
       </ul>
-
     </mat-tab>
 
     <!-- 螢光筆書籤 -->
