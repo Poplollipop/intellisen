@@ -74,7 +74,7 @@
           matTooltipClass="custom-tooltip"
           [ngClass]="{ 'active': Bookmarkcode === 200, 'inactive': Bookmarkcode !== 200 }">
           <mat-icon [ngClass]="{ 'icon-active': Bookmarkcode === 200, 'icon-inactive': Bookmarkcode !== 200 }">
-            star
+            bookmark
           </mat-icon>
         </button>
 
@@ -134,6 +134,6 @@
 
 
   <!-- 回上頁按鈕 -->
-  <button class="back-button" (click)="returnToPreviousPage()">回搜尋頁</button>
+  <button class="back-button" (click)="returnToPreviousPage()">回上一頁</button>
   <p-scrolltop />
 </div>

@@ -4,7 +4,7 @@
   <mat-tab-group dynamicHeight>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">star</mat-icon> 我的書籤
+        <mat-icon class="example-tab-icon">bookmark</mat-icon> 我的書籤
       </ng-template>
       <ul class="bookmark-list">
         @for (bookmark of myBookmarks; track $index) {
@@ -15,8 +15,8 @@
             <span class="bookmark-header" (click)="checkContent(bookmark.group_id, bookmark.id, bookmark.court)">
               {{ bookmark.id }}
             </span>
-            <span class="bookmark-header">{{ bookmark.verdictDate }}</span>
-            <mat-icon style="cursor: pointer;" fontIcon = "bookmark_remove"  routerLinkActive="active"  ></mat-icon>
+            <span class="bookmark-header">{{ bookmark.verdict_date }}</span>
+            <mat-icon fontIcon = "bookmark_remove"  routerLinkActive="active" (click)="postDeleteBookmarkApi(bookmark.group_id,bookmark.id,bookmark.court)" ></mat-icon>
           </div>
           <!-- 詳細資訊 -->
           <div class="summary">
@@ -29,7 +29,6 @@
         </li>
         }
       </ul>
-
     </mat-tab>
 
     <!-- 螢光筆書籤 -->
