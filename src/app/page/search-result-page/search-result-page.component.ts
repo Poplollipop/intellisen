@@ -24,11 +24,14 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ClickDialogComponent } from '../view-full-text-page/click-dialog/click-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HighchartsChartModule } from 'highcharts-angular';
+import Highcharts from 'highcharts';
+import { CaseViewComponent } from '../../component/case-view/case-view.component';
 
 @Component({
   selector: 'app-search-result-page',
   imports: [
-    CaseDetailsComponent,
+    // CaseDetailsComponent,
     DrawerModule,
     ButtonModule,
     FormsModule,
@@ -46,7 +49,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatTabsModule,
     ScrollTop,
     PaginatorModule,
-    CommonModule
+    CommonModule,
+    HighchartsChartModule
   ],
   templateUrl: './search-result-page.component.html',
   styleUrl: './search-result-page.component.scss',
@@ -85,10 +89,6 @@ export class SearchResultPageComponent {
   isLogin: boolean = false; // 判斷是否為登入狀態
   myBookmarks: any[] = [];
 
-  // 檢查書籤是否已存在
-  Bookmarkcode !: any;
-
-
   // tab頁籤
   defaultTabIndex: number = 0; // 預設開啟第一個頁籤 (索引 0)
 
@@ -98,7 +98,7 @@ export class SearchResultPageComponent {
     private http: HttpClientService,
     private ngxService: NgxUiLoaderService,
     private router: Router,
-    private dialog: MatDialog,
+    public dialog: MatDialog,
   ) {
     // 法院選擇
     this.groupedCourts = [
@@ -155,6 +155,8 @@ export class SearchResultPageComponent {
         ],
       },
     ];
+
+    this.updateChartOptions('pie');
   }
 
   ngOnInit(): void {
@@ -553,6 +555,8 @@ export class SearchResultPageComponent {
   //     // console.log('已刪除書籤:', bookmarkId);
   //   }
 
+
+  // 先讀取資料庫中的資料，改變書籤icon顏色
   initializeBookmarks(email: string) {
     // 呼叫後端 API 獲取書籤清單
     this.http.getApi('http://localhost:8080/accountSystem/email-all-bookmark?email=' + email).subscribe((res: any) => {
@@ -579,6 +583,8 @@ export class SearchResultPageComponent {
     });
   }
 
+
+  // 加入書籤觸發
   toggleBookmark(caseItem: any) {
         // 從 sessionServiceService 獲取當前用戶的 email
         const email = this.sessionServiceService.getEmail();  
@@ -599,10 +605,11 @@ export class SearchResultPageComponent {
             if (res == null) {
               // 書籤不存在，呼叫儲存書籤 API
               this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
-              caseItem.isBookmarked = true; // 即時更新狀態
+              caseItem.isBookmarked = true; // 更新icon狀態
             } else {
               // 書籤已存在
-              this.openDialog('書籤已儲存，不須重複儲存！');
+              this.deleteBookmarkApi(email, groupId, id, court);
+              caseItem.isBookmarked = false ; // 更新icon狀態
             }
           },
           error: (error: any) => {
@@ -646,6 +653,24 @@ export class SearchResultPageComponent {
   }
 
 
+  // 刪除書籤 API
+  deleteBookmarkApi(email: string, groupId: string, id: string, court: string) {
+    // 將變數組裝成物件
+    const deleteBookmark = { email, groupId, id, court };
+    this.http.postApi('http://localhost:8080/accountSystem/delete-bookmark', deleteBookmark).subscribe({
+      next: (res: any) => {
+        console.log('書籤刪除成功:', res);
+        this.openDialog('書籤已刪除！');
+        
+      },
+      error: (error: any) => {
+        console.error('刪除書籤失敗:', error);
+        this.openDialog('刪除書籤失敗，請稍後再試！');
+      },
+    })
+  }
+
+
   // 確認書籤是否已存在 API
   getBookmarkAlreadyExists(email: string, groupId: string, id: string, court: string) {
     const url = `http://localhost:8080/accountSystem/bookmark-already-exists?email=${email}&groupId=${groupId}&id=${id}&court=${court}`;
@@ -658,4 +683,145 @@ export class SearchResultPageComponent {
       data: { message }
     });
   }
+
+
+
+
+
+
+
+  // 圖表
+    Highcharts: typeof Highcharts = Highcharts;
+    chartOptions: Highcharts.Options = {};  // 圖表配置
+  
+    // 表格的動態數據，這裡的數據可以從 API 獲取
+    items = [
+      {
+        type: '死刑',
+        count: 1,
+        min: '',
+        max: '',
+        avg: ''
+      },
+      {
+        type: '有期徒刑',
+        count: 5,
+        min: '1年',
+        max: '10年',
+        avg: '5年'
+      },
+      {
+        type: '無期徒刑',
+        count: 3,
+        min: '',
+        max: '',
+        avg: ''
+      }
+    ];
+
+
+    updateChartOptions(type: 'pie' | 'bar') {
+        if (type == 'pie') {
+          this.chartOptions = {
+            chart: {
+              type: 'pie',
+              backgroundColor: undefined    // 設定背景顏色為透明
+            },
+            title: {
+              text: '刑種全貌圖',
+            },
+            legend: {
+              enabled: false    // 禁用圖例
+            },
+            accessibility: {
+              enabled: false,
+            },
+            credits: {
+              enabled: false    // 禁用右下角的 Highcharts.com
+            },
+            xAxis: {
+              categories: undefined,
+              title: undefined,
+              lineWidth: 0,     // 隱藏 x 軸線
+            },
+            yAxis: {
+              title: undefined,
+            },
+            series: [
+              {
+                type: 'pie',
+                name: '比例',
+                data: [
+                  { name: '有期徒刑', y: 45 },
+                  { name: '無期徒刑', y: 25 },
+                  { name: '罰金', y: 20 },
+                  { name: '其他', y: 10 },
+                ],
+              },
+            ],
+          };
+        } if (type == 'bar') {
+          this.chartOptions = {
+            chart: {
+              type: 'column',
+              backgroundColor: undefined    // 設定背景顏色為透明
+            },
+            title: {
+              text: '刑度年度統計圖',
+            },
+            accessibility: {
+              enabled: false,
+            },
+            legend: {
+              enabled: false // 禁用圖例
+            },
+            xAxis: {
+              categories: ['90', '91', '92', '93'],
+              title: { text: '年度' },
+            },
+            yAxis: {
+              title: { text: '數量' },
+            },
+            series: [
+              {
+                type: 'column',
+                name: '件數',
+                data: [20, 35, 10, 20],
+              },
+            ],
+          };
+        }
+      }
+    
+      renderChart(type: 'pie' | 'bar') {
+    
+        console.log(this.chartOptions.chart)
+    
+        // 更新圖表
+        this.updateChartOptions(type);
+    
+        // 強制觸發 Angular 變更檢測
+        this.chartOptions = { ...this.chartOptions };
+    
+      }
+    
+    
+      // 件數跳出dialog
+      // 開啟Dialog，並將「件數」作為參數傳遞
+      openDialog2(count: number): void {
+        const dialogRef = this.dialog.open(CaseViewComponent, {
+          maxWidth: '100vw',
+          height: '90%',
+          width: '90%',
+          data: { count: count } // 傳入該行的件數
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('Dialog closed with result:', result);
+        });
+      }
+
+
+      // 統計圖回上頁
+      
 }

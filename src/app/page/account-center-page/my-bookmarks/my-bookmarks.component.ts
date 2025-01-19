@@ -7,6 +7,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SessionServiceService } from '../../../service/session-service.service';
 import { HttpClientService } from '../../../service/http-client.service';
 import Swal from 'sweetalert2';
+import { ClickDialogComponent } from '../../view-full-text-page/click-dialog/click-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-bookmarks',
@@ -18,7 +20,8 @@ export class MyBookmarksComponent implements OnInit {
   constructor(
     private router: Router,
     protected sessionServiceService: SessionServiceService,
-    private http: HttpClientService
+    private http: HttpClientService,
+    public dialog: MatDialog,
   ) {}
 
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
@@ -46,45 +49,8 @@ export class MyBookmarksComponent implements OnInit {
     this.sessionServiceService.url = this.router.url;
   }
 
-  // =====================================================================================================================================
+  
 
-  // // 取得書籤資料
-  // getBookmarks(): any[] {
-  //   if(isPlatformBrowser(this.platformId)) {
-  //     const storedBookmarks = sessionStorage.getItem('myBookmarks');
-  //   return storedBookmarks ? JSON.parse(storedBookmarks) : [];
-  //   }
-  //   return [];
-  // }
-
-  // // 清除單一書籤
-  // removeBookmark(bookmarkId: string): void {
-  //   const storedBookmarks = sessionStorage.getItem('myBookmarks');
-  //   let bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
-
-  //   // 過濾掉要刪除的書籤
-  //   bookmarks = bookmarks.filter((bookmark: any) => bookmark.id != bookmarkId);
-  //   // 更新 sessionStorage
-  //   sessionStorage.setItem('myBookmarks', JSON.stringify(bookmarks));
-  //   Swal.fire({
-  //     title: '移除書籤成功!',
-  //     icon: 'success',
-  //     confirmButtonText: '確定',
-  //   }).then((result) => {
-  //     if ( result.isConfirmed) {
-  //       window.location.reload(); // 在按下「確定」後執行刷新
-  //     }
-  //   });
-
-  //   // console.log('已刪除書籤:', bookmarkId);
-  // }
-
-  // // 清除所有書籤
-  // clearBookmarks(): void {
-  //   this.sessionServiceService.clearBookmarks();
-  // }
-
-  // =====================================================================================================================================
   // 取得該email的所有儲存書籤
   getBookmarksApi(email: string) {
     this.http
@@ -106,6 +72,64 @@ export class MyBookmarksComponent implements OnInit {
 
       });
   }
+
+
+  // 觸發刪除書籤方法
+  toggleRemoveBookmark(bookmark: any) {
+    const email = this.sessionServiceService.getEmail();
+    const groupId = bookmark.group_id;
+    const id = bookmark.id;
+    const court = bookmark.court;
+
+    this.removeBookmarkApi(email, groupId, id, court);
+
+  }
+
+  // 刪除書籤
+  removeBookmarkApi(email: string, groupId: string, id: string, court: string) {
+    // 將變數組裝成物件
+    const deleteBookmark = {email, groupId, id, court};
+    console.log("刪除的書籤",deleteBookmark)
+    this.http.postApi('http://localhost:8080/accountSystem/delete-bookmark', deleteBookmark).subscribe({
+      next: (res: any) => {
+        if (res.code == 200) {
+          Swal.fire({
+            title: '書籤已刪除!',
+            icon: 'success',
+            confirmButtonText: '確定',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload(); // 在按下「確定」後執行刷新
+            }
+          });
+        }
+        if (res.code != 200) {
+          Swal.fire({
+            title: '刪除失敗',
+            icon: 'error',
+            confirmButtonText: '再試一次'
+          });
+          console.log(res);
+        } 
+      },
+      error: (error: any) => {
+        Swal.fire({
+          title: '刪除失敗',
+          icon: 'error',
+          confirmButtonText: '再試一次'
+        });
+      },
+    })
+  }
+
+  
+  // 打開通知對話框
+    openDialog(message: string): void {
+      this.dialog.open(ClickDialogComponent, {
+        data: { message }
+      });
+    }
+
 
   // 取得該email的所有螢光筆書籤
   getHighlightersApi(email: string) {

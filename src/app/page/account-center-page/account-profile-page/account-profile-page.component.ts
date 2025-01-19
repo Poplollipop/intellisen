@@ -144,7 +144,7 @@ export class AccountProfilePageComponent {
       next: (response: any) => {
         if (response.body.code == 200) {
           Swal.fire({
-                title: '移除書籤成功!',
+                title: '資料更新成功!',
                 icon: 'success',
                 confirmButtonText: '確定',
               }).then((result) => {
@@ -156,7 +156,6 @@ export class AccountProfilePageComponent {
           this.editMode.basicInfo = false;
           this.editMode.contactInfo = false;
           sessionStorage.setItem('userData', JSON.stringify(this.udpdateData));
-          // window.location.reload(); // 強制刷新頁面
         }
 
         if (response.body.code != 200) {
