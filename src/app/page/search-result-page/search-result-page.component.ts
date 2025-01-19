@@ -232,7 +232,7 @@ export class SearchResultPageComponent {
     // }
 
     const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
-    console.log(match);
+    // console.log("合併的id",match);
 
     if (match) {
       this.year = match[1] || '';
@@ -392,7 +392,7 @@ export class SearchResultPageComponent {
 
     const savedConditions = tidyData;
     this.searchSessionService.searchData.searchName = this.keywords;
-
+    // console.log(savedConditions);
     this.searchApi(savedConditions);
   }
 
