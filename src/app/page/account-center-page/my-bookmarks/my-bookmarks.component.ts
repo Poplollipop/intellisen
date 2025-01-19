@@ -25,7 +25,7 @@ export class MyBookmarksComponent implements OnInit {
   ) {}
 
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
-  
+
 
   email!: any;
 
