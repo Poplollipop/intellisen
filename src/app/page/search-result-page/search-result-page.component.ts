@@ -184,7 +184,7 @@ export class SearchResultPageComponent {
       this.searchApi(savedConditions);
     }
 
-    // 確認是否是登入狀態以改變書籤點擊後動作
+    // 確認是否是登入狀態以改變書籤顯示
     if (isPlatformBrowser(this.platformId)) {
       this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
     }
@@ -225,25 +225,25 @@ export class SearchResultPageComponent {
     this.id = savedConditions.verdictId || '';
     console.log(typeof this.id);
 
-    const match = this.id.match(/^(\d+)?年度$/);
-    if (match) {
-      this.year = match[1] || '';
-      console.log(this.year);
-    }
-
-    // const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
-    // console.log(match);
-
+    // const match = this.id.match(/^(\d+)?年度$/);
     // if (match) {
     //   this.year = match[1] || '';
-    //   this.zhi = match[2] || '';
-    //   this.hao = match[3] || '';
-    // }else {
-    //   // 如果沒有匹配到任何內容
-    //   this.year = '';
-    //   this.zhi = '';
-    //   this.hao = '';
+    //   console.log(this.year);
     // }
+
+    const match = this.id.match(/^(?:(\d+)?年度)?(.*)?字(?:第(\d+)?號)?$/);
+    console.log(match);
+
+    if (match) {
+      this.year = match[1] || '';
+      this.zhi = match[2] || '';
+      this.hao = match[3] || '';
+    }else {
+      // 如果沒有匹配到任何內容
+      this.year = '';
+      this.zhi = '';
+      this.hao = '';
+    }
 
     // console.log(this.year);
 
