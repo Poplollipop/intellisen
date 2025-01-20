@@ -814,7 +814,6 @@ export class ViewFullTextPageComponent {
       return;
     }
 
-
     // 根據是否附帶螢光筆切換樣式
     if (!includeHighlights) {
       // 清除所有帶有背景色的元素樣式
@@ -876,7 +875,6 @@ export class ViewFullTextPageComponent {
         <body>${mainContent.outerHTML}</body>
       </html>
     `);
-
 
     printWindow.document.close();
 
