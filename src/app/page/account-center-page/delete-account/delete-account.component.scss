@@ -2,13 +2,15 @@
     font-family: "TaipeiR";
     src: url("../../../../../public/TaipeiSansTCBeta-Regular.ttf");
   }
+
+@import "primeicons/primeicons.css";
   
 .container {
   text-align: center;
   margin-top: 8rem;
   padding: 1.5rem;
   width: 60rem;
-  height: 18rem;
+  height: 24rem;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border: none;
@@ -51,6 +53,34 @@
   .delete:hover {
     background-color: #a91e1e;
     transform: scale(1.1);
+  }
+
+  .password-wrapper {
+    position: relative;
+    margin-top: 1.5rem;
+  }
+
+
+  .password-wrapper input{
+    width: 30% !important; /* 父級容器寬度 */
+    background-color: #ffffff;
+    border: 2px solid #dedcdc;
+    margin: auto;
+  }
+
+  .password-wrapper input:focus {
+    border: 2px solid #10b981;
+  }
+  
+  
+  .password-wrapper button {
+    position: absolute;
+    right: 320px;
+    top: 70%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
   }
 
 }

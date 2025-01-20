@@ -4,6 +4,14 @@
     <div class="text">
         <p>是否刪除帳號?<br>一旦刪除帳號將不可回復</p>
     </div>
+    <div class="password-wrapper">
+        <label class="input-label">請輸入密碼</label>
+        <input class="form-control" type="{{ isPasswordVisible ? 'text' : 'password' }}" 
+        pInputText [(ngModel)]="password" placeholder="請輸入密碼">
+        <button type="button" (click)="togglePassword()">
+          <i [class]="isPasswordVisible ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
+        </button>
+    </div>
     <div class="btn-area">
         <button class="delete" (click)="confirmDelete()">確認刪除</button>
     </div>

@@ -3,10 +3,11 @@ import { HttpClientService } from '../../../service/http-client.service';
 import { SessionServiceService } from '../../../service/session-service.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-delete-account',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './delete-account.component.html',
   styleUrl: './delete-account.component.scss'
 })
@@ -14,12 +15,21 @@ export class DeleteAccountComponent {
 
   deleteUserData!: any;
   email!: string;
+  password!: string;
+
+
+  isPasswordVisible: boolean = false;
+
 
   constructor(
     private http: HttpClientService,
     private session: SessionServiceService,
     private router: Router
   ) { }
+
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 
   // 刪除帳戶
   confirmDelete() {
