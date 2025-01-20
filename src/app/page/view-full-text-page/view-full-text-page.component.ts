@@ -75,6 +75,8 @@ export class ViewFullTextPageComponent {
 
 
   ngOnInit(): void {
+    this.suptext = null; // 清空 suptext，避免舊資料干擾
+    this.highlightedRanges = []; // 清空高亮範圍
 
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
@@ -259,18 +261,8 @@ export class ViewFullTextPageComponent {
   }
 
   // 儲存書籤api
-  postSaveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
+  postSeveBookmarkApi(email: string, groupId: string, id: string, court: string, charge: string, judgeName: string, defendantName: string, docType: string, caseType: string, verdictDate: string): void {
     const bookmark = { email, groupId, id, court, verdictDate, charge, defendantName, judgeName, caseType, docType };
-
-    console.log(bookmark);
-
-    // 檢查是否已存在書籤
-    this.getBookmarkAlreadyExists(email, groupId, id, court);
-
-    if (this.Bookmarkcode === 200) {
-      this.openDialog('書籤已儲存，不須重複儲存！');
-      return;
-    }
 
     this.http.postApi('http://localhost:8080/accountSystem/bookmark', bookmark).subscribe({
       next: (res: any) => {
@@ -285,8 +277,19 @@ export class ViewFullTextPageComponent {
   }
 
   // 刪除書籤
-  postDeleteBookmarkApi() {
-
+  postDeleteBookmarkApi(email: string, groupId: string, id: string, court: string) {
+    const bookmarkData = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court,
+    }
+    this.http.postApi('http://localhost:8080/accountSystem/delete-bookmark', bookmarkData).subscribe({
+      next: () => {
+        this.openDialog('書籤已刪除!');
+        this.Bookmarkcode = null;
+      }
+    })
   }
 
 
@@ -328,7 +331,6 @@ export class ViewFullTextPageComponent {
         (res: any) => {
           // 如果螢光筆資料庫沒有資料直接回傳
           if (res.code != 200) return;
-          console.log(res);
           this.storeHighlightRanges(res.highlighteList);
           this.replaceTextWithHighlights();
         });
@@ -373,8 +375,15 @@ export class ViewFullTextPageComponent {
       return;
     }
 
+    // 檢查是否已存在書籤
+    this.getBookmarkAlreadyExists(email, groupId, id, court);
+
     // 呼叫儲存書籤 API
-    this.postSaveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate);
+    if (this.Bookmarkcode === 200) {
+      this.postDeleteBookmarkApi(email, groupId, id, court); // 如果 Bookmarkcode 為 200，刪除書籤
+    } else {
+      this.postSeveBookmarkApi(email, groupId, id, court, charge, judgeName, defendantName, docType, caseType, verdictDate); // 如果 Bookmarkcode 不為 200，新增書籤
+    }
   }
 
   // 儲存螢光筆
@@ -515,10 +524,11 @@ export class ViewFullTextPageComponent {
 
   // 讀取 取得email所擁有的螢光筆文字替換進文章中
   replaceTextWithHighlights(): void {
-    // if (!this.suptext || typeof this.suptext !== 'string') {
-    //   console.error('suptext is not initialized or is not a valid string.');
-    //   return; // 中止操作
-    // }
+    // 防禦性檢查
+    if (!this.suptext || typeof this.suptext !== 'string') {
+      console.warn('suptext is not initialized or is not a valid string. Skipping replaceTextWithHighlights.');
+      return; // 如果 suptext 尚未初始化，跳過方法執行
+    }
 
     let textWithHighlights = this.suptext; // 初始化為原文
     let offsetCorrection = 0; // 偏移修正變數
@@ -531,12 +541,11 @@ export class ViewFullTextPageComponent {
         const adjustedStart = startOffset + offsetCorrection;
         const adjustedEnd = endOffset + offsetCorrection;
 
-        // 防禦性檢查：確保範圍不超出文字長度
         if (adjustedStart < 0 || adjustedEnd > textWithHighlights.length) {
           console.warn(
             `Invalid range: adjustedStart=${adjustedStart}, adjustedEnd=${adjustedEnd}, textLength=${textWithHighlights.length}`
           );
-          return; // 跳過無效範圍
+          return;
         }
 
         const currentText = textWithHighlights.slice(adjustedStart, adjustedEnd);
@@ -557,7 +566,6 @@ export class ViewFullTextPageComponent {
 
     this.suptextSpan.nativeElement.innerHTML = textWithHighlights;
   }
-
 
 
   //===============================================================
@@ -942,12 +950,12 @@ export class ViewFullTextPageComponent {
   }
 
   //===========================================================================
-  // addHour(date: Date, hours: number): Date {
-  //   const dateCopy = new Date(date.getTime());
-  //   const hoursToAdd = hours * 60 * 60 * 1000;
-  //   dateCopy.setTime(date.getTime() + hoursToAdd);
-  //   return dateCopy;
-  // }
+  addHour(date: Date, hours: number): Date {
+    const dateCopy = new Date(date.getTime());
+    const hoursToAdd = hours * 60 * 60 * 1000;
+    dateCopy.setTime(date.getTime() + hoursToAdd);
+    return dateCopy;
+  }
 
   // 觀看瀏覽紀錄所指定的全文
   checkContent(groupId: string, id: string, court: string) {
