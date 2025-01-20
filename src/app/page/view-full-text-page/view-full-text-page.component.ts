@@ -361,9 +361,9 @@ export class ViewFullTextPageComponent {
     const selection = window.getSelection()?.toString() || '';
     if (selection) {
       this.clipboard.copy(selection);
-      // alert('已複製選取內容！');
+      // this.openDialog('已複製選取內容！');
     } else {
-      // alert('未選取任何內容！');
+      // this.openDialog('未選取任何內容！');
     }
   }
 
@@ -425,7 +425,6 @@ export class ViewFullTextPageComponent {
     this.getHighlighterAlreadyExists(email, groupId, id, court);
 
     if(this.hlightercode===200){
-      // 刪除再放入
       this.postDeleteHighlighterApi(email, groupId, id, court);
     }
 
@@ -449,7 +448,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取文字後再進行高亮操作！');
+      this.openDialog('請先選取文字後再進行高亮操作！');
       return;
     }
 
@@ -636,7 +635,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取要刪除高亮的文字範圍！');
+      this.openDialog('請先選取要刪除高亮的文字範圍！');
       return;
     }
 
@@ -768,9 +767,9 @@ export class ViewFullTextPageComponent {
   onShare() {
     this.updateDynamicLink(); // 確保分享按鈕點擊時更新網址
     navigator.clipboard.writeText(this.copyLink).then(() => {
-      alert('網址已複製到剪貼簿！');
+      this.openDialog('網址已複製到剪貼簿！');
     }).catch(() => {
-      alert('複製失敗，請手動複製網址。');
+      this.openDialog('複製失敗，請手動複製網址。');
     });
   }
   // 前往判決書網站
@@ -779,7 +778,7 @@ export class ViewFullTextPageComponent {
   }
   // 判決書PDF檔下載
   onDownloadPDF() {
-    // alert('PDF 下載按鈕被點擊！');
+    // this.openDialog('PDF 下載按鈕被點擊！');
   }
   //===================================================
 
@@ -811,7 +810,7 @@ export class ViewFullTextPageComponent {
     // 複製主文內容
     const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
     if (!mainContent) {
-      alert('無法找到主文內容進行列印！');
+      this.openDialog('無法找到主文內容進行列印！');
       return;
     }
 
@@ -828,7 +827,7 @@ export class ViewFullTextPageComponent {
     // 建立列印窗口
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('無法開啟列印窗口！');
+      this.openDialog('無法開啟列印窗口！');
       return;
     }
 
