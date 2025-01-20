@@ -37,13 +37,16 @@ export class RegisterPageComponent {
   errorMessage: string = ''
   errorMessage2: string = ''
 
+  // 密碼可看與否的icon變數
   isPasswordVisible: boolean = false;
   isPasswordVisible2: boolean = false;
 
+  // 第一個輸入密碼的input icon觸發
   togglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+  // 第二個輸入密碼的input icon觸發
   togglePassword2() {
     this.isPasswordVisible2 = !this.isPasswordVisible2;
   }
