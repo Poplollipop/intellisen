@@ -64,6 +64,9 @@ export class ViewFullTextPageComponent {
   verdictDate!: any;
   // 檢查書籤是否已存在
   Bookmarkcode !: any;
+  // 檢查螢光筆是否已存在
+  hlightercode!:any;
+  //
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
@@ -323,7 +326,22 @@ export class ViewFullTextPageComponent {
     })
   }
 
-  // 螢光筆取得
+  // 刪除螢光筆
+  postDeleteHighlighterApi(email: string, groupId: string, id: string, court: string) {
+    const bookmarkData = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court,
+    }
+    this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', bookmarkData).subscribe({
+      next: (res:any) => {
+        if (res.code!=200)return;
+      }
+    })
+  }
+
+  // 螢光筆取得(包含檢查)
   getHighlighterAlreadyExists(email: string, groupId: string, id: string, court: string) {
     this.http
       .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
@@ -331,6 +349,7 @@ export class ViewFullTextPageComponent {
         (res: any) => {
           // 如果螢光筆資料庫沒有資料直接回傳
           if (res.code != 200) return;
+          this.hlightercode = res.code;
           this.storeHighlightRanges(res.highlighteList);
           this.replaceTextWithHighlights();
         });
@@ -402,6 +421,14 @@ export class ViewFullTextPageComponent {
       this.openDialog('未使用螢光筆');
       return;
     }
+    // 檢查是否存在
+    this.getHighlighterAlreadyExists(email, groupId, id, court);
+
+    if(this.hlightercode===200){
+      // 刪除再放入
+      this.postDeleteHighlighterApi(email, groupId, id, court);
+    }
+
 
     this.postHighlighterApi(email, groupId, id, court, highlights);
   }
