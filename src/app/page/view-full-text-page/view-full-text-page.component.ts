@@ -64,6 +64,9 @@ export class ViewFullTextPageComponent {
   verdictDate!: any;
   // 檢查書籤是否已存在
   Bookmarkcode !: any;
+  // 檢查螢光筆是否已存在
+  hlightercode!:any;
+  //
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
   savedRange: Range | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
@@ -323,7 +326,22 @@ export class ViewFullTextPageComponent {
     })
   }
 
-  // 螢光筆取得
+  // 刪除螢光筆
+  postDeleteHighlighterApi(email: string, groupId: string, id: string, court: string) {
+    const bookmarkData = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court,
+    }
+    this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', bookmarkData).subscribe({
+      next: (res:any) => {
+        if (res.code!=200)return;
+      }
+    })
+  }
+
+  // 螢光筆取得(包含檢查)
   getHighlighterAlreadyExists(email: string, groupId: string, id: string, court: string) {
     this.http
       .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
@@ -331,6 +349,7 @@ export class ViewFullTextPageComponent {
         (res: any) => {
           // 如果螢光筆資料庫沒有資料直接回傳
           if (res.code != 200) return;
+          this.hlightercode = res.code;
           this.storeHighlightRanges(res.highlighteList);
           this.replaceTextWithHighlights();
         });
@@ -342,9 +361,9 @@ export class ViewFullTextPageComponent {
     const selection = window.getSelection()?.toString() || '';
     if (selection) {
       this.clipboard.copy(selection);
-      // alert('已複製選取內容！');
+      // this.openDialog('已複製選取內容！');
     } else {
-      // alert('未選取任何內容！');
+      // this.openDialog('未選取任何內容！');
     }
   }
 
@@ -402,6 +421,13 @@ export class ViewFullTextPageComponent {
       this.openDialog('未使用螢光筆');
       return;
     }
+    // 檢查是否存在
+    this.getHighlighterAlreadyExists(email, groupId, id, court);
+
+    if(this.hlightercode===200){
+      this.postDeleteHighlighterApi(email, groupId, id, court);
+    }
+
 
     this.postHighlighterApi(email, groupId, id, court, highlights);
   }
@@ -422,7 +448,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取文字後再進行高亮操作！');
+      this.openDialog('請先選取文字後再進行高亮操作！');
       return;
     }
 
@@ -609,7 +635,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取要刪除高亮的文字範圍！');
+      this.openDialog('請先選取要刪除高亮的文字範圍！');
       return;
     }
 
@@ -741,9 +767,9 @@ export class ViewFullTextPageComponent {
   onShare() {
     this.updateDynamicLink(); // 確保分享按鈕點擊時更新網址
     navigator.clipboard.writeText(this.copyLink).then(() => {
-      alert('網址已複製到剪貼簿！');
+      this.openDialog('網址已複製到剪貼簿！');
     }).catch(() => {
-      alert('複製失敗，請手動複製網址。');
+      this.openDialog('複製失敗，請手動複製網址。');
     });
   }
   // 前往判決書網站
@@ -752,7 +778,7 @@ export class ViewFullTextPageComponent {
   }
   // 判決書PDF檔下載
   onDownloadPDF() {
-    // alert('PDF 下載按鈕被點擊！');
+    // this.openDialog('PDF 下載按鈕被點擊！');
   }
   //===================================================
 
@@ -784,7 +810,7 @@ export class ViewFullTextPageComponent {
     // 複製主文內容
     const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
     if (!mainContent) {
-      alert('無法找到主文內容進行列印！');
+      this.openDialog('無法找到主文內容進行列印！');
       return;
     }
 
@@ -801,7 +827,7 @@ export class ViewFullTextPageComponent {
     // 建立列印窗口
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('無法開啟列印窗口！');
+      this.openDialog('無法開啟列印窗口！');
       return;
     }
 

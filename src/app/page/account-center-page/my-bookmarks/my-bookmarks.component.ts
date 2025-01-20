@@ -22,7 +22,7 @@ export class MyBookmarksComponent implements OnInit {
     protected sessionServiceService: SessionServiceService,
     private http: HttpClientService,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
 
@@ -49,8 +49,8 @@ export class MyBookmarksComponent implements OnInit {
     this.sessionServiceService.url = this.router.url;
   }
 
-  
-
+  //==============================================================================
+  // api
   // 取得該email的所有儲存書籤
   getBookmarksApi(email: string) {
     this.http
@@ -88,8 +88,8 @@ export class MyBookmarksComponent implements OnInit {
   // 刪除書籤
   removeBookmarkApi(email: string, groupId: string, id: string, court: string) {
     // 將變數組裝成物件
-    const deleteBookmark = {email, groupId, id, court};
-    console.log("刪除的書籤",deleteBookmark)
+    const deleteBookmark = { email, groupId, id, court };
+    console.log("刪除的書籤", deleteBookmark)
     this.http.postApi('http://localhost:8080/accountSystem/delete-bookmark', deleteBookmark).subscribe({
       next: (res: any) => {
         if (res.code == 200) {
@@ -110,7 +110,7 @@ export class MyBookmarksComponent implements OnInit {
             confirmButtonText: '再試一次'
           });
           console.log(res);
-        } 
+        }
       },
       error: (error: any) => {
         Swal.fire({
@@ -122,13 +122,13 @@ export class MyBookmarksComponent implements OnInit {
     })
   }
 
-  
+
   // 打開通知對話框
-    openDialog(message: string): void {
-      this.dialog.open(ClickDialogComponent, {
-        data: { message }
-      });
-    }
+  openDialog(message: string): void {
+    this.dialog.open(ClickDialogComponent, {
+      data: { message }
+    });
+  }
 
 
   // 取得該email的所有螢光筆書籤
@@ -178,29 +178,27 @@ export class MyBookmarksComponent implements OnInit {
         // console.log(this.apiResponse);
       });
   }
+
+  // 刪除螢光筆
+  postDeleteHighlighterApi(email: string, groupId: string, id: string, court: string) {
+    const bookmarkData = {
+      email: email,
+      groupId: groupId,
+      id: id,
+      court: court,
+    }
+    this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', bookmarkData).subscribe({
+      next: (res: any) => {
+        if (res.code != 200) return;
+      }
+    })
+  }
+
+
+
 }
 
-// 螢光筆書籤假資料
 
-// apiResponse = [
-//   {
-//     groupId: "113年度中簡字第1265號",
-//     id: "113年度中簡字第1265號",
-//     court: "TCD",
-//     content: [
-//       { startOffset: 83, endOffset: 92, text: '列被告因公共危險案', color: 'yellow' },
-//       { startOffset: 132, endOffset: 145, text: '中華民國113年7月31日', color: 'lightgreen' },
-//     ],
-//   },
-//   {
-//     groupId: "113年度中簡字第1267號",
-//     id: "113年度中簡字第1267號",
-//     court: "TCD",
-//     content: [
-//       { startOffset: 200, endOffset: 220, text: '判決中的其他重點部分', color: 'lightblue' },
-//     ],
-//   },
-// ];
 // =======================================================================================
 
 
