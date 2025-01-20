@@ -3,6 +3,7 @@
   src: url('../../../../public/GenKiMin2TW-M.otf');
 }
 
+@import "primeicons/primeicons.css";
 
 :host{
   display: block;
@@ -69,22 +70,47 @@
   }
 
 
-  ::ng-deep .p-password {
-    width: 60% !important; /* 父級容器寬度 */
-    max-width: 60% !important;
+  // ::ng-deep .p-password {
+  //   width: 60% !important; /* 父級容器寬度 */
+  //   max-width: 60% !important;
+  // }
+
+  // ::ng-deep .password-wrapper input.p-inputtext {
+  //   width: 60% !important; /* 確保輸入框寬度 */
+  //   max-width: 100% !important;
+  //   background-color: #ffffff; /* 背景色 */
+  //   border-radius: 5px; /* 圓角 */
+  //   border: 2px solid #dedcdc;
+  // }
+
+
+  .password-wrapper {
+    position: relative;
+    margin-top: 1.5rem;
   }
 
-  ::ng-deep .p-password input.p-inputtext {
-    width: 100% !important; /* 確保輸入框寬度 */
-    max-width: 100% !important;
-    background-color: #ffffff; /* 背景色 */
-    border-radius: 5px; /* 圓角 */
+
+  .password-wrapper input{
+    width: 60% !important; /* 父級容器寬度 */
+    background-color: #ffffff;
     border: 2px solid #dedcdc;
   }
 
-  ::ng-deep .p-password input.p-inputtext:focus {
+  .password-wrapper input:focus {
     border: 2px solid #10b981;
   }
+  
+  
+  .password-wrapper button {
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  
 
 
 
@@ -98,8 +124,7 @@
 
   .forget-password {
     display: block;
-    margin-left: 800px;
-    margin-top: 2rem;
+    margin-left: 850px;
     cursor: pointer;
     font-size: 18px;
   }

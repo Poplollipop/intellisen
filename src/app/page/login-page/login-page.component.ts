@@ -16,7 +16,8 @@ import { SessionServiceService } from '../../service/session-service.service';
     MatButtonModule,
     FormsModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
@@ -33,6 +34,12 @@ export class LoginPageComponent {
     private http: HttpClientService,
     private session: SessionServiceService
   ) { }
+
+  isPasswordVisible: boolean = false;
+
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 
   // 驗證email格式
   accountValidation(input: string): boolean {

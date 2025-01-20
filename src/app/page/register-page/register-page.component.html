@@ -20,12 +20,14 @@
       </div>
 
       <div class="pwd-area">
-        <div class="input-psw">
-          <label style="margin-top: 20px; font-size: 18px;">請輸入密碼</label>
-          <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="rawPwd" [feedback]="false"
-            [toggleMask]="true" />
+        <div class="password-wrapper">
+          <label class="input-label" style="font-size: 18px;">請輸入密碼</label>
+          <input type="{{ isPasswordVisible ? 'text' : 'password' }}" pInputText [(ngModel)]="rawPwd" placeholder="請輸入密碼">
+          <button type="button" (click)="togglePassword()">
+            <i [class]="isPasswordVisible ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
+          </button>
         </div>
-        <div class="input-psw">
+        <!-- <div class="input-psw">
           <label style="margin-top: 20px; font-size: 18px;">請再次輸入密碼</label>
           <p-password class="input-psw ng-invalid ng-dirty " [(ngModel)]="confirmPwd" (keyup)="pwdValidation()"
             [feedback]="false" [toggleMask]="true" />
@@ -35,7 +37,21 @@
             {{errorMessage2}}
           </small>
           }
+        </div> -->
+
+        <div class="password-wrapper">
+          <label class="input-label" style="font-size: 18px;">請再次輸入密碼</label>
+          <input type="{{ isPasswordVisible ? 'text' : 'password' }}" pInputText [(ngModel)]="confirmPwd" 
+          placeholder="請再次輸入密碼" (keyup)="pwdValidation()">
+          <button type="button" (click)="togglePassword()">
+            <i [class]="isPasswordVisible ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
+          </button>
         </div>
+        @if (errorMessage2) {
+        <small style="color: red; display: inline-block; margin-left: 1%; position: absolute;left: 38%;">
+          {{errorMessage2}}
+        </small>
+        }
       </div>
 
       <div class="btn-area">

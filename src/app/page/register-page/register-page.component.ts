@@ -37,6 +37,12 @@ export class RegisterPageComponent {
   errorMessage: string = ''
   errorMessage2: string = ''
 
+  isPasswordVisible: boolean = false;
+
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
   // 驗證email格式
   accountValidation(input: string): boolean {
     const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;;

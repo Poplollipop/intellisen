@@ -13,10 +13,12 @@
         <small style="color: red; display: inline-block; margin-left: 1%;position: absolute;left: 22.4%;">{{errorMessage}}</small>
         }
       </div>
-      <div class="pwd-area">
+      <div class="password-wrapper">
         <label class="input-label">密碼</label>
-        <p-password class="input-psw" name="input-psw" [(ngModel)]="password" [feedback]="false" [toggleMask]="true"
-        placeholder="請輸入密碼"  (keyup.enter)="login()" autocomplete="off"/>
+        <input type="{{ isPasswordVisible ? 'text' : 'password' }}" pInputText [(ngModel)]="password" placeholder="請輸入密碼">
+        <button type="button" (click)="togglePassword()">
+          <i [class]="isPasswordVisible ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
+        </button>
       </div>
     </div>
     <a class="forget-password" (click)="goForgotPassword()">忘記密碼？</a>
