@@ -189,17 +189,17 @@ mat-tab-group .mat-tab-body-wrapper {
   position: relative;
 }
 
-.highlight-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
+// .highlight-table tr:nth-child(even) {
+//   background-color: #f9f9f9;
+// }
 
-.highlight-table tr:hover {
-  background-color: #ececec;
-}
+// .highlight-table tr:hover {
+//   background-color: #ececec;
+// }
 
 .highlight-table td {
   padding: 15px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #818181;
   vertical-align: top;
   position: relative;
 }
@@ -234,7 +234,7 @@ mat-tab-group .mat-tab-body-wrapper {
   position: absolute;
   bottom: 10px;
   right: 15px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   color: #007bff;
   cursor: pointer;
@@ -242,7 +242,7 @@ mat-tab-group .mat-tab-body-wrapper {
 }
 
 .highlight-table p:hover {
-  color: #0056b3;
+  color: #013d7d;
 }
 
 /*==============================*/

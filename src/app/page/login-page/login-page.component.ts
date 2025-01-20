@@ -85,7 +85,7 @@ export class LoginPageComponent {
           console.log(response.body.code);
           this.session.setIsLogin(true);
           this.session.setEmail(this.email);
-          console.log(this.session.getIsLogin());
+          // console.log(this.session.getIsLogin());
           this.getUserInfo();
         }
 
@@ -118,11 +118,20 @@ export class LoginPageComponent {
         if (response.body.code == 200) {
           sessionStorage.setItem('userData', JSON.stringify(response.body))
         }
-        this.router.navigateByUrl('/search')
+        this.pageNavi();
       },
       error: (error) => {
       }
     })
+  }
+
+  pageNavi() {
+    if(JSON.parse(sessionStorage.getItem('userData')!).name == "guest") {
+      this.router.navigateByUrl('/edit-info')
+    } else {
+      this.router.navigateByUrl('/search')
+
+    }
   }
 
   // 建立帳號

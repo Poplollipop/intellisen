@@ -1,7 +1,7 @@
 <div class="container">
   <h2>書籤</h2>
   <div class="nav"></div>
-  <mat-tab-group dynamicHeight>
+  <mat-tab-group dynamicHeight  [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">bookmark</mat-icon> 我的書籤
@@ -19,7 +19,8 @@
             <mat-icon (click)="toggleRemoveBookmark(bookmark)"
               style="cursor: pointer; font-size: 28px;"
               fontIcon = "bookmark_remove"
-              routerLinkActive="active" >
+              routerLinkActive="active" 
+              matTooltip="刪除書籤">
             </mat-icon>
           </div>
           <!-- 詳細資訊 -->
@@ -48,9 +49,16 @@
           <td>
             <div class="highlight-header">
               <span class="court">{{this.sessionServiceService.turnCodeToName(highlight.court)}}</span>
-              <span class="judgment" (click)="checkContent(highlight.groupId, highlight.id, highlight.court)">
+              <span class="judgment" style="cursor: pointer;"
+              (click)="checkContent(highlight.groupId, highlight.id, highlight.court)">
                 {{ highlight.id }}</span>
             </div>
+            <mat-icon (click)="toggleRemoveHighlighter(highlight)"
+              style="cursor: pointer; font-size: 26px;"
+              fontIcon = "edit_off"
+              routerLinkActive="active"
+              matTooltip="刪除螢光筆" >
+              </mat-icon>
             <div class="highlight-content">
               @for (content of highlight.content; track content.text) {
               <div class="highlight-item">

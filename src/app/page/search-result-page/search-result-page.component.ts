@@ -589,11 +589,14 @@ export class SearchResultPageComponent {
 
       // 和案件列表比對
       // 遍歷案件列表，初始化書籤狀態
-      this.caseList.forEach(caseItem => {
-        caseItem.isBookmarked = this.myBookmarks.some(
-          bookmark => bookmark.id == caseItem.id && bookmark.court == caseItem.court
-        );
-      });
+      if(this.myBookmarks) {
+        this.caseList.forEach(caseItem => {
+          caseItem.isBookmarked = this.myBookmarks.some(
+            bookmark => bookmark.id == caseItem.id && bookmark.court == caseItem.court
+          );
+        });
+      }
+      
 
       // Debug: 顯示結果
       // console.log(this.myBookmarks);

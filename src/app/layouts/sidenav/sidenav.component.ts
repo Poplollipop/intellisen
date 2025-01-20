@@ -40,7 +40,7 @@ export class SidenavComponent {
     if (isPlatformBrowser(this.platformId)) {
       // 取得header資訊
       this.role = JSON.parse(sessionStorage.getItem('userData')!).role;
-      this.name = JSON.parse(sessionStorage.getItem('userData')!).name;;
+      this.name = JSON.parse(sessionStorage.getItem('userData')!).name;
     }
     // 根據不同角色顯示不同sidenav選項
     switch (this.role) {

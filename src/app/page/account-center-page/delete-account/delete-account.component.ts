@@ -34,7 +34,8 @@ export class DeleteAccountComponent {
   // 刪除帳戶
   confirmDelete() {
     this.deleteUserData = {
-      email: this.session.getEmail()
+      email: this.session.getEmail(),
+      password: this.password
     }
 
     Swal.fire({
@@ -58,7 +59,7 @@ export class DeleteAccountComponent {
               this.router.navigateByUrl('/search');
             } else {
               Swal.fire({
-                text: '刪除帳戶失敗',
+                text: '刪除帳戶失敗，請檢查密碼是否錯誤',
                 icon: 'error',
                 confirmButtonText: '確定'
               });

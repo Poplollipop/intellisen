@@ -9,10 +9,12 @@ import { HttpClientService } from '../../../service/http-client.service';
 import Swal from 'sweetalert2';
 import { ClickDialogComponent } from '../../view-full-text-page/click-dialog/click-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @Component({
   selector: 'app-my-bookmarks',
-  imports: [MatTabsModule, MatIconModule, ScrollTop, CommonModule],
+  imports: [MatTabsModule, MatIconModule, ScrollTop, CommonModule, MatTooltipModule],
   templateUrl: './my-bookmarks.component.html',
   styleUrl: './my-bookmarks.component.scss',
 })
@@ -40,6 +42,11 @@ export class MyBookmarksComponent implements OnInit {
     this.email = this.sessionServiceService.getEmail();
     this.getBookmarksApi(this.email);
     this.getHighlightersApi(this.email);
+    // 嘗試從 sessionStorage 取得已儲存的 tab index
+    const savedTabIndex = sessionStorage.getItem('selectedTab');
+    if (savedTabIndex !== null) {
+      this.selectedTabIndex = +savedTabIndex; // 轉換為數字
+    }
   }
 
   checkContent(groupId: string, id: string, court: string) {
@@ -175,30 +182,67 @@ export class MyBookmarksComponent implements OnInit {
         this.apiResponse = groupedData;
 
         // Debug: 顯示結果
-        // console.log(this.apiResponse);
+        console.log(this.apiResponse);
       });
+  }
+
+  // 觸發刪除書籤方法
+  toggleRemoveHighlighter(highlight: any) {
+    const email = this.sessionServiceService.getEmail();
+    const groupId = highlight.groupId;
+    const id = highlight.id;
+    const court = highlight.court;
+
+    this.postDeleteHighlighterApi(email, groupId, id, court);
+
   }
 
   // 刪除螢光筆
   postDeleteHighlighterApi(email: string, groupId: string, id: string, court: string) {
-    const bookmarkData = {
-      email: email,
-      groupId: groupId,
-      id: id,
-      court: court,
-    }
-    this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', bookmarkData).subscribe({
+    const DeleteHighlighter = { email, groupId, id, court };
+    console.log(DeleteHighlighter);
+    this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', DeleteHighlighter).subscribe({
       next: (res: any) => {
-        if (res.code != 200) return;
-      }
+        if (res.code == 200) {
+          Swal.fire({
+            title: '螢光筆已刪除!',
+            icon: 'success',
+            confirmButtonText: '確定',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload(); // 在按下「確定」後執行刷新
+            }
+          });
+        }
+        if (res.code != 200) {
+          Swal.fire({
+            title: '刪除失敗',
+            icon: 'error',
+            confirmButtonText: '再試一次'
+          });
+          console.log(res);
+        }
+      },
+      error: (error: any) => {
+        Swal.fire({
+          title: '刪除失敗',
+          icon: 'error',
+          confirmButtonText: '再試一次'
+        });
+      },
     })
   }
 
+  selectedTabIndex: number = 0; // 預設為第一個 tab
+
+  onTabChange(index: number): void {
+    this.selectedTabIndex = index;
+    sessionStorage.setItem('selectedTab', index.toString()); // 儲存 tab index
+  }
 
 
 }
 
 
-// =======================================================================================
 
 

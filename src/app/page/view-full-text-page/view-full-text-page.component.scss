@@ -300,8 +300,8 @@ span[style*="box-shadow"]:hover {
 /* 書籤按鈕樣式（根據狀態變化） */
 .toolbar-button.star-button {
   &.active {
-    background-color: black;
-    border-color: black;
+    background-color: green;
+    border-color: rgb(97, 97, 97);
     color: white;
 
     .mat-icon {
