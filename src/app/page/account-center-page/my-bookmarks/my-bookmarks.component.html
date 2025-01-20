@@ -17,8 +17,8 @@
             </span>
             <span class="bookmark-header">{{ bookmark.verdictDate }}</span>
             <mat-icon (click)="toggleRemoveBookmark(bookmark)"
-              style="cursor: pointer; font-size: 28px;" 
-              fontIcon = "bookmark_remove" 
+              style="cursor: pointer; font-size: 28px;"
+              fontIcon = "bookmark_remove"
               routerLinkActive="active" >
             </mat-icon>
           </div>
@@ -47,7 +47,7 @@
         <tr>
           <td>
             <div class="highlight-header">
-              <span class="court">{{highlight.court}}</span>
+              <span class="court">{{this.sessionServiceService.turnCodeToName(highlight.court)}}</span>
               <span class="judgment" (click)="checkContent(highlight.groupId, highlight.id, highlight.court)">
                 {{ highlight.id }}</span>
             </div>
