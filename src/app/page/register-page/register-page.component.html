@@ -41,10 +41,10 @@
 
         <div class="password-wrapper">
           <label class="input-label" style="font-size: 18px;">請再次輸入密碼</label>
-          <input type="{{ isPasswordVisible ? 'text' : 'password' }}" pInputText [(ngModel)]="confirmPwd" 
+          <input type="{{ isPasswordVisible2 ? 'text' : 'password' }}" pInputText [(ngModel)]="confirmPwd" 
           placeholder="請再次輸入密碼" (keyup)="pwdValidation()">
-          <button type="button" (click)="togglePassword()">
-            <i [class]="isPasswordVisible ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
+          <button type="button" (click)="togglePassword2()">
+            <i [class]="isPasswordVisible2 ?  'pi pi-eye' : 'pi pi-eye-slash' "></i>
           </button>
         </div>
         @if (errorMessage2) {

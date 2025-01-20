@@ -38,9 +38,14 @@ export class RegisterPageComponent {
   errorMessage2: string = ''
 
   isPasswordVisible: boolean = false;
+  isPasswordVisible2: boolean = false;
 
   togglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  togglePassword2() {
+    this.isPasswordVisible2 = !this.isPasswordVisible2;
   }
 
   // 驗證email格式
