@@ -202,11 +202,11 @@ export class AccountProfilePageComponent {
           // 動態設置圖片的 MIME 類型，並設置 imageUrl
           this.imageUrl = `data:${contentType};base64,${base64String}`;
         } else {
-          console.error('圖片數據為空');
+          return;
         }
       },
       error: (error) => {
-        console.error('獲取圖片失敗', error);
+        return;
       }
     });
   }
