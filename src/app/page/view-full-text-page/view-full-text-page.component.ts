@@ -502,9 +502,9 @@ export class ViewFullTextPageComponent {
     // 檢查是否存在
     this.getHighlighterAlreadyExists(email, groupId, id, court);
 
-    if (this.hlightercode === 200) {
-      this.postDeleteHighlighterApi(email, groupId, id, court);
-    }
+    // if (this.hlightercode === 200) {
+    //   this.postDeleteHighlighterApi(email, groupId, id, court);
+    // }
 
     // if (this.hlightercode === 200) {
     //   this.openDialog('請先刪除舊有螢光筆!');
@@ -649,8 +649,11 @@ export class ViewFullTextPageComponent {
     }
 
     const pureText = this.suptext; // 保留原文內容
-    let textWithHighlights = ''; // 初始化結果字符串
-    let currentOffset = 0; // 跟蹤處理進度
+    const container = this.suptextSpan.nativeElement;
+
+    // 清空 DOM，重建高亮內容
+    container.innerHTML = '';
+    let currentOffset = 0; // 用於追蹤純文字處理進度
 
     // 按起始位置排序高亮範圍
     this.highlightedRanges
@@ -658,14 +661,19 @@ export class ViewFullTextPageComponent {
       .forEach((range) => {
         const { startOffset, endOffset, selectText, highlighterColor } = range;
 
-        // 添加高亮範圍之前的純文字
+        // 添加高亮範圍前的純文字
         if (startOffset > currentOffset) {
-          textWithHighlights += pureText.slice(currentOffset, startOffset);
+          const textNode = document.createTextNode(
+            pureText.slice(currentOffset, startOffset)
+          );
+          container.appendChild(textNode);
         }
 
-        // 添加高亮範圍的文字
-        const highlightedText = `<span style="background-color: ${highlighterColor};">${selectText}</span>`;
-        textWithHighlights += highlightedText;
+        // 添加高亮範圍文字（避免直接使用 selectText，改為從純文字擷取確保一致性）
+        const highlightSpan = document.createElement('span');
+        highlightSpan.style.backgroundColor = highlighterColor;
+        highlightSpan.textContent = pureText.slice(startOffset, endOffset);
+        container.appendChild(highlightSpan);
 
         // 更新處理進度
         currentOffset = endOffset;
@@ -673,11 +681,11 @@ export class ViewFullTextPageComponent {
 
     // 添加最後一段未高亮的文字
     if (currentOffset < pureText.length) {
-      textWithHighlights += pureText.slice(currentOffset);
+      const textNode = document.createTextNode(
+        pureText.slice(currentOffset)
+      );
+      container.appendChild(textNode);
     }
-
-    // 將結果寫入 DOM
-    this.suptextSpan.nativeElement.innerHTML = textWithHighlights;
   }
 
 
