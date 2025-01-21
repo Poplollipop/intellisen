@@ -103,6 +103,7 @@ export class ViewFullTextPageComponent {
         // 檢查書籤是否已存在
         this.getBookmarkAlreadyExists(this.email, groupId, id, court);
 
+        // // 文章螢光筆替換文字
         this.getHighlighterAlreadyExists(this.email, groupId, id, court);
       }
 
@@ -551,8 +552,9 @@ export class ViewFullTextPageComponent {
   // 讀取 取得email所擁有的螢光筆文字替換進文章中
   replaceTextWithHighlights(): void {
     // 防禦性檢查
-    if (!this.suptext || typeof this.suptext !== 'string') {
+    if (!this.suptext) {
       console.warn('suptext is not initialized or is not a valid string. Skipping replaceTextWithHighlights.');
+      window.location.reload();
       return; // 如果 suptext 尚未初始化，跳過方法執行
     }
 
@@ -814,7 +816,6 @@ export class ViewFullTextPageComponent {
       return;
     }
 
-
     // 根據是否附帶螢光筆切換樣式
     if (!includeHighlights) {
       // 清除所有帶有背景色的元素樣式
@@ -876,7 +877,6 @@ export class ViewFullTextPageComponent {
         <body>${mainContent.outerHTML}</body>
       </html>
     `);
-
 
     printWindow.document.close();
 
