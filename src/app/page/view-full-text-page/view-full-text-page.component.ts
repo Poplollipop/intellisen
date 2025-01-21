@@ -50,7 +50,7 @@ export class ViewFullTextPageComponent {
 
   email!: any;
   suptext!: any;
-
+  pureText!:any;
   url!: any;
   fullTextParam !: any;
   judgmentJgroupId!: any;
