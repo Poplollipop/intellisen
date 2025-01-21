@@ -182,7 +182,7 @@
                   <span class="separator">|</span>
                   <span class="date">{{ item.verdictDate }}</span>
                   @if (this.isLogin) {
-                  <i class="pi pi-bookmark-fill" (click)="toggleBookmark(item)" 
+                  <i class="pi pi-bookmark-fill" (click)="toggleBookmark(item)"
                   style="font-size: 1.5rem; cursor: pointer;"
                   [ngClass]="item.isBookmarked ? 'bookmark-green' : 'bookmark-gray'"
                     >
@@ -219,7 +219,7 @@
 
           <!-- 右中量刑區間、統計列表區 -->
           <div class="table-container">
-        
+
             <div class="number-result">
               <div class="left-result">
                 <p>平均刑度</p>
@@ -232,7 +232,7 @@
                 <p>年</p>
               </div>
             </div>
-        
+
             <div class="container">
               <ul class="responsive-table">
                 <!-- 表格標題 -->
@@ -243,7 +243,7 @@
                   <div class="col col-4">最高刑度</div>
                   <div class="col col-5">平均刑度</div>
                 </li>
-        
+
                 <!-- 這裡使用 for 迴圈，動態生成表格行 -->
                 @for (item of items; track $index) {
                 <li class="table-row">
@@ -255,10 +255,10 @@
                 </li>
                 }
               </ul>
-        
+
             </div>
           </div>
-        
+
           <!-- 右下圖表區 -->
           <div class="chart-container">
             <!-- 按鈕區域 -->
@@ -266,14 +266,14 @@
               <button mat-raised-button color="primary" class="small-button" (click)="renderChart('pie')">
                 刑種全貌圖
               </button>
-              <button mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
+              <!-- <button mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
                 有期徒刑
               </button>
               <button mat-raised-button color="primary" class="small-button" (click)="renderChart('bar')">
                 無期徒刑
-              </button>
+              </button> -->
             </div>
-        
+
             <!-- 圖表容器 -->
             <!-- <div id="chartContainer1" style="width: 90vh; height: 80vh;"></div> -->
             @defer {

@@ -96,7 +96,7 @@ export class SearchResultPageComponent {
   combinedId: string = '';
   id: string = '';
 
-  
+
 
   // 書籤變數
   isLogin: boolean = false; // 判斷是否為登入狀態
@@ -189,7 +189,7 @@ export class SearchResultPageComponent {
       this.isLogin = JSON.parse(sessionStorage.getItem('isLogin')!);
     }
 
-    
+
 
   }
 
@@ -299,12 +299,12 @@ export class SearchResultPageComponent {
     // 把sessionStorage裡面已經存在的書籤id和畫面顯示的列表id做比對
     // const existingItems = this.visibleCases.filter(   // 把visibleCases的每個物件取出成caseItem並進行比對
     //   caseItem => bookmarks.some(      // 遍歷 bookmarks 陣列，檢查是否有至少一個bookmark滿足條件
-    //     (bookmark: any) => bookmark.id == caseItem.id   
+    //     (bookmark: any) => bookmark.id == caseItem.id
     //   )
     // );
 
     // existingItems.forEach(item => item.isBookmarked = true)
-      
+
   }
 
   // 重組資料
@@ -596,7 +596,7 @@ export class SearchResultPageComponent {
           );
         });
       }
-      
+
 
       // Debug: 顯示結果
       // console.log(this.myBookmarks);
@@ -608,7 +608,7 @@ export class SearchResultPageComponent {
   // 加入書籤觸發
   toggleBookmark(caseItem: any) {
         // 從 sessionServiceService 獲取當前用戶的 email
-        const email = this.sessionServiceService.getEmail();  
+        const email = this.sessionServiceService.getEmail();
         // 取得案件相關資訊
         const groupId = caseItem.groupId;
         const id = caseItem.id;
@@ -619,7 +619,7 @@ export class SearchResultPageComponent {
         const docType = caseItem.docType;
         const caseType = caseItem.caseType;
         const verdictDate = caseItem.verdictDate;
-        
+
         // 檢查書籤是否存在，然後決定新增或提示
         this.getBookmarkAlreadyExists(email, groupId, id, court).subscribe({
           next: (res: any) => {
@@ -638,9 +638,9 @@ export class SearchResultPageComponent {
             console.error('檢查書籤失敗:', error);
             this.openDialog('檢查書籤失敗，請稍後再試！');
           },
-        });        
+        });
       }
-    
+
 
   // 儲存書籤 API
   postSaveBookmarkApi(
@@ -664,7 +664,7 @@ export class SearchResultPageComponent {
       next: (res: any) => {
         console.log('書籤儲存成功:', res);
         this.openDialog('書籤已成功儲存！');
-        
+
       },
       error: (error: any) => {
         console.error('儲存書籤失敗:', error);
@@ -682,7 +682,7 @@ export class SearchResultPageComponent {
       next: (res: any) => {
         console.log('書籤刪除成功:', res);
         this.openDialog('書籤已刪除！');
-        
+
       },
       error: (error: any) => {
         console.error('刪除書籤失敗:', error);
@@ -714,7 +714,7 @@ export class SearchResultPageComponent {
   // 圖表
     Highcharts: typeof Highcharts = Highcharts;
     chartOptions: Highcharts.Options = {};  // 圖表配置
-  
+
     // 表格的動態數據，這裡的數據可以從 API 獲取
     items = [
       {
@@ -773,10 +773,9 @@ export class SearchResultPageComponent {
                 type: 'pie',
                 name: '比例',
                 data: [
-                  { name: '有期徒刑', y: 45 },
-                  { name: '無期徒刑', y: 25 },
-                  { name: '罰金', y: 20 },
-                  { name: '其他', y: 10 },
+                  { name: '有期徒刑', y: 5 },
+                  { name: '無期徒刑', y: 3 },
+                  { name: '死刑', y: 1 },
                 ],
               },
             ],
@@ -813,20 +812,20 @@ export class SearchResultPageComponent {
           };
         }
       }
-    
+
       renderChart(type: 'pie' | 'bar') {
-    
+
         console.log(this.chartOptions.chart)
-    
+
         // 更新圖表
         this.updateChartOptions(type);
-    
+
         // 強制觸發 Angular 變更檢測
         this.chartOptions = { ...this.chartOptions };
-    
+
       }
-    
-    
+
+
       // 件數跳出dialog
       // 開啟Dialog，並將「件數」作為參數傳遞
       openDialog2(count: number): void {
@@ -836,7 +835,7 @@ export class SearchResultPageComponent {
           width: '90%',
           data: { count: count } // 傳入該行的件數
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           console.log('Dialog closed with result:', result);
         });
@@ -845,4 +844,4 @@ export class SearchResultPageComponent {
 
 }
 
-    
+
