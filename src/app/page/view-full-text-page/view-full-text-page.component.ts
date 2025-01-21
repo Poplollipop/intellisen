@@ -44,12 +44,13 @@ export class ViewFullTextPageComponent {
   ) { }
 
 
-  @ViewChild('suptextSpan', { static: false }) suptextSpan!: ElementRef<HTMLSpanElement>;
+  @ViewChild('suptextSpan', { static: false }) suptextSpan!: ElementRef;
   @ViewChild('toolbar', { static: false }) toolbarRef!: ElementRef<HTMLDivElement>;
 
 
   email!: any;
   suptext!: any;
+
   url!: any;
   fullTextParam !: any;
   judgmentJgroupId!: any;
@@ -65,16 +66,17 @@ export class ViewFullTextPageComponent {
   // 檢查書籤是否已存在
   Bookmarkcode !: any;
   // 檢查螢光筆是否已存在
-  hlightercode!:any;
+  hlightercode!: any;
   //
   currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
-  savedRange: Range | null = null; // 用於保存用戶的選取範圍
+  savedRange: SavedRange | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
   isToolbarVisible = false; // 控制工具列表起始狀態:為 false 不啟用
   historicalRecord: Array<{
     id: string, groupId: string, court: string,
     year: number, month: number, date: number
   }> = new Array();// 觀看紀錄列表
+
 
 
   ngOnInit(): void {
@@ -103,7 +105,6 @@ export class ViewFullTextPageComponent {
         // 檢查書籤是否已存在
         this.getBookmarkAlreadyExists(this.email, groupId, id, court);
 
-        // // 文章螢光筆替換文字
         this.getHighlighterAlreadyExists(this.email, groupId, id, court);
       }
 
@@ -197,7 +198,7 @@ export class ViewFullTextPageComponent {
       const rect = range.getBoundingClientRect();
 
       // 保存選取範圍
-      this.savedRange = range;
+      this.saveSelection();
 
       // 確認選取範圍是否在文字區域內
       if (this.suptextSpan.nativeElement.contains(range.commonAncestorContainer)) {
@@ -215,25 +216,98 @@ export class ViewFullTextPageComponent {
     }
   }
 
+
   //========================================
-  // 儲存用戶的選取範圍
+  // 儲存用戶的選取範圍，基於文字長度計算位置
   saveSelection(): void {
     const selection = window.getSelection();
     if (selection && !selection.isCollapsed) {
-      this.savedRange = selection.getRangeAt(0);
-      console.log('選取範圍已保存', this.savedRange);
+      const range = selection.getRangeAt(0);
+      const startContainer = range.startContainer;
+      const endContainer = range.endContainer;
+
+      if (this.suptextSpan.nativeElement.contains(startContainer) && this.suptextSpan.nativeElement.contains(endContainer)) {
+        const startOffset = this.getTextOffset(startContainer, range.startOffset);
+        const endOffset = this.getTextOffset(endContainer, range.endOffset);
+
+        this.savedRange = {
+          startOffset,
+          endOffset,
+          selectText: range.toString(),
+        } as SavedRange; // 使用自定義範圍介面
+
+        console.log('選取範圍已保存', this.savedRange);
+      } else {
+        console.warn('選取範圍不在文字區域內，保存失敗');
+      }
     }
   }
+
+
+  // 輔助方法：計算節點在文字中的絕對位置
+  private getTextOffset(node: Node, offset: number): number {
+    let totalOffset = 0;
+    const walker = document.createTreeWalker(this.suptextSpan.nativeElement, NodeFilter.SHOW_TEXT, null);
+
+    while (walker.nextNode()) {
+      const currentNode = walker.currentNode;
+      if (currentNode === node) {
+        totalOffset += offset;
+        break;
+      } else {
+        totalOffset += currentNode.textContent?.length || 0;
+      }
+    }
+
+    return totalOffset;
+  }
+
+
 
   // 恢復用戶的選取範圍
   restoreSelection(): void {
     if (this.savedRange) {
       const selection = window.getSelection();
       selection?.removeAllRanges();
-      selection?.addRange(this.savedRange);
-      console.log('選取範圍已恢復', this.savedRange);
+
+      const range = document.createRange();
+      const { startOffset, endOffset } = this.savedRange;
+
+      const startNodeInfo = this.findNodeByOffset(startOffset);
+      const endNodeInfo = this.findNodeByOffset(endOffset);
+
+      if (startNodeInfo && endNodeInfo) {
+        range.setStart(startNodeInfo.node, startNodeInfo.offset);
+        range.setEnd(endNodeInfo.node, endNodeInfo.offset);
+
+        selection?.addRange(range);
+        console.log('選取範圍已恢復', range);
+      } else {
+        console.warn('無法恢復選取範圍');
+      }
     }
   }
+
+  // 輔助方法：根據文字偏移量尋找對應節點
+  private findNodeByOffset(targetOffset: number): { node: Node; offset: number } | null {
+    let currentOffset = 0;
+    const walker = document.createTreeWalker(this.suptextSpan.nativeElement, NodeFilter.SHOW_TEXT, null);
+
+    while (walker.nextNode()) {
+      const currentNode = walker.currentNode;
+      const nodeLength = currentNode.textContent?.length || 0;
+
+      if (currentOffset + nodeLength >= targetOffset) {
+        return { node: currentNode, offset: targetOffset - currentOffset };
+      }
+
+      currentOffset += nodeLength;
+    }
+
+    return null;
+  }
+
+
   //==========================================
   // api區
   // 搜尋給於id，呼叫後端接收判決書資料
@@ -319,7 +393,7 @@ export class ViewFullTextPageComponent {
       court: court,
       highlights: highlights
     }
-    // console.log(highlighter);
+    console.log(highlighter);
     this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte', highlighter).subscribe({
       next: () => {
         this.openDialog('螢光筆儲存成功!');
@@ -336,8 +410,8 @@ export class ViewFullTextPageComponent {
       court: court,
     }
     this.http.postApi('http://localhost:8080/accountSystem/delete-highlighte', bookmarkData).subscribe({
-      next: (res:any) => {
-        if (res.code!=200)return;
+      next: (res: any) => {
+        if (res.code != 200) return;
       }
     })
   }
@@ -362,9 +436,9 @@ export class ViewFullTextPageComponent {
     const selection = window.getSelection()?.toString() || '';
     if (selection) {
       this.clipboard.copy(selection);
-      // this.openDialog('已複製選取內容！');
+      // alert('已複製選取內容！');
     } else {
-      // this.openDialog('未選取任何內容！');
+      // alert('未選取任何內容！');
     }
   }
 
@@ -418,19 +492,28 @@ export class ViewFullTextPageComponent {
       return;
     }
 
+    // 如果清空後儲存就直接刪除
     if (!highlights || highlights.length === 0 || highlights.some(highlight => !highlight.selectText || highlight.selectText.trim() === '')) {
-      this.openDialog('未使用螢光筆');
+      this.postDeleteHighlighterApi(email, groupId, id, court);
+      this.openDialog('螢光筆儲存成功!');
       return;
     }
+
     // 檢查是否存在
     this.getHighlighterAlreadyExists(email, groupId, id, court);
 
-    if(this.hlightercode===200){
+    if (this.hlightercode === 200) {
       this.postDeleteHighlighterApi(email, groupId, id, court);
     }
 
+    // if (this.hlightercode === 200) {
+    //   this.openDialog('請先刪除舊有螢光筆!');
+    //   return;
+    // }
 
     this.postHighlighterApi(email, groupId, id, court, highlights);
+
+
   }
 
   // 打開通知對話框
@@ -449,14 +532,21 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      this.openDialog('請先選取文字後再進行高亮操作！');
+      alert('請先選取文字後再進行高亮操作！');
       return;
     }
 
-    const range = selection.getRangeAt(0);
-    const { startOffset, endOffset } = this.getAbsoluteOffset(range);
+    // 儲存選取範圍
+    this.saveSelection();
 
-    // 更新高亮範圍，處理重疊範圍
+    if (!this.savedRange) {
+      console.warn('無法儲存選取範圍');
+      return;
+    }
+
+    const { startOffset, endOffset, selectText } = this.savedRange;
+
+    // 處理高亮範圍，避免重疊
     this.highlightedRanges = this.highlightedRanges.flatMap((highlight) => {
       if (highlight.endOffset <= startOffset || highlight.startOffset >= endOffset) {
         return [highlight]; // 保留無交集的高亮
@@ -489,7 +579,7 @@ export class ViewFullTextPageComponent {
     const newHighlight: HighlightRange = {
       startOffset,
       endOffset,
-      selectText: this.suptext.slice(startOffset, endOffset),
+      selectText, // 使用保存的選取文字
       highlighterColor: color,
     };
     this.highlightedRanges.push(newHighlight);
@@ -498,6 +588,7 @@ export class ViewFullTextPageComponent {
     this.updateHighlightStorage();
 
     // 新增高亮文字到 DOM
+    const range = selection.getRangeAt(0);
     const highlightSpan = this.renderer.createElement('span');
     this.renderer.setStyle(highlightSpan, 'background-color', color);
     highlightSpan.appendChild(range.extractContents());
@@ -506,13 +597,12 @@ export class ViewFullTextPageComponent {
     selection.removeAllRanges(); // 清除選取範圍
   }
 
-
   private applyHighlights(): void {
     // 清除目前的高亮
     const highlightedSpans = this.suptextSpan.nativeElement.querySelectorAll(
       'span[style*="background-color"]'
     );
-    highlightedSpans.forEach((span) => {
+    highlightedSpans.forEach((span: HTMLSpanElement) => {
       const textNode = document.createTextNode(span.textContent || '');
       span.parentNode?.replaceChild(textNode, span);
     });
@@ -552,48 +642,45 @@ export class ViewFullTextPageComponent {
   // 讀取 取得email所擁有的螢光筆文字替換進文章中
   replaceTextWithHighlights(): void {
     // 防禦性檢查
-    if (!this.suptext) {
+    if (!this.suptext || typeof this.suptext !== 'string') {
       console.warn('suptext is not initialized or is not a valid string. Skipping replaceTextWithHighlights.');
       window.location.reload();
-      return; // 如果 suptext 尚未初始化，跳過方法執行
+      return;
     }
 
-    let textWithHighlights = this.suptext; // 初始化為原文
-    let offsetCorrection = 0; // 偏移修正變數
+    const pureText = this.suptext; // 保留原文內容
+    let textWithHighlights = ''; // 初始化結果字符串
+    let currentOffset = 0; // 跟蹤處理進度
 
+    // 按起始位置排序高亮範圍
     this.highlightedRanges
       .sort((a, b) => a.startOffset - b.startOffset)
       .forEach((range) => {
         const { startOffset, endOffset, selectText, highlighterColor } = range;
 
-        const adjustedStart = startOffset + offsetCorrection;
-        const adjustedEnd = endOffset + offsetCorrection;
-
-        if (adjustedStart < 0 || adjustedEnd > textWithHighlights.length) {
-          console.warn(
-            `Invalid range: adjustedStart=${adjustedStart}, adjustedEnd=${adjustedEnd}, textLength=${textWithHighlights.length}`
-          );
-          return;
+        // 添加高亮範圍之前的純文字
+        if (startOffset > currentOffset) {
+          textWithHighlights += pureText.slice(currentOffset, startOffset);
         }
 
-        const currentText = textWithHighlights.slice(adjustedStart, adjustedEnd);
-        if (currentText !== selectText) {
-          console.warn(
-            `範圍文字不匹配：預期 "${selectText}"，實際 "${currentText}"`
-          );
-          return;
-        }
-
+        // 添加高亮範圍的文字
         const highlightedText = `<span style="background-color: ${highlighterColor};">${selectText}</span>`;
-        const beforeText = textWithHighlights.slice(0, adjustedStart);
-        const afterText = textWithHighlights.slice(adjustedEnd);
-        textWithHighlights = beforeText + highlightedText + afterText;
+        textWithHighlights += highlightedText;
 
-        offsetCorrection += highlightedText.length - selectText.length;
+        // 更新處理進度
+        currentOffset = endOffset;
       });
 
+    // 添加最後一段未高亮的文字
+    if (currentOffset < pureText.length) {
+      textWithHighlights += pureText.slice(currentOffset);
+    }
+
+    // 將結果寫入 DOM
     this.suptextSpan.nativeElement.innerHTML = textWithHighlights;
   }
+
+
 
 
   //===============================================================
@@ -622,7 +709,7 @@ export class ViewFullTextPageComponent {
       'span[style*="background-color"]'
     );
 
-    highlightedSpans.forEach((span) => {
+    highlightedSpans.forEach((span: HTMLSpanElement) => {
       const textNode = document.createTextNode(span.textContent || '');
       span.parentNode?.replaceChild(textNode, span);
     });
@@ -637,7 +724,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      this.openDialog('請先選取要刪除高亮的文字範圍！');
+      alert('請先選取要刪除高亮的文字範圍！');
       return;
     }
 
@@ -769,9 +856,9 @@ export class ViewFullTextPageComponent {
   onShare() {
     this.updateDynamicLink(); // 確保分享按鈕點擊時更新網址
     navigator.clipboard.writeText(this.copyLink).then(() => {
-      this.openDialog('網址已複製到剪貼簿！');
+      alert('網址已複製到剪貼簿！');
     }).catch(() => {
-      this.openDialog('複製失敗，請手動複製網址。');
+      alert('複製失敗，請手動複製網址。');
     });
   }
   // 前往判決書網站
@@ -780,7 +867,7 @@ export class ViewFullTextPageComponent {
   }
   // 判決書PDF檔下載
   onDownloadPDF() {
-    // this.openDialog('PDF 下載按鈕被點擊！');
+    // alert('PDF 下載按鈕被點擊！');
   }
   //===================================================
 
@@ -812,9 +899,10 @@ export class ViewFullTextPageComponent {
     // 複製主文內容
     const mainContent = document.querySelector('.main-content')?.cloneNode(true) as HTMLElement;
     if (!mainContent) {
-      this.openDialog('無法找到主文內容進行列印！');
+      alert('無法找到主文內容進行列印！');
       return;
     }
+
 
     // 根據是否附帶螢光筆切換樣式
     if (!includeHighlights) {
@@ -828,7 +916,7 @@ export class ViewFullTextPageComponent {
     // 建立列印窗口
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      this.openDialog('無法開啟列印窗口！');
+      alert('無法開啟列印窗口！');
       return;
     }
 
@@ -878,6 +966,7 @@ export class ViewFullTextPageComponent {
       </html>
     `);
 
+
     printWindow.document.close();
 
     // 確保樣式更新後再進行列印
@@ -924,7 +1013,7 @@ export class ViewFullTextPageComponent {
   // 監控高亮文字位置儲存狀態
   updateHighlightStorage(range?: { startOffset: number; endOffset: number }, add: boolean = false, highlighterColor: string = 'yellow'): void {
     if (!range) {
-      console.log('更新高亮範圍儲存：', this.highlightedRanges);
+      console.log('更新後高亮範圍儲存：', this.highlightedRanges);
       return;
     }
 
@@ -949,19 +1038,39 @@ export class ViewFullTextPageComponent {
   }
 
 
-  // 偏移量計算方法，計算文章長度，去判斷螢光筆文字的位置
-  getAbsoluteOffset(range: Range): { startOffset: number; endOffset: number } {
-    const fullText = this.suptext; // 獲取完整文章內容
-    const startContainer = range.startContainer.textContent || '';
-    const endContainer = range.endContainer.textContent || '';
+  // 計算絕對偏移的方法
+  private getAbsoluteOffset(range: Range): { startOffset: number; endOffset: number } {
+    const textContent = this.suptextSpan.nativeElement.textContent || ''; // 使用 suptextSpan 的內容
+    const rangeText = range.toString();
+    const rangeStart = range.startContainer;
+    const rangeEnd = range.endContainer;
 
-    const startIndex =
-      fullText.indexOf(startContainer) + range.startOffset;
-    const endIndex =
-      fullText.indexOf(endContainer) + range.endOffset;
+    let startOffset = 0;
+    let endOffset = 0;
 
-    return { startOffset: startIndex, endOffset: endIndex };
+    // 使用 TreeWalker 遍歷文字節點
+    const calculateOffset = (node: Node, isStart: boolean) => {
+      let offset = 0;
+      const walker = document.createTreeWalker(this.suptextSpan.nativeElement, NodeFilter.SHOW_TEXT, null);
+      while (walker.nextNode()) {
+        const currentNode = walker.currentNode;
+        if (currentNode === (isStart ? rangeStart : rangeEnd)) {
+          offset += range.startOffset; // 累加偏移量
+          break;
+        }
+        offset += currentNode.textContent?.length || 0;
+      }
+      return offset;
+    };
+
+    startOffset = calculateOffset(rangeStart, true);
+    endOffset = startOffset + rangeText.length;
+
+    return { startOffset, endOffset };
   }
+
+
+
 
   // 將高亮資料存入 highlightedRanges 容器
   storeHighlightRanges(highlighterData: any[]): void {
@@ -995,4 +1104,10 @@ interface HighlightRange {
   endOffset: number; // 結束位置
   selectText: string; // 提取的文字
   highlighterColor: string; // 顏色
+}
+// 定義保存的範圍介面
+interface SavedRange {
+  startOffset: number;
+  endOffset: number;
+  selectText: string;
 }
