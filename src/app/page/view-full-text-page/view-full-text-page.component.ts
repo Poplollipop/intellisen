@@ -396,7 +396,6 @@ export class ViewFullTextPageComponent {
     this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte', highlighter).subscribe({
       next: () => {
         this.openDialog('螢光筆儲存成功!');
-        window.location.reload();
       }
     })
   }
@@ -416,7 +415,7 @@ export class ViewFullTextPageComponent {
     })
   }
 
-  // 螢光筆取得(包含檢查)
+  // 螢光筆取得
   getHighlighterAlreadyExists(email: string, groupId: string, id: string, court: string) {
     this.http
       .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
@@ -427,6 +426,18 @@ export class ViewFullTextPageComponent {
           this.hlightercode = res.code;
           this.storeHighlightRanges(res.highlighteList);
           this.replaceTextWithHighlights();
+        });
+  }
+
+  // 檢查螢光筆存在
+  getHighlighterExamine(email: string, groupId: string, id: string, court: string){
+    this.http
+      .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
+      .subscribe(
+        (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res.code != 200) return;
+          this.hlightercode = res.code;
         });
   }
 
@@ -500,7 +511,7 @@ export class ViewFullTextPageComponent {
     }
 
     // 檢查是否存在
-    this.getHighlighterAlreadyExists(email, groupId, id, court);
+    this.getHighlighterExamine(email, groupId, id, court);
 
     // if (this.hlightercode === 200) {
     //   this.postDeleteHighlighterApi(email, groupId, id, court);
@@ -510,10 +521,7 @@ export class ViewFullTextPageComponent {
     //   this.openDialog('請先刪除舊有螢光筆!');
     //   return;
     // }
-
     this.postHighlighterApi(email, groupId, id, court, highlights);
-
-
   }
 
   // 打開通知對話框
