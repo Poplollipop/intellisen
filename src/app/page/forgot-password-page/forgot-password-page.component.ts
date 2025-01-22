@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { SessionServiceService } from '../../service/session-service.service';
 import { HttpClientService } from '../../service/http-client.service';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class ForgotPasswordPageComponent {
   constructor(
     private http: HttpClientService,
     private router: Router,
-  ) {}
+    private ngxService: NgxUiLoaderService,
+  ) { }
 
   // 驗證email格式
   accountValidation(input: string): boolean {
@@ -42,6 +44,7 @@ export class ForgotPasswordPageComponent {
     this.forgotPasswordData = {
       email: this.email
     }
+    this.ngxService.start(); // 啟動 loading 動畫
     this.http.postApi2('http://localhost:8080/accountSystem/forgot-password', this.forgotPasswordData).subscribe({
       next: (response: any) => {
         if (response.body.code == 200) {
@@ -64,6 +67,7 @@ export class ForgotPasswordPageComponent {
           });
           console.log(response.body.code);
         }
+        this.ngxService.stop(); // 關閉 loading 動畫
       },
       error: (error) => {
         Swal.fire({
@@ -72,6 +76,7 @@ export class ForgotPasswordPageComponent {
           icon: 'error',
           confirmButtonText: '再試一次'
         });
+        this.ngxService.stop(); // 關閉 loading 動畫
       }
     })
   }
