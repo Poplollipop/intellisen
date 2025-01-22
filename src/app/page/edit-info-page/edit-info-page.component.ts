@@ -17,9 +17,9 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class EditInfoPageComponent {
   private readonly platformId = inject(PLATFORM_ID); // 確保程式碼在瀏覽器上執行與 sessionStorage 存在
-  
+
   email!: string;
-  role: string | null = null; 
+  role: string | null = null;
   name: string | null = null;
   phone: string | null = null;
   udpdateData!: any
@@ -31,7 +31,7 @@ export class EditInfoPageComponent {
   // 事務所
   address: string | null = null;
   lawFirmNumber: string | null = null;
-  
+
   // 律師
   licenseNumber: string | null = null;
   lawFirm: string | null = null;
@@ -57,7 +57,7 @@ export class EditInfoPageComponent {
       this.role = '一般使用者'
     }
     if(this.role == 'guest') {
-      this.role = '訪客'
+      this.role = '使用者'
     }
     }
   }

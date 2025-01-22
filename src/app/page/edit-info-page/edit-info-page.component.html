@@ -14,7 +14,7 @@
 
       <!-- 根據角色顯示要切換的使用者類型 -->
       <div class="form-group">
-        <label for="role" style="font-size: 22px;">我想切換的使用者類型為：</label>
+        <label for="role" style="font-size: 22px;">選擇使用者類型：</label>
 
         @if (this.role == '事務所') {
         <div class="option">
@@ -52,7 +52,7 @@
         </div>
         }
 
-        @if (this.role == '訪客') {
+        @if (this.role == '使用者') {
         <div class="option">
           <input type="radio" id="lawFirm" name="role" value="lawFirm" [(ngModel)]="this.newRole">
           <label for="lawFirm">事務所</label><br>
