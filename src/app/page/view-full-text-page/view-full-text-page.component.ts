@@ -50,7 +50,7 @@ export class ViewFullTextPageComponent {
 
   email!: any;
   suptext!: any;
-  pureText!:any;
+  pureText!: any;
   url!: any;
   fullTextParam !: any;
   judgmentJgroupId!: any;
@@ -68,7 +68,7 @@ export class ViewFullTextPageComponent {
   // 檢查螢光筆是否已存在
   hlightercode!: any;
   //
-  currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的高亮元素
+  currentHighlight: HTMLElement | null = null; // 用於追蹤當前被選中的螢光筆元素
   savedRange: SavedRange | null = null; // 用於保存用戶的選取範圍
   showPrintOptions = false; // 控制列印選項框的顯示狀態
   isToolbarVisible = false; // 控制工具列表起始狀態:為 false 不啟用
@@ -81,7 +81,7 @@ export class ViewFullTextPageComponent {
 
   ngOnInit(): void {
     this.suptext = null; // 清空 suptext，避免舊資料干擾
-    this.highlightedRanges = []; // 清空高亮範圍
+    this.highlightedRanges = []; // 清空螢光筆範圍
 
     // 從 http 網址網址中取的案件 id
     this.route.paramMap.subscribe((param) => {
@@ -393,7 +393,6 @@ export class ViewFullTextPageComponent {
       court: court,
       highlights: highlights
     }
-    console.log(highlighter);
     this.http.postApi('http://localhost:8080/accountSystem/seve-highlighte', highlighter).subscribe({
       next: () => {
         this.openDialog('螢光筆儲存成功!');
@@ -416,7 +415,7 @@ export class ViewFullTextPageComponent {
     })
   }
 
-  // 螢光筆取得(包含檢查)
+  // 螢光筆取得
   getHighlighterAlreadyExists(email: string, groupId: string, id: string, court: string) {
     this.http
       .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
@@ -427,6 +426,18 @@ export class ViewFullTextPageComponent {
           this.hlightercode = res.code;
           this.storeHighlightRanges(res.highlighteList);
           this.replaceTextWithHighlights();
+        });
+  }
+
+  // 檢查螢光筆存在
+  getHighlighterExamine(email: string, groupId: string, id: string, court: string){
+    this.http
+      .getApi('http://localhost:8080/accountSystem/highlighte-already-exists?email=' + email + '&groupId=' + groupId + '&id=' + id + '&court=' + court)
+      .subscribe(
+        (res: any) => {
+          // 如果螢光筆資料庫沒有資料直接回傳
+          if (res.code != 200) return;
+          this.hlightercode = res.code;
         });
   }
 
@@ -500,20 +511,17 @@ export class ViewFullTextPageComponent {
     }
 
     // 檢查是否存在
-    this.getHighlighterAlreadyExists(email, groupId, id, court);
+    this.getHighlighterExamine(email, groupId, id, court);
 
-    if (this.hlightercode === 200) {
-      this.postDeleteHighlighterApi(email, groupId, id, court);
-    }
+    // if (this.hlightercode === 200) {
+    //   this.postDeleteHighlighterApi(email, groupId, id, court);
+    // }
 
     // if (this.hlightercode === 200) {
     //   this.openDialog('請先刪除舊有螢光筆!');
     //   return;
     // }
-
     this.postHighlighterApi(email, groupId, id, court, highlights);
-
-
   }
 
   // 打開通知對話框
@@ -524,7 +532,7 @@ export class ViewFullTextPageComponent {
   }
 
   //==========================================================
-  // 高亮功能，顏色參數為選擇的顏色
+  // 螢光筆功能，顏色參數為選擇的顏色
   highlightText(color: string, event?: MouseEvent): void {
     if (event) event.stopPropagation(); // 防止事件冒泡
 
@@ -532,7 +540,7 @@ export class ViewFullTextPageComponent {
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取文字後再進行高亮操作！');
+      alert('請先選取文字後再進行螢光筆操作！');
       return;
     }
 
@@ -546,10 +554,10 @@ export class ViewFullTextPageComponent {
 
     const { startOffset, endOffset, selectText } = this.savedRange;
 
-    // 處理高亮範圍，避免重疊
+    // 處理螢光筆範圍，避免重疊
     this.highlightedRanges = this.highlightedRanges.flatMap((highlight) => {
       if (highlight.endOffset <= startOffset || highlight.startOffset >= endOffset) {
-        return [highlight]; // 保留無交集的高亮
+        return [highlight]; // 保留無交集的螢光筆
       }
 
       const updatedRanges: HighlightRange[] = [];
@@ -575,7 +583,7 @@ export class ViewFullTextPageComponent {
       return updatedRanges;
     });
 
-    // 新增新的高亮範圍
+    // 新增新的螢光筆範圍
     const newHighlight: HighlightRange = {
       startOffset,
       endOffset,
@@ -584,10 +592,10 @@ export class ViewFullTextPageComponent {
     };
     this.highlightedRanges.push(newHighlight);
 
-    // 更新顯示的高亮範圍資訊
+    // 更新顯示的螢光筆範圍資訊
     this.updateHighlightStorage();
 
-    // 新增高亮文字到 DOM
+    // 新增螢光筆文字到 DOM
     const range = selection.getRangeAt(0);
     const highlightSpan = this.renderer.createElement('span');
     this.renderer.setStyle(highlightSpan, 'background-color', color);
@@ -598,7 +606,7 @@ export class ViewFullTextPageComponent {
   }
 
   private applyHighlights(): void {
-    // 清除目前的高亮
+    // 清除目前的螢光筆
     const highlightedSpans = this.suptextSpan.nativeElement.querySelectorAll(
       'span[style*="background-color"]'
     );
@@ -607,7 +615,7 @@ export class ViewFullTextPageComponent {
       span.parentNode?.replaceChild(textNode, span);
     });
 
-    // 重新新增高亮
+    // 重新新增螢光筆
     const content = this.suptextSpan.nativeElement.textContent || '';
     const fragment = document.createDocumentFragment();
     let lastIndex = 0;
@@ -619,7 +627,7 @@ export class ViewFullTextPageComponent {
         fragment.appendChild(textNode);
       }
 
-      // 新增高亮文字
+      // 新增螢光筆文字
       const highlightSpan = document.createElement('span');
       highlightSpan.textContent = content.slice(startOffset, endOffset);
       highlightSpan.style.backgroundColor = color;
@@ -649,35 +657,43 @@ export class ViewFullTextPageComponent {
     }
 
     const pureText = this.suptext; // 保留原文內容
-    let textWithHighlights = ''; // 初始化結果字符串
-    let currentOffset = 0; // 跟蹤處理進度
+    const container = this.suptextSpan.nativeElement;
 
-    // 按起始位置排序高亮範圍
+    // 清空 DOM，重建螢光筆內容
+    container.innerHTML = '';
+    let currentOffset = 0; // 用於追蹤純文字處理進度
+
+    // 按起始位置排序螢光筆範圍
     this.highlightedRanges
       .sort((a, b) => a.startOffset - b.startOffset)
       .forEach((range) => {
         const { startOffset, endOffset, selectText, highlighterColor } = range;
 
-        // 添加高亮範圍之前的純文字
+        // 添加螢光筆範圍前的純文字
         if (startOffset > currentOffset) {
-          textWithHighlights += pureText.slice(currentOffset, startOffset);
+          const textNode = document.createTextNode(
+            pureText.slice(currentOffset, startOffset)
+          );
+          container.appendChild(textNode);
         }
 
-        // 添加高亮範圍的文字
-        const highlightedText = `<span style="background-color: ${highlighterColor};">${selectText}</span>`;
-        textWithHighlights += highlightedText;
+        // 添加螢光筆範圍文字（避免直接使用 selectText，改為從純文字擷取確保一致性）
+        const highlightSpan = document.createElement('span');
+        highlightSpan.style.backgroundColor = highlighterColor;
+        highlightSpan.textContent = pureText.slice(startOffset, endOffset);
+        container.appendChild(highlightSpan);
 
         // 更新處理進度
         currentOffset = endOffset;
       });
 
-    // 添加最後一段未高亮的文字
+    // 添加最後一段未螢光筆的文字
     if (currentOffset < pureText.length) {
-      textWithHighlights += pureText.slice(currentOffset);
+      const textNode = document.createTextNode(
+        pureText.slice(currentOffset)
+      );
+      container.appendChild(textNode);
     }
-
-    // 將結果寫入 DOM
-    this.suptextSpan.nativeElement.innerHTML = textWithHighlights;
   }
 
 
@@ -703,7 +719,7 @@ export class ViewFullTextPageComponent {
   }
   // 執行清除螢光效果
   performHighlightRemoval(): void {
-    this.highlightedRanges = []; // 清空儲存的高亮範圍
+    this.highlightedRanges = []; // 清空儲存的螢光筆範圍
 
     const highlightedSpans = this.suptextSpan.nativeElement.querySelectorAll(
       'span[style*="background-color"]'
@@ -717,14 +733,14 @@ export class ViewFullTextPageComponent {
     this.updateHighlightStorage(); // 更新儲存
   }
 
-  // 刪除選取範圍內的高亮效果
+  // 刪除選取範圍內的螢光筆效果
   removeHighlightsInRange(event?: MouseEvent): void {
     if (event) event.stopPropagation(); // 防止事件冒泡
     this.restoreSelection(); // 恢復選取範圍
 
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      alert('請先選取要刪除高亮的文字範圍！');
+      alert('請先選取要刪除螢光筆的文字範圍！');
       return;
     }
 
@@ -732,7 +748,7 @@ export class ViewFullTextPageComponent {
     const startOffset = this.getAbsoluteOffset(range).startOffset;
     const endOffset = this.getAbsoluteOffset(range).endOffset;
 
-    // 遍歷高亮節點
+    // 遍歷螢光筆節點
     const walker = document.createTreeWalker(
       this.suptextSpan.nativeElement,
       NodeFilter.SHOW_ELEMENT,
@@ -776,27 +792,27 @@ export class ViewFullTextPageComponent {
 
       const parent = span.parentNode;
 
-      // 插入前段高亮文字
+      // 插入前段螢光筆文字
       if (beforeText.trim()) {
         const beforeSpan = span.cloneNode() as HTMLElement;
         beforeSpan.textContent = beforeText;
         parent?.insertBefore(beforeSpan, span);
       }
 
-      // 插入移除高亮部分為普通文字
+      // 插入移除螢光筆部分為普通文字
       if (removedText.trim()) {
         const normalTextNode = document.createTextNode(removedText);
         parent?.insertBefore(normalTextNode, span);
       }
 
-      // 插入後段高亮文字
+      // 插入後段螢光筆文字
       if (afterText.trim()) {
         const afterSpan = span.cloneNode() as HTMLElement;
         afterSpan.textContent = afterText;
         parent?.insertBefore(afterSpan, span.nextSibling);
       }
 
-      // 移除原高亮文字
+      // 移除原螢光筆文字
       parent?.removeChild(span);
     });
 
@@ -811,7 +827,7 @@ export class ViewFullTextPageComponent {
 
       const updatedRanges: HighlightRange[] = [];
 
-      // 前段高亮
+      // 前段螢光筆
       if (highlight.startOffset < startOffset) {
         updatedRanges.push({
           ...highlight,
@@ -823,7 +839,7 @@ export class ViewFullTextPageComponent {
         });
       }
 
-      // 後段高亮
+      // 後段螢光筆
       if (highlight.endOffset > endOffset) {
         updatedRanges.push({
           ...highlight,
@@ -1006,19 +1022,19 @@ export class ViewFullTextPageComponent {
     }
   }
   //=========================================
-  // 高亮文字索引位置儲存方法:
-  highlightedRanges: HighlightRange[] = []; // 儲存高亮範圍
+  // 螢光筆文字索引位置儲存方法:
+  highlightedRanges: HighlightRange[] = []; // 儲存螢光筆範圍
 
-  highlighterData: any[] = []; // 從後端取得的高亮資料
-  // 監控高亮文字位置儲存狀態
+  highlighterData: any[] = []; // 從後端取得的螢光筆資料
+  // 監控螢光筆文字位置儲存狀態
   updateHighlightStorage(range?: { startOffset: number; endOffset: number }, add: boolean = false, highlighterColor: string = 'yellow'): void {
     if (!range) {
-      console.log('更新後高亮範圍儲存：', this.highlightedRanges);
+      console.log('更新後螢光筆範圍儲存：', this.highlightedRanges);
       return;
     }
 
     if (add) {
-      // 新增高亮範圍，補全 HighlightRange 的屬性
+      // 新增螢光筆範圍，補全 HighlightRange 的屬性
       const selectText = this.suptextSpan.nativeElement.textContent?.slice(range.startOffset, range.endOffset) || '';
       this.highlightedRanges.push({
         ...range,
@@ -1026,7 +1042,7 @@ export class ViewFullTextPageComponent {
         highlighterColor: highlighterColor, // 指定顏色
       });
     } else {
-      // 移除範圍內的高亮
+      // 移除範圍內的螢光筆
       this.highlightedRanges = this.highlightedRanges.filter((highlight) => {
         return (
           highlight.endOffset <= range.startOffset || highlight.startOffset >= range.endOffset
@@ -1034,7 +1050,7 @@ export class ViewFullTextPageComponent {
       });
     }
 
-    console.log('更新後的高亮範圍：', this.highlightedRanges);
+    console.log('更新後的螢光筆範圍：', this.highlightedRanges);
   }
 
 
@@ -1072,7 +1088,7 @@ export class ViewFullTextPageComponent {
 
 
 
-  // 將高亮資料存入 highlightedRanges 容器
+  // 將螢光筆資料存入 highlightedRanges 容器
   storeHighlightRanges(highlighterData: any[]): void {
     this.highlightedRanges = highlighterData.map((item) => ({
       startOffset: item.start_offset,
@@ -1081,7 +1097,7 @@ export class ViewFullTextPageComponent {
       highlighterColor: item.highlighter_color
     }));
 
-    console.log('儲存的高亮範圍：', this.highlightedRanges);
+    console.log('儲存的螢光筆範圍：', this.highlightedRanges);
   }
 
   //===========================================================================
@@ -1098,7 +1114,7 @@ export class ViewFullTextPageComponent {
     this.router.navigateByUrl('full-text/' + groupId + '&id=' + id + '&court=' + court);
   }
 }
-// 儲存高亮文字位置格式
+// 儲存螢光筆文字位置格式
 interface HighlightRange {
   startOffset: number; // 起始位置
   endOffset: number; // 結束位置
